@@ -1,0 +1,53 @@
+digraph "digraph g" {
+	node [shape=doublecircle]
+	S0
+	node [shape=circle]
+	S0 -> S1 [label="event=Card(pin,B)
+condition=null
+action=Write(\"Enter Pin\"),attempts=0"]
+	S1 -> S0 [label="event=Enter_pin(p)
+condition=p!=pin,attempts=2
+action=Write(\"\"Password error number exceeded\"),return_card,attempts=attempts+1"]
+	S2 -> S3 [label="event=Withdrawal()
+condition=null
+action=Write(\"Enter amount\")"]
+	S3 -> S4 [label="event=Enter_amount(w)
+condition=w<=B
+action=Give_money,B=B-w,Write(\"your balance\",B)"]
+	S4 -> S2 [label="event=Return()
+condition=null
+action=Write(\"Select Withdrawal/GetBalance/Cancel\")"]
+	S2 -> S0 [label="event=Cancel()
+condition=null
+action=Write(\"Canceling\"),return_card"]
+	S1 -> S0 [label="event=Cancel()
+condition=null
+action=Write(\"Canceling\"),return_card"]
+	S4 -> S0 [label="event=Cancel()
+condition=null
+action=Write(\"Canceling\"),return_card"]
+	S1 -> S0 [label="event=Enter_pin(p)
+condition=null
+action=Write(\"Verify password timeout\"),return_card"]
+	S2 -> S4 [label="event=GetBalance()
+condition=null
+action=Write(\"your balance\",B)"]
+	S0 -> S1 [label="event=Card(pinB)
+condition=null
+action=Write(\"Enter Pin\"),attempts=0"]
+	S3 -> S5 [label="event=Enter_amount(w)
+condition=w>B
+action=Write(\"Out balance\")"]
+	S5 -> S2 [label="event=Return()
+condition=null
+action=Write(\"Select Withdrawal/GetBalance/Cancel\")"]
+	S2 -> S0 [label="event=Cancel()
+condition=null
+action=Write(\"Canceling\")return_card"]
+	S1 -> S1 [label="event=Enter_pin(p)
+condition=p!=pin,0<=attempts<=1
+action=Write(\"Wrong Pin,ReEnter\"),attempts=attempts+1"]
+	S1 -> S2 [label="event=Enter_pin(p)
+condition=p=pin,0<=attempts<=2
+action=Write(\"Select Withdrawal/GetBalance/Cancel\"),attempts=attempts+1"]
+}

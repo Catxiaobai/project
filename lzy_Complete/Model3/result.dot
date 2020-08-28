@@ -1,0 +1,47 @@
+digraph g {
+ S0 -> S1 [ label="t1
+event=Card(pin,B)
+condition=null" ];
+ S1 -> S0 [ label="t2
+event=Enter_pin(p)
+condition=p!=pin,attempts=2" ];
+ S2 -> S3 [ label="t3
+event=Withdrawal()
+condition=null" ];
+ S3 -> S4 [ label="t4
+event=Enter_amount(w)
+condition=w<=B" ];
+ S4 -> S2 [ label="t5
+event=Return()
+condition=null" ];
+ S2 -> S0 [ label="t6
+event=Cancel()
+condition=null" ];
+ S1 -> S0 [ label="t7
+event=Cancel()
+condition=null" ];
+ S3 -> S5 [ label="t8
+event=Enter_amount(w)
+condition=w>B" ];
+ S5 -> S2 [ label="t9
+event=Return()
+condition=null" ];
+ S1 -> S0 [ label="t10
+event=Enter_pin(p)
+condition=null" ];
+ S5 -> S0 [ label="t11
+event=Cancel()
+condition=null" ];
+ S4 -> S0 [ label="t12
+event=Cancel()
+condition=null" ];
+ S2 -> S4 [ label="t13
+event=GetBalance()
+condition=null" ];
+ S1 -> S1 [ label="t14
+event=Enter_pin(p)
+condition=p!=pin,0<=attempts<=1" ];
+ S1 -> S2 [ label="t15
+event=Enter_pin(p)
+condition=p=pin,0<=attempts<=2" ];
+}
