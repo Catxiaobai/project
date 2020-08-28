@@ -1,0 +1,52 @@
+Path [T1,T3,]	2
+this path is not feasible
+Path [T1,T2,T3,]	3
+this path is not feasible
+Path [T1,T2,T2,T3,]	4
+this path is not feasible
+Path [T1,T4,T5,T23,]	4
+No0	successGeneration:	1923
+No1	successGeneration:	81
+No2	successGeneration:	671
+No3	successGeneration:	97
+No4	successGeneration:	595
+No5	successGeneration:	32
+No6	successGeneration:	847
+No7	successGeneration:	125
+No8	successGeneration:	106
+No9	successGeneration:	15
+Path [T1,T4,T6,T23,]	4
+No0	successGeneration:	618
+No1	successGeneration:	120
+No2	successGeneration:	505
+No3	successGeneration:	419
+No4	successGeneration:	202
+No5	successGeneration:	1650
+No6	successGeneration:	131
+No7	successGeneration:	307
+No8	successGeneration:	406
+No9	successGeneration:	503
+Path [T1,T2,T2,T2,T3,]	5
+this path is not feasible
+Path [T1,T2,T4,T5,T23,]	5
+No0	successGeneration:	51
+No1	successGeneration:	394
+No2	successGeneration:	1290
+No3	successGeneration:	65
+No4	successGeneration:	1006
+No5	successGeneration:	621
+No6	successGeneration:	274
+No7	successGeneration:	758
+No8	successGeneration:	112
+No9	successGeneration:	143
+Path [T1,T2,T4,T6,T23,]	5
+No0	successGeneration:	667
+No1	successGeneration:	264
+No2	successGeneration:	514
+No3	successGeneration:	637
+No4	successGeneration:	364
+No5	successGeneration:	1966
+No6	successGeneration:	189
+No7	successGeneration:	57
+No8	successGeneration:	256
+No9	successGeneration:	90

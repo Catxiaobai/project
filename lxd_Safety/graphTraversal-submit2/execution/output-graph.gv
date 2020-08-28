@@ -1,0 +1,9 @@
+// 这是一个有向图
+digraph {
+	A [label="作者"]
+	B [label="医生"]
+	C [label="律师"]
+	A -> B
+	A -> C
+	B -> C
+}

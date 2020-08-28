@@ -1,0 +1,1063 @@
+State:
+	name=START
+
+State:
+	name=S1
+
+State:
+	name=S2
+
+State:
+	name=S3
+
+State:
+	name=S4
+
+State:
+	name=S5
+
+State:
+	name=S6
+
+State:
+	name=S7
+
+State:
+	name=S8
+
+State:
+	name=S9
+
+State:
+	name=EXIT
+
+
+Label:
+	name=T1
+	event=start()
+	cond=
+	action=count=0;countquotation=0;write("Printtokens2")
+
+Label:
+	name=T2
+	event=an(c)
+	cond=
+	action=
+
+Label:
+	name=T3
+	event=an(c)
+	cond=
+	action=
+
+Label:
+	name=T4
+	event=key(k)
+	cond=(k!="=>")
+	action=
+
+Label:
+	name=T5
+	event=eof()
+	cond=
+	action=write("Identifier");write("Exit")
+
+Label:
+	name=T6
+	event=space()
+	cond=
+	action=write("Identifier")
+
+Label:
+	name=T7
+	event=sem()
+	cond=
+	action=write("Identifier")
+
+Label:
+	name=T8
+	event=key(k)
+	cond=(k=="=>")
+	action=count=count+1
+
+Label:
+	name=T9
+	event=space()
+	cond=
+	action=
+Label:
+	name=T10
+	event=sem()
+	cond=
+	action=
+
+Label:
+	name=T11
+	event=key(k)
+	cond=(k!="=>")
+	action=count=0
+
+Label:
+	name=T12
+	event=key(k)
+	cond=(k!="=>")
+	action=
+Label:
+	name=T13
+	event=eof()
+	cond=(count==0)
+	action=write("Keyword");write("Exit")
+
+Label:
+	name=T14
+	event=space()
+	cond=
+	action=write("Keyword")
+
+Label:
+	name=T15
+	event=sem()
+	cond=
+	action=write("Keyword")
+
+Label:
+	name=T16
+	event=error()
+	cond=
+	action=
+Label:
+	name=T17
+	event=eof()
+	cond=
+	action=write("Exit")
+
+Label:
+	name=T18
+	event=symbol(s)
+	cond=
+	action=write("Keyword");write("Symbol")
+
+Label:
+	name=T19
+	event=symbol(s)
+	cond=
+	action=write("Symbol")
+
+
+Label:
+	name=T20
+	event=num()
+	cond=
+	action=
+Label:
+	name=T21
+	event=an(c)
+	cond=
+	action=
+Label:
+	name=T22
+	event=key(k)
+	cond=
+	action=
+Label:
+	name=T23
+	event=symbol(s)
+	cond=
+	action=
+Label:
+	name=T24
+	event=num()
+	cond=
+	action=
+Label:
+	name=T25
+	event=sem()
+	cond=
+	action=
+Label:
+	name=T26
+	event=space()
+	cond=
+	action=
+Label:
+	name=T27
+	event=num()
+	cond=
+	action=
+Label:
+	name=T28
+	event=symbol(s)
+	cond=
+	action=write("Identifier");write("Symbol")
+
+Label:
+	name=T29
+	event=key(k)
+	cond=
+	action=count=count+1
+
+Label:
+	name=T30
+	event=key(k)
+	cond=
+	action=
+Label:
+	name=T31
+	event=an(c)
+	cond=
+	action=
+Label:
+	name=T32
+	event=eof()
+	cond=
+	action=write("Exit")
+
+Label:
+	name=T33
+	event=sem()
+	cond=
+	action=write("Numeric")
+
+Label:
+	name=T34
+	event=space()
+	cond=
+	action=write("Numeric")
+
+Label:
+	name=T35
+	event=symbol(s)
+	cond=
+	action=write("Numeric");write("Symbol")
+
+Label:
+	name=T36
+	event=num()
+	cond=
+	action=
+Label:
+	name=T37
+	event=key(k)
+	cond=
+	action=
+Label:
+	name=T38
+	event=an(c)
+	cond=
+	action=
+Label:
+	name=T39
+	event=eof()
+	cond=
+	action=write("Numeric");write("Exit")
+
+Label:
+	name=T40
+	event=key(k)
+	cond=(k=="=>")
+	action=count=count+1
+
+Label:
+	name=T41
+	event=space()
+	cond=(count>1)
+	action=write("Error")
+
+Label:
+	name=T42
+	event=num()
+	cond=
+	action=
+Label:
+	name=T43
+	event=an(c)
+	cond=
+	action=
+Label:
+	name=T44
+	event=space()
+	cond=
+	action=write("Error")
+
+Label:
+	name=T45
+	event=symbol(s)
+	cond=
+	action=write("Error");write("Symbol")
+
+Label:
+	name=T46
+	event=space()
+	cond=(count==1)
+	action=write("Keyword")
+
+Label:
+	name=T47
+	event=key(k)
+	cond=(k=="=>")
+	action=count=1
+
+Label:
+	name=T48
+	event=error()
+	cond=
+	action=
+Label:
+	name=T49
+	event=eof()
+	cond=(count==1)
+	action=write("Keyword");write("Exit")
+
+Label:
+	name=T50
+	event=eof()
+	cond=(count>0)
+	action=write("Error");write("Exit")
+
+Label:
+	name=T51
+	event=symbol(s)
+	cond=
+	action=write("Symbol");write("Error")
+
+Label:
+	name=T52
+	event=sem()
+	cond=(count>1)
+	action=write("Error")
+
+Label:
+	name=T53
+	event=sem()
+	cond=
+	action=write("Error")
+
+Label:
+	name=T54
+	event=quotation()
+	cond=
+	action=countquotation=countquotation+1
+
+Label:
+	name=T55
+	event=an(c)
+	cond=
+	action=
+Label:
+	name=T56
+	event=eof()
+	cond=
+	action=write("Error");write("Exit")
+
+Label:
+	name=T57
+	event=key(k)
+	cond=
+	action=
+Label:
+	name=T58
+	event=error()
+	cond=
+	action=
+Label:
+	name=T59
+	event=num()
+	cond=
+	action=
+Label:
+	name=T60
+	event=an(c)
+	cond=
+	action=
+Label:
+	name=T61
+	event=eof()
+	cond=
+	action=write("Error");write("Exit")
+
+Label:
+	name=T62
+	event=space()
+	cond=
+	action=write("Error")
+
+Label:
+	name=T63
+	event=sem()
+	cond=
+	action=write("Error")
+
+Label:
+	name=T64
+	event=symbol(s)
+	cond=
+	action=write("Error");write("Symbol")
+
+Label:
+	name=T65
+	event=error()
+	cond=
+	action=
+Label:
+	name=T66
+	event=num()
+	cond=
+	action=
+Label:
+	name=T67
+	event=quotation()
+	cond=
+	action=countquotation=countquotation+1
+
+Label:
+	name=T68
+	event=eol()
+	cond=
+	action=write("Error")
+
+Label:
+	name=T69
+	event=space()
+	cond=
+	action=
+Label:
+	name=T70
+	event=symbol(s)
+	cond=
+	action=
+Label:
+	name=T71
+	event=an(c)
+	cond=
+	action=
+Label:
+	name=T72
+	event=key(k)
+	cond=
+	action=
+Label:
+	name=T73
+	event=sem()
+	cond=
+	action=
+Label:
+	name=T74
+	event=error()
+	cond=
+	action=
+Label:
+	name=T75
+	event=eof()
+	cond=
+	action=write("Error");write("Exit")
+
+Label:
+	name=T76
+	event=num()
+	cond=
+	action=
+Label:
+	name=T77
+	event=quotation()
+	cond=
+	action=countquotation=0;write("String")
+
+Label:
+	name=T78
+	event=quotation()
+	cond=
+	action=
+Label:
+	name=T79
+	event=quotation()
+	cond=
+	action=
+Label:
+	name=T80
+	event=quotation()
+	cond=
+	action=
+Label:
+	name=T81
+	event=sem()
+	cond=(count==1)
+	action=write("Keyword")
+
+Label:
+	name=T82
+	event=error()
+	cond=
+	action=
+Label:
+	name=T83
+	event=space()
+	cond=
+	action=
+Label:
+	name=T84
+	event=error()
+	cond=
+	action=
+Label:
+	name=T85
+	event=quotation()
+	cond=
+	action=
+Label:
+	name=T86
+	event=error()
+	cond=
+	action=
+Label:
+	name=T87
+	event=error()
+	cond=
+	action=
+Label:
+	name=T88
+	event=quotation()
+	cond=
+	action=countquotation=countquotation+1
+
+Label:
+	name=T89
+	event=num()
+	cond=
+	action=
+
+
+
+Transition:
+	name=TS1
+	srt=START
+	tgt=S1
+	label=T1
+
+Transition:
+	name=TS2
+	srt=S1
+	tgt=S2
+	label=T2
+
+Transition:
+	name=TS3
+	srt=S2
+	tgt=S2
+	label=T3
+
+Transition:
+	name=TS4
+	srt=S2
+	tgt=S2
+	label=T4
+
+Transition:
+	name=TS5
+	srt=S2
+	tgt=EXIT
+	label=T5
+
+Transition:
+	name=TS6
+	srt=S2
+	tgt=S1
+	label=T6
+
+Transition:
+	name=TS7
+	srt=S2
+	tgt=S1
+	label=T7
+
+Transition:
+	name=TS8
+	srt=S2
+	tgt=S7
+	label=T8
+
+Transition:
+	name=TS9
+	srt=S1
+	tgt=S1
+	label=T9
+
+Transition:
+	name=TS10
+	srt=S1
+	tgt=S4
+	label=T10
+
+Transition:
+	name=TS11
+	srt=S1
+	tgt=S3
+	label=T11
+
+Transition:
+	name=TS12
+	srt=S3
+	tgt=S2
+	label=T12
+
+Transition:
+	name=TS13
+	srt=S3
+	tgt=EXIT
+	label=T13
+
+Transition:
+	name=TS14
+	srt=S3
+	tgt=S1
+	label=T14
+
+Transition:
+	name=TS15
+	srt=S3
+	tgt=S1
+	label=T15
+
+Transition:
+	name=TS16
+	srt=S1
+	tgt=S9
+	label=T16
+
+Transition:
+	name=TS17
+	srt=S1
+	tgt=EXIT
+	label=T17
+
+Transition:
+	name=TS18
+	srt=S3
+	tgt=S1
+	label=T18
+
+Transition:
+	name=TS19
+	srt=S1
+	tgt=S1
+	label=T19
+
+Transition:
+	name=TS20
+	srt=S2
+	tgt=S2
+	label=T20
+
+Transition:
+	name=TS21
+	srt=S4
+	tgt=S4
+	label=T21
+
+Transition:
+	name=TS22
+	srt=S4
+	tgt=S4
+	label=T22
+
+Transition:
+	name=TS23
+	srt=S4
+	tgt=S4
+	label=T23
+
+Transition:
+	name=TS24
+	srt=S4
+	tgt=S4
+	label=T24
+
+Transition:
+	name=TS25
+	srt=S4
+	tgt=S1
+	label=T25
+
+Transition:
+	name=TS26
+	srt=S4
+	tgt=S1
+	label=T26
+
+Transition:
+	name=TS27
+	srt=S1
+	tgt=S6
+	label=T27
+
+Transition:
+	name=TS28
+	srt=S2
+	tgt=S1
+	label=T28
+
+Transition:
+	name=TS29
+	srt=S7
+	tgt=S7
+	label=T29
+
+Transition:
+	name=TS30
+	srt=S8
+	tgt=S8
+	label=T30
+
+Transition:
+	name=TS31
+	srt=S3
+	tgt=S2
+	label=T31
+
+Transition:
+	name=TS32
+	srt=S4
+	tgt=EXIT
+	label=T32
+
+Transition:
+	name=TS33
+	srt=S6
+	tgt=S1
+	label=T33
+
+Transition:
+	name=TS34
+	srt=S6
+	tgt=S1
+	label=T34
+
+Transition:
+	name=TS35
+	srt=S6
+	tgt=S1
+	label=T35
+
+Transition:
+	name=TS36
+	srt=S7
+	tgt=S7
+	label=T36
+
+Transition:
+	name=TS37
+	srt=S6
+	tgt=S8
+	label=T37
+
+Transition:
+	name=TS38
+	srt=S6
+	tgt=S8
+	label=T38
+
+Transition:
+	name=TS39
+	srt=S6
+	tgt=EXIT
+	label=T39
+
+Transition:
+	name=TS40
+	srt=S3
+	tgt=S7
+	label=T40
+
+Transition:
+	name=TS41
+	srt=S7
+	tgt=S1
+	label=T41
+
+Transition:
+	name=TS42
+	srt=S6
+	tgt=S6
+	label=T42
+
+Transition:
+	name=TS43
+	srt=S8
+	tgt=S8
+	label=T43
+
+Transition:
+	name=TS44
+	srt=S8
+	tgt=S1
+	label=T44
+
+Transition:
+	name=TS45
+	srt=S8
+	tgt=S1
+	label=T45
+
+Transition:
+	name=TS46
+	srt=S7
+	tgt=S1
+	label=T46
+
+Transition:
+	name=TS47
+	srt=S1
+	tgt=S7
+	label=T47
+
+Transition:
+	name=TS48
+	srt=S2
+	tgt=S9
+	label=T48
+
+Transition:
+	name=TS49
+	srt=S7
+	tgt=EXIT
+	label=T49
+
+Transition:
+	name=TS50
+	srt=S7
+	tgt=EXIT
+	label=T50
+
+Transition:
+	name=TS51
+	srt=S7
+	tgt=S1
+	label=T51
+
+Transition:
+	name=TS52
+	srt=S7
+	tgt=S1
+	label=T52
+
+Transition:
+	name=TS53
+	srt=S8
+	tgt=S1
+	label=T53
+
+Transition:
+	name=TS54
+	srt=S9
+	tgt=S5
+	label=T54
+
+Transition:
+	name=TS55
+	srt=S7
+	tgt=S7
+	label=T55
+
+Transition:
+	name=TS56
+	srt=S8
+	tgt=EXIT
+	label=T56
+
+Transition:
+	name=TS57
+	srt=S9
+	tgt=S9
+	label=T57
+
+Transition:
+	name=TS58
+	srt=S9
+	tgt=S9
+	label=T58
+
+Transition:
+	name=TS59
+	srt=S9
+	tgt=S9
+	label=T59
+
+Transition:
+	name=TS60
+	srt=S9
+	tgt=S9
+	label=T60
+
+Transition:
+	name=TS61
+	srt=S9
+	tgt=EXIT
+	label=T61
+
+Transition:
+	name=TS62
+	srt=S9
+	tgt=S1
+	label=T62
+
+Transition:
+	name=TS63
+	srt=S9
+	tgt=S1
+	label=T63
+
+Transition:
+	name=TS64
+	srt=S9
+	tgt=S1
+	label=T64
+
+Transition:
+	name=TS65
+	srt=S3
+	tgt=S9
+	label=T65
+
+Transition:
+	name=TS66
+	srt=S3
+	tgt=S2
+	label=T66
+
+Transition:
+	name=TS67
+	srt=S1
+	tgt=S5
+	label=T67
+
+Transition:
+	name=TS68
+	srt=S5
+	tgt=S1
+	label=T68
+
+Transition:
+	name=TS69
+	srt=S5
+	tgt=S5
+	label=T69
+
+Transition:
+	name=TS70
+	srt=S5
+	tgt=S5
+	label=T70
+
+Transition:
+	name=TS71
+	srt=S5
+	tgt=S5
+	label=T71
+
+Transition:
+	name=TS72
+	srt=S5
+	tgt=S5
+	label=T72
+
+Transition:
+	name=TS73
+	srt=S5
+	tgt=S5
+	label=T73
+
+Transition:
+	name=TS74
+	srt=S5
+	tgt=S5
+	label=T74
+
+Transition:
+	name=TS75
+	srt=S5
+	tgt=EXIT
+	label=T75
+
+Transition:
+	name=TS76
+	srt=S5
+	tgt=S5
+	label=T76
+
+Transition:
+	name=TS77
+	srt=S5
+	tgt=S1
+	label=T77
+
+Transition:
+	name=TS78
+	srt=S2
+	tgt=S9
+	label=T78
+
+Transition:
+	name=TS79
+	srt=S3
+	tgt=S9
+	label=T79
+
+Transition:
+	name=TS80
+	srt=S6
+	tgt=S9
+	label=T80
+
+Transition:
+	name=TS81
+	srt=S7
+	tgt=S1
+	label=T81
+
+Transition:
+	name=TS82
+	srt=S4
+	tgt=S9
+	label=T82
+
+Transition:
+	name=TS83
+	srt=S7
+	tgt=S1
+	label=T83
+
+Transition:
+	name=TS84
+	srt=S6
+	tgt=S9
+	label=T84
+
+Transition:
+	name=TS85
+	srt=S8
+	tgt=S9
+	label=T85
+
+Transition:
+	name=TS86
+	srt=S7
+	tgt=S9
+	label=T86
+
+Transition:
+	name=TS87
+	srt=S8
+	tgt=S9
+	label=T87
+
+Transition:
+	name=TS88
+	srt=S4
+	tgt=S5
+	label=T88
+
+Transition:
+	name=TS89
+	srt=S8
+	tgt=S6
+	label=T89
+

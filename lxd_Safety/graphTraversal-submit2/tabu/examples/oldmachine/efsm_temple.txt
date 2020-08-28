@@ -1,0 +1,354 @@
+State:
+	name=START
+
+State:
+	name=S1
+
+State:
+	name=S2
+
+State:
+	name=S3
+
+State:
+	name=S4
+
+State:
+	name=S5
+
+State:
+	name=S6
+
+State:
+	name=S7
+
+State:
+	name=S8
+
+State:
+	name=S9
+
+State:
+	name=S10
+
+State:
+	name=S11
+
+State:
+	name=EXIT
+
+
+Label:
+	name=T1
+	event=Activate(Rprice,Mprice,Sprice)
+	cond=
+	action=Rprice=0;Mprice=0;Sprice=0;Charge=0;Regular= 1;Medium = 1;Super = 1;carwash=0;True=1;False=0;amount=0;total=0
+
+Label:
+	name=T2
+	event=
+	cond=
+	action=
+
+Label:
+	name=T3
+	event=
+	cond=
+	action=
+
+Label:
+	name=T4
+	event=
+	cond=
+	action=
+
+Label:
+	name=T5
+	event=
+	cond=
+	action=
+Label:
+	name=T6
+	event=
+	cond=
+	action=
+Label:
+	name=T7
+	event=
+	cond=
+	action=
+Label:
+	name=T8
+	event=
+	cond=
+	action=
+Label:
+	name=T9
+	event=
+	cond=
+	action=
+Label:
+	name=T10
+	event=
+	cond=
+	action=
+
+Label:
+	name=T11
+	event=
+	cond=
+	action=
+Label:
+	name=T12
+	event=
+	cond=
+	action=
+Label:
+	name=T13
+	event=
+	cond=
+	action=
+Label:
+	name=T14
+	event=
+	cond=
+	action=
+Label:
+	name=T15
+	event=
+	cond=
+	action=
+Label:
+	name=T16
+	event=
+	cond=
+	action=
+Label:
+	name=T17
+	event=
+	cond=
+	action=
+Label:
+	name=T18
+	event=
+	cond=
+	action=
+Label:
+	name=T19
+	event=
+	cond=
+	action=
+
+Label:
+	name=T20
+	event=
+	cond=
+	action=
+Label:
+	name=T21
+	event=
+	cond=
+	action=
+Label:
+	name=T22
+	event=
+	cond=
+	action=
+Label:
+	name=T23
+	event=
+	cond=
+	action=
+Label:
+	name=T24
+	event=
+	cond=
+	action=
+Label:
+	name=T25
+	event=
+	cond=
+	action=
+Label:
+	name=T26
+	event=
+	cond=
+	action=
+Label:
+	name=T27
+	event=
+	cond=
+	action=
+Label:
+	name=T28
+	event=
+	cond=
+	action=
+
+Transition:
+	name=TS1
+	srt=START
+	tgt=S1
+	label=T1
+
+Transition:
+	name=TS2
+	srt=S1
+	tgt=S2
+	label=T2
+
+Transition:
+	name=TS3
+	srt=S1
+	tgt=S1
+	label=T3
+
+Transition:
+	name=TS4
+	srt=S1
+	tgt=S1
+	label=T4
+
+Transition:
+	name=TS5
+	srt=S1
+	tgt=S1
+	label=T5
+
+Transition:
+	name=TS6
+	srt=S1
+	tgt=S1
+	label=T6
+
+Transition:
+	name=TS7
+	srt=S1
+	tgt=EXIT
+	label=T7
+
+Transition:
+	name=TS8
+	srt=S2
+	tgt=S2
+	label=T8
+
+Transition:
+	name=TS9
+	srt=S2
+	tgt=S2
+	label=T9
+
+Transition:
+	name=TS10
+	srt=S2
+	tgt=S2
+	label=T10
+
+Transition:
+	name=TS11
+	srt=S2
+	tgt=S3
+	label=T11
+
+Transition:
+	name=TS12
+	srt=S2
+	tgt=S1
+	label=T12
+
+Transition:
+	name=TS13
+	srt=S2
+	tgt=S1
+	label=T13
+
+Transition:
+	name=TS14
+	srt=S2
+	tgt=S1
+	label=T14
+
+Transition:
+	name=TS15
+	srt=S2
+	tgt=S4
+	label=T15
+
+Transition:
+	name=TS16
+	srt=S2
+	tgt=S5
+	label=T16
+
+Transition:
+	name=TS17
+	srt=S3
+	tgt=S3
+	label=T17
+
+Transition:
+	name=TS18
+	srt=S3
+	tgt=S3
+	label=T18
+
+Transition:
+	name=TS19
+	srt=S3
+	tgt=S3
+	label=T19
+
+Transition:
+	name=TS20
+	srt=S3
+	tgt=S1
+	label=T20
+
+Transition:
+	name=TS21
+	srt=S3
+	tgt=S1
+	label=T21
+
+Transition:
+	name=TS22
+	srt=S3
+	tgt=S5
+	label=T22
+
+Transition:
+	name=TS23
+	srt=S3
+	tgt=S4
+	label=T23
+
+Transition:
+	name=TS24
+	srt=S4
+	tgt=S4
+	label=T24
+
+Transition:
+	name=TS25
+	srt=S4
+	tgt=S1
+	label=T25
+
+Transition:
+	name=TS26
+	srt=S5
+	tgt=S5
+	label=T26
+
+Transition:
+	name=TS27
+	srt=S5
+	tgt=S1
+	label=T27
+
+Transition:
+	name=TS28
+	srt=S3
+	tgt=S1
+	label=T28

@@ -27,6 +27,7 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
+          style="margin-top: 20px;margin-left: 25%"
           :current-page="page"
           :page-sizes="[1, 2, 5, 10]"
           :page-size="limit"

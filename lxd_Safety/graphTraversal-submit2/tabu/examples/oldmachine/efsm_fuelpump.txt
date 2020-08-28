@@ -1,0 +1,340 @@
+State:
+	name=START
+
+State:
+	name=S1
+
+State:
+	name=S2
+
+State:
+	name=S3
+
+State:
+	name=S4
+
+State:
+	name=S5
+
+State:
+	name=S6
+
+State:
+	name=S7
+
+State:
+	name=S8
+
+State:
+	name=S9
+
+State:
+	name=S10
+
+State:
+	name=S11
+
+State:
+	name=EXIT
+
+
+Label:
+	name=T1
+	event=Activate(Rprice,Mprice,Sprice)
+	cond=
+	action=Rprice=0;Mprice=0;Sprice=0;Charge=0;Regular= 1;Medium = 1;Super = 1;carwash=0;True=1;False=0;amount=0;total=0
+
+Label:
+	name=T2
+	event=Cash()
+	cond=
+	action=write("Insert Credit Card")
+
+Label:
+	name=T3
+	event=Credit()
+	cond=
+	action=write("Please Insert Your Credit Card")
+
+Label:
+	name=T4
+	event=Reject()
+	cond=
+	action=write("Invalid Credit Card")
+
+Label:
+	name=T5
+	event=Accept()
+	cond=
+	action=write("Select Fuell Menu")
+
+Label:
+	name=T6
+	event=Accept()
+	cond=
+	action=write("Select Fuell Menu")
+
+Label:
+	name=T7
+	event=Regular()
+	cond=
+	action=Regular=1;write("Pulll Handle to pum Gas");write("Push Start")
+
+Label:
+	name=T8
+	event=Medium()
+	cond=
+	action=Medium=1;write("Pulll Handle to pum Gas");write("Push Start")
+
+Label:
+	name=T9
+	event=Super()
+	cond=
+	action=Super=1;write("Pulll Handle to pum Gas");write("Push Start")
+
+Label:
+	name=T10
+	event=Handle()
+	cond=
+	action=write("Start Filling! push the lever")
+
+Label:
+	name=T11
+	event=Lever()
+	cond=
+	action=write("Pumping in Progress")
+
+Label:
+	name=T12
+	event=Lever()
+	cond=
+	action=write("Pumping in Progress")
+
+Label:
+	name=T13
+	event=Flowoff()
+	cond=
+	action=write("Stop Pumping")
+
+Label:
+	name=T14
+	event=Lever()
+	cond=
+	action=write("Start Pumping")
+
+Label:
+	name=T15
+	event=Handeloff()
+	cond=
+	action=write("Pumping Stop")
+
+Label:
+	name=T16
+	event=Handelon()
+	cond=
+	action=write("Do You Want Car Wash")
+
+Label:
+	name=T17
+	event=Carwash(carwash,amount)
+	cond=(carwash==False)
+	action=Charge=amount*Rprice;total=total+Charge;write(Charge)
+
+Label:
+	name=T18
+	event=Carwash(carwash,amount)
+	cond=(carwash==False)
+	action=Charge= amount*Mprice;total=total+Charge;write(Charge)
+
+Label:
+	name=T19
+	event=Carwash(carwash,amount)
+	cond=(carwash==False)
+	action=Charge= amount*Sprice;total=total+Charge;write(Charge)
+
+Label:
+	name=T20
+	event=Carwash(carwash,amount)
+	cond=((carwash == True) and (Regular==True) and (amount<=40))
+	action=Charge=amount*Rprice+5;total=total+Charge;write(Charge)
+
+Label:
+	name=T21
+	event=Carwash(carwash,amount)
+	cond=((carwash == True) && (Medium==True)&& (amount>40)&& (amount<=60))
+	action=Charge=amount*Mprice+4.75;total=total+Charge;write(Charge)
+
+Label:
+	name=T22
+	event=Carwash(carwash,amount)
+	cond=((carwash == True)&&(Super=True)&& (amount>60)&& (amount<=100))
+	action=Charge= amount*Sprice+5;total=total+Charge;write(Charge)
+
+Label:
+	name=T23
+	event=Carwash(carwash,amount)
+	cond=((carwash == True)&&(Super==True)&& (amount>100))
+	action=Charge=amount*Sprice+5;total=total+Charge;write(Charge)
+
+Label:
+	name=T24
+	event=Receipt()
+	cond=
+	action=write(Charge);write("Thank You for Shoping");write(" Come back again")
+
+Label:
+	name=T25
+	event=Exit()
+	cond=
+	action=write("Thank You for Shoping")
+
+
+Transition:
+	name=TS1
+	srt=START
+	tgt=S1
+	label=T1
+
+Transition:
+	name=TS2
+	srt=S1
+	tgt=S2
+	label=T2
+
+Transition:
+	name=TS3
+	srt=S1
+	tgt=S3
+	label=T3
+
+Transition:
+	name=TS4
+	srt=S3
+	tgt=S1
+	label=T4
+
+Transition:
+	name=TS5
+	srt=S2
+	tgt=S4
+	label=T5
+
+Transition:
+	name=TS6
+	srt=S3
+	tgt=S4
+	label=T6
+
+Transition:
+	name=TS7
+	srt=S4
+	tgt=S5
+	label=T7
+
+Transition:
+	name=TS8
+	srt=S4
+	tgt=S5
+	label=T8
+
+Transition:
+	name=TS9
+	srt=S4
+	tgt=S5
+	label=T9
+
+Transition:
+	name=TS10
+	srt=S5
+	tgt=S6
+	label=T10
+
+Transition:
+	name=TS11
+	srt=S6
+	tgt=S7
+	label=T11
+
+Transition:
+	name=TS12
+	srt=S7
+	tgt=S7
+	label=T12
+
+Transition:
+	name=TS13
+	srt=S7
+	tgt=S8
+	label=T13
+
+Transition:
+	name=TS14
+	srt=S8
+	tgt=S7
+	label=T14
+
+Transition:
+	name=TS15
+	srt=S8
+	tgt=S8
+	label=T15
+
+Transition:
+	name=TS16
+	srt=S8
+	tgt=S9
+	label=T16
+
+Transition:
+	name=TS17
+	srt=S9
+	tgt=S10
+	label=T17
+
+Transition:
+	name=TS18
+	srt=S9
+	tgt=S10
+	label=T18
+
+Transition:
+	name=TS19
+	srt=S9
+	tgt=S10
+	label=T19
+
+Transition:
+	name=TS20
+	srt=S9
+	tgt=S10
+	label=T20
+
+Transition:
+	name=TS21
+	srt=S9
+	tgt=S10
+	label=T21
+
+Transition:
+	name=TS22
+	srt=S9
+	tgt=S10
+	label=T22
+
+Transition:
+	name=TS23
+	srt=S9
+	tgt=S10
+	label=T23
+
+Transition:
+	name=TS24
+	srt=S10
+	tgt=S11
+	label=T24
+
+Transition:
+	name=TS25
+	srt=S11
+	tgt=EXIT
+	label=T25

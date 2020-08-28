@@ -1,0 +1,75 @@
+State:
+	name=S1
+
+State:
+	name=S2
+
+State:
+	name=S3
+
+State:
+	name=S4
+
+State:
+	name=S5
+
+Label:
+	name=T1
+	event=Card(pin, sb, cb)
+	cond=
+	action=write ("Enter PIN")"; attempts = 0;
+
+Label:
+	name=T2
+	event=PIN(p)
+	cond=(p != pin) and (attempts < 3)
+	action=write("Wrong Pin, ReEnter"); attempts = attempts+1; Prompt for PIN;
+
+Label:
+	name=T3
+	event=PIN(p)
+	cond=(p != pin) and (attempts == 3)
+	action=write("Wrong Pin, Ejecting Card");
+
+Label:
+	name=T4
+	event=PIN(p)
+	cond=(p == pin)
+	action=write("Select a Language English/Spanish")
+
+Label:
+	name=T5
+	event=English
+	cond=
+	action=l='e'; write(" Savings / Checking");
+
+
+Transition:
+	name=TS1
+	srt=S1
+	tgt=S5
+	label=T1
+
+Transition:
+	name=TS2
+	srt=S1
+	tgt=S2
+	label=T2
+
+Transition:
+	name=TS3
+	srt=S2
+	tgt=S3
+	label=T3
+
+Transition:
+	name=TS4
+	srt=S3
+	tgt=S4
+	label=T4
+
+Transition:
+	name=TS5
+	srt=S4
+	tgt=S2
+	label=T5

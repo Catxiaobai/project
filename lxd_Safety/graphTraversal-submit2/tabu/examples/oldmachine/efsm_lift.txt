@@ -1,0 +1,162 @@
+State:
+	name=START
+
+State:
+	name=wait
+
+State:
+	name=closeDoor
+
+State:
+	name=doorIsClosed
+
+State:
+	name=openDoor
+
+State:
+	name=doorIsOpen
+
+Label:
+	name=T1
+	event=
+	cond=
+	action=timer=5;
+
+Label:
+	name=T2
+	event=
+	cond=(timer >0)
+	action=timer=timer-1;
+
+Label:
+	name=T3
+	event=
+	cond=(timer==0)
+	action=
+
+Label:
+	name=T4
+	event=
+	cond=
+	action=
+
+Label:
+	name=T5
+	event=
+	cond=
+	action=timer=3
+	
+Label:
+	name=T6
+	event=
+	cond=
+	action=
+
+Label:
+	name=T7
+	event=
+	cond=
+	action=
+
+Label:
+	name=T8
+	event=
+	cond=
+	action=timer=10;
+
+Label:
+	name=T9
+	event=
+	cond=
+	action=
+
+Label:
+	name=T10
+	event=
+	cond=
+	action=
+
+Label:
+	name=T11
+	event=
+	cond=(timer>0)
+	action=timer=timer-1;
+
+Label:
+	name=T12
+	event=
+	cond=
+	action=
+
+
+Transition:
+	name=TS1
+	srt=START
+	tgt=wait
+	label=T1
+
+Transition:
+	name=TS2
+	srt=wait
+	tgt=wait
+	label=T2
+
+Transition:
+	name=TS3
+	srt=wait
+	tgt=closeDoor
+	label=T3
+
+Transition:
+	name=TS4
+	srt=closeDoor
+	tgt=closeDoor
+	label=T4
+
+Transition:
+	name=TS5
+	srt=closeDoor
+	tgt=openDoor
+	label=T5
+
+Transition:
+	name=TS6
+	srt=closeDoor
+	tgt=doorIsClosed
+	label=T6
+
+Transition:
+	name=TS7
+	srt=doorIsClosed
+	tgt=doorIsClosed
+	label=T7
+
+Transition:
+	name=TS8
+	srt=doorIsClosed
+	tgt=openDoor
+	label=T8
+
+Transition:
+	name=TS9
+	srt=openDoor
+	tgt=openDoor
+	label=T9
+
+Transition:
+	name=TS10
+	srt=openDoor
+	tgt=doorIsOpen
+	label=T10
+
+Transition:
+	name=TS11
+	srt=doorIsOpen
+	tgt=doorIsOpen
+	label=T11
+
+Transition:
+	name=TS12
+	srt=doorIsOpen
+	tgt=closeDoor
+	label=T12

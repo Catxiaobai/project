@@ -1,0 +1,7 @@
+Transition:
+name=T27
+src=S3
+tgt=Exit
+event=Enter_amount(w)
+cond=!(w>B)
+action=Write("Out balance")

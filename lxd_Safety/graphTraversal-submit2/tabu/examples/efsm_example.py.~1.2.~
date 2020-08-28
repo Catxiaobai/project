@@ -1,0 +1,104 @@
+import sys
+sys.path.append("..")
+sys.path.append("../..")
+
+import EFSM
+import lusst
+import lusst.SM as LSM
+import lusst.Skip as SKIP
+
+#sys.setrecursionlimit(5000)
+
+def example():
+    """This example show how to create a marked Laurie state machine"""
+
+    inputfile="fairnessEG.txt"
+#    inputfile="atm.txt"
+#    inputfile="cashier.txt"
+#    inputfile="kellysample.txt"
+#    inputfile="sm3.txt"
+    SM=EFSM.efsmFromFile(inputfile)
+    EFSM.initEFSM(SM)
+
+
+#generate the dependence graph
+    SMDG=SM.makeDependenceGraph()
+    SMDG.view()    # view the dependence graph
+
+
+
+####################################
+#define a slicing criterion here
+
+    criterion=SM.transition('TS2')
+
+####################################
+
+
+
+
+#generate the dependence graph wrt the criterion
+    subDG=SMDG.subGraphwrtNode(criterion)
+    subDG.view() # view the subdependence graph
+
+#create Laurie SM, with marked transitions
+    states=[]
+    for s in SM.stateList:
+        if s.name=='START':
+            states.append(LSM.State(s.name, True))
+        else:
+            states.append(LSM.State(s.name))
+
+    transitions=[]
+    for tran in SM.transitionList:
+        srcState=[state for state in states if state.name == tran.src.name].pop()
+        tgtState=[state for state in states if state.name == tran.tgt.name].pop()
+        if tran in subDG.nodeList:
+            transitions.append(LSM.Transition(tran.label.name, \
+                                                 srcState, tgtState, True))
+        else:
+            transitions.append(LSM.Transition(tran.label.name, \
+                                                 srcState, tgtState, False))
+
+
+####################################
+
+    LaurieSM = LSM.State_Machine(states, transitions)    
+
+    print "  Before (%d states, %d transitions)" % (len(LaurieSM.states), len(LaurieSM.transitions))
+    print " ", LaurieSM.states
+    print " ", LaurieSM.transitions  
+
+    LaurieSM.visualize()
+    LaurieSM.slice()
+    LaurieSM.visualize()
+
+    print "  After (%d states, %d transitions)" % (len(LaurieSM.states), len(LaurieSM.transitions))
+    print " ", LaurieSM.states
+    print " ", LaurieSM.transitions  
+
+####################################
+# using skip algorithm
+
+#     SkipSM = SKIP.State_Machine(states, transitions) 
+
+#     print "  Before (%d states, %d transitions)" % (len(SkipSM.states), len(SkipSM.transitions))
+#     print " ", SkipSM.states
+#     print " ", SkipSM.transitions  
+
+# #     SkipSM.visualize()
+#     SkipSM.slice()
+#     SkipSM.visualize()
+
+#     print "  After (%d states, %d transitions)" % (len(SkipSM.states), len(SkipSM.transitions))
+#     print " ", SkipSM.states
+#     print " ", SkipSM.transitions 
+
+
+
+
+
+
+if __name__ == '__main__':
+    example()
+    

@@ -1,0 +1,231 @@
+T57	eventVdef:	
+T57	condVuse:	
+T57	actionVdef:	
+T57	actionVuse:	
+T1	eventVdef:	
+T1	condVuse:	ActiveOpen	False	
+T1	actionVdef:	
+T1	actionVuse:	TCB	
+T2	eventVdef:	
+T2	condVuse:	ActiveOpen	False	ForeignSocketSpecified	True	
+T2	actionVdef:	SEQ	CTL	SND_UNA	SND_NXT	
+T2	actionVuse:	TCB	ISS	ISS	SYN	ISS	ISS	
+T3	eventVdef:	
+T3	condVuse:	ForeignSocketSpecified	True	
+T3	actionVdef:	SEQ	CTL	SND_UNA	SND_NXT	
+T3	actionVuse:	TCB	ISS	ISS	SYN	ISS	ISS	
+T4	eventVdef:	
+T4	condVuse:	ForeignSocketSpecified	True	
+T4	actionVdef:	SEQ	CTL	SND_UNA	SND_NXT	
+T4	actionVuse:	TCB	ISS	ISS	SYN	ISS	ISS	
+T5	eventVdef:	
+T5	condVuse:	QueuedRECEIVE	FALSE	
+T5	actionVdef:	
+T5	actionVuse:	TCB	
+T6	eventVdef:	
+T6	condVuse:	QueuedRECEIVE	TRUE	
+T6	actionVdef:	
+T6	actionVuse:	TCB	
+T7	eventVdef:	
+T7	condVuse:	QueuedRECEIVE	FALSE	
+T7	actionVdef:	
+T7	actionVuse:	TCB	
+T8	eventVdef:	
+T8	condVuse:	QueuedRECEIVE	TRUE	
+T8	actionVdef:	
+T8	actionVuse:	TCB	
+T9	eventVdef:	
+T9	condVuse:	SEG_RST_on	FALSE	SEG_ACK_on	FALSE	SEG_SYN_on	TRUE	
+T9	actionVdef:	RCV_NXT	IRS	SEQ	ACK	CTL	SND_NXT	SND_UNA	
+T9	actionVuse:	SEG_SEQ	SEQ_SEQ	ISS	ISS	RCV_NXT	SYN_ACK	ISS	ISS	
+T10	eventVdef:	
+T10	condVuse:	
+T10	actionVdef:	
+T10	actionVuse:	TCB	
+T11	eventVdef:	
+T11	condVuse:	
+T11	actionVdef:	
+T11	actionVuse:	TCB	
+T12	eventVdef:	
+T12	condVuse:	SEG_ACK_on	FALSE	SEG_RST_on	FALSE	SEG_SYN_on	TRUE	
+T12	actionVdef:	RCV_NXT	IRS	SEQ	ACK	CTL	
+T12	actionVuse:	SEG_SEG	SEQ_SEQ	ISS	RCV_NXT	SYN_ACK	
+T13	eventVdef:	
+T13	condVuse:	SEG_ACK_on	TRUE	SEQ_ACK	ISS	or	SEQ_ACK	SND_NXT	FALSE	SEG_ACK	SND_UNA	SEG_ACK	SND_NXT	SEG_RST_on	FALSE	SND_UNA	ISS	
+T13	actionVdef:	SEQ	ACK	CTL	
+T13	actionVuse:	ISS	RCV_NXT	SYN	
+T14	eventVdef:	
+T14	condVuse:	SEG_ACK_on	TRUE	SEQ_ACK	ISS	or	SEQ_ACK	SND_NXT	FALSE	SEG_ACK	SND_UNA	SEG_ACK	SND_NXT	SEG_RST_on	FALSE	SND_UNA	ISS	
+T14	actionVdef:	SEQ	ACK	CTL	
+T14	actionVuse:	SND_NXT	RCV_NXT	ACK	
+T15	eventVdef:	
+T15	condVuse:	SEG_ACK_on	TRUE	SEQ_ACK	ISS	or	SEQ_ACK	SND_NXT	FALSE	SEG_ACK	SND_UNA	SEG_ACK	SND_NXT	SEG_RST_on	TRUE	
+T15	actionVdef:	
+T15	actionVuse:	TCB	
+T16	eventVdef:	
+T16	condVuse:	newSENDs	FALSE	or	QueuedSENDs	FALSE	
+T16	actionVdef:	SEQ	CTL	
+T16	actionVuse:	SND_NXT	FIN	
+T17	eventVdef:	
+T17	condVuse:	
+T17	actionVdef:	
+T17	actionVuse:	TCB	
+T18	eventVdef:	
+T18	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TURE	SEG_RST_on	FLASE	SEG_SYN_on	TRUE	
+T18	actionVdef:	SEQ	CTL	
+T18	actionVuse:	SND_NXT	RST	TCB	
+T19	eventVdef:	
+T19	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TURE	SEG_RST_on	FALSE	SEG_SYN_on	FALSE	SEG_ACK_on	TRUE	SND_UNA	SEG_ACK	or	SEG_ACK	SND_NXT	SEG_FIN_on	FALSE	
+T19	actionVdef:	SEQ	CTL	
+T19	actionVuse:	SND_NXT	RST	TCB	
+T20	eventVdef:	
+T20	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TURE	SEG_RST_on	FALSE	SEG_SYN_on	FALSE	SEG_ACK_on	TRUE	SND_UNA	SEG_ACK	SEG_ACK	SND_NXT	
+T20	actionVdef:	
+T20	actionVuse:	
+T21	eventVdef:	
+T21	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TURE	SEG_RST_on	FALSE	SEG_SYN_on	FALSE	SEG_ACK_on	TRUE	SND_UNA	SEG_ACK	or	SEG_ACK	SND_NXT	SEG_FIN_on	TRUE	
+T21	actionVdef:	
+T21	actionVuse:	SND_NXT	RCV_NXT	SEG_SEQ	
+T22	eventVdef:	
+T22	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TURE	SEG_RST_on	TRUE	PRIVIOUSSTATE	LISTEN	
+T22	actionVdef:	RexmtQueue	
+T22	actionVuse:	NULL	TCB	
+T23	eventVdef:	
+T23	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TURE	SEG_RST_on	TRUE	PRIVIOUSSTATE	LISTEN	
+T23	actionVdef:	RexmtQueue	
+T23	actionVuse:	NULL	
+T24	eventVdef:	
+T24	condVuse:	
+T24	actionVdef:	SEQ	CTL	
+T24	actionVuse:	SND_NXT	FIN	
+T25	eventVdef:	
+T25	condVuse:	
+T25	actionVdef:	SEQ	CTL	
+T25	actionVuse:	SND_NXT	RST	TCB	
+T26	eventVdef:	
+T26	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TURE	SEG_RST_on	FALSE	SEG_SYN_on	TRUE	
+T26	actionVdef:	SEQ	CTL	
+T26	actionVuse:	SND_NXT	RST	TCB	
+T27	eventVdef:	
+T27	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TURE	SEG_RST_on	TRUE	
+T27	actionVdef:	
+T27	actionVuse:	TCB	
+T28	eventVdef:	
+T28	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TURE	SEG_RST_on	FALSE	SEG_SYN_on	FALSE	SEG_ACK_on	TRUE	SND_UNA	SEG_ACK	SEG_ACK	SND_NXT	SEG_FIN_on	TRUE	
+T28	actionVdef:	
+T28	actionVuse:	SND_NXT	RCV_NXT	SEG_SEQ	
+T29	eventVdef:	
+T29	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TURE	SEG_RST_on	FALSE	SEG_SYN_on	FALSE	SEG_ACK_on	TRUE	SND_UNA	SEG_ACK	or	SEG_ACK	SND_NX	T	SEG_ACK	SND_UNA	dACK	SEG_FIN_on	TRUE	
+T29	actionVdef:	
+T29	actionVuse:	SND_NXT	RCV_NXT	SEG_SEQ	
+T30	eventVdef:	
+T30	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TURE	SEG_RST_on	FALSE	SEG_SYN_on	FALSE	SEG_ACK_on	TRUE	SND_UNA	SEG_ACK	or	SEG_ACK	SND_NX	T	SEG_ACK	SND_UNA	dACK	SEG_FIN_on	TRUE	
+T30	actionVdef:	
+T30	actionVuse:	SND_NXT	RCV_NXT	SEG_SEQ	
+T31	eventVdef:	
+T31	condVuse:	
+T31	actionVdef:	SEQ	CTL	
+T31	actionVuse:	SND_NXT	RST	TCB	
+T32	eventVdef:	
+T32	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	TRUE	
+T32	actionVdef:	
+T32	actionVuse:	TCB	
+T33	eventVdef:	
+T33	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	FALSE	SEG_SYN_on	TRUE	
+T33	actionVdef:	SEQ	CTL	
+T33	actionVuse:	SND_NXT	RST	TCB	
+T34	eventVdef:	
+T34	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	FALSE	SEG_SYN_on	FALSE	SEG_ACK_on	TRUE	SEG_ACK_FIN	FALSE	SEG_FIN_on	TRUE	
+T34	actionVdef:	
+T34	actionVuse:	SND_NXT	RCV_NXT	SEG_SEQ	
+T35	eventVdef:	
+T35	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	FALSE	SEG_SYN_on	FALSE	SEG_ACK_on	TRUE	SEG_ACK_FIN	TRUE	SEG_FIN_on	FALSE	
+T35	actionVdef:	
+T35	actionVuse:	
+T36	eventVdef:	
+T36	condVuse:	CHECK	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	FALSE	SEG_SYN_on	FALSE	SEG_ACK_on	TRUE	SEG_ACK_FIN	TRUE	SEG_FIN_on	TRUE	
+T36	actionVdef:	
+T36	actionVuse:	SND_NXT	RCV_NXT	SEG_SEQ	timers	TWtimeout	TIMEWAIT	
+T37	eventVdef:	
+T37	condVuse:	
+T37	actionVdef:	SEQ	CTL	
+T37	actionVuse:	SND_NXT	RST	TCB	
+T38	eventVdef:	
+T38	condVuse:	CHECKSEGMENTSEQ	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	TRUE	
+T38	actionVdef:	
+T38	actionVuse:	TCB	
+T39	eventVdef:	
+T39	condVuse:	CHECKSEGMENTSEQ	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	FALSE	SEG_SYN_on	TRUE	
+T39	actionVdef:	SEQ	CTL	
+T39	actionVuse:	SND_NXT	RST	TCB	
+T40	eventVdef:	
+T40	condVuse:	CHECKSEGMENTSEQ	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	FALSE	SEG_SYN_on	FALSE	SEG_ACK_on	TRUE	SEG_FIN_on	TRUE	
+T40	actionVdef:	
+T40	actionVuse:	SND_NXT	RCV_NXT	SEG_SEQ	timers	MSL	TIMEWAIT	
+T41	eventVdef:	
+T41	condVuse:	
+T41	actionVdef:	
+T41	actionVuse:	OK	TCB	
+T42	eventVdef:	
+T42	condVuse:	CHECKSEGMENTSEQ	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	TRUE	
+T42	actionVdef:	
+T42	actionVuse:	TCB	
+T43	eventVdef:	
+T43	condVuse:	CHECKSEGMENTSEQ	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	FALSE	SEG_SYN_on	TRUE	
+T43	actionVdef:	
+T43	actionVuse:	TCB	
+T44	eventVdef:	
+T44	condVuse:	CHECKSEGMENTSEQ	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	FALSE	SEG_SYN_on	FALSE	SEG_ACK_on	TRUE	SND_UNA	SEG_ACK	SND_ACK	SND_NXT	ACKED	FINE	
+T44	actionVdef:	
+T44	actionVuse:	timers	MSL	TIMEWAIT	
+T45	eventVdef:	
+T45	condVuse:	
+T45	actionVdef:	
+T45	actionVuse:	OK	TCB	
+T46	eventVdef:	
+T46	condVuse:	CHECKSEGMENTSEQ	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	TRUE	
+T46	actionVdef:	
+T46	actionVuse:	TCB	
+T47	eventVdef:	
+T47	condVuse:	CHECKSEGMENTSEQ	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	FALSE	SEG_SYN_on	TRUE	
+T47	actionVdef:	SEQ	CTL	
+T47	actionVuse:	SND_NXT	RST	TCB	
+T48	eventVdef:	TIMEWAITTIEMOUT	
+T48	condVuse:	
+T48	actionVdef:	
+T48	actionVuse:	TCB	
+T49	eventVdef:	
+T49	condVuse:	
+T49	actionVdef:	SEQ	CTL	
+T49	actionVuse:	SND_NXT	FIN	
+T50	eventVdef:	
+T50	condVuse:	
+T50	actionVdef:	SEQ	CTL	
+T50	actionVuse:	SND_NXT	RST	TCB	
+T51	eventVdef:	
+T51	condVuse:	CHECKSEGMENTSEQ	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	FALSE	SEG_SYN_on	TRUE	
+T51	actionVdef:	SEQ	CTL	
+T51	actionVuse:	SND_NXT	RST	TCB	
+T52	eventVdef:	
+T52	condVuse:	CHECKSEGMENTSEQ	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	TRUE	
+T52	actionVdef:	
+T52	actionVuse:	TCB	
+T53	eventVdef:	
+T53	condVuse:	
+T53	actionVdef:	
+T53	actionVuse:	OK	TCB	
+T54	eventVdef:	
+T54	condVuse:	CHECKSEGMENTSEQ	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	TRUE	
+T54	actionVdef:	
+T54	actionVuse:	TCB	
+T55	eventVdef:	
+T55	condVuse:	CHECKSEGMENTSEQ	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	FALSE	SEG_SYN_on	TRUE	
+T55	actionVdef:	SEQ	CTL	
+T55	actionVuse:	SND_NXT	RST	TCB	
+T56	eventVdef:	
+T56	condVuse:	CHECKSEGMENTSEQ	SEG_SEQ	SEG_LEN	RCV_NXT	RCV_WND	TRUE	SEG_RST_on	FALSE	SEG_SYN_on	FALSE	SEG_ACK_on	TRUE	SND_UNA	SEG_ACK	SND_ACK	SND_NXT	ACKED	FINE	
+T56	actionVdef:	
+T56	actionVuse:	TCB	
+
+total variables55
+SND_UNA, dACK, SEG_SEQ, FLASE, ISS, RCV_NXT, FIN, ForeignSocketSpecified, SEG_SEG, MSL, SEG_LEN, CTL, SEG_ACK_on, NULL, TRUE, SEG_ACK, SEG_ACK_FIN, SEQ, SEQ_ACK, ACKED, SND_NX, ACK, SEG_SYN_on, TURE, newSENDs, TCB, CHECK, OK, FINE, QueuedSENDs, TIMEWAIT, CHECKSEGMENTSEQ, IRS, TWtimeout, SEG_RST_on, T, SND_ACK, FALSE, ActiveOpen, RCV_WND, QueuedRECEIVE, False, SEG_FIN_on, SYN_ACK, True, TIMEWAITTIEMOUT, SYN, SND_NXT, SEQ_SEQ, PRIVIOUSSTATE, timers, RexmtQueue, RST, or, LISTEN, 

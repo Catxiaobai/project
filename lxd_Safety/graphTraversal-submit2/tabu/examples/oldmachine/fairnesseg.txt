@@ -1,0 +1,159 @@
+State:
+	name=START
+
+State:
+	name=Z
+
+State:
+	name=P
+
+State:
+	name=Y
+
+State:
+	name=X
+
+State:
+	name=A
+
+State:
+	name=B
+
+State:
+	name=C
+
+State:
+	name=D
+
+Label:
+	name=T0
+	event=
+	cond=
+	action=
+
+Label:
+	name=T1
+	event=
+	cond=
+	action=
+
+Label:
+	name=T2
+	event=
+	cond=
+	action=
+	
+Label:
+	name=T3
+	event=
+	cond=
+	action=
+	
+Label:
+	name=T4
+	event=
+	cond=
+	action=
+
+Label:
+	name=T5
+	event=
+	cond=
+	action=
+
+Label:
+	name=T6
+	event=
+	cond=
+	action=
+
+Label:
+	name=T7
+	event=
+	cond=
+	action=
+
+Label:
+	name=T8
+	event=
+	cond=
+	action=
+
+Label:
+	name=T9
+	event=
+	cond=
+	action=
+	
+Label:
+	name=T10
+	event=
+	cond=
+	action=
+
+
+Transition:
+	name=TS0
+	srt=START
+	tgt=Z
+	label=T0
+	
+Transition:
+	name=TS1
+	srt=A
+	tgt=B
+	label=T1
+
+Transition:
+	name=TS2
+	srt=B
+	tgt=C
+	label=T2
+
+Transition:
+	name=TS3
+	srt=A
+	tgt=C
+	label=T3
+
+Transition:
+	name=TS4
+	srt=C
+	tgt=D
+	label=T4
+
+Transition:
+	name=TS5
+	srt=D
+	tgt=A
+	label=T5
+
+Transition:
+	name=TS6
+	srt=Z
+	tgt=P
+	label=T6
+
+Transition:
+	name=TS7
+	srt=Z
+	tgt=Y
+	label=T7
+
+Transition:
+	name=TS8
+	srt=Y
+	tgt=X
+	label=T8
+
+Transition:
+	name=TS9
+	srt=X
+	tgt=A
+	label=T9
+
+Transition:
+	name=TS10
+	srt=X
+	tgt=Y
+	label=T10

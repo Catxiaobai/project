@@ -1,0 +1,95 @@
+T1	eventVdef:	pin	sb	cb	
+T1	condVuse:	
+T1	actionVdef:	attempts	
+T1	actionVuse:	
+T2	eventVdef:	p	
+T2	condVuse:	p	pin	attempts	
+T2	actionVdef:	attempts	
+T2	actionVuse:	attempts	
+T3	eventVdef:	p	
+T3	condVuse:	p	pin	attempts	
+T3	actionVdef:	
+T3	actionVuse:	
+T4	eventVdef:	p	
+T4	condVuse:	p	pin	
+T4	actionVdef:	
+T4	actionVuse:	
+T5	eventVdef:	
+T5	condVuse:	
+T5	actionVdef:	l	
+T5	actionVuse:	
+T6	eventVdef:	
+T6	condVuse:	
+T6	actionVdef:	l	
+T6	actionVuse:	
+T7	eventVdef:	
+T7	condVuse:	
+T7	actionVdef:	
+T7	actionVuse:	
+T8	eventVdef:	
+T8	condVuse:	
+T8	actionVdef:	
+T8	actionVuse:	
+T9	eventVdef:	
+T9	condVuse:	
+T9	actionVdef:	
+T9	actionVuse:	
+T10	eventVdef:	
+T10	condVuse:	
+T10	actionVdef:	
+T10	actionVuse:	
+T11	eventVdef:	
+T11	condVuse:	l	
+T11	actionVdef:	
+T11	actionVuse:	cb	
+T12	eventVdef:	
+T12	condVuse:	l	
+T12	actionVdef:	
+T12	actionVuse:	cb	
+T13	eventVdef:	d	
+T13	condVuse:	
+T13	actionVdef:	cb	
+T13	actionVuse:	cb	d	
+T14	eventVdef:	w	
+T14	condVuse:	
+T14	actionVdef:	cb	
+T14	actionVuse:	cb	w	
+T15	eventVdef:	
+T15	condVuse:	l	
+T15	actionVdef:	
+T15	actionVuse:	cb	
+T16	eventVdef:	
+T16	condVuse:	l	
+T16	actionVdef:	
+T16	actionVuse:	cb	
+T17	eventVdef:	w	
+T17	condVuse:	
+T17	actionVdef:	sb	
+T17	actionVuse:	sb	w	
+T18	eventVdef:	d	
+T18	condVuse:	
+T18	actionVdef:	sb	
+T18	actionVuse:	sb	d	
+T19	eventVdef:	
+T19	condVuse:	l	
+T19	actionVdef:	
+T19	actionVuse:	sb	
+T20	eventVdef:	
+T20	condVuse:	l	
+T20	actionVdef:	
+T20	actionVuse:	cb	
+T21	eventVdef:	
+T21	condVuse:	l	
+T21	actionVdef:	
+T21	actionVuse:	sb	
+T22	eventVdef:	
+T22	condVuse:	l	
+T22	actionVdef:	
+T22	actionVuse:	sb	
+T23	eventVdef:	
+T23	condVuse:	
+T23	actionVdef:	
+T23	actionVuse:	
+
+total variables8
+d, pin, cb, l, p, attempts, w, sb, 

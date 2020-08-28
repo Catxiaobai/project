@@ -76,10 +76,3 @@ T75 S121 S122 event=Withdrawal() condition=null action=Write("Enter amount")
 T76 S122 S123 event=Enter_amount(w) condition=w>B action=Write("Out balance") 
 T77 S123 S124 event=Return() condition=null action=Write("Select Withdrawal/GetBalance/Cancel") 
 T78 S124 S125 event=Cancel() condition=null action=Write("Canceling")return_card 
-T79 S126 S127 event=Card(pin,B) condition=null action=Write("Enter Pin"),attempts=0 
-T80 S127 S128 event=Enter_pin(p) condition=p!=pin,attempts=0 action=Write("Wrong Pin,ReEnter"),attempts=attempts+1 
-T81 S128 S129 event=Enter_pin(p) condition=p=pin,attempts=1 action=Write("Select Withdrawal/GetBalance/Cancel"),attempts=attempts+1 
-T82 S129 S130 event=Withdrawal() condition=null action=Write("Enter amount") 
-T83 S130 S131 event=Enter_amount(w) condition=w>B action=Write("Out balance") 
-T84 S131 S132 event=Return() condition=null action=Write("Select Withdrawal/GetBalance/Cancel") 
-T85 S132 S133 event=Cancel() condition=null action=Write("Canceling"),return_card 

@@ -1,0 +1,222 @@
+State:
+	name=START
+
+State:
+	name=S1
+
+State:
+	name=S2
+
+State:
+	name=S3
+
+State:
+	name=EXIT
+
+
+Label:
+	name=T1
+	event=EngineOn()
+	cond=
+	action=MinSpeed=40;MaxSpeed=65;CruiseSpeed=0;DeactivatingSpeed = 35;Off =0;Suspended = 0;False =0;True=1;Activated=1;StepSpeed =1;CCS=0
+
+Label:
+	name=T2
+	event=Set(CurrentSpeed, BrakeR, AccelR)
+	cond=((CurrentSpeed >=MinSpeed) && (CurrentSpeed <=MaxSpeed) && (BrakeR==True) && (AccelR==True))
+	action=CruiseSpeed=CurrentSpeed;CCS=Activated;write("CruiseSpeed = ",CruiseSpeed )
+
+Label:
+	name=T3
+	event=SensorSpeed(CurrentSpeed)
+	cond=(CurrentSpeed==CruiseSpeed)
+	action=write("CurrentSpeed = ",CurrentSpeed )
+
+Label:
+	name=T4
+	event=SensorSpeed(CurrentSpeed)
+	cond=(CurrentSpeed > CruiseSpeed)
+	action=decr=CurrentSpeed - CruiseSpeed;write("Your Speed is over cruising speed, Decreasing Speed");CurrentSpeed = CurrentSpeed - decr;write("CurrentSpeed = ",CurrentSpeed )
+
+Label:
+	name=T5
+	event=SensorSpeed(CurrentSpeed)
+	cond=((CurrentSpeed < CruiseSpeed) && (CurrentSpeed >=DeactivatingSpeed))
+	action=inc=CruiseSpeed - CurrentSpeed;write("Your Speed is lower than cruising speed, Increasing Speed to crusie speed");CurrentSpeed = CurrentSpeed  - CruiseSpeed;write("CurrentSpeed = ",CurrentSpeed )
+
+Label:
+	name=T6
+	event=Accel(CurrentSpeed)
+	cond=(CurrentSpeed < MaxSpeed)
+	action=write("Your Speed is lower than Max speed, Increasing Speed by 1 mile each Accel");CruiseSpeed = CruiseSpeed + 1
+
+Label:
+	name=T7
+	event=Coast(CurrentSpeed)
+	cond=(CurrentSpeed >=MinSpeed)
+	action=write("Your Speed is greater than than Min Speed limit, decreasing Speed");CruiseSpeed = CruiseSpeed - StepSpeed ;write("CruiseSpeed = ",CruiseSpeed )
+
+Label:
+	name=T8
+	event=SensorSpeed(CurrentSpeed)
+	cond=(CurrentSpeed < DeactivatingSpeed)
+	action=CCS=Suspended;write ("Current Speed less than 35 mile, Cruise Control Speed: CCS Suspended");write("CurrentSpeed = ",CurrentSpeed );CurrentSpeed = CruiseSpeed - CurrentSpeed
+
+Label:
+	name=T9
+	event=Brake(BrakeR)
+	cond=
+	action=CCS=Suspended;CurrentSpeed = CruiseSpeed - CurrentSpeed
+
+Label:
+	name=T10
+	event=Accelerator(AccelR)
+	cond=
+	action=CCS=Suspended;CurrentSpeed = CruiseSpeed - CurrentSpeed
+
+
+Label:
+	name=T11
+	event=Resume(CurrentSpeed, BrakeR, AccelR)
+	cond=((CurrentSpeed > MinSpeed) && (CurrentSpeed <= MaxSpeed) && (BrakeR==True) && (AccelR==True))
+	action=CCS=Activated;write("CCS Activated");CurrentSpeed = CruiseSpeed - CurrentSpeed
+
+Label:
+	name=T12
+	event=Resume(CurrentSpeed, BrakeR, AccelR)
+	cond=(CurrentSpeed <= MinSpeed) 
+	action=CCS=Suspended;write("T12: CCS Suspended");CurrentSpeed = CruiseSpeed - CurrentSpeed
+
+Label:
+	name=T13
+	event=Resume(CurrentSpeed, BrakeR, AccelR)
+	cond=(CurrentSpeed > MaxSpeed) 
+	action=CCS=Suspended;write("T13: CCS Suspended");CurrentSpeed = CruiseSpeed - CurrentSpeed 
+
+Label:
+	name=T14
+	event=Resume(CurrentSpeed, 0, 0)
+	cond=((CurrentSpeed >= MinSpeed) && (CurrentSpeed <= MaxSpeed) && (BrakeR==False) && (AccelR==False))
+	action=CCS=Suspended;write("T14: CCS Suspended");CurrentSpeed = CruiseSpeed - CurrentSpeed
+
+
+Label:
+	name=T15
+	event=Off()
+	cond=
+	action=CCS=Off
+
+Label:
+	name=T16
+	event=Off()
+	cond=
+	action=CCS=Off
+
+Label:
+	name=T17
+	event=Off()
+	cond=
+	action=CCS=Off
+
+
+Transition:
+	name=TS1
+	srt=START
+	tgt=S1
+	label=T1
+
+Transition:
+	name=TS2
+	srt=S1
+	tgt=S2
+	label=T2
+
+Transition:
+	name=TS3
+	srt=S2
+	tgt=S2
+	label=T3
+
+Transition:
+	name=TS4
+	srt=S2
+	tgt=S2
+	label=T4
+
+Transition:
+	name=TS5
+	srt=S2
+	tgt=S2
+	label=T5
+
+Transition:
+	name=TS6
+	srt=S2
+	tgt=S2
+	label=T6
+
+Transition:
+	name=TS7
+	srt=S2
+	tgt=S2
+	label=T7
+
+Transition:
+	name=TS8
+	srt=S2
+	tgt=S3
+	label=T8
+
+Transition:
+	name=TS9
+	srt=S2
+	tgt=S3
+	label=T9
+
+Transition:
+	name=TS10
+	srt=S2
+	tgt=S3
+	label=T10
+
+Transition:
+	name=TS11
+	srt=S3
+	tgt=S2
+	label=T11
+
+Transition:
+	name=TS12
+	srt=S3
+	tgt=S2
+	label=T12
+
+Transition:
+	name=TS13
+	srt=S3
+	tgt=S2
+	label=T13
+
+Transition:
+	name=TS14
+	srt=S3
+	tgt=S2
+	label=T14
+
+Transition:
+	name=TS15
+	srt=S2
+	tgt=EXIT
+	label=T15
+
+Transition:
+	name=TS16
+	srt=S1
+	tgt=EXIT
+	label=T16
+
+Transition:
+	name=TS17
+	srt=S3
+	tgt=EXIT
+	label=T17

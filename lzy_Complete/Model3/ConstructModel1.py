@@ -2,18 +2,19 @@
 import copy
 import json
 import copy
+import os
 import sys
 import json
 import numpy as np
 from graphviz import Digraph
 #获取状态集跟迁移集
 sys.path.append("")
-writepath = r''
-filepath = r''
+writepath = r'E:/Code/project301/file/'
+filepath = r'E:/Code/project301/file/'
 filename1 = "Trace1.txt"
 filename2 = r'result1'
 def getTransState1():
-    lines = open(filename1, 'r', encoding="utf-8").readlines()
+    lines = open(filepath+filename1, 'r', encoding="utf-8").readlines()
     states_label = []
     source, event, condition, action, target = "", "", "", "", ""
     # 迁移列表
@@ -62,18 +63,18 @@ def getTransState1():
             source, event, condition, action, target = "", "", "", "", ""
             if Trace not in TransSet:
                 TraceSet.append(Trace)
-    output = open('TraceSet.txt', 'w+')
+    output = open(filepath+'TraceSet.txt', 'w+')
     for i in range(len(TraceSet)):
         for j in range(len(TraceSet[i])):
             output.write(str(TraceSet[i][j]))
             output.write(' ')
         output.write('\n')
     output.close()
-    with open('StateSet.txt', 'w') as f:
+    with open(filepath+'StateSet.txt', 'w') as f:
         json_str = json.dumps(StateSet, ensure_ascii=False, indent=0)
         f.write(json_str)
         f.write('\n')
-    output = open('TransSet.txt', 'w+')
+    output = open(filepath+'TransSet.txt', 'w+')
     for i in range(len(TransSet)):
         for j in range(len(TransSet[i])):
             output.write(str(TransSet[i][j]))
@@ -95,7 +96,7 @@ def ConstructModel1():
         s = "S" + str(i)
         State3[value] = s
         i += 1
-    with open('S1.txt', 'w') as f:
+    with open(filepath+'S1.txt', 'w') as f:
         json_str = json.dumps(State3, ensure_ascii=False, indent=0)
         f.write(json_str)
         f.write('\n')
@@ -103,7 +104,7 @@ def ConstructModel1():
     State4 = {}
     for key, value in State3.items():
         State4[value] = key
-    with open('S2.txt', 'w') as f:
+    with open(filepath+'S2.txt', 'w') as f:
         json_str = json.dumps(State4, ensure_ascii=False, indent=0)
         f.write(json_str)
         f.write('\n')
@@ -269,14 +270,14 @@ def ConstructModel1():
            # print(mergeSame)
            T1.append(mergeSame)
            k += 1
-    output = open('T8.txt', 'w+')
+    output = open(filepath+'T8.txt', 'w+')
     for i in range(len(T1)):
         for j in range(len(T1[i])):
             output.write(str(T1[i][j]))
             output.write(' ')
         output.write('\n')
     output.close()
-    # 画图
+    # # 画图
     # with open(r"" + writepath + filename2 + '.dot', 'w+') as fout:
     #     fout.writelines("digraph g {\n")
     #     st = list()
@@ -300,26 +301,28 @@ def ConstructModel1():
     #             print(src + "->" + State4[src])
     #     fout.writelines("}\n")
     # os.popen("dot -Tpng {}.dot -o {}.png".format(filename2, filename2))
-    f = Digraph('digraph g', filename="efsm1.gv")
-    s=""
-    for i in range(0, len(T1)):
-        src = T1[i][1]
-        if src== "S0":
-            s=src
-    f.attr('node', shape='doublecircle')
-    f.node(s)
-    f.attr('node', shape='circle')
-    st=list()
-    for i in range(0, len(T1)):
-        name = T1[i][0]
-        src = T1[i][1]
-        tgt = T1[i][2]
-        event = T1[i][3]
-        cond = T1[i][4]
-        action = T1[i][5]
-        if src not in st:
-            st.append(src)
-            print(src + "->" + State4[src])
-        f.edge(src, tgt, label=event + '\n' + cond + '\n' + action)
-    f.view()
+    # f = Digraph('digraph g', filename="efsm1.gv")
+    # s=""
+    # for i in range(0, len(T1)):
+    #     src = T1[i][1]
+    #     if src== "S0":
+    #         s=src
+    # f.attr('node', shape='doublecircle')
+    # f.node(s)
+    # f.attr('node', shape='circle')
+    # st=list()
+    # for i in range(0, len(T1)):
+    #     name = T1[i][0]
+    #     src = T1[i][1]
+    #     tgt = T1[i][2]
+    #     event = T1[i][3]
+    #     cond = T1[i][4]
+    #     action = T1[i][5]
+    #     if src not in st:
+    #         st.append(src)
+    #         print(src + "->" + State4[src])
+    #     f.edge(src, tgt, label=event + '\n' + cond + '\n' + action)
+    # f.view()
     return TraceSet,StateSet,TransSet,State4,T1
+if __name__ == '__main__':
+    ConstructModel1()

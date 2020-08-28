@@ -1,0 +1,525 @@
+State:
+	name=START
+
+State:
+	name=S1
+
+State:
+	name=S2
+
+State:
+	name=S3
+
+State:
+	name=S4
+
+State:
+	name=S5
+
+State:
+	name=S6
+
+State:
+	name=S7
+
+State:
+	name=S8
+
+State:
+	name=S9
+
+State:
+	name=S10
+
+State:
+	name=S11
+
+State:
+	name=S12
+
+State:
+	name=S13
+
+State:
+	name=S14
+
+State:
+	name=S15
+
+State:
+	name=S16
+
+State:
+	name=S17
+
+State:
+	name=S18
+
+State:
+	name=S19
+
+State:
+	name=S20
+
+State:
+	name=EXIT
+
+
+Label:
+	name=T1
+	event=On()
+	cond=
+	action=
+
+Label:
+	name=T2
+	event=Input_Digit(d)
+	cond=
+	action=no=no+d
+
+Label:
+	name=T3
+	event=Receive_Call(no)
+	cond=
+	action=
+
+Label:
+	name=T4
+	event=Accept_Call()
+	cond=
+	action=time=0
+
+Label:
+	name=T5
+	event=Talk()
+	cond=
+	action=time=time+1
+Label:
+	name=T6
+	event=Hang_Up()
+	cond=
+	action=Call_Hist_Add(no, time)
+Label:
+	name=T7
+	event=Return_to_Home_Screen()
+	cond=
+	action=
+Label:
+	name=T8
+	event=Call_No(no)
+	cond=
+	action=time=0
+Label:
+	name=T9
+	event=Hang_Up()
+	cond=
+	action=
+Label:
+	name=T10
+	event=Send_Text()
+	cond=no!=NULL
+	action=Prompt_Input();receipeints=no
+
+Label:
+	name=T11
+	event=Input_Char(c)
+	cond=
+	action=message=message+c
+Label:
+	name=T12
+	event=Add_More_Receipients()
+	cond=
+	action=
+Label:
+	name=T13
+	event=Add_Receipient(r)
+	cond=
+	action=receipeints=receipeints+r
+Label:
+	name=T14
+	event=Send()
+	cond=no!=NULL
+	action=Send_SM()
+Label:
+	name=T15
+	event=Send()
+	cond=no!=NULL
+	action=Send_SM()
+Label:
+	name=T16
+	event=Add_to_Send(msg)
+	cond=
+	action=Send_Add(msg)
+Label:
+	name=T17
+	event=Done()
+	cond=
+	action=
+Label:
+	name=T18
+	event=Main_Menu()
+	cond=
+	action=Display_Options()
+Label:
+	name=T19
+	event=Send_Text()
+	cond=
+	action=
+
+Label:
+	name=T20
+	event=Add_Contact()
+	cond=
+	action=Prompt_Input_No()
+Label:
+	name=T21
+	event=Prompt_Name()
+	cond=
+	action=name=""
+Label:
+	name=T22
+	event=Save_Name()
+	cond=
+	action=Prompt_Address();Display_Done()
+Label:
+	name=T23
+	event=Save_Add()
+	cond=
+	action=Prompt_Email();Display_Done()
+Label:
+	name=T24
+	event=Save_Email()
+	cond=
+	action=Display_Done()
+Label:
+	name=T25
+	event=Done()
+	cond=
+	action=
+Label:
+	name=T26
+	event=Done()
+	cond=
+	action=
+Label:
+	name=T27
+	event=Done()
+	cond=
+	action=
+Label:
+	name=T28
+	event=Add_to_Contacts()
+	cond=
+	action=
+Label:
+	name=T29
+	event=Input_No()
+	cond=
+	action=
+Label:
+	name=T30
+	event=Input_Char()
+	cond=
+	action=
+Label:
+	name=T31
+	event=Input_Char()
+	cond=
+	action=
+Label:
+	name=T32
+	event=SMS_Inbox()
+	cond=
+	action=
+Label:
+	name=T33
+	event=Choose_Message(id)
+	cond=
+	action=
+Label:
+	name=T34
+	event=Display_Message(id)
+	cond=
+	action=
+Label:
+	name=T35
+	event=Done()
+	cond=
+	action=
+Label:
+	name=T36
+	event=Reveive_Message()
+	cond=
+	action=Prompt_New_Message(id)
+Label:
+	name=T37
+	event=Display_Message(id)
+	cond=
+	action=
+Label:
+	name=T38
+	event=Call_Contact()
+	cond=
+	action=List_Contact()
+Label:
+	name=T39
+	event=Choose_Contact(r)
+	cond=
+	action=no=r
+Label:
+	name=T40
+	event=Call(no)
+	cond=
+	action=
+Label:
+	name=T41
+	event=Off()
+	cond=
+	action=
+
+
+Transition:
+	name=TS1
+	srt=START
+	tgt=S1
+	label=T1
+
+Transition:
+	name=TS2
+	srt=S1
+	tgt=S1
+	label=T2
+
+Transition:
+	name=TS3
+	srt=S1
+	tgt=S6
+	label=T3
+
+Transition:
+	name=TS4
+	srt=S6
+	tgt=S7
+	label=T4
+
+Transition:
+	name=TS5
+	srt=S7
+	tgt=S7
+	label=T5
+
+Transition:
+	name=TS6
+	srt=S7
+	tgt=S8
+	label=T6
+
+Transition:
+	name=TS7
+	srt=S8
+	tgt=S1
+	label=T7
+
+Transition:
+	name=TS8
+	srt=S1
+	tgt=S7
+	label=T8
+
+Transition:
+	name=TS9
+	srt=S6
+	tgt=S1
+	label=T9
+
+Transition:
+	name=TS10
+	srt=S1
+	tgt=S2
+	label=T10
+
+Transition:
+	name=TS11
+	srt=S2
+	tgt=S2
+	label=T11
+
+Transition:
+	name=TS12
+	srt=S2
+	tgt=S3
+	label=T12
+
+Transition:
+	name=TS13
+	srt=S3
+	tgt=S3
+	label=T13
+
+Transition:
+	name=TS14
+	srt=S3
+	tgt=S4
+	label=T14
+
+Transition:
+	name=TS15
+	srt=S2
+	tgt=S4
+	label=T15
+
+Transition:
+	name=TS16
+	srt=S4
+	tgt=S5
+	label=T16
+
+Transition:
+	name=TS17
+	srt=S5
+	tgt=S1
+	label=T17
+
+Transition:
+	name=TS18
+	srt=S1
+	tgt=S9
+	label=T18
+
+Transition:
+	name=TS19
+	srt=S9
+	tgt=S2
+	label=T19
+
+Transition:
+	name=TS20
+	srt=S9
+	tgt=S10
+	label=T20
+
+Transition:
+	name=TS21
+	srt=S10
+	tgt=S11
+	label=T21
+
+Transition:
+	name=TS22
+	srt=S11
+	tgt=S12
+	label=T22
+
+Transition:
+	name=TS23
+	srt=S12
+	tgt=S13
+	label=T23
+
+Transition:
+	name=TS24
+	srt=S13
+	tgt=S14
+	label=T24
+
+Transition:
+	name=TS25
+	srt=S14
+	tgt=S1
+	label=T25
+
+Transition:
+	name=TS26
+	srt=S13
+	tgt=S1
+	label=T26
+
+Transition:
+	name=TS27
+	srt=S12
+	tgt=S1
+	label=T27
+
+Transition:
+	name=TS28
+	srt=S1
+	tgt=S11
+	label=T28
+
+Transition:
+	name=TS29
+	srt=S10
+	tgt=S10
+	label=T29
+
+Transition:
+	name=TS30
+	srt=S11
+	tgt=S11
+	label=T30
+
+Transition:
+	name=TS31
+	srt=S12
+	tgt=S12
+	label=T31
+
+Transition:
+	name=TS32
+	srt=S9
+	tgt=S17
+	label=T32
+
+Transition:
+	name=TS33
+	srt=S17
+	tgt=S20
+	label=T33
+
+Transition:
+	name=TS34
+	srt=S20
+	tgt=S19
+	label=T34
+
+Transition:
+	name=TS35
+	srt=S19
+	tgt=S1
+	label=T35
+
+Transition:
+	name=TS36
+	srt=S1
+	tgt=S18
+	label=T36
+
+Transition:
+	name=TS37
+	srt=S18
+	tgt=S19
+	label=T37
+
+Transition:
+	name=TS38
+	srt=S9
+	tgt=S15
+	label=T38
+
+Transition:
+	name=TS39
+	srt=S15
+	tgt=S16
+	label=T39
+
+Transition:
+	name=TS40
+	srt=S16
+	tgt=S7
+	label=T40
+
+Transition:
+	name=TS41
+	srt=S1
+	tgt=EXIT
+	label=T41

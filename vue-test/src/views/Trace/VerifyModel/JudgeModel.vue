@@ -13,7 +13,7 @@
     <el-dialog name="failure" title="提示" :visible.sync="showFailureDialog" width="30%">
       <span>{{ outMessage }}</span>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="gotolink">Yes! 立即添加</el-button>
+        <el-button type="primary" @click="gotolink">Yes！立即添加</el-button>
         <el-button @click="refresh">No，稍后添加</el-button>
       </span>
     </el-dialog>

@@ -1,0 +1,481 @@
+State:
+	name=START
+State:
+	name=S1
+State:
+	name=S2
+State:
+	name=S3
+State:
+	name=S4
+State:
+	name=Exit
+Transition:
+	name=T0
+	src=START
+	tgt=S1
+	event=Card(pin,B)
+	cond=
+	action=Write("Enter Pin"),attempts=0
+Transition:
+	name=T1
+	src=S1
+	tgt=START
+	event=Cancel()
+	cond=
+	action=Write("Canceling"),return_card
+Transition:
+	name=T2
+	src=START
+	tgt=S1
+	event=Card(pin,B)
+	cond=
+	action=Write("Enter Pin"),attempts=0
+Transition:
+	name=T3
+	src=S1
+	tgt=START
+	event=Enter_pin(p)
+	cond=
+	action=Write("Verify password timeout"),return_card
+Transition:
+	name=T4
+	src=START
+	tgt=S1
+	event=Card(pin,B)
+	cond=
+	action=Write("Enter Pin"),attempts=0
+Transition:
+	name=T5
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	cond=p!=pin,attempts=0
+	action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
+Transition:
+	name=T6
+	src=S1
+	tgt=START
+	event=Cancel()
+	cond=
+	action=Write("Canceling"),return_card
+Transition:
+	name=T7
+	src=START
+	tgt=S1
+	event=Card(pin,B)
+	cond=
+	action=Write("Enter Pin"),attempts=0
+Transition:
+	name=T8
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	cond=p!=pin,attempts=0
+	action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
+Transition:
+	name=T9
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	cond=p!=pin,attempts=1
+	action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
+Transition:
+	name=T10
+	src=S1
+	tgt=START
+	event=Enter_pin(p)
+	cond=p!=pin,attempts=2
+	action=
+Transition:
+	name=T11
+	src=START
+	tgt=S1
+	event=Card(pin,B)
+	cond=
+	action=Write("Enter Pin"),attempts=0
+Transition:
+	name=T12
+	src=S1
+	tgt=S2
+	event=Enter_pin(p)
+	cond=p=pin,attempts=0
+	action=Write("Select Withdrawal/GetBalance/Cancel"),attempts=attempts+1
+Transition:
+	name=T13
+	src=S2
+	tgt=S3
+	event=Withdrawal()
+	cond=
+	action=Write("Enter amount")
+Transition:
+	name=T14
+	src=S3
+	tgt=S4
+	event=Enter_amount(w)
+	cond=w<=B
+	action=Give_money,B=B-w,Write("your balance",B)
+Transition:
+	name=T15
+	src=S4
+	tgt=S2
+	event=
+	cond=
+	action=Write("Select Withdrawal/GetBalance/Cancel")
+Transition:
+	name=T16
+	src=S2
+	tgt=START
+	event=Cancel()
+	cond=
+	action=Write("Canceling"),return_card
+Transition:
+	name=T17
+	src=START
+	tgt=S1
+	event=Card(pin,B)
+	cond=
+	action=Write("Enter Pin"),attempts=0
+Transition:
+	name=T18
+	src=S1
+	tgt=S2
+	event=Enter_pin(p)
+	cond=p=pin,attempts=0
+	action=Write("Select Withdrawal/GetBalance/Cancel"),attempts=attempts+1
+Transition:
+	name=T19
+	src=S2
+	tgt=S3
+	event=Withdrawal()
+	cond=
+	action=Write("Enter amount")
+Transition:
+	name=T20
+	src=S3
+	tgt=Exit
+	event=Enter_amount(w)
+	cond=w>B
+	action=Write("Out balance")
+Transition:
+	name=T21
+	src=Exit
+	tgt=S2
+	event=
+	cond=
+	action=Write("Select Withdrawal/GetBalance/Cancel")
+Transition:
+	name=T22
+	src=S2
+	tgt=START
+	event=Cancel()
+	cond=
+	action=Write("Canceling"),return_card
+Transition:
+	name=T23
+	src=START
+	tgt=S1
+	event=Card(pin,B)
+	cond=
+	action=Write("Enter Pin"),attempts=0
+Transition:
+	name=T24
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	cond=p!=pin,attempts=0
+	action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
+Transition:
+	name=T25
+	src=S1
+	tgt=S2
+	event=Enter_pin(p)
+	cond=p=pin,attempts=1
+	action=Write("Select Withdrawal/GetBalance/Cancel"),attempts=attempts+1
+Transition:
+	name=T26
+	src=S2
+	tgt=S3
+	event=Withdrawal()
+	cond=
+	action=Write("Enter amount")
+Transition:
+	name=T27
+	src=S3
+	tgt=Exit
+	event=Enter_amount(w)
+	cond=w>B
+	action=Write("Out balance")
+Transition:
+	name=T28
+	src=Exit
+	tgt=S2
+	event=
+	cond=
+	action=Write("Select Withdrawal/GetBalance/Cancel")
+Transition:
+	name=T29
+	src=S2
+	tgt=START
+	event=Cancel()
+	cond=
+	action=Write("Canceling"),return_card
+Transition:
+	name=T30
+	src=START
+	tgt=S1
+	event=Card(pin,B)
+	cond=
+	action=Write("Enter Pin"),attempts=0
+Transition:
+	name=T31
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	cond=p!=pin,attempts=0
+	action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
+Transition:
+	name=T32
+	src=S1
+	tgt=S2
+	event=Enter_pin(p)
+	cond=p=pin,attempts=1
+	action=Write("Select Withdrawal/GetBalance/Cancel"),attempts=attempts+1
+Transition:
+	name=T33
+	src=S2
+	tgt=S3
+	event=Withdrawal()
+	cond=
+	action=Write("Enter amount")
+Transition:
+	name=T34
+	src=S3
+	tgt=S4
+	event=Enter_amount(w)
+	cond=w<=B
+	action=Give_money,B=B-w,Write("your balance",B)
+Transition:
+	name=T35
+	src=S4
+	tgt=S2
+	event=
+	cond=
+	action=Write("Select Withdrawal/GetBalance/Cancel")
+Transition:
+	name=T36
+	src=S2
+	tgt=START
+	event=Cancel()
+	cond=
+	action=Write("Canceling"),return_card
+Transition:
+	name=T37
+	src=START
+	tgt=S1
+	event=Card(pin,B)
+	cond=
+	action=Write("Enter Pin"),attempts=0
+Transition:
+	name=T38
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	cond=p!=pin,attempts=0
+	action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
+Transition:
+	name=T39
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	cond=p!=pin,attempts=1
+	action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
+Transition:
+	name=T40
+	src=S1
+	tgt=S2
+	event=Enter_pin(p)
+	cond=p=pin,attempts=2
+	action=Write("Select Withdrawal/GetBalance/Cancel"),attempts=attempts+1
+Transition:
+	name=T41
+	src=S2
+	tgt=S3
+	event=Withdrawal()
+	cond=
+	action=Write("Enter amount")
+Transition:
+	name=T42
+	src=S3
+	tgt=S4
+	event=Enter_amount(w)
+	cond=w<=B
+	action=Give_money,B=B-w,Write("your balance",B)
+Transition:
+	name=T43
+	src=S4
+	tgt=S2
+	event=
+	cond=
+	action=Write("Select Withdrawal/GetBalance/Cancel")
+Transition:
+	name=T44
+	src=S2
+	tgt=START
+	event=Cancel()
+	cond=
+	action=Write("Canceling"),return_card
+Transition:
+	name=T45
+	src=START
+	tgt=S1
+	event=Card(pin,B)
+	cond=
+	action=Write("Enter Pin"),attempts=0
+Transition:
+	name=T46
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	cond=p!=pin,attempts=0
+	action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
+Transition:
+	name=T47
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	cond=p!=pin,attempts=1
+	action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
+Transition:
+	name=T48
+	src=S1
+	tgt=S2
+	event=Enter_pin(p)
+	cond=p=pin,attempts=2
+	action=Write("Select Withdrawal/GetBalance/Cancel"),attempts=attempts+1
+Transition:
+	name=T49
+	src=S2
+	tgt=S3
+	event=Withdrawal()
+	cond=
+	action=Write("Enter amount")
+Transition:
+	name=T50
+	src=S3
+	tgt=Exit
+	event=Enter_amount(w)
+	cond=w>B
+	action=Write("Out balance")
+Transition:
+	name=T51
+	src=Exit
+	tgt=S2
+	event=
+	cond=
+	action=Write("Select Withdrawal/GetBalance/Cancel")
+Transition:
+	name=T52
+	src=S2
+	tgt=START
+	event=Cancel()
+	cond=
+	action=Write("Canceling"),return_card
+Transition:
+	name=T53
+	src=START
+	tgt=S1
+	event=Card(pin,B)
+	cond=
+	action=Write("Enter Pin"),attempts=0
+Transition:
+	name=T54
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	cond=p!=pin,attempts=0
+	action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
+Transition:
+	name=T55
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	cond=p!=pin,attempts=1
+	action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
+Transition:
+	name=T56
+	src=S1
+	tgt=S2
+	event=Enter_pin(p)
+	cond=p=pin,attempts=2
+	action=Write("Select Withdrawal/GetBalance/Cancel"),attempts=attempts+1
+Transition:
+	name=T57
+	src=S2
+	tgt=S3
+	event=Withdrawal()
+	cond=
+	action=Write("Enter amount")
+Transition:
+	name=T58
+	src=S3
+	tgt=Exit
+	event=Enter_amount(w)
+	cond=w>B
+	action=Write("Out balance")
+Transition:
+	name=T59
+	src=Exit
+	tgt=START
+	event=Cancel()
+	cond=
+	action=Write("Canceling"),return_card
+Transition:
+	name=T60
+	src=START
+	tgt=S1
+	event=Card(pin,B)
+	cond=
+	action=Write("Enter Pin"),attempts=0
+Transition:
+	name=T61
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	cond=p!=pin,attempts=0
+	action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
+Transition:
+	name=T62
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	cond=p!=pin,attempts=1
+	action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
+Transition:
+	name=T63
+	src=S1
+	tgt=S2
+	event=Enter_pin(p)
+	cond=p=pin,attempts=2
+	action=Write("Select Withdrawal/GetBalance/Cancel"),attempts=attempts+1
+Transition:
+	name=T64
+	src=S2
+	tgt=S3
+	event=Withdrawal()
+	cond=
+	action=Write("Enter amount")
+Transition:
+	name=T65
+	src=S3
+	tgt=S4
+	event=Enter_amount(w)
+	cond=w<=B
+	action=Give_money,B=B-w,Write("your balance",B)
+Transition:
+	name=T66
+	src=S4
+	tgt=START
+	event=Cancel()
+	cond=
+	action=Write("Canceling"),return_card

@@ -1,0 +1,263 @@
+T1	eventVdef:	
+T1	condVuse:	
+T1	actionVdef:	
+T1	actionVuse:	ST_OK	
+T3	eventVdef:	sigpAppReq	
+T3	condVuse:	ValidateCall	sigpAppCallReq	
+T3	actionVdef:	
+T3	actionVuse:	sigpAppCallReq	
+T4	eventVdef:	sigpAlerting	
+T4	condVuse:	
+T4	actionVdef:	
+T4	actionVuse:	
+T5	eventVdef:	sigpCallProceed	
+T5	condVuse:	
+T5	actionVdef:	l	
+T5	actionVuse:	
+T6	eventVdef:	sigpConnect	
+T6	condVuse:	
+T6	actionVdef:	
+T6	actionVuse:	
+T7	eventVdef:	
+T7	condVuse:	
+T7	actionVdef:	
+T7	actionVuse:	
+T8	eventVdef:	sigpReleaseComplete	
+T8	condVuse:	
+T8	actionVdef:	
+T8	actionVuse:	
+T9	eventVdef:	sigpSetupAck	
+T9	condVuse:	
+T9	actionVdef:	
+T9	actionVuse:	calledNum	
+T10	eventVdef:	sigpAlerting	
+T10	condVuse:	
+T10	actionVdef:	
+T10	actionVuse:	
+T11	eventVdef:	sigpCallProceed	
+T11	condVuse:	
+T11	actionVdef:	
+T11	actionVuse:	
+T12	eventVdef:	sigpConnect	
+T12	condVuse:	
+T12	actionVdef:	
+T12	actionVuse:	
+T13	eventVdef:	sigpDisconnect	
+T13	condVuse:	
+T13	actionVdef:	
+T13	actionVuse:	
+T14	eventVdef:	
+T14	condVuse:	
+T14	actionVdef:	sigpDisconnect_Cause_data	
+T14	actionVuse:	CAUSE_RECOVERY_ON_TIMER_EXPIRY	
+T15	eventVdef:	sigpSetup	
+T15	condVuse:	sigpSetup_SendingComplete	SendingComplete_t_PRESENT	
+T15	actionVdef:	callingNum	sigpAppCallInd_CallingPartyNumber	
+T15	actionVuse:	sigpSetup_CallingpartyNumber	callingNum	sigpAppCallInd	
+T16	eventVdef:	sigpSetup	
+T16	condVuse:	sigpSetup_SendingComplete	SendingComplete_t_PRESENT	
+T16	actionVdef:	callingNum	
+T16	actionVuse:	sigpSetup_CallingpartyNumber	sigpSetupAck	
+T17	eventVdef:	
+T17	condVuse:	
+T17	actionVdef:	sigpSCODiscReq_SCOHandle	
+T17	actionVuse:	sigpDisconnect_SCOHandle	sigpSCODiscReq	
+T19	eventVdef:	sigpSCODiscAcc	
+T19	condVuse:	sigpSCODiscAcc_SCOHandle	scoHandle	
+T19	actionVdef:	sigpRelease_Cause_data	sigprelease_SCOHandle	
+T19	actionVuse:	Cause_data_t_invalid	scoHandle	sigpRelease	
+T20	eventVdef:	
+T20	condVuse:	
+T20	actionVdef:	sigpRelease_Cause_data	sigprelease_SCOHandle	
+T20	actionVuse:	CAUSE_RECOVERY_ON_TIMER_EXPIRY	scoHandle	sigpRelease	
+T21	eventVdef:	sigpReleaseComplete	
+T21	condVuse:	
+T21	actionVdef:	
+T21	actionVuse:	
+T22	eventVdef:	sigpRelease	
+T22	condVuse:	
+T22	actionVdef:	
+T22	actionVuse:	
+T23	eventVdef:	
+T23	condVuse:	
+T23	actionVdef:	
+T23	actionVuse:	
+T24	eventVdef:	
+T24	condVuse:	
+T24	actionVdef:	sigpSCODiscReq_SCOHandle	
+T24	actionVuse:	scoHandle	sigpSCODiscReq	
+T25	eventVdef:	sigpSCODiscAcc	
+T25	condVuse:	sigpSCDiscAcc_SCOHandle	scHandle	
+T25	actionVdef:	
+T25	actionVuse:	
+T26	eventVdef:	sigpSCODiscAcc	
+T26	condVuse:	sigpSCDiscAcc_SCOHandle	scHandle	
+T26	actionVdef:	sigpDisconnectSCOHandle	
+T26	actionVuse:	scoHandle	sigpDisconnect	
+T27	eventVdef:	
+T27	condVuse:	
+T27	actionVdef:	sigpDisconnect_Cause_data	sigpDisconnectSCOHandle	
+T27	actionVuse:	CAUSE_RECOVERY_ON_TIMER_EXPIRY	scoHandle	sigpDisconnect	
+T28	eventVdef:	sigpRelease	
+T28	condVuse:	
+T28	actionVdef:	sigpReleaseComplete_Cause_data	sigpReleaseComplete_SCOHandle	scoHandle	
+T28	actionVuse:	Cause_data_t_invalid	scoHandle	sigpReleaseComplete	
+T29	eventVdef:	sigpDisconnect	
+T29	condVuse:	
+T29	actionVdef:	
+T29	actionVuse:	sigpRelease	
+T71	eventVdef:	
+T71	condVuse:	
+T71	actionVdef:	
+T71	actionVuse:	sigpRelease	
+T72	eventVdef:	
+T72	condVuse:	
+T72	actionVdef:	
+T72	actionVuse:	sigpDisconnect	
+T30	eventVdef:	sigpDisconnect	
+T30	condVuse:	
+T30	actionVdef:	
+T30	actionVuse:	
+T31	eventVdef:	sigpDisconnect	
+T31	condVuse:	
+T31	actionVdef:	
+T31	actionVuse:	
+T32	eventVdef:	sigpAlerting	
+T32	condVuse:	
+T32	actionVdef:	
+T32	actionVuse:	
+T33	eventVdef:	
+T33	condVuse:	
+T33	actionVdef:	sigpDisconnect_Cause_data	
+T33	actionVuse:	CAUSE_RECOVERY_ON_TIMER_EXPIRY	
+T34	eventVdef:	sigpConnect	
+T34	condVuse:	
+T34	actionVdef:	
+T34	actionVuse:	
+T35	eventVdef:	sigpDisconnect	
+T35	condVuse:	
+T35	actionVdef:	
+T35	actionVuse:	
+T36	eventVdef:	
+T36	condVuse:	
+T36	actionVdef:	sigpDisconnect_Cause_data	
+T36	actionVuse:	CAUSE_RECOVERY_ON_TIMER_EXPIRY	
+T37	eventVdef:	sigpAppCallRelease	
+T37	condVuse:	
+T37	actionVdef:	sigpDisconnect_Cause	
+T37	actionVuse:	sigpAppCallRelsease_Cause	
+T38	eventVdef:	sigpDiconnect	
+T38	condVuse:	
+T38	actionVdef:	
+T38	actionVuse:	
+T41	eventVdef:	
+T41	condVuse:	
+T41	actionVdef:	scoHandle	sigpSCOLinkRequest_SCOHandle	
+T41	actionVuse:	sigpSCOLinkRequest	
+T42	eventVdef:	sigpSCOLinkAccept	
+T42	condVuse:	
+T42	actionVdef:	scoHandle	sigpConnectAck_SCOHandle	
+T42	actionVuse:	sigpSCOLinkAccept_SCOHandle	scoHandle	sigpConnectAck	
+T43	eventVdef:	sigpSCOLinkReject	
+T43	condVuse:	
+T43	actionVdef:	sigpDisconnect_Cause_data	
+T43	actionVuse:	Cause_data_t_invalid	
+T70	eventVdef:	
+T70	condVuse:	
+T70	actionVdef:	sigpDisconnect_Cause_data	
+T70	actionVuse:	CAUSE_RECOVERY_ON_TIMER_EXPIRY	
+T44	eventVdef:	
+T44	condVuse:	
+T44	actionVdef:	sigpSCOConRequest_SCOHandle	
+T44	actionVuse:	scoHandle	sigpSCOConRequest	
+T45	eventVdef:	sigpSCOCConAccept	
+T45	condVuse:	sigpSCOConAccept_SCOHandle	scoHandle	
+T45	actionVdef:	
+T45	actionVuse:	
+T46	eventVdef:	sigpSCOCConAccept	
+T46	condVuse:	sigpSCOConAccept_SCOHandle	scoHandle	
+T46	actionVdef:	
+T46	actionVuse:	call_active_10	
+T47	eventVdef:	sigpSCOCConReject	
+T47	condVuse:	sigpSCOConRaject_SCOHandle	scoHandle	
+T47	actionVdef:	
+T47	actionVuse:	
+T48	eventVdef:	sigpSCOCConReject	
+T48	condVuse:	sigpSCOConReject_SCOHandle	scoHandle	
+T48	actionVdef:	
+T48	actionVuse:	sigpSCCOConReject_LMCause	
+T49	eventVdef:	
+T49	condVuse:	
+T49	actionVdef:	
+T49	actionVuse:	
+T50	eventVdef:	sigpInfo	
+T50	condVuse:	sigpInfo_SendingComplete	SecingComplete_t_PRESENT	
+T50	actionVdef:	sigpAppCallInd_CallingPartyNumber	
+T50	actionVuse:	callingNum	sigpAppCallInd	
+T52	eventVdef:	
+T52	condVuse:	
+T52	actionVdef:	sigpDisconnect_SCOHandle	sigpDisconnect_Cause_data	
+T52	actionVuse:	scoHandle	CAUSE_RECOVERY_ON_TIMER_EXPIRY	
+T53	eventVdef:	
+T53	condVuse:	
+T53	actionVdef:	
+T53	actionVuse:	sigpCallProceed	
+T54	eventVdef:	
+T54	condVuse:	
+T54	actionVdef:	
+T54	actionVuse:	sigpCallProceed	
+T55	eventVdef:	
+T55	condVuse:	
+T55	actionVdef:	
+T55	actionVuse:	sigpConnect	
+T56	eventVdef:	
+T56	condVuse:	
+T56	actionVdef:	
+T56	actionVuse:	sigpConnect	
+T57	eventVdef:	
+T57	condVuse:	
+T57	actionVdef:	
+T57	actionVuse:	sigpConnect	
+T58	eventVdef:	
+T58	condVuse:	
+T58	actionVdef:	
+T58	actionVuse:	sigpConnect	
+T59	eventVdef:	sigpAppCallRej	
+T59	condVuse:	
+T59	actionVdef:	sigpDisconnect_SCOHandle	sigpDisconnect_Cause_data	
+T59	actionVuse:	scoHandle	sigpAppCallRej_Cause_data	
+T60	eventVdef:	sigpAppCallRej	
+T60	condVuse:	
+T60	actionVdef:	sigpDisconnect_SCOHandle	sigpDisconnect_Cause_data	
+T60	actionVuse:	scoHandle	sigpAppCallRej_Cause_data	
+T61	eventVdef:	sigpAppCallRej	
+T61	condVuse:	
+T61	actionVdef:	sigpDisconnect_SCOHandle	sigpDisconnect_Cause_data	
+T61	actionVuse:	scoHandle	sigpAppCallRej_Cause_data	
+T62	eventVdef:	sigpAppCallRej	
+T62	condVuse:	
+T62	actionVdef:	sigpDisconnect_SCOHandle	sigpDisconnect_Cause_data	
+T62	actionVuse:	scoHandle	sigpAppCallRej_Cause_data	
+T63	eventVdef:	
+T63	condVuse:	
+T63	actionVdef:	
+T63	actionVuse:	sigpAlerting	
+T64	eventVdef:	
+T64	condVuse:	
+T64	actionVdef:	
+T64	actionVuse:	sigpAlerting	
+T65	eventVdef:	
+T65	condVuse:	
+T65	actionVdef:	
+T65	actionVuse:	sigpAlerting	
+T66	eventVdef:	sigpConnectAck	
+T66	condVuse:	
+T66	actionVdef:	scoHandle	
+T66	actionVuse:	sigpConnectAck_SCOHandle	
+T67	eventVdef:	
+T67	condVuse:	
+T67	actionVdef:	sigpDisconnect_SCOHandle	sigpDisconnect_Cause_data	
+T67	actionVuse:	scoHandle	CAUSE_RECOVERY_ON_TIMER_EXPIRY	
+
+total variables61
+scHandle, ValidateCall, sigpSetup_SendingComplete, sigpSCOConRequest_SCOHandle, sigpDisconnectSCOHandle, sigpSCOCConAccept, sigpDisconnect_Cause, SendingComplete_t_PRESENT, sigpSCOCConReject, sigpDisconnect_SCOHandle, sigprelease_SCOHandle, sigpConnect, sigpSCODiscReq, sigpAppCallInd_CallingPartyNumber, CAUSE_RECOVERY_ON_TIMER_EXPIRY, sigpSCODiscReq_SCOHandle, sigpSCDiscAcc_SCOHandle, sigpSCOLinkAccept, sigpSetupAck, sigpSetup, sigpCallProceed, sigpSCOLinkRequest, Cause_data_t_invalid, sigpSCCOConReject_LMCause, sigpSCOLinkReject, sigpSCOLinkAccept_SCOHandle, sigpSCODiscAcc_SCOHandle, sigpSCOConRaject_SCOHandle, calledNum, sigpRelease_Cause_data, sigpAppCallRelease, sigpConnectAck_SCOHandle, call_active_10, sigpReleaseComplete_SCOHandle, sigpAppCallRej, sigpDisconnect, sigpAppCallInd, sigpSCODiscAcc, sigpAppCallRelsease_Cause, sigpSCOConRequest, sigpDiconnect, sigpSCOLinkRequest_SCOHandle, sigpSetup_CallingpartyNumber, sigpReleaseComplete, ST_OK, sigpAppCallReq, scoHandle, sigpInfo, callingNum, sigpSCOConReject_SCOHandle, SecingComplete_t_PRESENT, sigpRelease, l, sigpAppCallRej_Cause_data, sigpDisconnect_Cause_data, sigpReleaseComplete_Cause_data, sigpConnectAck, sigpAlerting, sigpAppReq, sigpSCOConAccept_SCOHandle, sigpInfo_SendingComplete, 

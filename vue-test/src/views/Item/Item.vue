@@ -1,6 +1,6 @@
 <template>
   <el-row :gutter="20">
-    <el-card class="box-card" style="height: 700px">
+    <el-card class="box-card" style="height: 620px">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="项目id" width="180">
           <template slot-scope="scope">
@@ -43,22 +43,22 @@ export default {
         {
           date: '1',
           name: '项目1',
-          address: 'aaaa'
+          address: '这是第一个项目'
         },
         {
           date: '2',
           name: '项目2',
-          address: 'bbbb'
+          address: '这是第二个项目'
         },
         {
           date: '3',
           name: '项目3',
-          address: 'cccc'
+          address: '这是第三个项目'
         },
         {
           date: '4',
           name: '项目4',
-          address: 'dddd'
+          address: '这是第四个项目'
         }
       ]
     }

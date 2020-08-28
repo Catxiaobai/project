@@ -1,0 +1,4 @@
+digraph G {
+ a -> b [ label="a to b" ];
+ b -> c [ label="another label"];
+}

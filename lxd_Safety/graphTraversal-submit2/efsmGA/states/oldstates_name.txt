@@ -1,0 +1,1023 @@
+
+Transition:
+	name=target1
+	src=S9
+	tgt=target8
+	event=;xpath=/html/body/div[2]/div[1]/ul/li[7]/a;click
+	cond=pwdPassword == pwdPassword2
+	action=
+
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target1
+	src=S9
+	tgt=target8
+	event=;xpath=/html/body/div[2]/div[1]/ul/li[7]/a;click
+	cond=pwdPassword == pwdPassword2
+	action=
+
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target7
+	src=S6
+	tgt=target8
+	event=input(txtFirstName,txtLastName,pwdOldPassword,pwdPassword,pwdPassword2);xpath=/html/body/div[2]/div[2]/div[1]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target1
+	src=S9
+	tgt=target8
+	event=;xpath=/html/body/div[2]/div[1]/ul/li[7]/a;click
+	cond=pwdPassword == pwdPassword2
+	action=
+Transition:
+	name=target1
+	src=S9
+	tgt=target8
+	event=;xpath=/html/body/div[2]/div[1]/ul/li[7]/a;click
+	cond=pwdPassword == pwdPassword2
+	action=
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target1
+	src=S9
+	tgt=target8
+	event=;xpath=/html/body/div[2]/div[1]/ul/li[7]/a;click
+	cond=pwdPassword == pwdPassword2
+	action=
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target1
+	src=S9
+	tgt=target8
+	event=;xpath=/html/body/div[2]/div[1]/ul/li[7]/a;click
+	cond=pwdPassword == pwdPassword2
+	action=
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target1
+	src=S9
+	tgt=target8
+	event=;xpath=/html/body/div[2]/div[1]/ul/li[7]/a;click
+	cond=pwdPassword == pwdPassword2
+	action=
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target7
+	src=S6
+	tgt=target8
+	event=input(txtFirstName,txtLastName,pwdOldPassword,pwdPassword,pwdPassword2);xpath=/html/body/div[2]/div[2]/div[1]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target1
+	src=S9
+	tgt=target8
+	event=;xpath=/html/body/div[2]/div[1]/ul/li[7]/a;click
+	cond=pwdPassword == pwdPassword2
+	action=
+
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target3
+	src=S7
+	tgt=target8
+	event=;xpath=/html/body/div[2]/div[1]/ul/li[5]/a;click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target4
+	src=S11
+	tgt=target8
+	event=;xpath=/html/body/div/div[1]/p/a;click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target5
+	src=S10
+	tgt=target8
+	event=input(txtTitle,txtMessage);name=newMessage;click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target6
+	src=S12
+	tgt=target8
+	event=;id=btnLogout;click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target8
+	src=S9
+	tgt=target8
+	event=input(opponent,color);xpath=/html/body/div[2]/div[2]/div[3]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target7
+	src=S6
+	tgt=target8
+	event=input(txtFirstName,txtLastName,pwdOldPassword,pwdPassword,pwdPassword2);xpath=/html/body/div[2]/div[2]/div[1]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target1
+	src=S9
+	tgt=target8
+	event=;xpath=/html/body/div[2]/div[1]/ul/li[7]/a;click
+	cond=pwdPassword == pwdPassword2
+	action=
+
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target3
+	src=S7
+	tgt=target8
+	event=;xpath=/html/body/div[2]/div[1]/ul/li[5]/a;click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target4
+	src=S11
+	tgt=target8
+	event=;xpath=/html/body/div/div[1]/p/a;click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target5
+	src=S10
+	tgt=target8
+	event=input(txtTitle,txtMessage);name=newMessage;click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target6
+	src=S12
+	tgt=target8
+	event=;id=btnLogout;click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target8
+	src=S9
+	tgt=target8
+	event=input(opponent,color);xpath=/html/body/div[2]/div[2]/div[3]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target7
+	src=S6
+	tgt=target8
+	event=input(txtFirstName,txtLastName,pwdOldPassword,pwdPassword,pwdPassword2);xpath=/html/body/div[2]/div[2]/div[1]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target1
+	src=S9
+	tgt=target8
+	event=;xpath=/html/body/div[2]/div[1]/ul/li[7]/a;click
+	cond=pwdPassword == pwdPassword2
+	action=
+
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target3
+	src=S7
+	tgt=target8
+	event=;xpath=/html/body/div[2]/div[1]/ul/li[5]/a;click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target4
+	src=S11
+	tgt=target8
+	event=;xpath=/html/body/div/div[1]/p/a;click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target5
+	src=S10
+	tgt=target8
+	event=input(txtTitle,txtMessage);name=newMessage;click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target6
+	src=S12
+	tgt=target8
+	event=;id=btnLogout;click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target8
+	src=S9
+	tgt=target8
+	event=input(opponent,color);xpath=/html/body/div[2]/div[2]/div[3]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target1
+	src=S5
+	tgt=target8
+	event=;link=Back to Topics List;click
+	cond=!(newTitle=='')
+	action=
+
+Transition:
+	name=target2
+	src=S7
+	tgt=target8
+	event=;link=Commit Changes;click
+	cond=!(newTitle=='')
+	action=
+
+Transition:
+	name=target3
+	src=S6
+	tgt=target8
+	event=;link=View Your Document;click
+	cond=!(topicTitle==newTitle)
+	action=
+Transition:
+	name=target1
+	src=S5
+	tgt=target8
+	event=;link=Back to Topics List;click
+	cond=!(newTitle=='')
+	action=
+
+Transition:
+	name=target2
+	src=S7
+	tgt=target8
+	event=;link=Commit Changes;click
+	cond=!(newTitle=='')
+	action=
+
+Transition:
+	name=target3
+	src=S6
+	tgt=target8
+	event=;link=View Your Document;click
+	cond=!(topicTitle==newTitle)
+	action=
+Transition:
+	name=target1
+	src=S5
+	tgt=target8
+	event=;link=Back to Topics List;click
+	cond=!(newTitle=='')
+	action=
+
+Transition:
+	name=target1
+	src=S5
+	tgt=target8
+	event=;link=Back to Topics List;click
+	cond=!(newTitle=='')
+	action=
+
+Transition:
+	name=target1
+	src=S5
+	tgt=target8
+	event=;link=Back to Topics List;click
+	cond=!(newTitle=='')
+	action=
+
+Transition:
+	name=target1
+	src=S5
+	tgt=target8
+	event=;link=Back to Topics List;click
+	cond=!(newTitle=='')
+	action=
+
+Transition:
+	name=target2
+	src=S7
+	tgt=target8
+	event=;link=Commit Changes;click
+	cond=!(newTitle=='')
+	action=
+
+Transition:
+	name=target3
+	src=S6
+	tgt=target8
+	event=;link=View Your Document;click
+	cond=!(topicTitle==newTitle)
+	action=
+Transition:
+	name=target1
+	src=S5
+	tgt=target8
+	event=;link=Back to Topics List;click
+	cond=!(newTitle=='')
+	action=
+
+Transition:
+	name=target2
+	src=S7
+	tgt=target8
+	event=;link=Commit Changes;click
+	cond=!(newTitle=='')
+	action=
+
+Transition:
+	name=target3
+	src=S6
+	tgt=target8
+	event=;link=View Your Document;click
+	cond=!(topicTitle==newTitle)
+	action=
+Transition:
+	name=target1
+	src=S13
+	tgt=target8
+	event=;link=group page;click
+	cond=!(selected=='')
+	action=
+
+Transition:
+	name=target2
+	src=S11
+	tgt=target8
+	event=input(firstname,middlename,lastname,nickname,photo,title,company,address,home,mobile,work,fax,email,email2,email3,homepage,bday,bmonth,byear,aday,amonth,ayear,new_group,address2,phone2,notes);xpath=/html/body/div/div[4]/form/input[21];click
+	cond=!(a!='')
+	action=
+
+Transition:
+	name=target3
+	src=S12
+	tgt=target8
+	event=input(group_name,group_parent_id,group_header,group_footer);name=submit;click
+	cond=!(selected=='')
+	action=
+
+Transition:
+	name=target4
+	src=S15
+	tgt=target8
+	event=input(group_name,group_parent_id,group_header,group_footer);name=update;click
+	cond=!(a==0)
+	action=
+
+Transition:
+	name=target5
+	src=S17
+	tgt=target8
+	event=input(firstname,middlename,lastname,nickname,photo,company,title,address,home,mobile,work,fax,email,email2,email3,homepage,bday,bmonth,byear,aday,amonth,ayear,address2,phone2,notes);xpath=/html/body/div/div[4]/form[1]/input[1];click
+	cond=!(a==0)
+	action=
+Transition:
+	name=target1
+	src=S13
+	tgt=target8
+	event=;link=group page;click
+	cond=!(selected=='')
+	action=
+
+Transition:
+	name=target2
+	src=S11
+	tgt=target8
+	event=input(firstname,middlename,lastname,nickname,photo,title,company,address,home,mobile,work,fax,email,email2,email3,homepage,bday,bmonth,byear,aday,amonth,ayear,new_group,address2,phone2,notes);xpath=/html/body/div/div[4]/form/input[21];click
+	cond=!(a!='')
+	action=
+
+Transition:
+	name=target3
+	src=S12
+	tgt=target8
+	event=input(group_name,group_parent_id,group_header,group_footer);name=submit;click
+	cond=!(selected=='')
+	action=
+
+Transition:
+	name=target4
+	src=S15
+	tgt=target8
+	event=input(group_name,group_parent_id,group_header,group_footer);name=update;click
+	cond=!(a==0)
+	action=
+
+Transition:
+	name=target5
+	src=S17
+	tgt=target8
+	event=input(firstname,middlename,lastname,nickname,photo,company,title,address,home,mobile,work,fax,email,email2,email3,homepage,bday,bmonth,byear,aday,amonth,ayear,address2,phone2,notes);xpath=/html/body/div/div[4]/form[1]/input[1];click
+	cond=!(a==0)
+	action=
+Transition:
+	name=target6
+	src=S46
+	tgt=target8
+	event=;id=DeleteCheckboxButton;click
+	cond=!(td==idd)
+	action=confirm('请确认是否删除！')
+
+Transition:
+	name=target7
+	src=S12
+	tgt=target8
+	event=input(myfile);name=act;upload
+	cond=!(myfile==idd)
+	action=
+Transition:
+	name=target2
+	src=S44
+	tgt=target8
+	event=;name=checkbox;click
+	cond=!(categery==p)
+	action=
+
+Transition:
+	name=target4
+	src=S34
+	tgt=target8
+	event=;id=updateCategoryButton;click
+	cond=a==0
+	action=
+
+Transition:
+	name=target5
+	src=S38
+	tgt=target8
+	event=;xpath=/html/body/table/tbody/tr/td/table[2]/tbody/tr[2]/td[4]/a[3];click
+	cond=seqq==''
+	action=
+
+Transition:
+	name=target2
+	src=S44
+	tgt=target8
+	event=;name=checkbox;click
+	cond=!(categery==p)
+	action=
+
+Transition:
+	name=target4
+	src=S34
+	tgt=target8
+	event=;id=updateCategoryButton;click
+	cond=a==0
+	action=
+
+Transition:
+	name=target2
+	src=S44
+	tgt=target8
+	event=;name=checkbox;click
+	cond=!(categery==p)
+	action=
+
+Transition:
+	name=target2
+	src=S44
+	tgt=target8
+	event=;name=checkbox;click
+	cond=!(categery==p)
+	action=
+
+Transition:
+	name=target3
+	src=S31
+	tgt=target8
+	event=;xpath=/html/body/table/tbody/tr/td[2]/a[3]/strong;click
+	cond=!(a==0)
+	action=
+
+Transition:
+	name=target4
+	src=S34
+	tgt=target8
+	event=;id=updateCategoryButton;click
+	cond=a==0
+	action=
+
+Transition:
+	name=target5
+	src=S38
+	tgt=target8
+	event=;xpath=/html/body/table/tbody/tr/td/table[2]/tbody/tr[2]/td[4]/a[3];click
+	cond=seqq==''
+	action=
+
+Transition:
+	name=target6
+	src=S46
+	tgt=target8
+	event=;id=DeleteCheckboxButton;click
+	cond=!(td==idd)
+	action=confirm('请确认是否删除！')
+
+Transition:
+	name=target7
+	src=S12
+	tgt=target8
+	event=input(myfile);name=act;upload
+	cond=!(myfile==idd)
+	action=
+Transition:
+	name=target4
+	src=S34
+	tgt=target8
+	event=;id=updateCategoryButton;click
+	cond=a==0
+	action=
+
+Transition:
+	name=target5
+	src=S38
+	tgt=target8
+	event=;xpath=/html/body/table/tbody/tr/td/table[2]/tbody/tr[2]/td[4]/a[3];click
+	cond=seqq==''
+	action=
+
+Transition:
+	name=target6
+	src=S46
+	tgt=target8
+	event=;id=DeleteCheckboxButton;click
+	cond=!(td==idd)
+	action=confirm('请确认是否删除！')
+
+Transition:
+	name=target7
+	src=S12
+	tgt=target8
+	event=input(myfile);name=act;upload
+	cond=!(myfile==idd)
+	action=
+Transition:
+	name=target2
+	src=S44
+	tgt=target8
+	event=;name=checkbox;click
+	cond=!(categery==p)
+	action=
+
+Transition:
+	name=target6
+	src=S46
+	tgt=target8
+	event=;id=DeleteCheckboxButton;click
+	cond=!(td==idd)
+	action=confirm('请确认是否删除！')
+
+Transition:
+	name=target2
+	src=S44
+	tgt=target8
+	event=;name=checkbox;click
+	cond=!(categery==p)
+	action=
+
+Transition:
+	name=target4
+	src=S34
+	tgt=target8
+	event=;id=updateCategoryButton;click
+	cond=a==0
+	action=
+
+Transition:
+	name=target2
+	src=S44
+	tgt=target8
+	event=;name=checkbox;click
+	cond=!(categery==p)
+	action=
+
+Transition:
+	name=target2
+	src=S44
+	tgt=target8
+	event=;name=checkbox;click
+	cond=!(categery==p)
+	action=
+
+Transition:
+	name=target3
+	src=S31
+	tgt=target8
+	event=;xpath=/html/body/table/tbody/tr/td[2]/a[3]/strong;click
+	cond=!(a==0)
+	action=
+
+Transition:
+	name=target4
+	src=S34
+	tgt=target8
+	event=;id=updateCategoryButton;click
+	cond=a==0
+	action=
+
+Transition:
+	name=target5
+	src=S38
+	tgt=target8
+	event=;xpath=/html/body/table/tbody/tr/td/table[2]/tbody/tr[2]/td[4]/a[3];click
+	cond=seqq==''
+	action=
+
+Transition:
+	name=target6
+	src=S46
+	tgt=target8
+	event=;id=DeleteCheckboxButton;click
+	cond=!(td==idd)
+	action=confirm('请确认是否删除！')
+
+Transition:
+	name=target7
+	src=S12
+	tgt=target8
+	event=input(myfile);name=act;upload
+	cond=!(myfile==idd)
+	action=
+Transition:
+	name=target6
+	src=S46
+	tgt=target8
+	event=;id=DeleteCheckboxButton;click
+	cond=!(td==idd)
+	action=confirm('请确认是否删除！')
+
+Transition:
+	name=target2
+	src=S44
+	tgt=target8
+	event=;name=checkbox;click
+	cond=!(categery==p)
+	action=
+
+Transition:
+	name=target2
+	src=S44
+	tgt=target8
+	event=;name=checkbox;click
+	cond=!(categery==p)
+	action=
+
+Transition:
+	name=target3
+	src=S31
+	tgt=target8
+	event=;xpath=/html/body/table/tbody/tr/td[2]/a[3]/strong;click
+	cond=!(a==0)
+	action=
+
+Transition:
+	name=target4
+	src=S34
+	tgt=target8
+	event=;id=updateCategoryButton;click
+	cond=a==0
+	action=
+
+Transition:
+	name=target5
+	src=S38
+	tgt=target8
+	event=;xpath=/html/body/table/tbody/tr/td/table[2]/tbody/tr[2]/td[4]/a[3];click
+	cond=seqq==''
+	action=
+
+Transition:
+	name=target6
+	src=S46
+	tgt=target8
+	event=;id=DeleteCheckboxButton;click
+	cond=!(td==idd)
+	action=confirm('请确认是否删除！')
+
+Transition:
+	name=target7
+	src=S12
+	tgt=target8
+	event=input(myfile);name=act;upload
+	cond=!(myfile==idd)
+	action=
+Transition:
+	name=target5
+	src=S38
+	tgt=target8
+	event=;xpath=/html/body/table/tbody/tr/td/table[2]/tbody/tr[2]/td[4]/a[3];click
+	cond=seqq==''
+	action=
+
+Transition:
+	name=target6
+	src=S46
+	tgt=target8
+	event=;id=DeleteCheckboxButton;click
+	cond=!(td==idd)
+	action=confirm('请确认是否删除！')
+
+Transition:
+	name=target6
+	src=S46
+	tgt=target8
+	event=;id=DeleteCheckboxButton;click
+	cond=!(td==idd)
+	action=confirm('请确认是否删除！')
+
+Transition:
+	name=target6
+	src=S46
+	tgt=target8
+	event=;id=DeleteCheckboxButton;click
+	cond=!(td==idd)
+	action=confirm('请确认是否删除！')
+
+Transition:
+	name=target2
+	src=S44
+	tgt=target8
+	event=;name=checkbox;click
+	cond=!(categery==p)
+	action=
+
+Transition:
+	name=target2
+	src=S44
+	tgt=target8
+	event=;name=checkbox;click
+	cond=!(categery==p)
+	action=
+
+Transition:
+	name=target2
+	src=S44
+	tgt=target8
+	event=;name=checkbox;click
+	cond=!(categery==p)
+	action=
+
+Transition:
+	name=target3
+	src=S31
+	tgt=target8
+	event=;xpath=/html/body/table/tbody/tr/td[2]/a[3]/strong;click
+	cond=!(a==0)
+	action=
+
+Transition:
+	name=target4
+	src=S34
+	tgt=target8
+	event=;id=updateCategoryButton;click
+	cond=a==0
+	action=
+
+Transition:
+	name=target5
+	src=S38
+	tgt=target8
+	event=;xpath=/html/body/table/tbody/tr/td/table[2]/tbody/tr[2]/td[4]/a[3];click
+	cond=seqq==''
+	action=
+
+Transition:
+	name=target6
+	src=S46
+	tgt=target8
+	event=;id=DeleteCheckboxButton;click
+	cond=!(td==idd)
+	action=confirm('请确认是否删除！')
+
+Transition:
+	name=target7
+	src=S12
+	tgt=target8
+	event=input(myfile);name=act;upload
+	cond=!(myfile==idd)
+	action=
+Transition:
+	name=target2
+	src=S44
+	tgt=target8
+	event=;name=checkbox;click
+	cond=!(categery==p)
+	action=
+
+Transition:
+	name=target3
+	src=S31
+	tgt=target8
+	event=;xpath=/html/body/table/tbody/tr/td[2]/a[3]/strong;click
+	cond=!(a==0)
+	action=
+
+Transition:
+	name=target4
+	src=S34
+	tgt=target8
+	event=;id=updateCategoryButton;click
+	cond=a==0
+	action=
+
+Transition:
+	name=target5
+	src=S38
+	tgt=target8
+	event=;xpath=/html/body/table/tbody/tr/td/table[2]/tbody/tr[2]/td[4]/a[3];click
+	cond=seqq==''
+	action=
+
+Transition:
+	name=target6
+	src=S46
+	tgt=target8
+	event=;id=DeleteCheckboxButton;click
+	cond=!(td==idd)
+	action=confirm('请确认是否删除！')
+
+Transition:
+	name=target7
+	src=S12
+	tgt=target8
+	event=input(myfile);name=act;upload
+	cond=!(myfile==idd)
+	action=
+Transition:
+	name=target7
+	src=S6
+	tgt=target8
+	event=input(txtFirstName,txtLastName,pwdOldPassword,pwdPassword,pwdPassword2);xpath=/html/body/div[2]/div[2]/div[1]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+
+Transition:
+	name=target1
+	src=S9
+	tgt=target8
+	event=;xpath=/html/body/div[2]/div[1]/ul/li[7]/a;click
+	cond=pwdPassword == pwdPassword2
+	action=
+
+Transition:
+	name=target2
+	src=S5
+	tgt=target8
+	event=input(rdoHistory,rdoHistorylayout,rdoTheme,txtReload);xpath=/html/body/div[2]/div[2]/div[2]/div/div/div[1]/form/div/input[1];click
+	cond=!(pwdPassword == pwdPassword2)
+	action=
+

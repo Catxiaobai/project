@@ -2,7 +2,7 @@
 /shelf/
 /workspace.xml
 # Datasource local storage ignored files
-/../../../../../:\Code\lzy\Model3\.idea/dataSources/
+/../../../../../../:\Code\Complete\Model3_2\Model3\.idea/dataSources/
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/

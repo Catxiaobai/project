@@ -1,0 +1,16 @@
+Levenshtein/StringMatcher.py,sha256=8K6UUJ0HQUzOqrkMqEgWk9CWpZLkiSlaU5zDIMf4uC4,2198
+Levenshtein/StringMatcher.pyc,,
+Levenshtein/__init__.py,sha256=HxWybJyjO0i9JCbuePePqxPhPBioUw_3DBqIiKGHUUM,112
+Levenshtein/__init__.pyc,,
+Levenshtein/_levenshtein.c,sha256=aF_telv3WS_yFiZ5TsvDqKRh21Q2FYRqqJA_lPltZA4,191853
+Levenshtein/_levenshtein.h,sha256=CL1zbSeAqG9kEzmc0Ejk7kj9SjVNOaX9kbzYWtfliXk,11227
+Levenshtein/_levenshtein.pyd,sha256=7Vz8mUgu8VQ2rPVHhY5cE1R1v6s10zxRoIm_CgQjsD8,75776
+python_Levenshtein-0.12.0.dist-info/DESCRIPTION.rst,sha256=t4c3B_F1MyaYPVe2ttefl_IdUUYe_I90SoXrhmwUBPY,3335
+python_Levenshtein-0.12.0.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+python_Levenshtein-0.12.0.dist-info/METADATA,sha256=n_BFg4KW57QkNItun9J2fqJ-VsEBXDqPbhd1fz2eXyM,4112
+python_Levenshtein-0.12.0.dist-info/RECORD,,
+python_Levenshtein-0.12.0.dist-info/WHEEL,sha256=Jmq6HlU3-gun8Kdi3LY3f3pFZ0JqJ7Bn8GbGn_XfX0M,106
+python_Levenshtein-0.12.0.dist-info/entry_points.txt,sha256=cMDTxLD3IhTcL0h4wm9KRcujGVmDc5-E7pKMJVSVitE,7
+python_Levenshtein-0.12.0.dist-info/metadata.json,sha256=gYabLFiHoRUMKW46hB53hS6jJUz6vcIqBHH4_oNKavA,810
+python_Levenshtein-0.12.0.dist-info/namespace_packages.txt,sha256=AbpHGcgLb-kRsJGnwFEktk7uzpZOCcBY74-YBdrKVGs,1
+python_Levenshtein-0.12.0.dist-info/top_level.txt,sha256=RvPuPevm_7j5S0VBmjD7AQr8RlHYl2CTA_4GqFW-gfA,12

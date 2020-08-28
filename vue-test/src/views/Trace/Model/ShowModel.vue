@@ -10,20 +10,15 @@
 <script>
 export default {
   name: 'ShowModel.vue',
-  data() {
-    return {
-      cardMainShow: true,
-      cardHtmlShow: false
-      //   isChange: false
-    }
-  },
-  methods: {
-    changeStatus() {
-      // if (this.isChange) {
-      this.cardMainShow = !this.cardMainShow
-      this.cardHtmlShow = !this.cardHtmlShow
-      // }
-    }
+  created() {
+    this.$http
+      .get('http://127.0.0.1:8000/api/showModel')
+      .then(response => {
+        console.log(response)
+      })
+      .catch(function(error) {
+        console.log(error)
+      })
   }
 }
 </script>

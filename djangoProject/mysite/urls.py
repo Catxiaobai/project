@@ -18,9 +18,10 @@ from django.contrib import admin
 from mysite import views
 
 urlpatterns = [
-    url(r'^test', views.test, name='test'),
-    url(r'^happy', views.happy, name='happy'),
-    url(r'^judgeModel', views.judgeModel, name='judgeModle'),
-    url(r'^addModel', views.addModel, name='addModel'),
-    url(r'^verify', views.verify, name='verify')
+    url(r'^modeling', views.modeling, name='modeling'),  # 生成模型
+    url(r'^showModel', views.showModel, name='showModel'),  # 展示模型
+    url(r'^judgeModel', views.judgeModel, name='judgeModle'),  # 完整性检验
+    url(r'^addModel', views.addModel, name='addModel'),  # 模型补全
+    url(r'^safeVerify', views.safeVerify, name='safeVerify'),  # 安全性验证
+
 ]

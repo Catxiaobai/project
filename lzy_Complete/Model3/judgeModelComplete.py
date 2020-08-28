@@ -6,16 +6,17 @@
 import os
 import sys
 
-from Model3.ConstructModel1 import ConstructModel1
+from ConstructModel1 import ConstructModel1
 
 sys.path.append("")
-writepath = r''
-filepath = r''
+writepath = r'E:/Code/project301/file/'
+filepath = r'E:/Code/project301/file/'
 import fp as fp
-def judgeModelComplete1(TraceSet,StateSet,Transet,State2,T):
-    # print(T)
-    # print(TraceSet[0])
-    # 存储没有找到条件对立分支的条件及其所在迁移
+def judgeModelComplete1():
+        # print(T)
+        # print(TraceSet[0])
+        # 存储没有找到条件对立分支的条件及其所在迁移
+    TraceSet, StateSet, TransSet, State2, T = ConstructModel1()
     counterCondSet = {}
     for i in range(0, len(T)):
         # # 存储没有找到条件对立分支的条件及其所在迁移
@@ -24,50 +25,50 @@ def judgeModelComplete1(TraceSet,StateSet,Transet,State2,T):
         src1 = T[i][1]
         tgt1 = T[i][2]
         event1 = T[i][3]
-        cond1=T[i][4].split("condition=")[1]
-        if cond1=="null":
+        cond1 = T[i][4].split("condition=")[1]
+        if cond1 == "null":
             continue
         else:
-            cond1=cond1.split(",")
-            l=len(cond1)
-            for k in range(0,len(cond1)):
-                flag=1
-                #寻找每一个条件的对立分支
+            cond1 = cond1.split(",")
+            l = len(cond1)
+            for k in range(0, len(cond1)):
+                flag = 1
+                # 寻找每一个条件的对立分支
                 for j in range(0, len(T)):
                     t2 = T[j][0]
                     src2 = T[j][1]
                     tgt2 = T[j][2]
                     event2 = T[j][3]
                     cond2 = T[j][4].split("condition=")[1]
-                    if t2!=t1:
-                        if src2 == src1 and tgt2!=tgt1 and event2==event1 and cond2!="null":
+                    if t2 != t1:
+                        if src2 == src1 and tgt2 != tgt1 and event2 == event1 and cond2 != "null":
                             cond2 = cond2.split(",")
                             # print(t1)
                             # print(t2)
                             # print(cond1)
                             # print(cond2)
-                            count=0
-                            if k==0:
-                                count=0
+                            count = 0
+                            if k == 0:
+                                count = 0
                             else:
-                                for n in range(0,k):
-                                    if cond1[n]==cond2[n]:
-                                        count+=1
-                            if count==k:
+                                for n in range(0, k):
+                                    if cond1[n] == cond2[n]:
+                                        count += 1
+                            if count == k:
                                 if "!=" in cond1[k] and "=" in cond2[k]:
                                     variable1 = cond1[k].split("!=")
-                                    variable2=cond2[k].split("=")
+                                    variable2 = cond2[k].split("=")
                                     # print(variable1)
                                     # print(variable1)
-                                    if variable1==variable2:
-                                        flag=0
-                                elif  "!=" in cond2[k] and "=" in cond1[k]:
+                                    if variable1 == variable2:
+                                        flag = 0
+                                elif "!=" in cond2[k] and "=" in cond1[k]:
                                     variable1 = cond1[k].split("=")
                                     variable2 = cond2[k].split("!=")
                                     # print(variable1)
                                     # print(variable1)
                                     if variable1 == variable2:
-                                        flag =0
+                                        flag = 0
                                 elif "<=" in cond1[k] and ">" in cond2[k]:
                                     variable1 = cond1[k].split("<=")
                                     variable2 = cond2[k].split(">")
@@ -77,7 +78,7 @@ def judgeModelComplete1(TraceSet,StateSet,Transet,State2,T):
                                     # print(variable1)
                                     if variable1 == variable2:
                                         flag = 0
-                                elif  "<=" in cond2[k] and ">" in cond1[k]:
+                                elif "<=" in cond2[k] and ">" in cond1[k]:
                                     variable1 = cond1[k].split(">")
                                     variable2 = cond2[k].split("<=")
                                     # print(variable1)
@@ -116,9 +117,9 @@ def judgeModelComplete1(TraceSet,StateSet,Transet,State2,T):
                                         flag = 0
                     else:
                         continue
-                #如果没有找到该条件的分支
-                if flag==1:
-                    counterCondSet[cond1[k]]=t1
+                # 如果没有找到该条件的分支
+                if flag == 1:
+                    counterCondSet[cond1[k]] = t1
 
                 else:
                     break
@@ -141,18 +142,19 @@ def judgeModelComplete1(TraceSet,StateSet,Transet,State2,T):
                     # print(maxStateLabe)
                     event = "event:" + event
                     cond = "condition:" + cond
-                    print(event)
-                    print(cond)
+                    # print(event)
+                    # print(cond)
                     traceSample = None
                     for k in range(0, len(TraceSet)):
                         if event in TraceSet[k] and cond in TraceSet[k]:
                             traceSample = TraceSet[k]
                             break
-                    print(traceSample)
+                    # print(traceSample)
                     completeT.append(src)
                     completeT.append(event)
+                    print("模型不完整")
                     savedStdout = sys.stdout  # 保存标准输出流
-                    with open('out.txt', 'w+') as file:
+                    with open(filepath+'out.txt', 'w+') as file:
                         sys.stdout = file  # 标准输出重定向至文件
                         print("N")
                         print("模型不完整，请补全：")
@@ -169,14 +171,24 @@ def judgeModelComplete1(TraceSet,StateSet,Transet,State2,T):
                         print("请按照Trace示例从最大状态节点编号之后编号，并从需要修改为其对立条件的Condition处修改Trace示例，补全Trace：")
                     sys.stdout = savedStdout  # 恢复标准输出流
     else:
-
         print("模型完整")
         savedStdout = sys.stdout  # 保存标准输出流
-        with open('out.txt', 'w+') as file:
+        with open(filepath+'out.txt', 'w+') as file:
             sys.stdout = file  # 标准输出重定向至文件
             print("Y")
             print("模型完整")
             for key, value in State2.items():
                 print(key + "->" + value)
         sys.stdout = savedStdout  # 恢复标准输出流
-    return State2,counterCondSet
+    return State2, counterCondSet
+
+if __name__ == '__main__':
+    judgeModelComplete1()
+
+
+
+
+
+
+
+

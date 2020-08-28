@@ -1,0 +1,87 @@
+control sink [[<Transition TS15>], [<Transition TS16>], [<Transition TS17>]]
+<Transition TS1> :
+
+[<**Path [<Transition TS1>, <Transition TS16>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS3>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS4>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS5>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS6>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS7>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS15>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS8>, <Transition TS11>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS8>, <Transition TS12>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS8>, <Transition TS13>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS8>, <Transition TS14>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS8>, <Transition TS17>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS9>, <Transition TS11>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS9>, <Transition TS12>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS9>, <Transition TS13>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS9>, <Transition TS14>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS9>, <Transition TS17>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS10>, <Transition TS11>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS10>, <Transition TS12>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS10>, <Transition TS13>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS10>, <Transition TS14>]**>, <**Path [<Transition TS1>, <Transition TS2>, <Transition TS10>, <Transition TS17>]**>]
+
+
+<Transition TS2> :
+
+[<**Path [<Transition TS2>, <Transition TS3>]**>, <**Path [<Transition TS2>, <Transition TS4>]**>, <**Path [<Transition TS2>, <Transition TS5>]**>, <**Path [<Transition TS2>, <Transition TS6>]**>, <**Path [<Transition TS2>, <Transition TS7>]**>, <**Path [<Transition TS2>, <Transition TS15>]**>, <**Path [<Transition TS2>, <Transition TS8>, <Transition TS11>]**>, <**Path [<Transition TS2>, <Transition TS8>, <Transition TS12>]**>, <**Path [<Transition TS2>, <Transition TS8>, <Transition TS13>]**>, <**Path [<Transition TS2>, <Transition TS8>, <Transition TS14>]**>, <**Path [<Transition TS2>, <Transition TS8>, <Transition TS17>]**>, <**Path [<Transition TS2>, <Transition TS9>, <Transition TS11>]**>, <**Path [<Transition TS2>, <Transition TS9>, <Transition TS12>]**>, <**Path [<Transition TS2>, <Transition TS9>, <Transition TS13>]**>, <**Path [<Transition TS2>, <Transition TS9>, <Transition TS14>]**>, <**Path [<Transition TS2>, <Transition TS9>, <Transition TS17>]**>, <**Path [<Transition TS2>, <Transition TS10>, <Transition TS11>]**>, <**Path [<Transition TS2>, <Transition TS10>, <Transition TS12>]**>, <**Path [<Transition TS2>, <Transition TS10>, <Transition TS13>]**>, <**Path [<Transition TS2>, <Transition TS10>, <Transition TS14>]**>, <**Path [<Transition TS2>, <Transition TS10>, <Transition TS17>]**>]
+
+
+<Transition TS3> :
+
+[<**Path [<Transition TS3>]**>]
+
+
+<Transition TS4> :
+
+[<**Path [<Transition TS4>]**>]
+
+
+<Transition TS5> :
+
+[<**Path [<Transition TS5>]**>]
+
+
+<Transition TS6> :
+
+[<**Path [<Transition TS6>]**>]
+
+
+<Transition TS7> :
+
+[<**Path [<Transition TS7>]**>]
+
+
+<Transition TS8> :
+
+[<**Path [<Transition TS8>, <Transition TS11>]**>, <**Path [<Transition TS8>, <Transition TS12>]**>, <**Path [<Transition TS8>, <Transition TS13>]**>, <**Path [<Transition TS8>, <Transition TS14>]**>, <**Path [<Transition TS8>, <Transition TS17>]**>, <**Path [<Transition TS8>, <Transition TS11>, <Transition TS3>]**>, <**Path [<Transition TS8>, <Transition TS11>, <Transition TS4>]**>, <**Path [<Transition TS8>, <Transition TS11>, <Transition TS5>]**>, <**Path [<Transition TS8>, <Transition TS11>, <Transition TS6>]**>, <**Path [<Transition TS8>, <Transition TS11>, <Transition TS7>]**>, <**Path [<Transition TS8>, <Transition TS11>, <Transition TS9>]**>, <**Path [<Transition TS8>, <Transition TS11>, <Transition TS10>]**>, <**Path [<Transition TS8>, <Transition TS11>, <Transition TS15>]**>, <**Path [<Transition TS8>, <Transition TS12>, <Transition TS3>]**>, <**Path [<Transition TS8>, <Transition TS12>, <Transition TS4>]**>, <**Path [<Transition TS8>, <Transition TS12>, <Transition TS5>]**>, <**Path [<Transition TS8>, <Transition TS12>, <Transition TS6>]**>, <**Path [<Transition TS8>, <Transition TS12>, <Transition TS7>]**>, <**Path [<Transition TS8>, <Transition TS12>, <Transition TS9>]**>, <**Path [<Transition TS8>, <Transition TS12>, <Transition TS10>]**>, <**Path [<Transition TS8>, <Transition TS12>, <Transition TS15>]**>, <**Path [<Transition TS8>, <Transition TS13>, <Transition TS3>]**>, <**Path [<Transition TS8>, <Transition TS13>, <Transition TS4>]**>, <**Path [<Transition TS8>, <Transition TS13>, <Transition TS5>]**>, <**Path [<Transition TS8>, <Transition TS13>, <Transition TS6>]**>, <**Path [<Transition TS8>, <Transition TS13>, <Transition TS7>]**>, <**Path [<Transition TS8>, <Transition TS13>, <Transition TS9>]**>, <**Path [<Transition TS8>, <Transition TS13>, <Transition TS10>]**>, <**Path [<Transition TS8>, <Transition TS13>, <Transition TS15>]**>, <**Path [<Transition TS8>, <Transition TS14>, <Transition TS3>]**>, <**Path [<Transition TS8>, <Transition TS14>, <Transition TS4>]**>, <**Path [<Transition TS8>, <Transition TS14>, <Transition TS5>]**>, <**Path [<Transition TS8>, <Transition TS14>, <Transition TS6>]**>, <**Path [<Transition TS8>, <Transition TS14>, <Transition TS7>]**>, <**Path [<Transition TS8>, <Transition TS14>, <Transition TS9>]**>, <**Path [<Transition TS8>, <Transition TS14>, <Transition TS10>]**>, <**Path [<Transition TS8>, <Transition TS14>, <Transition TS15>]**>]
+
+
+<Transition TS9> :
+
+[<**Path [<Transition TS9>, <Transition TS11>]**>, <**Path [<Transition TS9>, <Transition TS12>]**>, <**Path [<Transition TS9>, <Transition TS13>]**>, <**Path [<Transition TS9>, <Transition TS14>]**>, <**Path [<Transition TS9>, <Transition TS17>]**>, <**Path [<Transition TS9>, <Transition TS11>, <Transition TS3>]**>, <**Path [<Transition TS9>, <Transition TS11>, <Transition TS4>]**>, <**Path [<Transition TS9>, <Transition TS11>, <Transition TS5>]**>, <**Path [<Transition TS9>, <Transition TS11>, <Transition TS6>]**>, <**Path [<Transition TS9>, <Transition TS11>, <Transition TS7>]**>, <**Path [<Transition TS9>, <Transition TS11>, <Transition TS8>]**>, <**Path [<Transition TS9>, <Transition TS11>, <Transition TS10>]**>, <**Path [<Transition TS9>, <Transition TS11>, <Transition TS15>]**>, <**Path [<Transition TS9>, <Transition TS12>, <Transition TS3>]**>, <**Path [<Transition TS9>, <Transition TS12>, <Transition TS4>]**>, <**Path [<Transition TS9>, <Transition TS12>, <Transition TS5>]**>, <**Path [<Transition TS9>, <Transition TS12>, <Transition TS6>]**>, <**Path [<Transition TS9>, <Transition TS12>, <Transition TS7>]**>, <**Path [<Transition TS9>, <Transition TS12>, <Transition TS8>]**>, <**Path [<Transition TS9>, <Transition TS12>, <Transition TS10>]**>, <**Path [<Transition TS9>, <Transition TS12>, <Transition TS15>]**>, <**Path [<Transition TS9>, <Transition TS13>, <Transition TS3>]**>, <**Path [<Transition TS9>, <Transition TS13>, <Transition TS4>]**>, <**Path [<Transition TS9>, <Transition TS13>, <Transition TS5>]**>, <**Path [<Transition TS9>, <Transition TS13>, <Transition TS6>]**>, <**Path [<Transition TS9>, <Transition TS13>, <Transition TS7>]**>, <**Path [<Transition TS9>, <Transition TS13>, <Transition TS8>]**>, <**Path [<Transition TS9>, <Transition TS13>, <Transition TS10>]**>, <**Path [<Transition TS9>, <Transition TS13>, <Transition TS15>]**>, <**Path [<Transition TS9>, <Transition TS14>, <Transition TS3>]**>, <**Path [<Transition TS9>, <Transition TS14>, <Transition TS4>]**>, <**Path [<Transition TS9>, <Transition TS14>, <Transition TS5>]**>, <**Path [<Transition TS9>, <Transition TS14>, <Transition TS6>]**>, <**Path [<Transition TS9>, <Transition TS14>, <Transition TS7>]**>, <**Path [<Transition TS9>, <Transition TS14>, <Transition TS8>]**>, <**Path [<Transition TS9>, <Transition TS14>, <Transition TS10>]**>, <**Path [<Transition TS9>, <Transition TS14>, <Transition TS15>]**>]
+
+
+<Transition TS10> :
+
+[<**Path [<Transition TS10>, <Transition TS11>]**>, <**Path [<Transition TS10>, <Transition TS12>]**>, <**Path [<Transition TS10>, <Transition TS13>]**>, <**Path [<Transition TS10>, <Transition TS14>]**>, <**Path [<Transition TS10>, <Transition TS17>]**>, <**Path [<Transition TS10>, <Transition TS11>, <Transition TS3>]**>, <**Path [<Transition TS10>, <Transition TS11>, <Transition TS4>]**>, <**Path [<Transition TS10>, <Transition TS11>, <Transition TS5>]**>, <**Path [<Transition TS10>, <Transition TS11>, <Transition TS6>]**>, <**Path [<Transition TS10>, <Transition TS11>, <Transition TS7>]**>, <**Path [<Transition TS10>, <Transition TS11>, <Transition TS8>]**>, <**Path [<Transition TS10>, <Transition TS11>, <Transition TS9>]**>, <**Path [<Transition TS10>, <Transition TS11>, <Transition TS15>]**>, <**Path [<Transition TS10>, <Transition TS12>, <Transition TS3>]**>, <**Path [<Transition TS10>, <Transition TS12>, <Transition TS4>]**>, <**Path [<Transition TS10>, <Transition TS12>, <Transition TS5>]**>, <**Path [<Transition TS10>, <Transition TS12>, <Transition TS6>]**>, <**Path [<Transition TS10>, <Transition TS12>, <Transition TS7>]**>, <**Path [<Transition TS10>, <Transition TS12>, <Transition TS8>]**>, <**Path [<Transition TS10>, <Transition TS12>, <Transition TS9>]**>, <**Path [<Transition TS10>, <Transition TS12>, <Transition TS15>]**>, <**Path [<Transition TS10>, <Transition TS13>, <Transition TS3>]**>, <**Path [<Transition TS10>, <Transition TS13>, <Transition TS4>]**>, <**Path [<Transition TS10>, <Transition TS13>, <Transition TS5>]**>, <**Path [<Transition TS10>, <Transition TS13>, <Transition TS6>]**>, <**Path [<Transition TS10>, <Transition TS13>, <Transition TS7>]**>, <**Path [<Transition TS10>, <Transition TS13>, <Transition TS8>]**>, <**Path [<Transition TS10>, <Transition TS13>, <Transition TS9>]**>, <**Path [<Transition TS10>, <Transition TS13>, <Transition TS15>]**>, <**Path [<Transition TS10>, <Transition TS14>, <Transition TS3>]**>, <**Path [<Transition TS10>, <Transition TS14>, <Transition TS4>]**>, <**Path [<Transition TS10>, <Transition TS14>, <Transition TS5>]**>, <**Path [<Transition TS10>, <Transition TS14>, <Transition TS6>]**>, <**Path [<Transition TS10>, <Transition TS14>, <Transition TS7>]**>, <**Path [<Transition TS10>, <Transition TS14>, <Transition TS8>]**>, <**Path [<Transition TS10>, <Transition TS14>, <Transition TS9>]**>, <**Path [<Transition TS10>, <Transition TS14>, <Transition TS15>]**>]
+
+
+<Transition TS11> :
+
+[<**Path [<Transition TS11>, <Transition TS3>]**>, <**Path [<Transition TS11>, <Transition TS4>]**>, <**Path [<Transition TS11>, <Transition TS5>]**>, <**Path [<Transition TS11>, <Transition TS6>]**>, <**Path [<Transition TS11>, <Transition TS7>]**>, <**Path [<Transition TS11>, <Transition TS8>]**>, <**Path [<Transition TS11>, <Transition TS9>]**>, <**Path [<Transition TS11>, <Transition TS10>]**>, <**Path [<Transition TS11>, <Transition TS15>]**>, <**Path [<Transition TS11>, <Transition TS8>, <Transition TS12>]**>, <**Path [<Transition TS11>, <Transition TS8>, <Transition TS13>]**>, <**Path [<Transition TS11>, <Transition TS8>, <Transition TS14>]**>, <**Path [<Transition TS11>, <Transition TS8>, <Transition TS17>]**>, <**Path [<Transition TS11>, <Transition TS9>, <Transition TS12>]**>, <**Path [<Transition TS11>, <Transition TS9>, <Transition TS13>]**>, <**Path [<Transition TS11>, <Transition TS9>, <Transition TS14>]**>, <**Path [<Transition TS11>, <Transition TS9>, <Transition TS17>]**>, <**Path [<Transition TS11>, <Transition TS10>, <Transition TS12>]**>, <**Path [<Transition TS11>, <Transition TS10>, <Transition TS13>]**>, <**Path [<Transition TS11>, <Transition TS10>, <Transition TS14>]**>, <**Path [<Transition TS11>, <Transition TS10>, <Transition TS17>]**>]
+
+
+<Transition TS12> :
+
+[<**Path [<Transition TS12>, <Transition TS3>]**>, <**Path [<Transition TS12>, <Transition TS4>]**>, <**Path [<Transition TS12>, <Transition TS5>]**>, <**Path [<Transition TS12>, <Transition TS6>]**>, <**Path [<Transition TS12>, <Transition TS7>]**>, <**Path [<Transition TS12>, <Transition TS8>]**>, <**Path [<Transition TS12>, <Transition TS9>]**>, <**Path [<Transition TS12>, <Transition TS10>]**>, <**Path [<Transition TS12>, <Transition TS15>]**>, <**Path [<Transition TS12>, <Transition TS8>, <Transition TS11>]**>, <**Path [<Transition TS12>, <Transition TS8>, <Transition TS13>]**>, <**Path [<Transition TS12>, <Transition TS8>, <Transition TS14>]**>, <**Path [<Transition TS12>, <Transition TS8>, <Transition TS17>]**>, <**Path [<Transition TS12>, <Transition TS9>, <Transition TS11>]**>, <**Path [<Transition TS12>, <Transition TS9>, <Transition TS13>]**>, <**Path [<Transition TS12>, <Transition TS9>, <Transition TS14>]**>, <**Path [<Transition TS12>, <Transition TS9>, <Transition TS17>]**>, <**Path [<Transition TS12>, <Transition TS10>, <Transition TS11>]**>, <**Path [<Transition TS12>, <Transition TS10>, <Transition TS13>]**>, <**Path [<Transition TS12>, <Transition TS10>, <Transition TS14>]**>, <**Path [<Transition TS12>, <Transition TS10>, <Transition TS17>]**>]
+
+
+<Transition TS13> :
+
+[<**Path [<Transition TS13>, <Transition TS3>]**>, <**Path [<Transition TS13>, <Transition TS4>]**>, <**Path [<Transition TS13>, <Transition TS5>]**>, <**Path [<Transition TS13>, <Transition TS6>]**>, <**Path [<Transition TS13>, <Transition TS7>]**>, <**Path [<Transition TS13>, <Transition TS8>]**>, <**Path [<Transition TS13>, <Transition TS9>]**>, <**Path [<Transition TS13>, <Transition TS10>]**>, <**Path [<Transition TS13>, <Transition TS15>]**>, <**Path [<Transition TS13>, <Transition TS8>, <Transition TS11>]**>, <**Path [<Transition TS13>, <Transition TS8>, <Transition TS12>]**>, <**Path [<Transition TS13>, <Transition TS8>, <Transition TS14>]**>, <**Path [<Transition TS13>, <Transition TS8>, <Transition TS17>]**>, <**Path [<Transition TS13>, <Transition TS9>, <Transition TS11>]**>, <**Path [<Transition TS13>, <Transition TS9>, <Transition TS12>]**>, <**Path [<Transition TS13>, <Transition TS9>, <Transition TS14>]**>, <**Path [<Transition TS13>, <Transition TS9>, <Transition TS17>]**>, <**Path [<Transition TS13>, <Transition TS10>, <Transition TS11>]**>, <**Path [<Transition TS13>, <Transition TS10>, <Transition TS12>]**>, <**Path [<Transition TS13>, <Transition TS10>, <Transition TS14>]**>, <**Path [<Transition TS13>, <Transition TS10>, <Transition TS17>]**>]
+
+
+<Transition TS14> :
+
+[<**Path [<Transition TS14>, <Transition TS3>]**>, <**Path [<Transition TS14>, <Transition TS4>]**>, <**Path [<Transition TS14>, <Transition TS5>]**>, <**Path [<Transition TS14>, <Transition TS6>]**>, <**Path [<Transition TS14>, <Transition TS7>]**>, <**Path [<Transition TS14>, <Transition TS8>]**>, <**Path [<Transition TS14>, <Transition TS9>]**>, <**Path [<Transition TS14>, <Transition TS10>]**>, <**Path [<Transition TS14>, <Transition TS15>]**>, <**Path [<Transition TS14>, <Transition TS8>, <Transition TS11>]**>, <**Path [<Transition TS14>, <Transition TS8>, <Transition TS12>]**>, <**Path [<Transition TS14>, <Transition TS8>, <Transition TS13>]**>, <**Path [<Transition TS14>, <Transition TS8>, <Transition TS17>]**>, <**Path [<Transition TS14>, <Transition TS9>, <Transition TS11>]**>, <**Path [<Transition TS14>, <Transition TS9>, <Transition TS12>]**>, <**Path [<Transition TS14>, <Transition TS9>, <Transition TS13>]**>, <**Path [<Transition TS14>, <Transition TS9>, <Transition TS17>]**>, <**Path [<Transition TS14>, <Transition TS10>, <Transition TS11>]**>, <**Path [<Transition TS14>, <Transition TS10>, <Transition TS12>]**>, <**Path [<Transition TS14>, <Transition TS10>, <Transition TS13>]**>, <**Path [<Transition TS14>, <Transition TS10>, <Transition TS17>]**>]
+
+
+<Transition TS15> :
+
+[<**Path [<Transition TS15>]**>]
+
+
+<Transition TS16> :
+
+[<**Path [<Transition TS16>]**>]
+
+
+<Transition TS17> :
+
+[<**Path [<Transition TS17>]**>]
+
+
+generate the dependence graph...

@@ -1,17 +1,19 @@
 <template>
   <div>
-    <el-table ref="singleTable" :data="tableData" @row-click="handdle" highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
-      <el-table-column type="index" label="Id" width="50"> </el-table-column>
-      <el-table-column property="name" label="名称" width="120"> </el-table-column>
-      <el-table-column property="transition" label="失效序列"> </el-table-column>
-    </el-table>
-    <el-dialog title="提示" :visible.sync="showDialog" width="30%">
-      <span>是否选择 {{ transName }} 进行验证</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="showDialog = false">取 消</el-button>
-        <el-button type="primary" @click="verify">确 定</el-button>
-      </span>
-    </el-dialog>
+    <el-card>
+      <el-table ref="singleTable" :data="tableData" @row-click="handdle" highlight-current-row @current-change="handleCurrentChange" style="width: 100%">
+        <el-table-column type="index" label="Id" width="50"> </el-table-column>
+        <el-table-column property="name" label="名称" width="120"> </el-table-column>
+        <el-table-column property="transition" label="失效序列"> </el-table-column>
+      </el-table>
+      <el-dialog title="提示" :visible.sync="showDialog" width="30%">
+        <span>是否选择 {{ transName }} 进行验证</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="showDialog = false">取 消</el-button>
+          <el-button type="primary" @click="verify">确 定</el-button>
+        </span>
+      </el-dialog>
+    </el-card>
   </div>
 </template>
 
@@ -82,7 +84,7 @@ export default {
     verify() {
       this.showDialog = false
       this.$http
-        .post('http://127.0.0.1:8000/api/verify', { msg: this.trans })
+        .post('http://127.0.0.1:8000/api/safeVerify', { msg: this.trans })
         .then(response => {
           console.log({ msg: this.trans })
         })
@@ -93,31 +95,5 @@ export default {
   }
 }
 </script>
-
-<!--<script>-->
-<!--export default {-->
-<!--  name: 'SafeVerify.vue',-->
-<!--  data() {-->
-<!--    return {-->
-<!--      msg: 'sss',-->
-<!--      v: ''-->
-<!--    }-->
-<!--  },-->
-<!--  methods: {},-->
-<!--  created() {-->
-<!--    // console.log(this.$http)-->
-<!--    this.$http-->
-<!--      .get('http://127.0.0.1:8000/api/judgeModel')-->
-<!--      .then(response => {-->
-<!--        console.log(response)-->
-<!--        this.msg = response.data.result-->
-<!--        // this.v = JSON.parse(response)-->
-<!--      })-->
-<!--      .catch(function(error) {-->
-<!--        console.log(error)-->
-<!--      })-->
-<!--  }-->
-<!--}-->
-<!--</script>-->
 
 <style scoped></style>

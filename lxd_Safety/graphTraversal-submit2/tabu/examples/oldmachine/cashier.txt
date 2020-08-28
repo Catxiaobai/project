@@ -1,0 +1,287 @@
+State:
+	name=START
+
+State:
+	name=S1
+
+State:
+	name=S2
+
+State:
+	name=S3
+
+State:
+	name=S4
+
+State:
+	name=S5
+
+State:
+	name=S6
+
+State:
+	name=S7
+
+State:
+	name=S8
+
+State:
+	name=S9
+
+State:
+	name=S10
+
+State:
+	name=EXIT
+
+Label:
+	name=T1
+	event=Prompt_Scan();
+	cond=
+	action=total=0;
+
+Label:
+	name=T2
+	event=scan_Barcode(name, price);
+	cond=
+	action=Add_to_basket(name); total=total+price;
+
+Label:
+	name=T3
+	event=Prompt_Payment();
+	cond=
+	action=write(total);
+
+Label:
+	name=T4
+	event=Pay_by_card();
+	cond=
+	action=
+
+Label:
+	name=T5
+	event=Swipe(b);
+	cond=
+	action=Prompt_for_Signature();
+
+Label:
+	name=T6
+	event=Check_signature(accept);
+	cond=
+	action=
+
+Label:
+	name=T7
+	event=Not_Authorised();
+	cond=accept==false;
+	action=
+
+Label:
+	name=T8
+	event=Authorise();
+	cond=accept==true;
+	action=b=b-total;Write("Receipt=", total);
+
+Label:
+	name=T9
+	event=ChipandPin(p,b);
+	cond=
+	action=attempts=0;
+
+Label:
+	name=T10
+	event=PIN(p);
+	cond=p!=pin&&attempts<3;
+	action=attempts=attempts+1;
+
+Label:
+	name=T11
+	event=Authorise();
+	cond=p==p&&attempts<3;
+	action=b=b-total;write("Receipt=",  total);
+
+Label:
+	name=T12
+	event=Pay_by_Cash(amount);
+	cond=
+	action=change=amount-total;
+
+Label:
+	name=T13
+	event=Insufficient_Cash();
+	cond=
+	action=
+
+Label:
+	name=T14
+	event=Receipt();
+	cond=chang=0;
+	action=write(change, total);
+
+Label:
+	name=T15
+	event=PIN(p)
+	cond=p!=pin&&attempts=3;
+	action=
+
+Label:
+	name=T16
+	event=Pay_by_cheque();
+	cond=
+	action=
+
+Label:
+	name=T17
+	event=SwipeCard(garauntee);
+	cond=
+	action=
+
+Label:
+	name=T18
+	event=Not_Authorised();
+	cond=gauauntee==False;
+	action=
+
+Label:
+	name=T19
+	event=Check_Signature(accept);
+	cond=garauntee==true;
+	action=
+
+Label:
+	name=T20
+	event=Authorise();
+	cond=accept==true;
+	action=b=b-total;Write("Receipt=", total);
+
+Label:
+	name=T21
+	event=Not_Authorised()
+	cond=accept==false
+	action=
+
+Transition:
+	name=TS1
+	srt=START
+	tgt=S1
+	label=T1
+
+Transition:
+	name=TS2
+	srt=S1
+	tgt=S1
+	label=T2
+
+Transition:
+	name=TS3
+	srt=S1
+	tgt=S2
+	label=T3
+
+Transition:
+	name=TS4
+	srt=S2
+	tgt=S3
+	label=T4
+
+Transition:
+	name=TS5
+	srt=S3
+	tgt=S4
+	label=T5
+
+Transition:
+	name=TS6
+	srt=S4
+	tgt=S5
+	label=T6
+
+Transition:
+	name=TS7
+	srt=S5
+	tgt=S2
+	label=T7
+
+Transition:
+	name=TS8
+	srt=S5
+	tgt=EXIT
+	label=T8
+
+Transition:
+	name=TS9
+	srt=S3
+	tgt=S6
+	label=T9
+
+Transition:
+	name=TS10
+	srt=S6
+	tgt=S6
+	label=T10
+
+Transition:
+	name=TS11
+	srt=S6
+	tgt=EXIT
+	label=T11
+
+Transition:
+	name=TS12
+	srt=S2
+	tgt=S7
+	label=T12
+
+Transition:
+	name=TS13
+	srt=S7
+	tgt=S2
+	label=T13
+
+Transition:
+	name=TS14
+	srt=S7
+	tgt=EXIT
+	label=T14
+
+Transition:
+	name=TS15
+	srt=S6
+	tgt=S2
+	label=T15
+
+Transition:
+	name=TS16
+	srt=S2
+	tgt=S8
+	label=T16
+
+Transition:
+	name=TS17
+	srt=S8
+	tgt=S9
+	label=T17
+
+Transition:
+	name=TS18
+	srt=S9
+	tgt=S2
+	label=T18
+
+Transition:
+	name=TS19
+	srt=S9
+	tgt=S10
+	label=T19
+
+Transition:
+	name=TS20
+	srt=S10
+	tgt=EXIT
+	label=T20
+
+Transition:
+	name=TS21
+	srt=S10
+	tgt=S2
+	label=T21

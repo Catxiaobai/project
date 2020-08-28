@@ -1,0 +1,174 @@
+State:
+	name=START
+
+State:
+	name=S2
+
+State:
+	name=S3
+
+State:
+	name=S4
+
+State:
+	name=S5
+
+State:
+	name=S6
+
+State:
+	name=S7
+
+State:
+	name=S8
+
+State:
+	name=S9
+
+State:
+	name=S10
+
+Label:
+	name=T1
+	event=
+	cond=
+	action=
+
+Label:
+	name=T2
+	event=
+	cond=
+	action=
+
+Label:
+	name=T3
+	event=
+	cond=
+	action=
+
+Label:
+	name=T4
+	event=
+	cond=
+	action=
+
+Label:
+	name=T5
+	event=
+	cond=
+	action=
+	
+Label:
+	name=T6
+	event=
+	cond=
+	action=
+
+Label:
+	name=T7
+	event=
+	cond=
+	action=
+
+Label:
+	name=T8
+	event=
+	cond=
+	action=
+
+Label:
+	name=T9
+	event=
+	cond=
+	action=
+
+Label:
+	name=T10
+	event=
+	cond=
+	action=
+
+Label:
+	name=T11
+	event=
+	cond=
+	action=
+
+Label:
+	name=T12
+	event=
+	cond=
+	action=
+
+
+Transition:
+	name=TS1
+	srt=START
+	tgt=S2
+	label=T1
+
+Transition:
+	name=TS2
+	srt=S2
+	tgt=S3
+	label=T2
+
+Transition:
+	name=TS3
+	srt=S3
+	tgt=S4
+	label=T3
+
+Transition:
+	name=TS4
+	srt=S4
+	tgt=S5
+	label=T4
+
+Transition:
+	name=TS5
+	srt=S5
+	tgt=S2
+	label=T5
+
+Transition:
+	name=TS6
+	srt=S4
+	tgt=S6
+	label=T6
+
+Transition:
+	name=TS7
+	srt=S6
+	tgt=S7
+	label=T7
+
+Transition:
+	name=TS8
+	srt=S7
+	tgt=S8
+	label=T8
+
+Transition:
+	name=TS9
+	srt=S7
+	tgt=S9
+	label=T9
+
+Transition:
+	name=TS10
+	srt=S8
+	tgt=S9
+	label=T10
+
+Transition:
+	name=TS11
+	srt=S9
+	tgt=S7
+	label=T11
+
+Transition:
+	name=TS12
+	srt=START
+	tgt=S10
+	label=T12
