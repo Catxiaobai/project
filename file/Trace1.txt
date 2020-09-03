@@ -372,7 +372,6 @@ event:Cancel()
 condition:null
 action:Write("Canceling"),return_card
 target:S118:初始页面
-
 Trace: 
 source:S119:初始页面 
 event:Card(pinB) 

@@ -1,4 +1,4 @@
-<template>
+<template xmlns:display="http://www.w3.org/1999/xhtml">
   <div>
     <el-progress type="circle" :percentage="percentage" :color="colors" v-show="showProgress"></el-progress>
     <el-button type="primary" v-show="showButton" @click="buttonClick" style="margin-left: 40%;margin-top: 25%;">完整性检验</el-button>
@@ -10,11 +10,11 @@
         <!--        <el-button>退出</el-button>-->
       </span>
     </el-dialog>
-    <el-dialog name="failure" title="提示" :visible.sync="showFailureDialog" width="30%">
-      <span>{{ outMessage }}</span>
+    <el-dialog name="failure" title="模型不完整，请补全" :visible.sync="showFailureDialog" width="60%">
+      <span style="white-space: pre-line">{{ msg }}</span>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="gotolink">Yes！立即添加</el-button>
-        <el-button @click="refresh">No，稍后添加</el-button>
+        <el-button type="primary" @click="gotolink">Yes！立即补全</el-button>
+        <el-button @click="refresh">No，稍后补全</el-button>
       </span>
     </el-dialog>
   </div>
@@ -32,8 +32,8 @@ export default {
       isButton: false,
       showSuccessDialog: false,
       showFailureDialog: false,
-      outMessage: '模型不完整，是否立即补全',
       res: '',
+      msg: '',
       colors: [
         { color: '#CCCCCC', percentage: 20 },
         { color: '#CCCC99', percentage: 40 },
@@ -70,10 +70,13 @@ export default {
         .then(response => {
           console.log(response)
           this.res = response.data.result
+          this.msg = response.data.msg
+          // console.log(this.msg)
           if (this.res == 'Y') {
             //todo 跳出检测成功的弹窗
             // this.showButton = true
             this.showSuccessDialog = true
+
             // this.showFailureDialog = true
           } else if (this.res == 'N') {
             //todo 跳出检测失败的弹窗

@@ -4,7 +4,7 @@ import codecs
 
 filepath = r'E:/Code/project301/file/'
 
-wf = codecs.open(filepath+"2020-result.txt", 'w', encoding="utf-8")
+wf = codecs.open(filepath+"result.txt", 'w', encoding="utf-8")
 state = dict(json.load(open(filepath+"S2.txt", 'r')))
 
 for key in sorted(state.keys(), key=lambda x: int(x[1:])):

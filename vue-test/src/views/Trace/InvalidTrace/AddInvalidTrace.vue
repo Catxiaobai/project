@@ -1,12 +1,12 @@
 <template>
   <el-form ref="form" :model="form" label-width="80px">
-    <el-form-item label="场景id">
+    <el-form-item label="序列id">
       <el-input v-model="form.id"></el-input>
     </el-form-item>
-    <el-form-item label="场景名称">
+    <el-form-item label="序列名称">
       <el-input v-model="form.name"></el-input>
     </el-form-item>
-    <el-form-item label="场景内容">
+    <el-form-item label="序列内容">
       <el-input type="textarea" v-model="form.desc"></el-input>
     </el-form-item>
     <el-form-item>

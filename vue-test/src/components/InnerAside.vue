@@ -61,24 +61,24 @@ export default {
         },
         {
           path: '/invalid',
-          label: '失效场景',
+          label: '失效序列',
           name: 'invalid',
           icon: 's-release',
           index: 2,
           children: [
             {
               path: '/invalid',
-              label: '场景查看',
+              label: '序列查看',
               name: 'invalid'
             },
             {
               path: '/importInvalidTrace',
-              label: '场景导入',
+              label: '序列导入',
               name: 'importInvalidTrace'
             },
             {
               path: '/addInvalidTrace',
-              label: '场景添加',
+              label: '序列添加',
               name: 'addInvalidTrace'
             }
           ]
@@ -100,18 +100,6 @@ export default {
               label: '模型查看',
               name: 'showModel'
             }
-            // {
-            //   path: '/editModel',
-            //   label: '模型编辑',
-            //   name: 'editModel'
-            // }
-
-            // {
-            //   path: '/safety',
-            //   label: '安全性评估',
-            //   name: 'safety',
-            //   icon: 'warning'
-            // }
           ]
         },
         {
@@ -149,7 +137,7 @@ export default {
             {
               path: '/safeAssess',
               label: '安全性评估',
-              name: 'page2',
+              name: 'safeAssess',
               icon: 'more'
             }
           ]

@@ -7,7 +7,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 
 filepath = r'E:/Code/project301/file/'
-FILENAME = '2020-result.txt'
+FILENAME = 'result.txt'
 
 lines = open(filepath+FILENAME, 'r', encoding='utf-8').readlines()
 index_line = 0
@@ -19,10 +19,6 @@ while index_line < len(lines):
     if lines[index_line].strip() == "State:":
         index_line += 1
         node_label = lines[index_line].strip().split('=')[1]
-        #index_line += 1
-        #node_name = lines[index_line].strip().split('=',1)[1]
-        #data.append({"data": {"id": node_name, "label": node_name, "category": node_category.get(node_name, 2)}})
-        #data.append({"data": {"id": node_name, "label": node_label,"name":node_name}})
         data.append({"data": {"id": node_label, "label": node_label, "color": "gray"}})
     if lines[index_line].strip() == "Transition:":
         index_line += 1
@@ -44,37 +40,6 @@ while index_line < len(lines):
         data.append({"data": edge})
 
     index_line += 1
-
-'''NEW_DATA = 'newdata.txt'
-lines = open(NEW_DATA, 'r').readlines()
-index_line = 0
-while index_line < len(lines):
-    if lines[index_line].strip() == "State:":
-        index_line += 1
-        node_label = lines[index_line].strip().split('=')[1]
-        if all([node_label != node["data"]["id"] for node in data]):
-            data.append({"data": {"id": node_label, "label": node_label, "color": "green"}}) # here modify your node color
-    if lines[index_line].strip() == "Transition:":
-        index_line += 1
-        name = lines[index_line].strip().split('=', 1)[1]
-        index_line += 1
-        src = lines[index_line].strip().split('=', 1)[1]
-        index_line += 1
-        tgt = lines[index_line].strip().split('=', 1)[1]
-        index_line += 1
-        event = lines[index_line].strip().split('=', 1)
-        event = event[1] if len(event) > 1 else ""
-        index_line += 1
-        cond = lines[index_line].strip().split('=', 1)
-        cond = cond[1] if len(cond) > 1 else ""
-        index_line += 1
-        action = lines[index_line].strip().split('=', 1)
-        action = action[1] if len(action) > 1 else ""
-        # assume all edge are new in new data!
-        edge = {"id":src+tgt, "source": src, "target": tgt, "name": name, "event":event, "cond":cond, "action":action, "color": "blue"} # here modify your new edge color
-        data.append({"data": edge})
-
-    index_line += 1'''
 
 app = dash.Dash(__name__)
 
