@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    component: () => import('@/views/Main'),
+    component: () => import('@/views/Test'),
     children: [
       {
         path: '/',
@@ -24,16 +24,6 @@ const routes = [
         name: 'person',
         component: () => import('@/views/Person/Person')
       }
-      // {
-      //   path: '/page1',
-      //   name: 'page1',
-      //   component: () => import('@/views/Other/PageOne')
-      // },
-      // {
-      //   path: '/page2',
-      //   name: 'page2',
-      //   component: () => import('@/views/Other/PageTwo')
-      // }
     ]
   },
   {

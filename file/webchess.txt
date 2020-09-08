@@ -7,8 +7,6 @@ State:
 State:
 	name=S3
 State:
-	name=S4
-State:
 	name=Exit
 Transition:
 	name=t1
@@ -34,13 +32,13 @@ Transition:
 Transition:
 	name=t4
 	src=S3
-	tgt=S4
+	tgt=Exit
 	event=Enter_amount(w)
 	cond=w<=B
 	action=Give_money,B=B-w,Write("your balance",B)
 Transition:
 	name=t5
-	src=S4
+	src=Exit
 	tgt=S2
 	event=Return()
 	cond=
@@ -61,7 +59,7 @@ Transition:
 	action=Write("Canceling"),return_card
 Transition:
 	name=t8
-	src=S4
+	src=Exit
 	tgt=START
 	event=Cancel()
 	cond=
@@ -76,47 +74,19 @@ Transition:
 Transition:
 	name=t10
 	src=S2
-	tgt=S4
+	tgt=Exit
 	event=GetBalance()
 	cond=
 	action=Write("your balance",B)
 Transition:
 	name=t11
-	src=START
-	tgt=S1
-	event=Card(pinB)
-	cond=
-	action=Write("Enter Pin"),attempts=0
-Transition:
-	name=t12
-	src=S3
-	tgt=Exit
-	event=Enter_amount(w)
-	cond=w>B
-	action=Write("Out balance")
-Transition:
-	name=t13
-	src=Exit
-	tgt=S2
-	event=Return()
-	cond=
-	action=Write("Select Withdrawal/GetBalance/Cancel")
-Transition:
-	name=t14
-	src=S2
-	tgt=START
-	event=Cancel()
-	cond=
-	action=Write("Canceling")return_card
-Transition:
-	name=t15
 	src=S1
 	tgt=S1
 	event=Enter_pin(p)
 	cond=p!=pin,0<=attempts<=1
 	action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
 Transition:
-	name=t16
+	name=t12
 	src=S1
 	tgt=S2
 	event=Enter_pin(p)

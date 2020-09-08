@@ -13,9 +13,6 @@ State:
 State:
 	label=S4
 	name=显示余额页
-State:
-	label=S5
-	name=余额不足页
 Transition:
 		name=t1
 		src=S0
@@ -88,41 +85,13 @@ Transition:
 		action=Write("your balance",B) 
 Transition:
 		name=t11
-		src=S0
-		tgt=S1
-		event=Card(pinB)
-		condition=null
-		action=Write("Enter Pin"),attempts=0 
-Transition:
-		name=t12
-		src=S3
-		tgt=S5
-		event=Enter_amount(w)
-		condition=w>B
-		action=Write("Out balance") 
-Transition:
-		name=t13
-		src=S5
-		tgt=S2
-		event=Return()
-		condition=null
-		action=Write("Select Withdrawal/GetBalance/Cancel") 
-Transition:
-		name=t14
-		src=S2
-		tgt=S0
-		event=Cancel()
-		condition=null
-		action=Write("Canceling")return_card 
-Transition:
-		name=t15
 		src=S1
 		tgt=S1
 		event=Enter_pin(p)
 		condition=p!=pin,0<=attempts<=1
 		action=Write("Wrong Pin,ReEnter"),attempts=attempts+1 
 Transition:
-		name=t16
+		name=t12
 		src=S1
 		tgt=S2
 		event=Enter_pin(p)

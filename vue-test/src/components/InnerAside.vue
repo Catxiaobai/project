@@ -1,18 +1,14 @@
 <template>
-  <el-menu :collapse="isCollape" default-active="2" class="el-menu-vertical-demo" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-    <el-menu-item :index="item.path" v-for="item in noChildren" :key="item.path" @click="clickMenu(item)" style="font-size: large">
-      <i :class="'el-icon-' + item.icon"></i>
-      <span slot="title">{{ item.label }}</span>
-    </el-menu-item>
-    <el-submenu :index="item.path" v-for="item in hasChildren" :key="item.path">
+  <el-menu>
+    <el-submenu :index="item.path" v-for="item in hasChildren" :key="item.path" class="el-parent-menu">
       <template slot="title">
         <i :class="'el-icon-' + item.icon"></i>
-        <span>{{ item.label }}</span>
+        <span style="font-size: 20px">{{ item.label }}</span>
       </template>
-      <el-menu-item-group>
-        <el-menu-item :index="subItem.value" v-for="(subItem, subIndex) in item.children" :key="subIndex" @click="clickMenu(subItem)">{{
-          subItem.label
-        }}</el-menu-item>
+      <el-menu-item-group class="el-children-menu">
+        <el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.path" @click="clickMenu(subItem)">
+          {{ subItem.label }}
+        </el-menu-item>
       </el-menu-item-group>
     </el-submenu>
   </el-menu>
@@ -61,24 +57,24 @@ export default {
         },
         {
           path: '/invalid',
-          label: '失效序列',
+          label: '失效迁移',
           name: 'invalid',
           icon: 's-release',
           index: 2,
           children: [
             {
               path: '/invalid',
-              label: '序列查看',
+              label: '查看',
               name: 'invalid'
             },
             {
               path: '/importInvalidTrace',
-              label: '序列导入',
+              label: '导入',
               name: 'importInvalidTrace'
             },
             {
               path: '/addInvalidTrace',
-              label: '序列添加',
+              label: '添加',
               name: 'addInvalidTrace'
             }
           ]
@@ -149,7 +145,6 @@ export default {
     clickMenu(item) {
       if (this.$route.name !== item.name) {
         this.$router.push({ name: item.name })
-        // this.$router.replace(item.path)
       }
       this.$store.commit('selectMenu', item)
     }
@@ -160,5 +155,57 @@ export default {
 <style lang="scss" scoped>
 .el-menu {
   height: 100%;
+}
+.el-menu-item {
+  font-size: 16px;
+}
+.el-parent-menu {
+  //background-color: #deebf7;
+}
+.el-children-menu {
+  background-color: whitesmoke;
+}
+</style>
+
+<style lang="scss">
+//设置了默认左边框为白色
+.el-submenu .el-submenu__title.active {
+  border-left: #fff solid 6px;
+}
+//设置鼠标悬停时el-submenu的样式
+.el-submenu .el-submenu__title:hover {
+  border-left: #33a2ef solid 6px !important;
+  background-color: #e2eff9 !important;
+  color: #38b2ff !important;
+  i {
+    color: #38b2ff;
+  }
+}
+</style>
+
+<style lang="scss">
+//设置了默认左边框为白色
+.el-menu-item {
+  border-left: #fff solid 6px;
+}
+
+//设置鼠标悬停时el-menu-item的样式
+.el-menu-item:hover {
+  border-left: #33a2ef solid 6px !important;
+  background-color: #e2eff9 !important;
+  color: #38b2ff !important;
+  //less语法，实现鼠标悬停时icon变色
+  i {
+    color: #38b2ff;
+  }
+}
+.el-menu-item.is-active {
+  border-left: #33a2ef solid 6px !important;
+  background-color: #e2eff9 !important;
+  color: #38b2ff !important;
+  //less语法，实现鼠标悬停时icon变色
+  i {
+    color: #38b2ff;
+  }
 }
 </style>

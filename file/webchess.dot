@@ -1,19 +1,15 @@
 digraph g {
 ratio = 1.25 
  START -> S1 [ label="t1",color = red];
- S1 -> START [ label="t2",color = red];
- S2 -> S3 [ label="t3"];
- S3 -> S4 [ label="t4"];
- S4 -> S2 [ label="t5"];
+ S1 -> START [ label="t2"];
+ S2 -> S3 [ label="t3",color = red];
+ S3 -> Exit [ label="t4"];
+ Exit -> S2 [ label="t5"];
  S2 -> START [ label="t6"];
  S1 -> START [ label="t7"];
- S4 -> START [ label="t8"];
+ Exit -> START [ label="t8"];
  S1 -> START [ label="t9"];
- S2 -> S4 [ label="t10"];
- START -> S1 [ label="t11"];
- S3 -> Exit [ label="t12"];
- Exit -> S2 [ label="t13"];
- S2 -> START [ label="t14"];
- S1 -> S1 [ label="t15"];
- S1 -> S2 [ label="t16"];
-START[color=red]}
+ S2 -> Exit [ label="t10"];
+ S1 -> S1 [ label="t11"];
+ S1 -> S2 [ label="t12",color = red];
+S3[color=red]}
