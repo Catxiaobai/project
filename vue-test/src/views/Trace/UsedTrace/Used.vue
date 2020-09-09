@@ -514,8 +514,8 @@ var listJson = {
 export default {
   data() {
     return {
-      list: [],
-      data: [],
+      // list: [],
+      // data: [],
       limit: 5,
       total: null,
       page: 1,

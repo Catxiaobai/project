@@ -84,7 +84,7 @@ export default {
     verify() {
       this.showDialog = false
       this.$http
-        .post('http://127.0.0.1:8000/api/safeVerify', { msg: this.trans })
+        .post('http://127.0.0.1:8000/api/safe_verify', { msg: this.trans })
         .then(response => {
           console.log({ msg: this.trans })
         })

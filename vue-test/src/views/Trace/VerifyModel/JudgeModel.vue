@@ -66,7 +66,7 @@ export default {
     },
     judgeResult() {
       this.$http
-        .get('http://127.0.0.1:8000/api/judgeModel')
+        .get('http://127.0.0.1:8000/api/judge_model')
         .then(response => {
           console.log(response)
           this.res = response.data.result

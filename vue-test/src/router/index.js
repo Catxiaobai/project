@@ -71,6 +71,11 @@ const routes = [
         component: () => import('@/views/Trace/UsedTrace/Used')
       },
       {
+        path: '/usedTrace',
+        name: 'usedTrace',
+        component: () => import('@/views/Trace/UsedTrace/UsedTrace')
+      },
+      {
         path: '/addTrace',
         name: 'addTrace',
         component: () => import('@/views/Trace/UsedTrace/AddTrace')

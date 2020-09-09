@@ -12,7 +12,7 @@ export default {
   name: 'ShowModel.vue',
   created() {
     this.$http
-      .get('http://127.0.0.1:8000/api/showModel')
+      .get('http://127.0.0.1:8000/api/show_model')
       .then(response => {
         console.log(response)
       })

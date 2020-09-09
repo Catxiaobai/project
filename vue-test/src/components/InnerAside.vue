@@ -33,11 +33,16 @@ export default {
       asideMenu: [
         {
           path: '/used',
-          label: '使用场景',
+          label: '使用场景维护',
           name: 'used',
           icon: 's-claim',
           index: 1,
           children: [
+            {
+              path: '/usedTrace',
+              label: '场景查看2.0',
+              name: 'usedTrace'
+            },
             {
               path: '/used',
               label: '场景查看',
@@ -52,30 +57,6 @@ export default {
               path: '/addTrace',
               label: '场景添加',
               name: 'addTrace'
-            }
-          ]
-        },
-        {
-          path: '/invalid',
-          label: '失效迁移',
-          name: 'invalid',
-          icon: 's-release',
-          index: 2,
-          children: [
-            {
-              path: '/invalid',
-              label: '查看',
-              name: 'invalid'
-            },
-            {
-              path: '/importInvalidTrace',
-              label: '导入',
-              name: 'importInvalidTrace'
-            },
-            {
-              path: '/addInvalidTrace',
-              label: '添加',
-              name: 'addInvalidTrace'
             }
           ]
         },
@@ -115,6 +96,30 @@ export default {
               label: '模型补全',
               name: 'completionModel',
               icon: 'more'
+            }
+          ]
+        },
+        {
+          path: '/invalid',
+          label: '失效场景',
+          name: 'invalid',
+          icon: 's-release',
+          index: 2,
+          children: [
+            {
+              path: '/invalid',
+              label: '场景查看',
+              name: 'invalid'
+            },
+            {
+              path: '/importInvalidTrace',
+              label: '场景导入',
+              name: 'importInvalidTrace'
+            },
+            {
+              path: '/addInvalidTrace',
+              label: '场景添加',
+              name: 'addInvalidTrace'
             }
           ]
         },

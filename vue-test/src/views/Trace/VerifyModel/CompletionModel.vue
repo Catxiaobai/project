@@ -45,7 +45,7 @@ export default {
     addModel() {
       console.log(this.dynamicValidateForm.domains)
       this.$http
-        .post('http://127.0.0.1:8000/api/addModel', this.dynamicValidateForm.domains)
+        .post('http://127.0.0.1:8000/api/add_model', this.dynamicValidateForm.domains)
         .then(response => {
           console.log(response)
           this.res = response.data.result

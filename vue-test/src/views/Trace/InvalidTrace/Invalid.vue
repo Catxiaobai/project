@@ -2,7 +2,7 @@
   <div>
     <el-card>
       <el-input v-model="search" placeholder="输入关键字搜索" style="float: right;width: 300px" />
-      <el-table :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))" style="width: 100%">
+      <el-table border :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))" style="width: 100%">
         <el-table-column type="index" label="Id" width="50"> </el-table-column>
         <el-table-column property="name" label="名称" width="120"> </el-table-column>
         <el-table-column property="transition" label="失效序列"> </el-table-column>
