@@ -3,7 +3,7 @@
     <el-submenu :index="item.path" v-for="item in hasChildren" :key="item.path" class="el-parent-menu">
       <template slot="title">
         <i :class="'el-icon-' + item.icon"></i>
-        <span style="font-size: 16px;font-weight: bold">{{ item.label }}</span>
+        <span style="font-size: 18px;font-weight: bold">{{ item.label }}</span>
       </template>
       <el-menu-item-group class="el-children-menu">
         <el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.path" @click="clickMenu(subItem)">
@@ -101,7 +101,7 @@ export default {
         },
         {
           path: '/invalid',
-          label: '失效场景',
+          label: '失效场景维护',
           name: 'invalid',
           icon: 's-release',
           index: 2,

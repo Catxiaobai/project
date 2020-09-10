@@ -5,7 +5,7 @@ import subprocess
 
 from django.http import HttpResponse, JsonResponse
 
-from entity.models import Trace
+from entity.models import Trace, Invalid
 from server import error_code
 from django.shortcuts import render
 
@@ -84,7 +84,6 @@ def add_trace(request):
 # 修改场景
 def edit_trace(request):
     request_json = json.loads(request.body)
-
     aim_id = request_json['id']
     new_name = request_json['name']
     new_content = request_json['content']
@@ -162,6 +161,96 @@ def import_trace(request):
                               trace_details=new_details,
                               trace_describe=new_describe)
                 trace.save()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "content": original_file})
+
+
+# 增加失效场景
+def add_invalid(request):
+    request_json = json.loads(request.body)
+    try:
+        invalid = Invalid(invalid_name=request_json['name'],
+                          invalid_content=request_json['content'],
+                          invalid_describe=request_json['describe'],
+                          invalid_details=request_json['details'])
+        invalid.save()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 修改失效场景
+def edit_invalid(request):
+    request_json = json.loads(request.body)
+    aim_id = request_json['id']
+    new_name = request_json['name']
+    new_content = request_json['content']
+    new_describe = request_json['describe']
+    new_details = request_json['details']
+
+    if not Invalid.objects.filter(id=aim_id).exists():
+        return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+    try:
+        Invalid.objects.filter(id=aim_id).update(invalid_name=new_name)
+        Invalid.objects.filter(id=aim_id).update(invalid_content=new_content)
+        Invalid.objects.filter(id=aim_id).update(invalid_describe=new_describe)
+        Invalid.objects.filter(id=aim_id).update(invalid_details=new_details)
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": str(e)})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 删除场景
+def delete_invalid(request):
+    request_json = json.loads(request.body)
+    aim_id = request_json['invalid_id']
+    try:
+        Invalid.objects.get(id=aim_id).delete()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 查询全部场景
+def invalid_list(request):
+    invalids = Invalid.objects.all()
+    result = [invalid.to_dict() for invalid in invalids]
+    return JsonResponse({**error_code.CLACK_SUCCESS, "invalid_list": result})
+
+
+# 从txt文件中导入场景
+def import_invalid(request):
+    request_json = json.loads(request.body)
+    filename = request_json['name']
+    try:
+        with open('E:/Code/project301/file/' + filename, 'r', encoding='utf-8') as f:
+            original_file = f.read()
+            lines = original_file.splitlines()
+        if Invalid.objects.filter().exists():
+            latest_invalid = Invalid.objects.latest('id')
+            latest_id = latest_invalid.id
+        else:
+            latest_id = 1
+        index = 0
+        while index < len(lines):
+            # 判断是否是Transition
+            if lines[index] == "Transition:":
+                index += 1
+                new_name = "失效场景" + str(latest_id)
+                latest_id += 1
+                new_content = ""
+                new_details = "暂无文字表述"
+                # 截取第一句放入介绍中
+                new_describe = lines[index]
+                while index < len(lines) and lines[index] != "Transition:":
+                    new_content = new_content + lines[index] + '\n'
+                    index += 1
+                invalid = Invalid(invalid_name=new_name,
+                                  invalid_content=new_content,
+                                  invalid_details=new_details,
+                                  invalid_describe=new_describe)
+                invalid.save()
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS, "content": original_file})

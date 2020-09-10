@@ -30,4 +30,9 @@ urlpatterns = [
     path('delete_trace', views.delete_trace, name='delete_trace'),  # 添加trace
     path('edit_trace', views.edit_trace, name='edit_trace'),  # 编辑trace
     path('import_trace', views.import_trace, name='import_trace'),  # 导入trace
+    path('invalid_list', views.invalid_list, name='invalid_list'),  # trace列表
+    path('add_invalid', views.add_invalid, name='add_invalid'),  # 添加trace
+    path('delete_invalid', views.delete_invalid, name='delete_invalid'),  # 添加trace
+    path('edit_invalid', views.edit_invalid, name='edit_invalid'),  # 编辑trace
+    path('import_invalid', views.import_invalid, name='import_invalid'),  # 导入trace
 ]

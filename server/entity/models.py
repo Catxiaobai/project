@@ -20,3 +20,24 @@ class Trace(models.Model):
         }
 
 
+# 失效场景
+class Invalid(models.Model):
+    invalid_name = models.TextField(default='', unique=True)
+    invalid_content = models.TextField(default='')
+    invalid_details = models.TextField(default='')
+    invalid_describe = models.TextField(default='')
+
+    def to_dict(self):
+        return {
+            'invalid_id': self.id,
+            'invalid_name': self.invalid_name,
+            'invalid_content': self.invalid_content,
+            'invalid_details': self.invalid_details,
+            'invalid_describe': self.invalid_describe
+        }
+
+
+# 失效（安全性）验证
+class InvalidVerify(models.Model):
+    invalid_id = models.ForeignKey(Invalid, on_delete=models.CASCADE, null=False)
+    verify_result = models.BooleanField()

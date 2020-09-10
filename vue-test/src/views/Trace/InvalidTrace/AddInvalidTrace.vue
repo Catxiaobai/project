@@ -1,40 +1,55 @@
 <template>
-  <el-form ref="form" :model="form" label-width="80px">
-    <el-form-item label="序列id">
-      <el-input v-model="form.id"></el-input>
-    </el-form-item>
-    <el-form-item label="序列名称">
-      <el-input v-model="form.name"></el-input>
-    </el-form-item>
-    <el-form-item label="序列内容">
-      <el-input type="textarea" v-model="form.desc"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit">立即添加</el-button>
-      <el-button>取消</el-button>
-    </el-form-item>
-  </el-form>
+  <div>
+    <el-form :model="addForm">
+      <el-form-item label="场景名称" label-width="120px">
+        <el-input v-model="addForm.name" clearable placeholder="请输入场景名称"></el-input>
+      </el-form-item>
+      <el-form-item label="场景内容" label-width="120px">
+        <el-input v-model="addForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景具体内容"> </el-input>
+      </el-form-item>
+      <el-form-item label="场景描述" label-width="120px">
+        <el-input v-model="addForm.details" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景文字描述"> </el-input>
+      </el-form-item>
+      <el-form-item label="场景介绍" label-width="120px">
+        <el-input v-model="addForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景简单介绍"> </el-input>
+      </el-form-item>
+    </el-form>
+
+    <el-button @click="dialogAddTrace = false" style="margin-left: 40%;width: 100px">取 消</el-button>
+    <el-button type="primary" @click="handleAddCommit" style="margin-left: 50px;width: 100px">确 定</el-button>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      form: {
+      dialogAddTrace: false, //添加trace弹窗
+      addForm: {
+        //添加时使用
         name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+        content: '',
+        details: '',
+        describe: ''
       }
     }
   },
   methods: {
-    onSubmit() {
-      console.log('submit!')
+    handleAddCommit() {
+      this.dialogAddTrace = false
+      console.log(this.addForm)
+      this.$http
+        .post('http://127.0.0.1:8000/api/add_invalid', this.addForm)
+        .then(response => {
+          console.log(response.data)
+          if (response.data.error_code === 0) {
+            // this.pageList()
+            console.log('success')
+          }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     }
   }
 }
