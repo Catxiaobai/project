@@ -6,12 +6,18 @@ CLACK_SUCCESS = {"error_code": 0, "error_message": "OK"}
 # 未知错误
 CLACK_UNEXPECTED_ERROR = {"error_code": -1, "error_message": "未知错误"}
 
-# # 请求方法不是POST
-# CLACK_POST_REQUIRED = {"error_code": 1, "error_message": "请求方法不是POST,触发该错误应该是前端写挂了"}
-#
-# # 请求JSON中部分必须的对象不存在
-# CLACK_REQUEST_JSON_ERROR = {"error_code": 2, "error_message": "请求JSON中部分必须的对象不存在,触发该错误应该是前端写挂了"}
-#
+# 请求方法不是POST
+CLACK_POST_REQUIRED = {"error_code": 1, "error_message": "请求方法不是POST,触发该错误应该是前端写挂了"}
+
+# 请求JSON中部分必须的对象不存在
+CLACK_REQUEST_JSON_ERROR = {"error_code": 2, "error_message": "请求JSON中部分必须的对象不存在,触发该错误应该是前端写挂了"}
+
+# 传递的值为空
+CLACK_NULL_ERROR = {"error_code": 3, "error_message": "前端传来的空的"}
+
+# 目标不存在
+CLACK_NOT_EXISTS={"error_code": 4, "error_message": "此目标不存在"}
+
 # # 注册账号的用户名已经存在
 # CLACK_USER_NAME_EXISTS = {"error_code": 3, "error_message": "用户名已存在"}
 #

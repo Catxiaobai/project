@@ -73,13 +73,11 @@ export default {
           this.msg = response.data.msg
           // console.log(this.msg)
           if (this.res == 'Y') {
-            //todo 跳出检测成功的弹窗
             // this.showButton = true
             this.showSuccessDialog = true
 
             // this.showFailureDialog = true
           } else if (this.res == 'N') {
-            //todo 跳出检测失败的弹窗
             // this.showProgress = true
             this.showFailureDialog = true
           }

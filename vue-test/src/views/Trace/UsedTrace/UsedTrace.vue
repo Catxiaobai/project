@@ -2,9 +2,9 @@
   <div>
     <!--    标题-->
     <el-card class="tableTitle">
-      <span>当前项目共有{{ total }}条使用场景</span>
-      <el-button size="20px" type="primary" style="margin-left: 50px" @click="handleAdd()">添加新场景</el-button>
-      <el-input v-model="search" placeholder="输入关键字搜索" style="margin-left:50px; width: 300px" />
+      <span style="margin-left: 300px;font-size: 20px">当前项目共有{{ total }}条使用场景</span>
+      <el-button size="20px" type="primary" style="margin-left: 150px" @click="handleAdd">添加新场景</el-button>
+      <el-input v-model="search" placeholder="输入关键字搜索" style="margin-left:50px; width: 300px" @input="pageList" />
     </el-card>
     <!--    表格内容-->
     <el-card class="traceTable" style="margin-top: 20px">
@@ -19,7 +19,7 @@
             <span style="margin-left: 10px">{{ scope.row.trace_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="描述" align="center">
+        <el-table-column label="介绍" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.trace_describe }}</span>
           </template>
@@ -43,19 +43,63 @@
         :page-size="limit"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
-        style="margin-left: 35%"
+        style="margin-left: 30%"
       >
       </el-pagination>
     </el-card>
-    <!--    某一trace弹窗-->
-    <el-dialog title="暂定以弹窗形式呈现" :visible.sync="dialogShowTrace" width="30%" class="showTraceDialog">
+    <!--    查看trace弹窗-->
+    <!--    todo: 展示效果不好-->
+    <el-dialog title="暂定以弹窗形式呈现" :visible.sync="dialogShowTrace">
       <span style="display: block">场景名称：{{ showTrace.trace_name }}</span>
-      <span style="margin-top: 10px;display: block">场景内容：{{ showTrace.trace_content }}</span>
-      <span style="margin-top: 10px;display: block">场景描述：{{ showTrace.trace_details }}</span>
+      <span style="margin-top: 10px;display: block">场景内容：</span>
+      <span style="display: block;white-space: pre-line">{{ showTrace.trace_content }}</span>
+      <span style="margin-top: 10px;display: block;white-space: pre-line">场景描述：{{ showTrace.trace_details }}</span>
       <span slot="footer" class="dialog-footer">
         <!--        <el-button @click="dialogShowTrace = false">取 消</el-button>-->
         <el-button type="primary" @click="dialogShowTrace = false">OK</el-button>
       </span>
+    </el-dialog>
+    <!--    添加场景弹窗-->
+    <el-dialog title="添加场景" :visible.sync="dialogAddTrace">
+      <el-form :model="addForm">
+        <el-form-item label="场景名称" label-width="120px">
+          <el-input v-model="addForm.name" clearable placeholder="请输入场景名称"></el-input>
+        </el-form-item>
+        <el-form-item label="场景内容" label-width="120px">
+          <el-input v-model="addForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景具体内容"> </el-input>
+        </el-form-item>
+        <el-form-item label="场景描述" label-width="120px">
+          <el-input v-model="addForm.details" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景文字描述"> </el-input>
+        </el-form-item>
+        <el-form-item label="场景介绍" label-width="120px">
+          <el-input v-model="addForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景简单介绍"> </el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogAddTrace = false">取 消</el-button>
+        <el-button type="primary" @click="handleAddCommit">确 定</el-button>
+      </div>
+    </el-dialog>
+    <!--    编辑场景弹窗-->
+    <el-dialog title="编辑此场景" :visible.sync="dialogEditTrace">
+      <el-form :model="editForm">
+        <el-form-item label="场景名称" label-width="120px">
+          <el-input v-model="editForm.name" clearable placeholder="请输入场景名称"></el-input>
+        </el-form-item>
+        <el-form-item label="场景内容" label-width="120px">
+          <el-input v-model="editForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景具体内容"> </el-input>
+        </el-form-item>
+        <el-form-item label="场景描述" label-width="120px">
+          <el-input v-model="editForm.details" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景文字描述"> </el-input>
+        </el-form-item>
+        <el-form-item label="场景介绍" label-width="120px">
+          <el-input v-model="editForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景简单介绍"> </el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogEditTrace = false">取 消</el-button>
+        <el-button type="primary" @click="handleEditCommit">确 定</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -65,13 +109,29 @@ export default {
   name: 'UsedTrace.vue',
   data() {
     return {
-      limit: 2, //每页显示条数
+      limit: 4, //每页显示条数
       total: null, //trace总数
       page: 1, //第几页
-      search: '', //todo: 搜索框
+      search: '', //搜索框
       dialogShowTrace: false, //查看trace弹窗
+      dialogAddTrace: false, //添加trace弹窗
+      dialogEditTrace: false, //编辑trace
       tableData: [], //trace表
-      showTrace: {}
+      showTrace: {}, //查看trace
+      addForm: {
+        //添加时使用
+        name: '',
+        content: '',
+        details: '',
+        describe: ''
+      },
+      editForm: {
+        id: '',
+        name: '',
+        content: '',
+        details: '',
+        describe: ''
+      } //添加trace
     }
   },
   created() {
@@ -83,7 +143,7 @@ export default {
       this.$http
         .get('http://127.0.0.1:8000/api/trace_list')
         .then(response => {
-          console.log(response.data.trace_list)
+          // console.log(response.data.trace_list)
           this.data = response.data.trace_list
           this.getList()
         })
@@ -97,8 +157,9 @@ export default {
     getList() {
       // es6过滤得到满足搜索条件的展示数据list
       // eslint-disable-next-line no-unused-vars
-      // let list = this.data.filter((item, index) => item.name.includes(this.searchData))
-      let list = this.data
+      // console.log({ test: this.search })
+      let list = this.data.filter((item, index) => item.trace_describe.includes(this.search))
+      // let list = this.data
       this.tableData = list.filter((item, index) => index < this.page * this.limit && index >= this.limit * (this.page - 1))
       this.total = list.length
     },
@@ -116,22 +177,82 @@ export default {
     },
     handleShow(index, row) {
       this.dialogShowTrace = true
-      console.log(index, row)
+      // console.log(index, row)
       this.showTrace = row
-      // this.showTrace.showId = row.trace_id
-      // this.showTrace.showContent = row.trace_content
-      // this.showTrace.showDescribe = row.trace_describe
-      // this.showTrace.showDetails = row.trace_details
-      // this.showTrace.showName = row.trace_name
     },
     handleEdit(index, row) {
-      console.log(index, row)
+      // console.log(index, row)
+      this.editForm.id = row.trace_id
+      this.editForm.name = row.trace_name
+      this.editForm.content = row.trace_content
+      this.editForm.describe = row.trace_describe
+      this.editForm.details = row.trace_details
+      this.dialogEditTrace = true
     },
     handleDelete(index, row) {
-      console.log(index, row)
+      // console.log(index, row)
+      this.$confirm('此操作将删除该trace, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          console.log(row.trace_id)
+          this.$http
+            .post('http://127.0.0.1:8000/api/delete_trace', { trace_id: row.trace_id })
+            .then(response => {
+              console.log(response.data)
+              if (response.data.error_code === 0) {
+                this.$message({
+                  type: 'success',
+                  message: '删除成功!'
+                })
+                this.pageList()
+              }
+            })
+            .catch(function(error) {
+              console.log(error)
+            })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
     },
-    handleAdd(val) {
-      console.log(val)
+    handleAdd() {
+      this.dialogAddTrace = true
+    },
+    handleAddCommit() {
+      this.dialogAddTrace = false
+      console.log(this.addForm)
+      this.$http
+        .post('http://127.0.0.1:8000/api/add_trace', this.addForm)
+        .then(response => {
+          console.log(response.data)
+          if (response.data.error_code === 0) {
+            this.pageList()
+          }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+    },
+    handleEditCommit() {
+      this.dialogEditTrace = false
+      console.log(this.addForm)
+      this.$http
+        .post('http://127.0.0.1:8000/api/edit_trace', this.editForm)
+        .then(response => {
+          console.log(response.data)
+          if (response.data.error_code === 0) {
+            this.pageList()
+          }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     }
   }
 }

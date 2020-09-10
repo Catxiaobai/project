@@ -26,4 +26,8 @@ urlpatterns = [
     path('add_model', views.add_model, name='add_model'),  # 模型补全
     path('safe_verify', views.safe_verify, name='safe_verify'),  # 安全性验证
     path('trace_list', views.trace_list, name='trace_list'),  # trace列表
+    path('add_trace', views.add_trace, name='add_trace'),  # 添加trace
+    path('delete_trace', views.delete_trace, name='delete_trace'),  # 添加trace
+    path('edit_trace', views.edit_trace, name='edit_trace'),  # 编辑trace
+    path('import_trace', views.import_trace, name='import_trace'),  # 导入trace
 ]
