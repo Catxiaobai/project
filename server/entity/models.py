@@ -26,6 +26,7 @@ class Invalid(models.Model):
     invalid_content = models.TextField(default='')
     invalid_details = models.TextField(default='')
     invalid_describe = models.TextField(default='')
+    invalid_verify = models.TextField(default='null')
 
     def to_dict(self):
         return {
@@ -33,11 +34,12 @@ class Invalid(models.Model):
             'invalid_name': self.invalid_name,
             'invalid_content': self.invalid_content,
             'invalid_details': self.invalid_details,
-            'invalid_describe': self.invalid_describe
+            'invalid_describe': self.invalid_describe,
+            'invalid_verify': self.invalid_verify
         }
 
 
-# 失效（安全性）验证
-class InvalidVerify(models.Model):
-    invalid_id = models.ForeignKey(Invalid, on_delete=models.CASCADE, null=False)
-    verify_result = models.BooleanField()
+# # 失效（安全性）验证
+# class InvalidVerify(models.Model):
+#     invalid_id = models.ForeignKey(Invalid, on_delete=models.CASCADE, null=False)
+#     verify_result = models.BooleanField()

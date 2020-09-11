@@ -2,13 +2,13 @@
   <div>
     <!--    标题-->
     <el-card class="tableTitle">
-      <span style="margin-left: 300px;font-size: 20px">当前项目共有{{ total }}条使用场景</span>
-      <el-button size="20px" type="primary" style="margin-left: 150px" @click="handleAdd">添加新场景</el-button>
-      <el-input v-model="search" placeholder="输入关键字搜索" style="margin-left:50px; width: 300px" @input="pageList" />
+      <span style="font-size: 20px">当前项目共有{{ total }}条使用场景</span>
+      <el-input v-model="search" placeholder="输入关键字搜索" style="margin-left: 30px; width: 300px" @input="pageList" />
+      <el-button size="20px" type="success" style="margin-left: 480px" @click="handleAdd" icon="el-icon-plus">添加新场景</el-button>
     </el-card>
     <!--    表格内容-->
     <el-card class="traceTable" style="margin-top: 20px">
-      <el-table :data="tableData" style="width: 100%;" stripe border>
+      <el-table :data="tableData" style="width: 100%;" stripe border :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
         <el-table-column label="Id" width="180px" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.trace_id }}</span>

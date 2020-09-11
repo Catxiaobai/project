@@ -35,4 +35,6 @@ urlpatterns = [
     path('delete_invalid', views.delete_invalid, name='delete_invalid'),  # 添加trace
     path('edit_invalid', views.edit_invalid, name='edit_invalid'),  # 编辑trace
     path('import_invalid', views.import_invalid, name='import_invalid'),  # 导入trace
+    path('verify_invalid', views.verify_invalid, name='verify_invalid'),  # 安全性验证
+    path('reset_verify', views.reset_verify, name='reset_verify'),  # 重置安全性验证信息
 ]

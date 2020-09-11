@@ -130,6 +130,12 @@ export default {
           index: 5,
           children: [
             {
+              path: '/invalidVerify',
+              label: '安全性验证2.0',
+              name: 'invalidVerify',
+              icon: 'more'
+            },
+            {
               path: '/safeVerify',
               label: '安全性验证',
               name: 'safeVerify',

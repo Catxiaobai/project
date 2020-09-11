@@ -2,6 +2,7 @@ import json
 import time
 import os
 import subprocess
+import random
 
 from django.http import HttpResponse, JsonResponse
 
@@ -254,3 +255,33 @@ def import_invalid(request):
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS, "content": original_file})
+
+
+# 验证失效序列
+def verify_invalid(request):
+    request_json = json.loads(request.body)
+    aim_id = request_json['invalid']['invalid_id']
+    aim_invalid = request_json['invalid']['invalid_content']
+    try:
+        a = random.randint(0, 1)
+        if a==0:
+            Invalid.objects.filter(id=aim_id).update(invalid_verify="Y")
+        elif a==1:
+            Invalid.objects.filter(id=aim_id).update(invalid_verify="N")
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 重置失效序列验证
+def reset_verify(request):
+    request_json = json.loads(request.body)
+    try:
+        for i in range(0, len(request_json)):
+            aim_id = request_json[i]['invalid_id']
+            if not Invalid.objects.filter(id=aim_id).exists():
+                return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+            Invalid.objects.filter(id=aim_id).update(invalid_verify="null")
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})

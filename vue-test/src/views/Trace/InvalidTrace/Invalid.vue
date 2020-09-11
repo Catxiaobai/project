@@ -2,19 +2,19 @@
   <div>
     <!--    标题-->
     <el-card class="tableTitle">
-      <span style="margin-left: 300px;font-size: 20px">当前项目共有{{ total }}条失效场景</span>
-      <el-button size="20px" type="primary" style="margin-left: 150px" @click="handleAdd">添加失效场景</el-button>
-      <el-input v-model="search" placeholder="输入关键字搜索" style="margin-left:50px; width: 300px" @input="pageList" />
+      <span style="font-size: 20px">当前项目共有{{ total }}条失效场景</span>
+      <el-input v-model="search" placeholder="输入关键字搜索" style="margin-left: 30px; width: 300px" @input="pageList" />
+      <el-button size="20px" type="success" style="margin-left: 480px" @click="handleAdd" icon="el-icon-plus">添加新场景</el-button>
     </el-card>
     <!--    表格内容-->
     <el-card class="traceTable" style="margin-top: 20px">
-      <el-table :data="tableData" style="width: 100%;" stripe border>
+      <el-table :data="tableData" style="width: 100%;" stripe border :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
         <el-table-column label="Id" width="40px" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.invalid_id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="名称" width="80px" align="center">
+        <el-table-column label="名称" width="100px" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.invalid_name }}</span>
           </template>
@@ -24,7 +24,7 @@
             <span style="margin-left: 10px">{{ scope.row.invalid_content }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="动作" align="center" width="240px">
+        <el-table-column label="动作" align="center" width="350px">
           <template slot-scope="scope">
             <el-button size="mini" type="info" @click="handleShow(scope.$index, scope.row)">查看</el-button>
             <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -143,7 +143,7 @@ export default {
       this.$http
         .get('http://127.0.0.1:8000/api/invalid_list')
         .then(response => {
-          // console.log(response.data.trace_list)
+          console.log(response.data.invalid_list)
           this.data = response.data.invalid_list
           this.getList()
         })

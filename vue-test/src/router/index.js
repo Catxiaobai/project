@@ -66,6 +66,11 @@ const routes = [
         component: () => import('@/views/Trace/Safety/SafeAssess')
       },
       {
+        path: '/invalidVerify',
+        name: 'invalidVerify',
+        component: () => import('@/views/Trace/Safety/InvalidVerify')
+      },
+      {
         path: '/used',
         name: 'used',
         component: () => import('@/views/Trace/UsedTrace/Used')

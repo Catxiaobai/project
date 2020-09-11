@@ -13,7 +13,10 @@ import echarts from 'echarts'
 export default {
   data() {
     return {
-      chartPie: null
+      chartPie: null,
+      yyy: 0,
+      nnn: 0,
+      tableData: []
     }
   },
   methods: {
@@ -41,8 +44,8 @@ export default {
             radius: '55%',
             center: ['50%', '60%'],
             data: [
-              { value: 5, name: '失效' },
-              { value: 1, name: '未失效' }
+              { value: this.yyy, name: '失效' },
+              { value: this.nnn, name: '未失效' }
               // { value: 234, name: '联盟广告' },
               // { value: 135, name: '视频广告' },
               // { value: 1548, name: '搜索引擎' }
@@ -60,15 +63,38 @@ export default {
     },
     drawCharts() {
       this.drawPieChart()
+    },
+    pageList() {
+      // 发请求拿到数据并暂存全部数据,方便之后操作
+      this.$http
+        .get('http://127.0.0.1:8000/api/invalid_list')
+        .then(response => {
+          this.tableData = response.data.invalid_list
+          console.log(this.tableData[0].invalid_verify)
+          for (var i = 0; i < this.tableData.length; i++) {
+            if (this.tableData[i].invalid_verify == 'Y') {
+              this.yyy++
+            } else if (this.tableData[i].invalid_verify == 'N') {
+              this.nnn++
+            }
+          }
+          console.log(this.yyy)
+          this.drawCharts()
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     }
   },
-
+  created() {
+    this.pageList()
+  },
   mounted: function() {
     this.drawCharts()
+  },
+  updated: function() {
+    this.drawCharts()
   }
-  // updated: function () {
-  //     this.drawCharts()
-  // }
 }
 </script>
 
