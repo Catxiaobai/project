@@ -1,7 +1,9 @@
 # project301
 # 项目介绍
+
 ### djangoProject
-原后端项目，现全部迁移至server文件夹中，已废弃
+> 原后端项目，现全部迁移至server文件夹中，已废弃
+
 ### file
 存放后端所需全部文件，包括场景、模型等
 ### lwn_Graphic
