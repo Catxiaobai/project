@@ -9,12 +9,12 @@
     <!--    表格内容-->
     <el-card class="traceTable" style="margin-top: 20px">
       <el-table :data="tableData" style="width: 100%;" stripe border :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
-        <el-table-column label="Id" width="40px" align="center">
+        <el-table-column label="Id" width="50px" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.invalid_id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="名称" width="100px" align="center">
+        <el-table-column label="名称" width="120px" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.invalid_name }}</span>
           </template>

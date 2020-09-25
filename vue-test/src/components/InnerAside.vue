@@ -1,9 +1,9 @@
 <template>
-  <el-menu>
-    <el-submenu :index="item.path" v-for="item in hasChildren" :key="item.path" class="el-parent-menu">
-      <template slot="title">
-        <i :class="'el-icon-' + item.icon"></i>
-        <span style="font-size: 18px;font-weight: bold">{{ item.label }}</span>
+  <el-menu router>
+    <el-submenu :index="item.path" v-for="item in hasChildren" :key="item.path" @click="clickMenu(item)">
+      <template slot="title" @click="clickMenu(item)">
+        <i :class="'el-icon-' + item.icon" @click="clickMenu(item)"></i>
+        <span style="font-size: 18px;font-weight: bold" @click="clickMenu(item)">{{ item.label }}</span>
       </template>
       <el-menu-item-group class="el-children-menu">
         <el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.path" @click="clickMenu(subItem)">
@@ -32,22 +32,22 @@ export default {
     return {
       asideMenu: [
         {
-          path: '/used',
+          path: '/titleUsed',
           label: '使用场景维护',
-          name: 'used',
+          name: 'titleUsed',
           icon: 's-claim',
           index: 1,
           children: [
             {
               path: '/usedTrace',
-              label: '场景查看2.0',
+              label: '场景查看',
               name: 'usedTrace'
             },
-            {
-              path: '/used',
-              label: '场景查看',
-              name: 'used'
-            },
+            // {
+            //   path: '/used',
+            //   label: '场景查看',
+            //   name: 'used'
+            // },
             {
               path: '/importTrace',
               label: '场景导入',
@@ -61,9 +61,9 @@ export default {
           ]
         },
         {
-          path: '/model',
+          path: '/titleCreate',
           label: '模型构建',
-          name: 'model',
+          name: 'titleCreate',
           icon: 'magic-stick',
           index: 3,
           children: [
@@ -76,13 +76,19 @@ export default {
               path: '/showModel',
               label: '模型查看',
               name: 'showModel'
+            },
+            {
+              path: '/pageOne',
+              label: '测试',
+              name: 'pageOne'
             }
           ]
         },
         {
-          path: '/verify',
+          path: '/titleVerify',
           label: '模型验证',
           icon: 's-cooperation',
+          name: 'titleVerify',
           index: 4,
           children: [
             {
@@ -100,9 +106,9 @@ export default {
           ]
         },
         {
-          path: '/invalid',
+          path: '/titleInvalid',
           label: '失效场景维护',
-          name: 'invalid',
+          name: 'titleInvalid',
           icon: 's-release',
           index: 2,
           children: [
@@ -124,23 +130,24 @@ export default {
           ]
         },
         {
-          path: '/analyze',
+          path: '/titleSafe',
           label: '安全性分析',
+          name: 'titleSafe',
           icon: 's-platform',
           index: 5,
           children: [
             {
               path: '/invalidVerify',
-              label: '安全性验证2.0',
+              label: '安全性验证',
               name: 'invalidVerify',
               icon: 'more'
             },
-            {
-              path: '/safeVerify',
-              label: '安全性验证',
-              name: 'safeVerify',
-              icon: 'more'
-            },
+            // {
+            //   path: '/safeVerify',
+            //   label: '安全性验证',
+            //   name: 'safeVerify',
+            //   icon: 'more'
+            // },
             {
               path: '/safeAssess',
               label: '安全性评估',
@@ -169,9 +176,6 @@ export default {
 }
 .el-menu-item {
   font-size: 16px;
-}
-.el-parent-menu {
-  //background-color: #deebf7;
 }
 .el-children-menu {
   background-color: whitesmoke;

@@ -52,7 +52,7 @@ export default {
     },
     prog() {
       var T = setInterval(() => {
-        this.percentage += Math.floor(Math.random() * 50 + 10)
+        this.percentage += Math.floor(Math.random() * 5 + 10)
         if (this.percentage >= 100) {
           this.percentage = 100
           if (this.isButton == true) {

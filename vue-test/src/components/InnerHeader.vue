@@ -2,18 +2,18 @@
   <div @click="gotolink">
     <el-card style="height: 92px;margin-top: 2px" :body-style="{ padding: '0px' }" shadow="always">
       <el-row>
-        <el-col :span="2">
+        <el-col :span="4">
           <div>
-            <el-image :src="logoImg" style="height: 90px;width: 90px"></el-image>
+            <el-image :src="logoImg" style="height: 90px;width: 130px;margin-left: 30px"></el-image>
           </div>
         </el-col>
-        <el-col :span="10">
+        <el-col :span="12">
           <div class="testWord">
             <span style="font-size: 45px;color: #2E75B6;letter-spacing: 6px;display:block;margin-top: 5px;font-family: 宋体">软件安全性验证分析平台</span>
             <span style="font-size: 30px;display: block;margin-top: 5px">Software safety verification and analysis</span>
           </div>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="8">
           <div>
             <el-image :src="planeImg" style="width: 100%;height: 90px"></el-image>
           </div>

@@ -9,7 +9,7 @@
     <!--    表格内容-->
     <el-card class="traceTable" style="margin-top: 20px">
       <el-table :data="tableData" style="width: 100%;" stripe border :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
-        <el-table-column label="Id" width="180px" align="center">
+        <el-table-column label="序号" width="180px" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.trace_id }}</span>
           </template>
@@ -19,12 +19,12 @@
             <span style="margin-left: 10px">{{ scope.row.trace_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="介绍" align="center">
+        <el-table-column label="场景介绍" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.trace_describe }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="动作" align="center">
+        <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button size="mini" type="info" @click="handleShow(scope.$index, scope.row)">查看</el-button>
             <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -49,11 +49,11 @@
     </el-card>
     <!--    查看trace弹窗-->
     <!--    todo: 展示效果不好-->
-    <el-dialog title="暂定以弹窗形式呈现" :visible.sync="dialogShowTrace">
+    <el-dialog title="查看场景" :visible.sync="dialogShowTrace">
       <span style="display: block">场景名称：{{ showTrace.trace_name }}</span>
       <span style="margin-top: 10px;display: block">场景内容：</span>
       <span style="display: block;white-space: pre-line">{{ showTrace.trace_content }}</span>
-      <span style="margin-top: 10px;display: block;white-space: pre-line">场景描述：{{ showTrace.trace_details }}</span>
+      <span style="margin-top: 10px;display: block;white-space: pre-line">场景详情：{{ showTrace.trace_details }}</span>
       <span slot="footer" class="dialog-footer">
         <!--        <el-button @click="dialogShowTrace = false">取 消</el-button>-->
         <el-button type="primary" @click="dialogShowTrace = false">OK</el-button>

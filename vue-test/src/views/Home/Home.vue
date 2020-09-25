@@ -1,13 +1,11 @@
 <template>
-  <div>
+  <div class="test">
     <el-row :gutter="20">
       <el-col :span="12">
-        <div>
-          <el-card style="height: 480px">
-            <!--            <span style="white-space: pre-line;font-size:24px;width: 100px;height: 100px" v-show="test" @dblclick="test = false">{{ msg }}</span>-->
-            <el-input type="textarea" autosize v-model="msg"> </el-input>
-          </el-card>
-        </div>
+        <el-card style="height: 480px">
+          <!--            <span style="white-space: pre-line;font-size:24px;width: 100px;height: 100px" v-show="test" @dblclick="test = false">{{ msg }}</span>-->
+          <el-input type="textarea" class="homeMsg" autosize v-model="msg"> </el-input>
+        </el-card>
       </el-col>
       <el-col :span="12">
         <div>
@@ -43,12 +41,14 @@ export default {
 }
 </script>
 
-<style>
-.el-textarea__inner {
-  border: none;
-  resize: none;
-  font-weight: bold;
-  font-size: 24px;
-  font-family: 楷体;
+<style lang="scss">
+.test {
+  .el-textarea__inner {
+    border: none;
+    resize: none;
+    font-weight: bold;
+    font-size: 24px;
+    font-family: 楷体;
+  }
 }
 </style>

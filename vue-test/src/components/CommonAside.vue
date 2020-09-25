@@ -1,6 +1,6 @@
 <template>
   <el-menu :collapse="isCollape" default-active="2" class="el-menu-vertical-demo" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-    <el-menu-item :index="item.path" v-for="item in noChildren" :key="item.path" @click="clickMenu(item)" style="font-size: large">
+    <el-menu-item :index="item.path" v-for="item in noChildren" :key="item.path" @click="clickMenu(item)">
       <i :class="'el-icon-' + item.icon"></i>
       <span slot="title">{{ item.label }}</span>
     </el-menu-item>

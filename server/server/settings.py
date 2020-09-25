@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+
     # 允许跨域访问
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',

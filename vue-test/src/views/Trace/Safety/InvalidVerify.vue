@@ -13,12 +13,12 @@
         :header-cell-style="{ background: '#eef1f6', color: '#606266' }"
       >
         <el-table-column type="selection" width="40px"> </el-table-column>
-        <el-table-column label="Id" width="40px" align="center">
+        <el-table-column label="Id" width="50px" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.invalid_id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="名称" width="100px" align="center">
+        <el-table-column label="名称" width="120px" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.invalid_name }}</span>
           </template>

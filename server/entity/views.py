@@ -122,6 +122,7 @@ def trace_list(request):
 
 
 # 从txt文件中导入场景
+# todo: 有时候会出现跨域问题？
 def import_trace(request):
     request_json = json.loads(request.body)
     filename = request_json['name']
@@ -156,7 +157,6 @@ def import_trace(request):
                 while index < len(lines) and (lines[index][0] <= '0' or lines[index][0] >= '9'):
                     new_content = new_content + lines[index] + '\n'
                     index += 1
-
                 trace = Trace(trace_name=new_name,
                               trace_content=new_content,
                               trace_details=new_details,

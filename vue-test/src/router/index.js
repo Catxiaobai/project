@@ -119,6 +119,36 @@ const routes = [
         path: '/completionModel',
         name: 'completionModel',
         component: () => import('@/views/Trace/VerifyModel/CompletionModel')
+      },
+      {
+        path: '/pageOne',
+        name: 'pageOne',
+        component: () => import('@/views/Other/PageOne')
+      },
+      {
+        path: '/titleCreate',
+        name: 'titleCreate',
+        component: () => import('@/views/Title/TitleCreate')
+      },
+      {
+        path: '/titleInvalid',
+        name: 'titleInvalid',
+        component: () => import('@/views/Title/TitleInvalid')
+      },
+      {
+        path: '/titleSafe',
+        name: 'titleSafe',
+        component: () => import('@/views/Title/TitleSafe')
+      },
+      {
+        path: '/titleUsed',
+        name: 'titleUsed',
+        component: () => import('@/views/Title/TitleUsed')
+      },
+      {
+        path: '/titleVerify',
+        name: 'titleVerify',
+        component: () => import('@/views/Title/TitleVerify')
       }
     ]
   }

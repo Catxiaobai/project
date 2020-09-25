@@ -7,6 +7,7 @@
     </el-row>
   </section>
 </template>
+
 <script>
 import echarts from 'echarts'
 
