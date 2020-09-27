@@ -122,7 +122,6 @@ def trace_list(request):
 
 
 # 从txt文件中导入场景
-# todo: 有时候会出现跨域问题？
 def import_trace(request):
     request_json = json.loads(request.body)
     filename = request_json['name']
@@ -144,16 +143,24 @@ def import_trace(request):
                 new_content = ""
                 new_details = ""
                 new_describe = ""
-                # 判断是否为中文
-                if '\u4e00' <= lines[index][0] <= '\u9fff':
+                # 判断是否为场景详情
+                if lines[index] == "details:":
+                    index += 1
                     new_details += lines[index] + '\n'
                     index += 1
 
-                # 判断是否是trace
+                # if '\u4e00' <= lines[index][0] <= '\u9fff':
+                #     new_details += lines[index] + '\n'
+                #     index += 1
+                # 判断是否为场景介绍
+                if lines[index] == "title:":
+                    index += 1
+                    new_describe += lines[index] + '\n'
+                    index += 1
+
+                    # 判断是否是trace
                 if lines[index] == "Trace:":
                     index += 1
-                    # 截取第一句放入介绍中
-                    new_describe = lines[index]
                 while index < len(lines) and (lines[index][0] <= '0' or lines[index][0] >= '9'):
                     new_content = new_content + lines[index] + '\n'
                     index += 1
@@ -264,9 +271,9 @@ def verify_invalid(request):
     aim_invalid = request_json['invalid']['invalid_content']
     try:
         a = random.randint(0, 1)
-        if a==0:
+        if a == 0:
             Invalid.objects.filter(id=aim_id).update(invalid_verify="Y")
-        elif a==1:
+        elif a == 1:
             Invalid.objects.filter(id=aim_id).update(invalid_verify="N")
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
@@ -285,3 +292,67 @@ def reset_verify(request):
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 传递模型数据
+def deliver_model(request):
+    file_name = 'E:/Code/project301/file/result.txt'
+    lines = open(file_name, 'r', encoding='UTF-8').readlines()
+    index_line = 0
+    data_node = []
+    data_edge = []
+    while index_line < len(lines):
+        if lines[index_line].strip() == "State:":
+            index_line += 1
+            node_num0 = lines[index_line].strip().split('=')[1]
+            node_num = int(node_num0[1:])
+            node_label = lines[index_line].strip().split('=')[1]
+            index_line += 1
+            node_name = lines[index_line].strip().split('=', 1)[1]
+            # data.append({"data": {"id": node_name, "label": node_name, "category": node_category.get(node_name, 2)}})
+            # data.append({"data": {"id": node_name, "label": node_label,"name":node_name}})
+            data_node.append({"id": node_num, "text": node_label, 'name': node_name})
+        if lines[index_line].strip() == "Transition:":
+            index_line += 1
+            name = lines[index_line].strip().split('=', 1)[1]
+            index_line += 1
+            src0 = lines[index_line].strip().split('=', 1)[1]
+            src = int(src0[1:])
+            index_line += 1
+            tgt0 = lines[index_line].strip().split('=', 1)[1]
+            tgt = int(tgt0[1:])
+            index_line += 1
+            event = lines[index_line].strip().split('=', 1)
+            event = event[1] if len(event) > 1 else ""
+            index_line += 1
+            cond = lines[index_line].strip().split('=', 1)
+            cond = cond[1] if len(cond) > 1 else ""
+            index_line += 1
+            action = lines[index_line].strip().split('=', 1)
+            action = action[1] if len(action) > 1 else ""
+            edge = {"id": src + tgt, "from": src, "to": tgt, "text": name, "event": event, "cond": cond,
+                    "action": action}
+            data_edge.append(edge)
+
+        index_line += 1
+
+    return JsonResponse({**error_code.CLACK_SUCCESS, "data_node": data_node, "data_edge": data_edge})
+
+
+# 验证对模型的操作是否合理
+def verify_action(request):
+    request_json = json.loads(request.body)
+    print(request_json)
+    try:
+        # a = random.randint(0, 2)
+        # if a == 0:
+        #     res = 'error'
+        # elif a == 1:
+        #     res = 'success'
+        # elif a == 2:
+        #     res = 'warning'
+    # 验证程序
+            res = ''
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "result": res})

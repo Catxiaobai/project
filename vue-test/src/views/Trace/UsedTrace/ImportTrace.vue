@@ -5,6 +5,9 @@
         <el-button size="small" type="primary">导入场景</el-button>
         <div slot="tip" class="el-upload__tip">只能上传txt文件，并要求按标准格式撰写</div>
       </el-upload>
+      <i :class="'el-icon-tickets'" style="font-size: 20px;margin-top: 10px"></i>
+      <span>样例文本.txt</span>
+      <!--      todo:完成样例下载-->
     </el-card>
 
     <el-card style="margin-top: 20px">

@@ -149,6 +149,16 @@ const routes = [
         path: '/titleVerify',
         name: 'titleVerify',
         component: () => import('@/views/Title/TitleVerify')
+      },
+      {
+        path: '/pageTwo',
+        name: 'pageTwo',
+        component: () => import('@/views/Other/PageTwo')
+      },
+      {
+        path: '/pageThree',
+        name: 'pageThree',
+        component: () => import('@/views/Other/PageThree')
       }
     ]
   }

@@ -1,9 +1,9 @@
 <template>
   <el-menu router>
     <el-submenu :index="item.path" v-for="item in hasChildren" :key="item.path" @click="clickMenu(item)">
-      <template slot="title" @click="clickMenu(item)">
-        <i :class="'el-icon-' + item.icon" @click="clickMenu(item)"></i>
-        <span style="font-size: 18px;font-weight: bold" @click="clickMenu(item)">{{ item.label }}</span>
+      <template slot="title">
+        <i :class="'el-icon-' + item.icon"></i>
+        <span style="font-size: 18px;font-weight: bold">{{ item.label }}</span>
       </template>
       <el-menu-item-group class="el-children-menu">
         <el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.path" @click="clickMenu(subItem)">
@@ -79,8 +79,18 @@ export default {
             },
             {
               path: '/pageOne',
-              label: '测试',
+              label: 'pageOne',
               name: 'pageOne'
+            },
+            {
+              path: '/pageTwo',
+              label: 'pageTwo',
+              name: 'pageTwo'
+            },
+            {
+              path: '/pageThree',
+              label: 'pageThree',
+              name: 'pageThree'
             }
           ]
         },

@@ -1,402 +1,206 @@
 <template>
-  <el-card class="echartLayout">
-    <!--    <div class="echartLayout">-->
-    <div id="container" style="overflow: hidden;height: 600px;width: 100%" class="test"></div>
-    <!--    </div>-->
+  <el-card>
+    <p>
+      Create a simple network with some nodes and edges. Some of the events are logged in the console in improve readability.
+    </p>
+    <el-button @click="test">test</el-button>
+    <div id="mynetwork"></div>
+    <div id="mynetwork2"></div>
+    <pre id="eventSpan"></pre>
   </el-card>
 </template>
 
 <script>
-import echarts from 'echarts'
-import imgSrc from '../../assets/images/head_1.png'
+import vis from 'vis'
 export default {
-  name: 'personRelation',
+  name: 'home',
   data() {
     return {
-      myChart: null,
-      chartData: [],
-      chartLink: []
+      data_node: [
+        { id: 10, label: 'Node 1', title: 'I have a popup!' },
+        { id: 20, label: 'Node 2', title: 'I have a popup!' }
+        // { id: 30, label: 'Node 3', title: 'I have a popup!' },
+        // { id: 40, label: 'Node 4', title: 'I have a popup!' },
+        // { id: 50, label: 'Node 5', title: 'I have a popup!' }
+      ],
+      test_data: [],
+      data_edge: [],
+      nodes: []
+    }
+  },
+  methods: {
+    init() {
+      // create an array with nodes
+      // var nodes = new vis.DataSet([
+      //   { id: 1, label: 'Node 1', title: 'I have a popup!' },
+      //   { id: 2, label: 'Node 2', title: 'I have a popup!' },
+      //   { id: 3, label: 'Node 3', title: 'I have a popup!' },
+      //   { id: 4, label: 'Node 4', title: 'I have a popup!' },
+      //   { id: 5, label: 'Node 5', title: 'I have a popup!' }
+      // ])
+      console.log('test')
+      this.getData()
+      console.log(this.data_node)
+      // this.getData()
+      var nodes = new vis.DataSet(this.data_node)
+      // create an array with edges
+      // var edges = new vis.DataSet([
+      //   { from: 1, to: 3 },
+      //   { from: 1, to: 2 },
+      //   { from: 2, to: 4 },
+      //   { from: 2, to: 5 }
+      // ])
+      var edges = new vis.DataSet(this.data_edge)
+      // create a network
+      var container = document.getElementById('mynetwork')
+      var data = {
+        nodes: nodes,
+        edges: edges
+      }
+
+      var options = {
+        interaction: { hover: true },
+        manipulation: {
+          enabled: true
+        }
+      }
+
+      var network = new vis.Network(container, data, options)
+      //
+      // network.on('click', function(params) {
+      //   params.event = '[original event]'
+      //   document.getElementById('eventSpan').innerHTML = '<h2>Click event:</h2>' + JSON.stringify(params, null, 4)
+      //   console.log('click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM))
+      // })
+      // network.on('doubleClick', function(params) {
+      //   params.event = '[original event]'
+      //   document.getElementById('eventSpan').innerHTML = '<h2>doubleClick event:</h2>' + JSON.stringify(params, null, 4)
+      // })
+      // network.on('oncontext', function(params) {
+      //   params.event = '[original event]'
+      //   document.getElementById('eventSpan').innerHTML = '<h2>oncontext (right click) event:</h2>' + JSON.stringify(params, null, 4)
+      // })
+      // network.on('dragStart', function(params) {
+      //   // There's no point in displaying this event on screen, it gets immediately overwritten
+      //   params.event = '[original event]'
+      //   console.log('dragStart Event:', params)
+      //   console.log('dragStart event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM))
+      // })
+      // network.on('dragging', function(params) {
+      //   params.event = '[original event]'
+      //   document.getElementById('eventSpan').innerHTML = '<h2>dragging event:</h2>' + JSON.stringify(params, null, 4)
+      // })
+      // network.on('dragEnd', function(params) {
+      //   params.event = '[original event]'
+      //   document.getElementById('eventSpan').innerHTML = '<h2>dragEnd event:</h2>' + JSON.stringify(params, null, 4)
+      //   console.log('dragEnd Event:', params)
+      //   console.log('dragEnd event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM))
+      // })
+      // network.on('controlNodeDragging', function(params) {
+      //   params.event = '[original event]'
+      //   document.getElementById('eventSpan').innerHTML = '<h2>control node dragging event:</h2>' + JSON.stringify(params, null, 4)
+      // })
+      // network.on('controlNodeDragEnd', function(params) {
+      //   params.event = '[original event]'
+      //   document.getElementById('eventSpan').innerHTML = '<h2>control node drag end event:</h2>' + JSON.stringify(params, null, 4)
+      //   console.log('controlNodeDragEnd Event:', params)
+      // })
+      // network.on('zoom', function(params) {
+      //   document.getElementById('eventSpan').innerHTML = '<h2>zoom event:</h2>' + JSON.stringify(params, null, 4)
+      // })
+      // network.on('showPopup', function(params) {
+      //   document.getElementById('eventSpan').innerHTML = '<h2>showPopup event: </h2>' + JSON.stringify(params, null, 4)
+      // })
+      // network.on('hidePopup', function() {
+      //   console.log('hidePopup Event')
+      // })
+      // network.on('select', function(params) {
+      //   console.log('select Event:', params)
+      // })
+      // network.on('selectNode', function(params) {
+      //   console.log('selectNode Event:', params)
+      // })
+      // network.on('selectEdge', function(params) {
+      //   console.log('selectEdge Event:', params)
+      // })
+      // network.on('deselectNode', function(params) {
+      //   console.log('deselectNode Event:', params)
+      // })
+      // network.on('deselectEdge', function(params) {
+      //   console.log('deselectEdge Event:', params)
+      // })
+      // network.on('hoverNode', function(params) {
+      //   console.log('hoverNode Event:', params)
+      // })
+      // network.on('hoverEdge', function(params) {
+      //   console.log('hoverEdge Event:', params)
+      // })
+      // network.on('blurNode', function(params) {
+      //   console.log('blurNode Event:', params)
+      // })
+      // network.on('blurEdge', function(params) {
+      //   console.log('blurEdge Event:', params)
+      // })
+    },
+
+    getData() {
+      this.$http
+        .get('http://127.0.0.1:8000/api/read_txt')
+        .then(response => {
+          console.log(response.data)
+          this.data_edge = JSON.stringify(response.data.data_edge)
+          this.data_node = JSON.stringify(response.data.data_node)
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+    },
+    test() {
+      var nodes = new vis.DataSet(this.data_node)
+      // create an array with edges
+      // var edges = new vis.DataSet([
+      //   { from: 1, to: 3 },
+      //   { from: 1, to: 2 },
+      //   { from: 2, to: 4 },
+      //   { from: 2, to: 5 }
+      // ])
+      var edges = new vis.DataSet(this.data_edge)
+      // create a network
+      var container = document.getElementById('mynetwork2')
+      var data = {
+        nodes: nodes,
+        edges: edges
+      }
+
+      var options = {
+        interaction: { hover: true },
+        manipulation: {
+          enabled: true
+        }
+      }
+
+      console.log(data)
+      var network = new vis.Network(container, data, options)
     }
   },
   mounted() {
-    this.initEchart()
+    // this.getData()
+    this.init()
   },
-  methods: {
-    initEchart() {
-      let dom = document.getElementById('container')
-      this.myChart = echarts.init(dom)
-      this.chartData = this.dataEChart()
-      this.chartLink = this.linkEChart()
-      // let option = {
-      //   tooltip: {
-      //     // show: true
-      //   },
-      //   series: [
-      //     {
-      //       edgeLabel: {
-      //         normal: {
-      //           formatter: '{c}',
-      //           show: true
-      //         }
-      //       },
-      //       edgeSymbol: 'circle',
-      //       force: {
-      //         repulsion: 2000
-      //       },
-      //       layout: 'force',
-      //       roam: true,
-      //       itemStyle: {
-      //         normal: {
-      //           color: '#6495ED'
-      //         },
-      //         //鼠标放上去有阴影效果
-      //         emphasis: {
-      //           shadowColor: '#3721db',
-      //           shadowOffsetX: 0,
-      //           shadowOffsetY: 0,
-      //           shadowBlur: 40
-      //         }
-      //       },
-      //       label: {
-      //         normal: {
-      //           show: true
-      //         }
-      //       },
-      //       //头像
-      //       // symbol: `image://${imgSrc}`,
-      //       symbolSize: 86,
-      //       type: 'graph',
-      //       links: this.chartLink,
-      //       data: this.chartData
-      //     }
-      //   ]
-      // }
-      let option = {
-        title: {
-          text: ''
-        },
-        tooltip: {},
-        animationDurationUpdate: 1500,
-        animationEasingUpdate: 'quinticInOut',
-        label: {
-          normal: {
-            show: true,
-            textStyle: {
-              fontSize: 12
-            }
-          }
-        },
-        legend: {
-          x: 'center',
-          show: false,
-          data: ['1', '2', '3']
-        },
-        series: [
-          {
-            type: 'graph',
-            layout: 'force',
-            symbolSize: 45,
-            focusNodeAdjacency: true,
-            roam: true,
-            categories: [
-              {
-                name: '1',
-                itemStyle: {
-                  normal: {
-                    color: '#009800'
-                  }
-                }
-              },
-              {
-                name: '2',
-                itemStyle: {
-                  normal: {
-                    color: '#4592FF'
-                  }
-                }
-              },
-              {
-                name: '3',
-                itemStyle: {
-                  normal: {
-                    color: '#3592F'
-                  }
-                }
-              }
-            ],
-            label: {
-              normal: {
-                show: true,
-                textStyle: {
-                  fontSize: 12
-                }
-              }
-            },
-            force: {
-              repulsion: 1000
-            },
-            edgeSymbolSize: [4, 50],
-            edgeLabel: {
-              normal: {
-                show: true,
-                textStyle: {
-                  fontSize: 10
-                },
-                formatter: '{c}'
-              }
-            },
-            data: [
-              {
-                name: '节点0',
-                draggable: true
-              },
-              {
-                name: '节点1',
-                category: 1,
-                draggable: true
-              },
-              {
-                name: '节点2',
-                category: 1,
-                draggable: true
-              },
-              {
-                name: '节点3',
-                category: 1,
-                draggable: true
-              },
-              {
-                name: '节点4',
-                category: 1,
-                draggable: true
-              },
-              {
-                name: '节点5',
-                category: 1,
-                draggable: true
-              },
-              {
-                name: '节点6',
-                category: 1,
-                draggable: true
-              },
-              // {
-              //   name: '节点7',
-              //   category: 1,
-              //   draggable: true
-              // },
-              {
-                name: '节点8',
-                category: 1,
-                draggable: true
-              },
-              {
-                name: '节点9',
-                category: 1,
-                draggable: true
-              },
-              {
-                name: '节点10',
-                category: 1,
-                draggable: true
-              },
-              {
-                name: '节点11',
-                category: 1,
-                draggable: true
-              },
-              {
-                name: '节点12',
-                category: 1,
-                draggable: true
-              }
-            ],
-            links: [
-              {
-                source: 0,
-                target: 1,
-                category: 0,
-                value: '0-1'
-              },
-              {
-                source: 0,
-                target: 2,
-                value: '0-2'
-              },
-              {
-                source: 0,
-                target: 3,
-                value: '0-3'
-              },
-              {
-                source: 0,
-                target: 4,
-                value: '0-4'
-              },
-              {
-                source: 1,
-                target: 2,
-                value: '1-2'
-              },
-              {
-                source: 0,
-                target: 5,
-                value: '0-5'
-              },
-              {
-                source: 4,
-                target: 5,
-                value: '4-5'
-              },
-              {
-                source: 2,
-                target: 8,
-                value: '2-8'
-              },
-              {
-                source: 0,
-                target: 12,
-                value: '0-12'
-              },
-              {
-                source: 6,
-                target: 11,
-                value: '6-11'
-              },
-              {
-                source: 6,
-                target: 3,
-                value: '6-3'
-              },
-              {
-                source: 7,
-                target: 5,
-                value: '7-5'
-              },
-              {
-                source: 9,
-                target: 10,
-                value: '9-10'
-              },
-              {
-                source: 3,
-                target: 10,
-                value: '3-10'
-              },
-              {
-                source: 2,
-                target: 11,
-                value: '2-11'
-              }
-            ],
-            lineStyle: {
-              normal: {
-                opacity: 0.9,
-                width: 1,
-                curveness: 0
-              }
-            }
-          }
-        ]
-      }
-      this.myChart.setOption(option)
-      this.myChart.on('click', function(params) {
-        console.log(params.data) //获取点击的头像的数据信息
-      })
-      //去除默认的鼠标事件
-      document.oncontextmenu = function() {
-        return false
-      }
-      //新加上鼠标右击事件
-      this.myChart.on('contextmenu', function(params) {
-        console.log('右键事件')
-        console.log(params)
-      })
-    },
-    /**
-     * 数据集合
-     */
-    dataEChart() {
-      let data = [
-        {
-          name: '张1',
-          id: '1',
-          des: 'qwe',
-          test: 'sasa'
-        },
-        {
-          name: '张2',
-          id: '2',
-          des: 'qwe',
-          test: 'sasa'
-        },
-        {
-          name: '张3',
-          id: '3',
-          des: 'qwe',
-          test: 'sasa'
-        },
-        {
-          name: '张4',
-          id: '4',
-          des: 'qwe',
-          test: 'sasa'
-        },
-        {
-          name: '张5',
-          id: '5',
-          des: 'qwe',
-          test: 'sasa'
-        },
-        {
-          name: '张6',
-          id: '6',
-          des: 'qwe',
-          test: 'sasa'
-        },
-        {
-          name: '张7',
-          id: '7',
-          des: 'qwe',
-          test: 'sasa'
-        },
-        {
-          name: '张8',
-          id: '8',
-          des: 'qwe',
-          test: 'sasa'
-        }
-      ]
-      return data
-    },
-    /**
-     * 关系数据集合
-     */
-    linkEChart() {
-      let dataLink = [
-        { value: '同事', source: '1', target: '2' },
-        { value: '同事', source: '1', target: '3' },
-        { value: '同事', source: '1', target: '4' },
-        { value: '同学', source: '1', target: '5' },
-        { value: '同学', source: '1', target: '6' },
-        { value: '同学', source: '1', target: '7' },
-        { value: '爸爸', source: '1', target: '8' }
-      ]
-      return dataLink
-    }
+  created() {
+    this.getData()
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.echartLayout {
-  margin: auto;
-  /*position: absolute;*/
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  height: 600px;
-  width: 100%;
+<style>
+#mynetwork {
+  width: 600px;
+  height: 400px;
+  border: 1px solid lightgray;
+}
+#mynetwork2 {
+  width: 600px;
+  height: 400px;
+  border: 1px solid lightgray;
 }
 </style>

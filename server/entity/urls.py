@@ -37,4 +37,6 @@ urlpatterns = [
     path('import_invalid', views.import_invalid, name='import_invalid'),  # 导入trace
     path('verify_invalid', views.verify_invalid, name='verify_invalid'),  # 安全性验证
     path('reset_verify', views.reset_verify, name='reset_verify'),  # 重置安全性验证信息
+    path('deliver_model', views.deliver_model, name='deliver_model'),  # 传递模型数据
+    path('verify_action', views.verify_action, name='verify_action'),  # 验证对模型的操作
 ]

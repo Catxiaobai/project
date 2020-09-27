@@ -1,4 +1,4 @@
-<template xmlns:display="http://www.w3.org/1999/xhtml">
+<template>
   <div>
     <el-progress type="circle" :percentage="percentage" :color="colors" v-show="showProgress"></el-progress>
     <el-button type="primary" v-show="showButton" @click="buttonClick" style="margin-left: 40%;margin-top: 25%;">完整性检验</el-button>
@@ -55,7 +55,7 @@ export default {
         this.percentage += Math.floor(Math.random() * 5 + 10)
         if (this.percentage >= 100) {
           this.percentage = 100
-          if (this.isButton == true) {
+          if (this.isButton === true) {
             this.dialogVisible = true
             this.showProgress = false
             this.judgeResult()
@@ -72,12 +72,12 @@ export default {
           this.res = response.data.result
           this.msg = response.data.msg
           // console.log(this.msg)
-          if (this.res == 'Y') {
+          if (this.res === 'Y') {
             // this.showButton = true
             this.showSuccessDialog = true
 
             // this.showFailureDialog = true
-          } else if (this.res == 'N') {
+          } else if (this.res === 'N') {
             // this.showProgress = true
             this.showFailureDialog = true
           }
