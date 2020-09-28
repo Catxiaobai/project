@@ -1,12 +1,12 @@
 <template>
   <div id="sample">
     <el-card>
-      <el-button type="primary" @click="save">save</el-button>
-      <el-button type="primary" @click="load">load</el-button>
+      <!--      <el-button type="primary" @click="save">save</el-button>-->
+      <!--      <el-button type="primary" @click="load">load</el-button>-->
       <span style="font-size: x-large;margin-left: 40%">模型可视化</span>
       <div id="myDiagramDiv" style="background-color: whitesmoke; border: solid 1px black; width: 100%; height: 520px;margin-top: 20px"></div>
-      <textarea id="myTransaction" style="width:100%;height:200px" v-show="true"></textarea>
-      <textarea id="mytest" v-model="msg" />
+      <textarea id="myTransaction" style="width:100%;height:200px" v-show="false"></textarea>
+      <textarea id="mytest" v-model="msg" v-show="false" />
       <!--      <input id="mytest" value="test" @change="postData('test')" />-->
       <!--      <div id="example">-->
       <!--&lt;!&ndash;        <p>Original message: "{{ msg }}"</p>&ndash;&gt;-->
@@ -52,7 +52,7 @@ export default {
       // document.getElementById('mySavedModel').value = this.myDiagram.model.toJson()
       console.log(this.myDiagram.model.toJson())
       this.postData(this.myDiagram.model.toJson())
-      this.text_data = this.myDiagram.model.toJSON()
+      this.text_data = this.myDiagram.model.toJson()
       this.myDiagram.isModified = false
       this.showIncremental('')
     },
@@ -61,8 +61,8 @@ export default {
       // establish GraphLinksModel functions:
       // node data id's are odd numbers
       var model = go.Model.fromJson(this.text_data)
-      console.log(this.text_data)
-      console.log(model.nodeDataArray)
+      // console.log(this.text_data)
+      // console.log(model.nodeDataArray)
       // console.log(document.getElementById('mySavedModel').value)
       model.makeUniqueKeyFunction = function(model, data) {
         var i = model.nodeDataArray.length * 2 + 1
@@ -89,7 +89,7 @@ export default {
           this.nodeDataArray = response.data.data_node
           this.text_data.nodeDataArray = this.nodeDataArray
           this.text_data.linkDataArray = this.linkDataArray
-          console.log(this.text_data)
+          // console.log(this.text_data)
           this.load()
         })
         .catch(function(error) {
@@ -123,13 +123,13 @@ export default {
         // InitialLayoutCompleted: function(e) {
         //   showIncremental('InitialLayout')
         // // // },
-        ModelChanged: function(e) {
-          if (e.isTransactionFinished) {
-            // this records each Transaction as a JSON-format string
-            // this.showIncremental(e.model.toIncrementalJson(e))
-            ttt(e)
-          }
-        },
+        // ModelChanged: function(e) {
+        //   if (e.isTransactionFinished) {
+        //     // this records each Transaction as a JSON-format string
+        //     // this.showIncremental(e.model.toIncrementalJson(e))
+        //     ttt(e)
+        //   }
+        // },
         // enable undo & redo
         'undoManager.isEnabled': false,
         layout: $(go.ForceDirectedLayout, {
@@ -139,12 +139,12 @@ export default {
           infinityDistance: 100
         })
       })
-      function ttt(e) {
-        var element2 = document.getElementById('myTransaction')
-        // don't show anything upon the initial layout
-        // if (element2.value === 'InitialLayout') str = ''
-        element2.value = e.model.toIncrementalJson(e)
-      }
+      // function ttt(e) {
+      //   var element2 = document.getElementById('myTransaction')
+      //   // don't show anything upon the initial layout
+      //   // if (element2.value === 'InitialLayout') str = ''
+      //   element2.value = e.model.toIncrementalJson(e)
+      // }
       this.myDiagram.nodeTemplate = $(
         go.Node,
         'Auto',
@@ -181,13 +181,14 @@ export default {
         )
       )
       this.myDiagram.toolManager.hoverDelay = 10
-      //添加监听线生成事件
-      this.myDiagram.addDiagramListener('LinkDrawn', function(e) {
-        console.log('线生成')
-        var data = { test: 'testjson' }
-        postData(data)
-        // this.postData({ test: 'tessss' })
-      })
+      // //添加监听线生成事件
+      // this.myDiagram.addDiagramListener('LinkDrawn', function(e) {
+      //   console.log('线生成')
+      //
+      //   var data = { test: 'testjson' }
+      //   postData(data)
+      //   // this.postData({ test: 'tessss' })
+      // })
 
       //添加监听线重新连接事件
       this.myDiagram.addDiagramListener('LinkRelinked', function(e) {
@@ -199,10 +200,10 @@ export default {
       this.myDiagram.addDiagramListener('TextEdited', function(e) {
         console.log('文本编辑' + e)
       })
-      //添加修改事件
-      this.myDiagram.addDiagramListener('Modified', function(e) {
-        console.log('修改' + e)
-      })
+      // //添加修改事件
+      // this.myDiagram.addDiagramListener('Modified', function(e) {
+      //   console.log('修改' + e)
+      // })
       // //添加监听节点生成事件
       // this.myDiagram.addDiagramListener('externalobjectsdropped', function(e) {
       //   e.subject.each(function(n) {
@@ -212,7 +213,7 @@ export default {
       //
       // this.myDiagram.addModelChangedListener(function(e) {
       //   if (e.isTransactionFinished) {
-      //     console.log('e' + e.model.toIncrementalJson(e))
+      //     console.log('剩下的' + e.model.toJson())
       //     var json = e.model.toIncrementalJson(e)
       //     console.log('修改的信息' + json)
       //     // record each Transaction as a JSON-format string
@@ -221,14 +222,23 @@ export default {
       // })
       // 监听删除事件
       this.myDiagram.addDiagramListener('SelectionDeleted', function(e) {
+        console.log(e)
         e.subject.each(function(n) {
-          console.log('删除事件' + e.diagram)
-          // test('删除')
-          var data = { test: 'testjson' }
-          // postData(data)
-          // this.postData('test')
-          // this.msg = 'test'
+          // console.log('delete:' + JSON.stringify(n.data))
+          //
+          // console.log('total:' + e.diagram.model.toJson())
+          // 传递删除信息和剩下的信息
+          var data = { total: e.diagram.model.toJson(), delete: JSON.stringify(n.data) }
+          postData(data)
         })
+      })
+      // 监听添加事件
+      this.myDiagram.addDiagramListener('LinkDrawn', function(e) {
+        console.log('add:' + JSON.stringify(e.subject.data))
+        console.log('total:' + e.diagram.model.toJson())
+        // 传递添加的信息和剩下的信息
+        var data = { total: e.diagram.model.toJson(), add: JSON.stringify(e.subject.data) }
+        postData(data)
       })
       // 向后端传递变化信息
       function postData(data) {
@@ -330,6 +340,12 @@ export default {
           cursor: 'pointer',
           // define a tooltip for each node that displays the color as text
           toolTip: $('ToolTip', $(go.TextBlock, { margin: 4 }, new go.Binding('text', 'action'))) // end of Adornment
+        },
+        {
+          click: function(e, obj) {
+            console.log('e:' + e + '---obj:' + obj.part.data)
+            console.log('Clicked on ' + obj.part.data.key)
+          }
         },
         new go.Binding('points').makeTwoWay(),
         new go.Binding('curviness', 'curviness'),

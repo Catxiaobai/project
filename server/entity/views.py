@@ -339,10 +339,39 @@ def deliver_model(request):
     return JsonResponse({**error_code.CLACK_SUCCESS, "data_node": data_node, "data_edge": data_edge})
 
 
-# 验证对模型的操作是否合理
-def verify_action(request):
+# 验证对模型的添加操作是否合理
+def verify_add(request):
     request_json = json.loads(request.body)
-    print(request_json)
+    # # 添加的信息
+    # add = request_json['add']
+    # # 剩下的信息
+    # total = request_json['total']
+    # print('add:'+delete)
+    # print('total:'+total)
+    try:
+        # a = random.randint(0, 2)
+        # if a == 0:
+        #     res = 'error'
+        # elif a == 1:
+        #     res = 'success'
+        # elif a == 2:
+        #     res = 'warning'
+    # 验证程序
+            res = ''
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "result": res})
+
+
+# 验证对模型的删除操作是否合理
+def verify_del(request):
+    request_json = json.loads(request.body)
+    # # 删除的信息
+    # delete = request_json['delete']
+    # # 剩下的信息
+    # total = request_json['total']
+    # print('del:'+delete)
+    # print('total:'+total)
     try:
         # a = random.randint(0, 2)
         # if a == 0:

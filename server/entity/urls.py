@@ -38,5 +38,6 @@ urlpatterns = [
     path('verify_invalid', views.verify_invalid, name='verify_invalid'),  # 安全性验证
     path('reset_verify', views.reset_verify, name='reset_verify'),  # 重置安全性验证信息
     path('deliver_model', views.deliver_model, name='deliver_model'),  # 传递模型数据
-    path('verify_action', views.verify_action, name='verify_action'),  # 验证对模型的操作
+    path('verify_add', views.verify_add, name='verify_add_link'),  # 验证对模型的添加操作
+    path('verify_del', views.verify_del, name='verify_del_link'),  # 验证对模型的删除操作
 ]
