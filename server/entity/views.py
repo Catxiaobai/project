@@ -16,14 +16,14 @@ from django.shortcuts import render
 
 # 建模
 def modeling(request):
-    os.system('python3 E:/Code/project301/lwn_Graphic/ConstructModel.py')
+    os.system('python E:/Code/project301/lwn_Graphic/ConstructModel.py')
     return JsonResponse({**error_code.CLACK_SUCCESS})
 
 
 # 图形化展示模型
 def show_model(request):
-    os.system('python3 E:/Code/project301/lwn_Graphic/2020-08.py')
-    pp = subprocess.Popen('python3 E:/Code/project301/lwn_Graphic/draw_graph.py')
+    os.system('python E:/Code/project301/lwn_Graphic/2020-08.py')
+    pp = subprocess.Popen('python E:/Code/project301/lwn_Graphic/draw_graph.py')
     time.sleep(10)
     pp.kill()
     return JsonResponse({**error_code.CLACK_SUCCESS})
@@ -31,7 +31,7 @@ def show_model(request):
 
 # 完整性验证
 def judge_model(request):
-    os.system('python3 E:/Code/project301/lzy_Complete/Model3/judgeModelComplete.py')
+    os.system('python E:/Code/project301/lzy_Complete/Model3/judgeModelComplete.py')
     with open('E:/Code/project301/file/out.txt', 'r') as f:
         lines = f.readline().split("\n")
     res = lines[0]
@@ -51,8 +51,8 @@ def add_model(request):
             f.write('Trace:\n')
             f.write(request_json[i]['value'].replace('  ', '\n'))  # 将字符串写入文件中
             f.write('\n')
-    os.system('python3 E:/Code/project301/lzy_Complete/Model3/completeModel.py')
-    os.system('python3 E:/Code/project301/lwn_Graphic/2020-08.py')
+    os.system('python E:/Code/project301/lzy_Complete/Model3/completeModel.py')
+    os.system('python E:/Code/project301/lwn_Graphic/2020-08.py')
 
     return JsonResponse({**error_code.CLACK_SUCCESS})
 
@@ -64,7 +64,7 @@ def safe_verify(request):
     with open('E:/Code/project301/file/target.txt', 'w') as f:  # 设置文件对象
         f.write('Transition:\n')
         f.write(res.replace('  ', '\n'))  # 将字符串写入文件中
-    os.system('python2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
+    os.system('python E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
     return JsonResponse({**error_code.CLACK_SUCCESS})
 
 
@@ -269,12 +269,25 @@ def verify_invalid(request):
     request_json = json.loads(request.body)
     aim_id = request_json['invalid']['invalid_id']
     aim_invalid = request_json['invalid']['invalid_content']
+    # print(aim_invalid)
+    with open('E:/Code/project301/file/targetInvalid.txt', 'w') as f:  # 设置文件对象
+        f.write('Transition:\n')
+        f.write(aim_invalid)
+    #     f.write(res.replace('  ', '\n'))  # 将字符串写入文件中
+    os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
     try:
-        a = random.randint(0, 1)
+        with open('E:/Code/project301/file/path.txt') as f:
+            lines = f.read()
+        if len(lines) > 2:
+            # print("len长度"+len(lines))
+            a = 0
+        else:
+            a = 1
+        # a = random.randint(0, 1)
         if a == 0:
-            Invalid.objects.filter(id=aim_id).update(invalid_verify="Y")
+            Invalid.objects.filter(id=aim_id).update(invalid_verify="能画出图")
         elif a == 1:
-            Invalid.objects.filter(id=aim_id).update(invalid_verify="N")
+            Invalid.objects.filter(id=aim_id).update(invalid_verify="不能画")
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
@@ -301,12 +314,15 @@ def deliver_model(request):
     index_line = 0
     data_node = []
     data_edge = []
+    test_id = 1
     while index_line < len(lines):
         if lines[index_line].strip() == "State:":
             index_line += 1
             node_num0 = lines[index_line].strip().split('=')[1]
             node_num = int(node_num0[1:])
             node_label = lines[index_line].strip().split('=')[1]
+            if node_label == 'S0':
+                node_label = 'START'
             index_line += 1
             node_name = lines[index_line].strip().split('=', 1)[1]
             # data.append({"data": {"id": node_name, "label": node_name, "category": node_category.get(node_name, 2)}})
@@ -330,8 +346,9 @@ def deliver_model(request):
             index_line += 1
             action = lines[index_line].strip().split('=', 1)
             action = action[1] if len(action) > 1 else ""
-            edge = {"id": src + tgt, "from": src, "to": tgt, "text": name, "event": event, "cond": cond,
-                    "action": action}
+            edge = {"id": test_id, "from": src, "to": tgt, "text": name, "event": event, "cond": cond,
+                    "action": action, "color": "black"}
+            test_id += 1
             data_edge.append(edge)
 
         index_line += 1
@@ -349,15 +366,15 @@ def verify_add(request):
     # print('add:'+delete)
     # print('total:'+total)
     try:
-        # a = random.randint(0, 2)
-        # if a == 0:
-        #     res = 'error'
-        # elif a == 1:
-        #     res = 'success'
-        # elif a == 2:
-        #     res = 'warning'
+        a = random.randint(0, 2)
+        if a == 0:
+            res = 'error'
+        elif a == 2:
+            res = 'success'
+        elif a == 1:
+            res = 'warning'
     # 验证程序
-            res = ''
+    #         res = ''
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS, "result": res})
@@ -366,22 +383,168 @@ def verify_add(request):
 # 验证对模型的删除操作是否合理
 def verify_del(request):
     request_json = json.loads(request.body)
-    # # 删除的信息
-    # delete = request_json['delete']
-    # # 剩下的信息
-    # total = request_json['total']
-    # print('del:'+delete)
-    # print('total:'+total)
+    # 删除的信息
+    delete = []
+    delete.append(json.loads(request_json['delete']))
+    # 剩下的信息
+    node = json.loads(request_json['total'])['nodeDataArray']
+    edge = json.loads(request_json['total'])['linkDataArray']
+    # print('delete:')
+    # print(delete)
+    # # print(node)
+    # print('edge:')
+    # print(edge)
+    filepath = 'E:/Code/project301/file/'
+    filename1 = 'change.json'
+    filename2 = 'node.json'
+    filename3 = 'edge.json'
     try:
-        # a = random.randint(0, 2)
-        # if a == 0:
-        #     res = 'error'
-        # elif a == 1:
-        #     res = 'success'
-        # elif a == 2:
-        #     res = 'warning'
-    # 验证程序
-            res = ''
+        # with open(filepath+filename1, 'w') as f:
+        #     json.dump(delete, f)
+        # with open(filepath + filename2, 'w') as f:
+        #     json.dump(node, f)
+        # with open(filepath + filename3, 'w') as f:
+        #     json.dump(edge, f)
+
+        data_list1 = node
+        result = ''
+        for data_dict in data_list1:
+            if 'text' in data_dict.keys():
+                if data_dict['text'] == "S0":
+                    data_dict['text'] = "START"
+                result = result + 'State:' + '\n' + '\t' + 'name=' + data_dict[
+                    'text'] + '\n'
+
+        data_list2 = edge
+        # print(data_list2)
+        for data_dict in data_list2:
+            if str(data_dict['from']) == '0':
+                data_dict['from'] = 'TART'
+            elif str(data_dict['to']) == '0':
+                data_dict['to'] = 'TART'
+            result = result + 'Transition:' + '\n' \
+                     + '\t' + 'name=' + str(data_dict['text']) + '\n' \
+                     + '\t' + 'src=' + 'S' + str(data_dict['from']) + '\n' \
+                     + '\t' + 'tgt=' + 'S' + str(data_dict['to']) + '\n' \
+                     + '\t' + 'event=' + str(data_dict['event']) + '\n' \
+                     + '\t' + 'condition=' + str(data_dict['cond']) + '\n' \
+                     + '\t' + 'action=' + str(data_dict['action']) + '\n'
+            # print(result)
+        with open(filepath + 'resultModel.txt', 'wt+', encoding='utf-8') as f:
+            f.write(result)
+
+        # 验证程序
+        os.system('python E:/Code/project301/lzy_Complete/Model3/judge/judgeFeasibility/delete.py')
+
+        with open(filepath + 'judgeResult.txt') as f:
+            a = int(f.read())
+        if a == 0:
+            res = 'error'
+        elif a == 1:
+            res = 'warning'
+        elif a == 2:
+            res = 'success'
+
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS, "result": res})
+
+
+#
+def verify_complete(request):
+    file_name = 'E:/Code/project301/file/result.txt'
+    lines = open(file_name, 'r', encoding='UTF-8').readlines()
+    index_line = 0
+    data_node = []
+    data_edge = []
+    data_node_add = []
+    data_edge_add = []
+    test_id = 1
+    while index_line < len(lines):
+        if lines[index_line].strip() == "State:":
+            index_line += 1
+            node_num0 = lines[index_line].strip().split('=')[1]
+            node_num = int(node_num0[1:])
+            node_label = lines[index_line].strip().split('=')[1]
+            if node_label == 'S0':
+                node_label = 'START'
+            index_line += 1
+            node_name = lines[index_line].strip().split('=', 1)[1]
+            # data.append({"data": {"id": node_name, "label": node_name, "category": node_category.get(node_name, 2)}})
+            # data.append({"data": {"id": node_name, "label": node_label,"name":node_name}})
+            data_node.append({"id": node_num, "text": node_label, 'name': node_name})
+        if lines[index_line].strip() == "Transition:":
+            index_line += 1
+            name = lines[index_line].strip().split('=', 1)[1]
+            index_line += 1
+            src0 = lines[index_line].strip().split('=', 1)[1]
+            src = int(src0[1:])
+            index_line += 1
+            tgt0 = lines[index_line].strip().split('=', 1)[1]
+            tgt = int(tgt0[1:])
+            index_line += 1
+            event = lines[index_line].strip().split('=', 1)
+            event = event[1] if len(event) > 1 else ""
+            index_line += 1
+            cond = lines[index_line].strip().split('=', 1)
+            cond = cond[1] if len(cond) > 1 else ""
+            index_line += 1
+            action = lines[index_line].strip().split('=', 1)
+            action = action[1] if len(action) > 1 else ""
+            edge = {"id": test_id, "from": src, "to": tgt, "text": name, "event": event, "cond": cond,
+                    "action": action, "color": "black"}
+            test_id += 1
+            data_edge.append(edge)
+
+        index_line += 1
+    file_name2 = 'E:/Code/project301/file/out.txt'
+    lines = open(file_name2, 'r', encoding='UTF-8').readlines()
+    index_line = 0
+    if os.path.getsize(file_name2):
+        while index_line < len(lines):
+            edge_name = lines[index_line].strip().split(',')[0]
+            edge_num = int(edge_name[1:])
+            src = lines[index_line].strip().split(',')[1]
+            src0 = int(src[2:])
+            src = src.replace(' ', '')
+            tgt = lines[index_line].strip().split(',')[2]
+            tgt0 = int(tgt[2:])
+            tgt = tgt.replace(' ', '')
+            event = lines[index_line].strip().split(',')[3].split('=', 1)[1]
+            cond = lines[index_line].strip().split(',')[4].split('=', 1)[1]
+            action = lines[index_line].strip().split(',')[5].split('=', 1)[1]
+            t = 1  # 判断增加节点是否需要新添
+            for data_dict in data_node:
+                if src0 == data_dict['id']:
+                    t = 0
+            if t == 1:
+                data_node_add.append({"id": src0, "text": src, 'name': '','color': 'red'})
+                data_node.append({"id": src0, "text": src, 'name': '', 'color': 'red'})
+            t = 1
+            for data_dict in data_node:
+                if tgt0 == data_dict['id']:
+                    t = 0
+            if t == 1:
+                data_node_add.append({"id": tgt0, "text": tgt, 'name': ''})
+                data_node.append({"id": tgt0, "text": tgt, 'name': '','color': 'red'})
+            edge = {"id": edge_num, "from": src0, "to": tgt0, "text": edge_name, "event": event, "cond": cond,
+                    "action": action, "color": 'red'}
+            index_line += 1
+            data_edge_add.append(edge)
+            data_edge.append(edge)
+    print(data_edge)
+    print(data_node)
+    return JsonResponse({**error_code.CLACK_SUCCESS, "data_node": data_node, "data_edge": data_edge})
+
+
+def verify_safe_result(request):
+    file_name = 'E:/Code/project301/file/path.txt'
+    try:
+        with open(file_name, 'r', encoding='utf-8') as f:
+            lines = f.read()
+            list_path = list(map(lambda a: int(a), lines[1:-1].split(',')))
+            print(list_path)
+            data_path = list_path
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "data_path": data_path})

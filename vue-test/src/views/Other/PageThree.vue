@@ -256,14 +256,15 @@ export default {
             var json = JSON.parse(httpRequest.responseText) //获取到服务端返回的数据
             console.log(json)
             element.value = json['result']
+            console.log(this.msg)
           }
         }
       }
-      function test(str) {
-        console.log(element)
-        element.value = str
-        // console.log(element.value)
-      }
+      // function test(str) {
+      //   console.log(element)
+      //   element.value = str
+      //   // console.log(element.value)
+      // }
 
       // unlike the normal selection Adornment, this one includes a Button
       this.myDiagram.nodeTemplate.selectionAdornmentTemplate = $(
@@ -338,9 +339,11 @@ export default {
         },
         {
           cursor: 'pointer',
+          // tooltip: tooltiptemplate
           // define a tooltip for each node that displays the color as text
-          toolTip: $('ToolTip', $(go.TextBlock, { margin: 4 }, new go.Binding('text', 'action'))) // end of Adornment
+          toolTip: $('ToolTip', $(go.TextBlock, { margin: 4 }, new go.Binding('text', '', tooltipTextConverter))) // end of Adornment
         },
+
         {
           click: function(e, obj) {
             console.log('e:' + e + '---obj:' + obj.part.data)
@@ -351,6 +354,7 @@ export default {
         new go.Binding('curviness', 'curviness'),
         $(
           go.Shape, // the link shape
+          new go.Binding('stroke', 'color'),
           { strokeWidth: 1.5 }
         ),
         $(
@@ -381,6 +385,18 @@ export default {
           )
         )
       )
+      function tooltipTextConverter(person) {
+        var str = ''
+        // console.log(person)
+        str += 'id: ' + person.id + '\n'
+        str += 'name: ' + person.text + '\n'
+        str += 'source: ' + person.from + '\n'
+        str += 'target: ' + person.to + '\n'
+        str += 'event: ' + person.event + '\n'
+        str += 'condition: ' + person.cond + '\n'
+        str += 'action: ' + person.action + '\n'
+        return str
+      }
       // // Show the diagram's model in JSON format
       // function save() {
       //   document.getElementById('mySavedModel').value = this.myDiagram.model.toJson()

@@ -24,6 +24,8 @@ export default {
   methods: {
     prog() {
       var T = setInterval(() => {
+        var temp = 0
+        temp += Math.floor(Math.random() * 10 + 1)
         this.percent += Math.floor(Math.random() * 10 + 1)
         if (this.percent >= 100) {
           this.percent = 100

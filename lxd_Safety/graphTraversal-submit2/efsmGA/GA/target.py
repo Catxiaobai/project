@@ -5,7 +5,7 @@ import obtain_efsm_info
 
 filepath = r'E:/Code/project301/file/'
 
-f = open(filepath+"target.txt", 'r')
+f = open(filepath+"targetInvalid.txt", 'r')
 # f = open("F:/graphTraversal-submit2/efsmGA/model/target.txt", 'r')
 targetList=[]
 #targetList = f.readlines()

@@ -9,7 +9,7 @@
     <!--    表格内容-->
     <el-card class="traceTable" style="margin-top: 20px">
       <el-table :data="tableData" style="width: 100%;" stripe border :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
-        <el-table-column label="Id" width="50px" align="center">
+        <el-table-column label="序号" width="50px" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.invalid_id }}</span>
           </template>
@@ -24,7 +24,7 @@
             <span style="margin-left: 10px">{{ scope.row.invalid_content }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="动作" align="center" width="350px">
+        <el-table-column label="操作" align="center" width="350px">
           <template slot-scope="scope">
             <el-button size="mini" type="info" @click="handleShow(scope.$index, scope.row)">查看</el-button>
             <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>

@@ -1,17 +1,25 @@
 <template>
-  <el-menu router>
-    <el-submenu :index="item.path" v-for="item in hasChildren" :key="item.path" @click="clickMenu(item)">
-      <template slot="title">
+  <div>
+    <!--    <el-button style="width: 100%;font-size: x-large;background-color: whitesmoke" icon="el-icon-back" @click="gotolink">项目一</el-button>-->
+    <el-menu router style="height: 600px">
+      <el-menu-item :index="item.path" v-for="item in noChildren" :key="item.path" @click="clickMenu(item)">
         <i :class="'el-icon-' + item.icon"></i>
-        <span style="font-size: 18px;font-weight: bold">{{ item.label }}</span>
-      </template>
-      <el-menu-item-group class="el-children-menu">
-        <el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.path" @click="clickMenu(subItem)">
-          {{ subItem.label }}
-        </el-menu-item>
-      </el-menu-item-group>
-    </el-submenu>
-  </el-menu>
+        <span slot="title">{{ item.label }}</span>
+      </el-menu-item>
+      <el-submenu :index="item.path" v-for="item in hasChildren" :key="item.path" @click="clickMenu(item)">
+        <template slot="title">
+          <i :class="'el-icon-' + item.icon"></i>
+          <span style="font-size: 18px;font-weight: bold">{{ item.label }}</span>
+        </template>
+        <el-menu-item-group class="el-children-menu">
+          <el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.path" @click="clickMenu(subItem)">
+            <i :class="'el-icon-caret-right'"></i>
+            {{ subItem.label }}
+          </el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+    </el-menu>
+  </div>
 </template>
 
 <script>
@@ -31,6 +39,12 @@ export default {
   data() {
     return {
       asideMenu: [
+        // {
+        //   path: '/',
+        //   label: '项目一',
+        //   name: '',
+        //   icon: 'back'
+        // },
         {
           path: '/titleUsed',
           label: '使用场景维护',
@@ -78,19 +92,9 @@ export default {
               name: 'showModel'
             },
             {
-              path: '/pageOne',
-              label: 'pageOne',
-              name: 'pageOne'
-            },
-            {
-              path: '/pageTwo',
-              label: 'pageTwo',
-              name: 'pageTwo'
-            },
-            {
-              path: '/pageThree',
-              label: 'pageThree',
-              name: 'pageThree'
+              path: '/editModel',
+              label: '模型编辑',
+              name: 'editModel'
             }
           ]
         },
@@ -165,6 +169,33 @@ export default {
               icon: 'more'
             }
           ]
+        },
+        {
+          path: '/titleOther',
+          label: '测试',
+          name: 'titleOther',
+          icon: 's-platform',
+          index: 6,
+          children: [
+            {
+              path: '/pageFive',
+              label: 'pageFive',
+              name: 'pageFive',
+              icon: 'more'
+            },
+            // {
+            //   path: '/safeVerify',
+            //   label: '安全性验证',
+            //   name: 'safeVerify',
+            //   icon: 'more'
+            // },
+            {
+              path: '/pageFour',
+              label: 'pageFour',
+              name: 'pageFour',
+              icon: 'more'
+            }
+          ]
         }
       ]
     }
@@ -175,6 +206,9 @@ export default {
         this.$router.push({ name: item.name })
       }
       this.$store.commit('selectMenu', item)
+    },
+    gotolink() {
+      this.$router.replace('/itemOne')
     }
   }
 }

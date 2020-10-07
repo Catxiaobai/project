@@ -43,3 +43,32 @@ class Invalid(models.Model):
 # class InvalidVerify(models.Model):
 #     invalid_id = models.ForeignKey(Invalid, on_delete=models.CASCADE, null=False)
 #     verify_result = models.BooleanField()
+
+
+# 项目表
+class Item(models.Model):
+    item_name = models.TextField(default='', unique=True)
+    item_content = models.TextField(default='')
+    item_describe = models.TextField(default='')
+
+    def to_dict(self):
+        return {
+            'invalid_id': self.id,
+            'item_name': self.item_name,
+            'item_content': self.item_content,
+            'item_describe': self.item_describe,
+        }
+
+
+# 项目-使用场景表
+class ItemTrace(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    trace = models.ForeignKey(Trace, on_delete=models.CASCADE)
+    relation_describe = models.TextField(default='')
+
+
+# 项目-失效场景表
+class ItemInvalid(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    invalid = models.ForeignKey(Invalid, on_delete=models.CASCADE)
+    relation_describe = models.TextField(default='')

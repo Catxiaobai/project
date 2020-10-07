@@ -32,7 +32,7 @@ def execute():
         length += sequeueGenerate.sequencelength
         select += sequeueGenerate.selecenumber
         iteration+=1
-        print pathT
+        # print pathT
         # print "\n"
         if len(pathT):
             pathT.pop(len(pathT)-1)
@@ -141,5 +141,5 @@ def execute():
     #print(format(length/count,'.2f'))
     #print "平均选择次数:"
     #print(format(select/count, '.2f'))
-    return pathT,a
+    return pathT
 

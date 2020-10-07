@@ -46,7 +46,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="page"
-        :page-sizes="[1, 2, 4, 8]"
+        :page-sizes="[1, 2, 4, 7, 10]"
         :page-size="limit"
         layout="total, sizes, prev, pager, next, jumper"
         background
@@ -66,7 +66,7 @@ export default {
     return {
       tableData: '',
       multipleSelection: [],
-      limit: 4, //每页显示条数
+      limit: 7, //每页显示条数
       total: null, //trace总数
       page: 1, //第几页
       buttonReset: false, //重置按钮

@@ -1,24 +1,31 @@
 <template>
-  <header>
-    <div class="l-content">
-      <el-button plain icon="el-icon-menu" circle size="large" @click="collapseMenu"></el-button>
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="current.path" v-if="current">
-          {{ current.label }}
-        </el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>
-    <div class="r-content">
-      <el-dropdown trigger="click" size="mini">
-        <span class="el-dropdown-link"><img :src="userImg" class="user"/></span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item icon="el-icon-plus">个人中心</el-dropdown-item>
-          <el-dropdown-item icon="el-icon-circle-plus">退出</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </div>
-  </header>
+  <div>
+    <el-card style="height: 92px;margin-top: 2px" :body-style="{ padding: '0px' }" shadow="always">
+      <el-row>
+        <el-col :span="6">
+          <div class="tabMain">
+            <el-breadcrumb separator-class="el-icon-arrow-right" style="font-size: 30px">
+              <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+              <el-breadcrumb-item :to="current.path" v-if="current">
+                {{ current.label }}
+              </el-breadcrumb-item>
+            </el-breadcrumb>
+          </div>
+        </el-col>
+        <el-col :span="10">
+          <div class="testWord">
+            <span style="font-size: 45px;color: #2E75B6;letter-spacing: 6px;display:block;margin-top: 5px;font-family: 宋体">软件安全性验证分析平台</span>
+            <span style="font-size: 30px;display: block;margin-top: 5px">Software safety verification and analysis</span>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div>
+            <el-image :src="planeImg" style="width: 100%;height: 90px"></el-image>
+          </div>
+        </el-col>
+      </el-row>
+    </el-card>
+  </div>
 </template>
 
 <script>
@@ -32,7 +39,9 @@ export default {
   },
   data() {
     return {
-      userImg: require('../assets/images/head_1.png')
+      userImg: require('../assets/images/head_1.png'),
+      planeImg: require('@/assets/images/plane.jpg'),
+      logoImg: require('@/assets/images/logo.png')
     }
   },
   methods: {
@@ -43,39 +52,20 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-header {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: space-between;
-}
-.l-content {
-  display: flex;
-  align-items: center;
-  .el-button {
-    margin-right: 20px;
-  }
-}
-.r-content {
-  .user {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-  }
-}
-</style>
-
 <style lang="scss">
-.el-breadcrumb__item {
-  .el-breadcrumb__inner {
-    color: white;
-    font-size: x-large;
-  }
-  &:last-child {
-    .el-breadcrumb__inner {
-      color: whitesmoke;
-    }
-  }
+.tabMain {
+  //background: #b3d8ff;
+  float: left;
+  margin-top: 30px;
+  margin-left: 50px;
+  font-size: 1000px;
+  //width: 200px;
+  //height: 100px;
+  line-height: 100px; /*让黄色div中的文字内容垂直居中*/
+  text-align: center; /*让文字水平居中*/
+  //position: absolute;
+  //top: 50%;
+  //margin-top: -50px;
+  //margin-left: 200px;
 }
 </style>

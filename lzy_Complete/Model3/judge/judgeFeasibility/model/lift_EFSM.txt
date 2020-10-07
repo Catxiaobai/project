@@ -1,0 +1,185 @@
+State:
+	name=START
+State:
+	name=s0
+State:
+	name=s1
+State:
+	name=s2
+State:
+	name=ss
+Transition:
+	name=T0
+	src=START
+	tgt=s0
+	event=reset()
+	cond=
+	action=Floor = 0; DrSt = 0; w = 0;
+Transition:
+	name=T1
+	src=s0
+	tgt=s0
+	event=DrOp(Pos)
+	cond=DrSt == 0 & Pos >= 0 & Pos <= 15 
+	action=DrSt = 1;
+Transition:
+	name=T2
+	src=s0
+	tgt=s0
+	event=DrCl(Pos,Pw)
+	cond=DrSt == 1 & Pos >= 0 & Pos <= 15 
+	action=DrSt = 0; w = Pw;
+Transition:
+	name=T3
+	src=s0
+	tgt=s1
+	event=Srv(Pf,Ph,Ps)
+	cond=DrSt == 0 & Pf == 1 & w >= 15 & w <= 250 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <= 25
+	action=Floor = 1; Display(Floor);
+Transition:
+	name=T4
+	src=s1
+	tgt=s0
+	event=Srv(Pf,Ph,Ps)
+	cond=DrSt == 0 & Pf == 0 & w >= 15 & w <= 250 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <= 25
+	action=Floor = 0;Display(Floor);
+Transition:
+	name=T5
+	src=s0
+	tgt=s1
+	event=Req(Pf,Ph,Ps)
+	cond=DrSt == 0 & Pf == 1 & w ==0 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <=25 
+	action=Floor = 1; Display(Floor);
+Transition:
+	name=T6
+	src=s1
+	tgt=s0
+	event=Req(Pf,Ph,Ps)
+	cond=DrSt == 0 & Pf == 0 & w ==0 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <= 25
+	action=Floor = 0;Display(Floor);
+Transition:
+	name=T7
+	src=s1
+	tgt=s1
+	event=DrOp(Pos)
+	cond=DrSt == 0 & Pos >= 0 & Pos <= 15 
+	action=DrSt = 1;
+Transition:
+	name=T8
+	src=s1
+	tgt=s1
+	event=DrCl(Pos,Pw)
+	cond=DrSt == 1 & Pos >= 0 & Pos <= 15 
+	action=DrSt = 0;w = Pw
+Transition:
+	name=T9
+	src=s1
+	tgt=s2
+	event=Srv(Pf, Ph, Ps)   
+	cond=DrSt == 0 & Pf == 2 & w >=15 & w <= 250 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <= 25 
+	action=Floor = 2;Display(Floor);
+Transition:
+	name=T10
+	src=s2
+	tgt=s1
+	event=Srv(Pf,Ph,Ps)
+	cond=DrSt == 0 & Pf == 1 & w >= 15 & w <= 250 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <= 25 
+	action=Floor = 1;Display(Floor);
+Transition:
+	name=T11
+	src=s2
+	tgt=s1
+	event=Req(Pf,Ph,Ps)
+	cond=DrSt == 0 & Pf ==1 & w ==0 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <=25
+	action=Floor = 1;Display(Floor);
+Transition:
+	name=T12
+	src=s1
+	tgt=s2
+	event=Req(Pf,Ph,Ps)
+	cond=DrSt == 0 & Pf == 2 & w ==0 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <=25
+	action=Floor = 2;Display(Floor);	
+Transition:
+	name=T13
+	src=s2
+	tgt=s2
+	event=DrOp(Pos)
+	cond=DrSt == 0 & Pos >= 0 & Pos <=15
+	action=DrSt = 1;
+Transition:
+	name=T14
+	src=s2
+	tgt=s2
+	event=DrCl(Pos,Pw)
+	cond=DrSt == 1 & Pos >= 0 & Pos <= 15
+	action=DrSt = 0;w = Pw
+Transition:
+	name=T15
+	src=s2
+	tgt=s0
+	event=Srv(Pf,Ph,Ps)
+	cond=DrSt == 0 & Pf == 0 & w >=15 & w <= 250 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <=25
+	action=Floor = 0;Display(Floor);
+Transition:
+	name=T16
+	src=s0
+	tgt=s2
+	event=Srv(Pf,Ph,Ps)
+	cond=DrSt == 0 & Pf == 2 & w >= 15 & w <= 250 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <= 25
+	action=Floor = 2;Display(Floor);
+Transition:
+	name=T17
+	src=s0
+	tgt=s2
+	event=Req(Pf,Ph,Ps)
+	cond=DrSt == 0 & Pf ==2 & w ==0 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <= 25
+	action=Floor = 2;Display(Floor);
+Transition:
+	name=T18
+	src=s2
+	tgt=s0
+	event=Req(Pf,Ph,Ps)
+	cond=DrSt == 0 & Pf == 0 & w == 0 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <= 25
+	action=Floor = 0;Display(Floor);
+Transition:
+	name=T19
+	src=s0
+	tgt=ss
+	event=Stp(Pf,Ph,Ps)
+	cond=DrSt == 0 & Pf == 100 & w >=15 & w <= 250 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <=25
+	action=Floor = 100;Display(Floor);
+Transition:
+	name=T20
+	src=ss
+	tgt=s0
+	event=Srv(Pf)
+	cond=DrSt == 0 & Pf == 0
+	action=Floor = 0;Display(Floor);
+Transition:
+	name=T21
+	src=ss
+	tgt=s1
+	event=Srv(Pf)
+	cond=DrSt == 0 & Pf == 1
+	action=Floor = 1;Display(Floor);
+Transition:
+	name=T22
+	src=s1
+	tgt=ss
+	event=Stp(Pf,Ph,Ps)
+	cond=DrSt == 0 & Pf == 100 & w >= 15 & w <= 250 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <=25
+	action=Floor = 100;Display(Floor);
+Transition:
+	name=T23
+	src=s2
+	tgt=ss
+	event=Stp(Pf,Ph,Ps)
+	cond=DrSt == 0 & Pf == 100 & w >= 15 & w <= 250 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <=25
+	action=Floor = 100;Display(Floor);
+Transition:
+	name=T24
+	src=ss
+	tgt=s2
+	event=Srv(Pf)
+	cond=DrSt == 0 & Pf == 2
+	action=Floor = 2;Display(Floor);

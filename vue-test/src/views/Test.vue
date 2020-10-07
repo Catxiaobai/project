@@ -1,10 +1,11 @@
 <template>
   <el-container style="height: 100%">
-    <el-header height="100px"><inner-header></inner-header></el-header>
+    <el-header height="90px"><inner-header></inner-header></el-header>
     <el-container>
       <el-aside width="240px"><inner-aside></inner-aside></el-aside>
       <inner-tab></inner-tab>
       <el-main>
+        <inner-main style="padding: 0;margin-top: -10px"></inner-main>
         <router-view> </router-view>
       </el-main>
     </el-container>
@@ -15,12 +16,14 @@
 import InnerHeader from '@/components/InnerHeader'
 import InnerAside from '@/components/InnerAside'
 import InnerTab from '@/components/InnerTab'
+import InnerMain from '@/components/InnerMain'
 export default {
   name: 'Test.vue',
   components: {
     InnerHeader,
     InnerAside,
-    InnerTab
+    InnerTab,
+    InnerMain
   }
 }
 </script>

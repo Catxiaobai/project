@@ -1,20 +1,21 @@
 <template>
   <div class="test">
-    <el-row :gutter="20">
-      <el-col :span="12">
-        <el-card style="height: 480px">
-          <!--            <span style="white-space: pre-line;font-size:24px;width: 100px;height: 100px" v-show="test" @dblclick="test = false">{{ msg }}</span>-->
-          <el-input type="textarea" class="homeMsg" autosize v-model="msg"> </el-input>
-        </el-card>
-      </el-col>
-      <el-col :span="12">
-        <div>
-          <el-card>
-            <el-image :src="src1" alt=""></el-image>
-          </el-card>
-        </div>
-      </el-col>
-    </el-row>
+    <!--    <el-row :gutter="20">-->
+    <!--      <el-col :span="12">-->
+    <!--        <el-card style="height: 480px">-->
+    <!--          &lt;!&ndash;            <span style="white-space: pre-line;font-size:24px;width: 100px;height: 100px" v-show="test" @dblclick="test = false">{{ msg }}</span>&ndash;&gt;-->
+    <!--          <el-input type="textarea" class="homeMsg" autosize v-model="msg"> </el-input>-->
+    <!--        </el-card>-->
+    <!--      </el-col>-->
+    <!--    <el-image :src="src1" alt="" style="height: 100%;width: 100%;padding: 0"></el-image>-->
+    <div>
+      <el-card>
+        <el-image :src="src1" alt="" style="height: 420px;width: 100%"></el-image>
+        <el-input type="textarea" class="homeMsg" autosize v-model="msg"> </el-input>
+      </el-card>
+    </div>
+
+    <!--    </el-row>-->
   </div>
 </template>
 
@@ -23,7 +24,7 @@ export default {
   name: 'Home.vue',
   data() {
     return {
-      src1: require('@/assets/images/company.png'),
+      src1: require('@/assets/images/homePage.jpg'),
       test: true,
       msg:
         '平台基于软件场景进行软件系统安全性分析验证。' +

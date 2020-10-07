@@ -90,7 +90,7 @@ class PartialList:
         self.sortnum = 0
         #print self.targetBranchSrcList
         if self.targetBranchSrcList is not None:
-            print ("插入点列表：%s %s") % (self.targetBranchSrcList, time.time() - starttime)
+            # print ("插入点列表：%s %s") % (self.targetBranchSrcList, time.time() - starttime)
 
             # STATE = EFSM.State("State S6")
             # targetBranch.src = STATE
@@ -104,7 +104,8 @@ class PartialList:
             self.eventDefList = set(originTran.getveventVdef())
 
         else:
-            print "目标分支无对立分支"
+            pass
+            # print "目标分支无对立分支"
 
         # 一些后面需要用到的东西
 
@@ -631,7 +632,7 @@ def search():
                             # print "已纠正"
                             pass
                 if not isFeasibility:
-                    print "可行性判断无法通过%s" % (time.time() - starttime)
+                    # print "可行性判断无法通过%s" % (time.time() - starttime)
                     if time.time() - starttime > 1:
                         break
                     continue
@@ -672,7 +673,8 @@ def search():
                     break
 
         if partialList.isComplete() == 0:
-            print "无任何可行序列"
+            # print "无任何可行序列"
+            pass
         else:
             if time.time() - starttime < 1:
                 psDict[partialList] = (time.time() - starttime)

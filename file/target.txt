@@ -1,7 +1,1 @@
-Transition:
-name=T34
-src=S3
-tgt=S4
-event=Enter_amount(w)
-cond=!(w<=B)
-action=Give_money,B=B-w,Write("your balance",B)
+t4, S1, START, Enter_pin(p), (p!=pin) & (attempts==2), Write(""Password error number exceeded");return_card;attempts=attempts+1

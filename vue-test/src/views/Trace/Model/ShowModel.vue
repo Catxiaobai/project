@@ -81,7 +81,7 @@ export default {
           console.log(error)
         })
     },
-    postData: function(data) {
+    postData(data) {
       this.$http
         .post('http://127.0.0.1:8000/api/verify_action', { add: data })
         .then(response => {
@@ -106,14 +106,14 @@ export default {
         // support double-click in background creating a new node
         'clickCreatingTool.archetypeNodeData': { text: 'new node' },
         // InitialLayoutCompleted: function(e) {
-
+        isReadOnly: true,
         // enable undo & redo
         'undoManager.isEnabled': false,
         layout: $(go.ForceDirectedLayout, {
-          defaultSpringLength: 200,
-          defaultElectricalCharge: 50,
+          defaultSpringLength: 40,
+          defaultElectricalCharge: 180,
           randomNumberGenerator: null,
-          infinityDistance: 100
+          infinityDistance: 210
         })
       })
 
@@ -130,7 +130,7 @@ export default {
 
         // 图标的style
         $(go.Shape, 'Circle', {
-          desiredSize: new go.Size(60, 60),
+          desiredSize: new go.Size(67, 67),
           fill: $(go.Brush, 'Linear', { 0: 'rgb(0,191,255)', 1: 'rgb(30,144,255)' }),
           stroke: 'black',
           portId: '',
@@ -164,14 +164,16 @@ export default {
       this.myDiagram.addDiagramListener('TextEdited', function(e) {
         console.log('文本编辑' + e)
       })
-
+      // this.myDiagram.addDiagramListener('Modified', function(e) {
+      //   console.log('文本cs' + e.diagram.model.toJson())
+      // })
       // 监听删除事件
       this.myDiagram.addDiagramListener('SelectionDeleted', function(e) {
-        console.log(e)
+        console.log('删除')
         e.subject.each(function(n) {
-          // console.log('delete:' + JSON.stringify(n.data))
+          console.log('delete:' + JSON.stringify(n.data))
           //
-          // console.log('total:' + e.diagram.model.toJson())
+          console.log('total:' + e.diagram.model.toJson())
           // 传递删除信息和剩下的信息
           var data = { total: e.diagram.model.toJson(), delete: JSON.stringify(n.data) }
           postDelData(data)
@@ -201,9 +203,11 @@ export default {
             var json = JSON.parse(httpRequest.responseText) //获取到服务端返回的数据
             console.log(json)
             element.value = json['result']
+            myFunction(json['result'])
           }
         }
       }
+      // todo 删除一个节点会进行多次判断
       // 向后端传递添删除信息
       function postDelData(data) {
         var httpRequest = new XMLHttpRequest() //第一步：创建需要的对象
@@ -220,14 +224,25 @@ export default {
             var json = JSON.parse(httpRequest.responseText) //获取到服务端返回的数据
             console.log(json)
             element.value = json['result']
+            myFunction(json['result'])
           }
         }
       }
-      function test(str) {
-        console.log(element)
-        element.value = str
-        // console.log(element.value)
+      function myFunction(res) {
+        var x
+        var r = confirm(res)
+        if (r == true) {
+          x = '你按下了"确定"按钮!'
+        } else {
+          x = '你按下了"取消"按钮!'
+        }
+        // document.getElementById('demo').innerHTML = x
       }
+      // function test(str) {
+      //   console.log(element)
+      //   element.value = str
+      //   // console.log(element.value)
+      // }
 
       // unlike the normal selection Adornment, this one includes a Button
       this.myDiagram.nodeTemplate.selectionAdornmentTemplate = $(
@@ -238,16 +253,16 @@ export default {
           'Auto',
           $(go.Shape, { fill: null, stroke: 'blue', strokeWidth: 2 }),
           $(go.Placeholder) // this represents the selected Node
-        ),
+        )
         // the button to create a "next" node, at the top-right corner
-        $(
-          'Button',
-          {
-            alignment: go.Spot.TopRight,
-            click: addNodeAndLink // this function is defined below
-          },
-          $(go.Shape, 'PlusLine', { desiredSize: new go.Size(6, 6) })
-        ) // end button
+        // $(
+        //   'Button',
+        //   {
+        //     // alignment: go.Spot.TopRight
+        //     // click: addNodeAndLink // this function is defined below
+        //   },
+        //   $(go.Shape, 'PlusLine', { desiredSize: new go.Size(6, 6) })
+        // ) // end button
       ) // end Adornment
       // and adds a link to that new node
       function addNodeAndLink(e, obj) {
@@ -303,7 +318,11 @@ export default {
         {
           cursor: 'pointer',
           // define a tooltip for each node that displays the color as text
-          toolTip: $('ToolTip', $(go.TextBlock, { margin: 4 }, new go.Binding('text', 'action'))) // end of Adornment
+          toolTip: $(
+            'ToolTip',
+            { 'Border.fill': 'whitesmoke', 'Border.stroke': 'black' },
+            $(go.TextBlock, { margin: 4 }, new go.Binding('text', '', tooltipTextConverter))
+          )
         },
         {
           click: function(e, obj) {
@@ -345,6 +364,18 @@ export default {
           )
         )
       )
+      function tooltipTextConverter(person) {
+        var str = ''
+        // console.log(person)
+        // str += 'id: ' + person.id + '\n'
+        str += 'name: ' + person.text + '\n'
+        str += 'source: ' + person.from + '\n'
+        str += 'target: ' + person.to + '\n'
+        str += 'event: ' + person.event + '\n'
+        str += 'condition: ' + person.cond + '\n'
+        str += 'action: ' + person.action + '\n'
+        return str
+      }
     }
   },
   created() {

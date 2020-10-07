@@ -40,4 +40,7 @@ urlpatterns = [
     path('deliver_model', views.deliver_model, name='deliver_model'),  # 传递模型数据
     path('verify_add', views.verify_add, name='verify_add_link'),  # 验证对模型的添加操作
     path('verify_del', views.verify_del, name='verify_del_link'),  # 验证对模型的删除操作
+    path('verify_complete', views.verify_complete, name='verify_complete'),  # 验证模型完整性
+    path('verify_safe_result', views.verify_safe_result, name='verify_safe_result'),  # 验证模型完整性
+
 ]

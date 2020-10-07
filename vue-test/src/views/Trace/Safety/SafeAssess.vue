@@ -1,11 +1,13 @@
 <template>
-  <section class="chart-container">
-    <el-row>
-      <el-col :span="12">
-        <div id="chartPie" style="width:100%; height:400px;"></div>
-      </el-col>
-    </el-row>
-  </section>
+  <el-card>
+    <section class="chart-container" style="margin-left: 25%">
+      <el-row>
+        <el-col :span="12">
+          <div id="chartPie" style="width:100%; height:400px;"></div>
+        </el-col>
+      </el-row>
+    </section>
+  </el-card>
 </template>
 
 <script>
@@ -25,8 +27,8 @@ export default {
       this.chartPie = echarts.init(document.getElementById('chartPie'))
       this.chartPie.setOption({
         title: {
-          text: 'Test Chart',
-          subtext: '测试数据',
+          text: 'Evaluation Result',
+          subtext: '安全性评估结果',
           x: 'center'
         },
         tooltip: {
@@ -36,7 +38,7 @@ export default {
         legend: {
           orient: 'vertical',
           left: 'left',
-          data: ['失效', '未失效', '联盟广告', '视频广告', '搜索引擎']
+          data: ['失效', '未失效']
         },
         series: [
           {

@@ -1,14 +1,15 @@
 <template>
   <div>
     <!--    标题-->
+    <!--    <span>项目名称</span>-->
     <el-card class="tableTitle">
       <span style="font-size: 20px">当前项目共有{{ total }}条使用场景</span>
       <el-input v-model="search" placeholder="输入关键字搜索" style="margin-left: 30px; width: 300px" @input="pageList" />
       <el-button size="20px" type="success" style="margin-left: 480px" @click="handleAdd" icon="el-icon-plus">添加新场景</el-button>
-    </el-card>
-    <!--    表格内容-->
-    <el-card class="traceTable" style="margin-top: 20px">
-      <el-table :data="tableData" style="width: 100%;" stripe border :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
+      <!--    </el-card>-->
+      <!--    &lt;!&ndash;    表格内容&ndash;&gt;-->
+      <!--    <el-card class="traceTable" style="margin-top: 20px">-->
+      <el-table :data="tableData" style="width: 100%;margin-top: 40px" stripe border :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
         <el-table-column label="序号" width="180px" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.trace_id }}</span>
@@ -32,18 +33,18 @@
           </template>
         </el-table-column>
       </el-table>
-    </el-card>
-    <!--    分页显示-->
-    <el-card class="tablePage" style="margin-top: 20px">
+      <!--    </el-card>-->
+      <!--    &lt;!&ndash;    分页显示&ndash;&gt;-->
+      <!--    <el-card class="tablePage" style="margin-top: 20px">-->
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="page"
-        :page-sizes="[1, 2, 4, 8]"
+        :page-sizes="[1, 2, 5, 7, 10]"
         :page-size="limit"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
-        style="margin-left: 30%"
+        style="margin-left: 30%;margin-top: 30px"
       >
       </el-pagination>
     </el-card>
@@ -61,7 +62,7 @@
     </el-dialog>
     <!--    添加场景弹窗-->
     <el-dialog title="添加场景" :visible.sync="dialogAddTrace">
-      <el-form :model="addForm">
+      <el-form :model="addForm" :rules="rules" ref="addForm">
         <el-form-item label="场景名称" label-width="120px">
           <el-input v-model="addForm.name" clearable placeholder="请输入场景名称"></el-input>
         </el-form-item>
@@ -109,7 +110,7 @@ export default {
   name: 'UsedTrace.vue',
   data() {
     return {
-      limit: 4, //每页显示条数
+      limit: 7, //每页显示条数
       total: null, //trace总数
       page: 1, //第几页
       search: '', //搜索框

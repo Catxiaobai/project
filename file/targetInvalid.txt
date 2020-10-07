@@ -1,0 +1,7 @@
+Transition:
+name=T34
+src=S3
+tgt=S4
+event=Enter_amount(w)
+cond=!(w<=B)
+action=Give_money,B=B-w,Write("your balance",B)

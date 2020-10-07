@@ -1,0 +1,1 @@
+target9 ,Srv(Pf,Ph,Ps) ,DrSt == 0 & Pf == 2 & w >=15 & w >= 250 & Ph >= 10 & Ph <= 35 & Ps >= 0 & Ps <= 25,Floor = 2;Display(Floor),

@@ -4,9 +4,51 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+const originalPush = VueRouter.prototype.push
+
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 const routes = [
   {
     path: '/',
+    name: 'login',
+    component: () => import('@/views/Login/Login')
+  },
+  // {
+  //   path: '/',
+  //   component: () => import('@/views/Main'),
+  //   children: [
+  //     // {
+  //     //   path: '/',
+  //     //   name: 'home',
+  //     //   component: () => import('@/views/Home/Home')
+  //     // },
+  //     {
+  //       path: '/item',
+  //       name: 'item',
+  //       component: () => import('@/views/Item/Item')
+  //     },
+  //     {
+  //       path: '/itemOne',
+  //       name: 'itemOne',
+  //       component: () => import('@/views/Item/ItemOne')
+  //     },
+  //     {
+  //       path: '/itemTwo',
+  //       name: 'itemTwo',
+  //       component: () => import('@/views/Item/ItemTwo')
+  //     },
+  //     {
+  //       path: '/person',
+  //       name: 'person',
+  //       component: () => import('@/views/Person/Person')
+  //     }
+  //   ]
+  // },
+  {
+    path: '/trace',
     component: () => import('@/views/Test'),
     children: [
       {
@@ -14,22 +56,7 @@ const routes = [
         name: 'home',
         component: () => import('@/views/Home/Home')
       },
-      {
-        path: '/item',
-        name: 'item',
-        component: () => import('@/views/Item/Item')
-      },
-      {
-        path: '/person',
-        name: 'person',
-        component: () => import('@/views/Person/Person')
-      }
-    ]
-  },
-  {
-    path: '/trace',
-    component: () => import('@/views/Test'),
-    children: [
+
       {
         path: '/page1',
         name: 'page1',
@@ -159,6 +186,16 @@ const routes = [
         path: '/pageThree',
         name: 'pageThree',
         component: () => import('@/views/Other/PageThree')
+      },
+      {
+        path: '/pageFour',
+        name: 'pageFour',
+        component: () => import('@/views/Other/PageFour')
+      },
+      {
+        path: '/pageFive',
+        name: 'pageFive',
+        component: () => import('@/views/Other/PageFive')
       }
     ]
   }
