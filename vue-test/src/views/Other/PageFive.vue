@@ -1,18 +1,8 @@
 <template>
   <div id="sample">
     <el-card>
-      <!--      <el-button type="primary" @click="save">save</el-button>-->
-      <!--      <el-button type="primary" @click="load">load</el-button>-->
-      <!--      <el-button @click="drawlink" type="primary">画线</el-button>-->
       <span style="font-size: x-large;margin-left: 40%">模型可视化</span>
       <div id="myDiagramDiv" style="background-color: whitesmoke; border: solid 1px black; width: 100%; height: 520px;margin-top: 20px"></div>
-      <textarea id="myTransaction" style="width:100%;height:200px" v-show="false"></textarea>
-      <textarea id="mytest" v-model="msg" v-show="false" />
-      <!--      <input id="mytest" value="test" @change="postData('test')" />-->
-      <!--      <div id="example">-->
-      <!--&lt;!&ndash;        <p>Original message: "{{ msg }}"</p>&ndash;&gt;-->
-      <!--        &lt;!&ndash;        <p>Computed reversed message: "{{ reversedMessage }}"</p>&ndash;&gt;-->
-      <!--      </div>-->
     </el-card>
   </div>
 </template>
@@ -33,9 +23,7 @@ export default {
         nodeDataArray: [],
         linkDataArray: [],
         test_draw: [1, 2, 2, 3]
-      },
-      msg: 'result',
-      test: 'tets'
+      }
     }
   },
   mounted() {
@@ -350,6 +338,7 @@ export default {
         $(
           go.Shape, // the link shape
           new go.Binding('stroke', 'color'),
+          new go.Binding('strokeWidth', 'mySize'),
           { strokeWidth: 1.5 }
         ),
         $(
@@ -416,12 +405,14 @@ export default {
         if (flag_list.indexOf(this.test_draw[temp]) > -1) {
           flag_list.remove(this.test_draw[temp])
           var ttt = this.myDiagram.findLinkForKey(this.test_draw[temp]).data
-          this.myDiagram.model.setDataProperty(ttt, 'color', 'red')
+          this.myDiagram.model.setDataProperty(ttt, 'color', 'blue')
+          this.myDiagram.model.setDataProperty(ttt, 'mySize', '5')
           temp -= 1
         } else {
           flag_list.push(this.test_draw[temp])
           var tt = this.myDiagram.findLinkForKey(this.test_draw[temp]).data
-          this.myDiagram.model.setDataProperty(tt, 'color', 'blue')
+          this.myDiagram.model.setDataProperty(tt, 'color', 'red')
+          this.myDiagram.model.setDataProperty(tt, 'mySize', '5')
         }
         // if(temp<this.text_data.length-1){}
         temp += 1

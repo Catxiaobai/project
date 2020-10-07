@@ -63,45 +63,46 @@
     <!--    添加场景弹窗-->
     <el-dialog title="添加场景" :visible.sync="dialogAddTrace">
       <el-form :model="addForm" :rules="rules" ref="addForm">
-        <el-form-item label="场景名称" label-width="120px">
+        <el-form-item label="场景名称" label-width="120px" prop="name">
           <el-input v-model="addForm.name" clearable placeholder="请输入场景名称"></el-input>
         </el-form-item>
-        <el-form-item label="场景内容" label-width="120px">
+        <el-form-item label="场景内容" label-width="120px" prop="content">
           <el-input v-model="addForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景具体内容"> </el-input>
         </el-form-item>
-        <el-form-item label="场景描述" label-width="120px">
+        <el-form-item label="场景描述" label-width="120px" prop="details">
           <el-input v-model="addForm.details" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景文字描述"> </el-input>
         </el-form-item>
-        <el-form-item label="场景介绍" label-width="120px">
+        <el-form-item label="场景介绍" label-width="120px" prop="describe">
           <el-input v-model="addForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景简单介绍"> </el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddTrace = false">取 消</el-button>
-        <el-button type="primary" @click="handleAddCommit">确 定</el-button>
+        <el-button type="primary" @click="handleAddCommit('addForm')">确 定</el-button>
       </div>
     </el-dialog>
     <!--    编辑场景弹窗-->
     <el-dialog title="编辑此场景" :visible.sync="dialogEditTrace">
-      <el-form :model="editForm">
-        <el-form-item label="场景名称" label-width="120px">
+      <el-form :model="editForm" :rules="rules" ref="editForm">
+        <el-form-item label="场景名称" label-width="120px" prop="name">
           <el-input v-model="editForm.name" clearable placeholder="请输入场景名称"></el-input>
         </el-form-item>
-        <el-form-item label="场景内容" label-width="120px">
+        <el-form-item label="场景内容" label-width="120px" prop="content">
           <el-input v-model="editForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景具体内容"> </el-input>
         </el-form-item>
-        <el-form-item label="场景描述" label-width="120px">
+        <el-form-item label="场景描述" label-width="120px" prop="details">
           <el-input v-model="editForm.details" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景文字描述"> </el-input>
         </el-form-item>
-        <el-form-item label="场景介绍" label-width="120px">
+        <el-form-item label="场景介绍" label-width="120px" prop="describe">
           <el-input v-model="editForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景简单介绍"> </el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogEditTrace = false">取 消</el-button>
-        <el-button type="primary" @click="handleEditCommit">确 定</el-button>
+        <el-button type="primary" @click="handleEditCommit('editForm')">确 定</el-button>
       </div>
     </el-dialog>
+    <!--    todo: 实现可拖动组件-->
   </div>
 </template>
 
@@ -127,12 +128,19 @@ export default {
         describe: ''
       },
       editForm: {
+        //编辑trace
         id: '',
         name: '',
         content: '',
         details: '',
         describe: ''
-      } //添加trace
+      },
+      rules: {
+        name: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        content: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        details: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        describe: [{ required: true, message: '不能为空', trigger: 'blur' }]
+      }
     }
   },
   created() {
@@ -225,36 +233,60 @@ export default {
     handleAdd() {
       this.dialogAddTrace = true
     },
-    handleAddCommit() {
-      this.dialogAddTrace = false
-      console.log(this.addForm)
-      this.$http
-        .post('http://127.0.0.1:8000/api/add_trace', this.addForm)
-        .then(response => {
-          console.log(response.data)
-          if (response.data.error_code === 0) {
-            this.pageList()
-          }
-        })
-        .catch(function(error) {
-          console.log(error)
-        })
+    handleAddCommit(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          // alert('submit!')
+          this.dialogAddTrace = false
+          console.log(this.addForm)
+          this.$http
+            .post('http://127.0.0.1:8000/api/add_trace', this.addForm)
+            .then(response => {
+              console.log(response.data)
+              if (response.data.error_code === 0) {
+                this.pageList()
+              }
+            })
+            .catch(function(error) {
+              console.log(error)
+            })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
-    handleEditCommit() {
-      this.dialogEditTrace = false
-      console.log(this.addForm)
-      this.$http
-        .post('http://127.0.0.1:8000/api/edit_trace', this.editForm)
-        .then(response => {
-          console.log(response.data)
-          if (response.data.error_code === 0) {
-            this.pageList()
-          }
-        })
-        .catch(function(error) {
-          console.log(error)
-        })
+    handleEditCommit(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          // alert('submit!');
+          this.dialogEditTrace = false
+          console.log(this.addForm)
+          this.$http
+            .post('http://127.0.0.1:8000/api/edit_trace', this.editForm)
+            .then(response => {
+              console.log(response.data)
+              if (response.data.error_code === 0) {
+                this.pageList()
+              }
+            })
+            .catch(function(error) {
+              console.log(error)
+            })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     }
+  },
+  mounted() {
+    this.$notify({
+      title: '提示',
+      message: '此页面可以实现对使用场景的增删改查操作',
+      duration: 0,
+      offset: 200
+    })
   }
 }
 </script>

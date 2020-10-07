@@ -286,11 +286,13 @@ def verify_invalid(request):
         # a = random.randint(0, 1)
         if a == 0:
             Invalid.objects.filter(id=aim_id).update(invalid_verify="能画出图")
+            res = 'Y'
         elif a == 1:
             Invalid.objects.filter(id=aim_id).update(invalid_verify="不能画")
+            res = 'N'
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
-    return JsonResponse({**error_code.CLACK_SUCCESS})
+    return JsonResponse({**error_code.CLACK_SUCCESS, 'res': res})
 
 
 # 重置失效序列验证
@@ -518,7 +520,7 @@ def verify_complete(request):
                 if src0 == data_dict['id']:
                     t = 0
             if t == 1:
-                data_node_add.append({"id": src0, "text": src, 'name': '','color': 'red'})
+                data_node_add.append({"id": src0, "text": src, 'name': '', 'color': 'red'})
                 data_node.append({"id": src0, "text": src, 'name': '', 'color': 'red'})
             t = 1
             for data_dict in data_node:
@@ -526,7 +528,7 @@ def verify_complete(request):
                     t = 0
             if t == 1:
                 data_node_add.append({"id": tgt0, "text": tgt, 'name': ''})
-                data_node.append({"id": tgt0, "text": tgt, 'name': '','color': 'red'})
+                data_node.append({"id": tgt0, "text": tgt, 'name': '', 'color': 'red'})
             edge = {"id": edge_num, "from": src0, "to": tgt0, "text": edge_name, "event": event, "cond": cond,
                     "action": action, "color": 'red'}
             index_line += 1

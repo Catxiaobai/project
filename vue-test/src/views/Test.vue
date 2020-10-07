@@ -5,7 +5,7 @@
       <el-aside width="240px"><inner-aside></inner-aside></el-aside>
       <inner-tab></inner-tab>
       <el-main>
-        <inner-main style="padding: 0;margin-top: -10px"></inner-main>
+        <inner-main style="margin-top: -10px"></inner-main>
         <router-view> </router-view>
       </el-main>
     </el-container>
