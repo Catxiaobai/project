@@ -499,7 +499,7 @@ def verify_complete(request):
             data_edge.append(edge)
 
         index_line += 1
-    file_name2 = 'E:/Code/project301/file/out.txt'
+    file_name2 = 'E:/Code/project301/file/outNew.txt'
     lines = open(file_name2, 'r', encoding='UTF-8').readlines()
     index_line = 0
     if os.path.getsize(file_name2):
@@ -534,9 +534,10 @@ def verify_complete(request):
             index_line += 1
             data_edge_add.append(edge)
             data_edge.append(edge)
-    print(data_edge)
-    print(data_node)
-    return JsonResponse({**error_code.CLACK_SUCCESS, "data_node": data_node, "data_edge": data_edge})
+    # print(data_edge)
+    # print(data_node)
+    return JsonResponse({**error_code.CLACK_SUCCESS, "data_node": data_node, "data_edge": data_edge,
+                         "data_node_add": data_node_add, "data_edge_add": data_edge_add})
 
 
 def verify_safe_result(request):
@@ -544,9 +545,9 @@ def verify_safe_result(request):
     try:
         with open(file_name, 'r', encoding='utf-8') as f:
             lines = f.read()
-            list_path = list(map(lambda a: int(a), lines[1:-1].split(',')))
-            print(list_path)
-            data_path = list_path
+        list_path = list(map(lambda a: int(a), lines[1:-1].split(',')))
+        print(list_path)
+        data_path = list_path
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS, "data_path": data_path})

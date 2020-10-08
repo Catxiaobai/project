@@ -1,21 +1,21 @@
 <template>
   <div id="sample">
-    <el-card>
-      <!--      <el-button type="primary" @click="save">save</el-button>-->
-      <!--      <el-button type="primary" @click="load">load</el-button>-->
-      <span style="font-size: x-large;margin-left: 45%">完整性验证</span>
-      <div id="myDiagramDiv" style="background-color: whitesmoke; border: solid 1px black; width: 60%; height: 480px;margin-top: 20px;margin-left: 20%"></div>
-      <textarea id="myTransaction" style="width:100%;height:200px" v-show="false"></textarea>
-      <textarea id="mytest" v-model="msg" v-show="false" />
-      <el-button type="primary" style="margin-left: 45%;margin-top: 10px" @click="judge">完整性验证</el-button>
+    <el-card style="height: 600px">
+      <el-col :span="14">
+        <div id="myDiagramDiv" class="myDiagramDiv"></div>
+        <el-button type="primary" style="margin-left: 45%;margin-top: 10px" @click="judge">完整性验证</el-button>
+      </el-col>
+      <el-col :span="10">
+        <div class="text-path">
+          <p>验证结果</p>
+          <br />
+          <p>{{ msg.tip }}</p>
+          <p>{{ msg.node }}</p>
+          <p>{{ msg.edge }}</p>
+          <el-button type="primary" v-show="textVisible" style="margin-top: 60px" @click="completeAll">全部补全</el-button>
+        </div>
+      </el-col>
     </el-card>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" style="margin-left: 850px">
-      <span>检测到模型不完整，是否补全</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
@@ -35,9 +35,18 @@ export default {
         nodeDataArray: [],
         linkDataArray: []
       },
-      msg: 'result',
+      msg: {
+        tip: '',
+        node: '',
+        edge: '',
+        node_id: '',
+        edge_id: ''
+      },
+      msgNode: '',
+      msgEdge: '',
+      // msg: '',
       test: 'tets',
-      dialogVisible: false
+      textVisible: false
     }
   },
   mounted() {
@@ -96,7 +105,7 @@ export default {
           this.load()
         })
         .catch(function(error) {
-          console.log(error)
+          // console.log(error)
         })
     },
     postData: function(data) {
@@ -123,7 +132,7 @@ export default {
         'toolManager.mouseWheelBehavior': go.ToolManager.WheelZoom,
         // support double-click in background creating a new node
         'clickCreatingTool.archetypeNodeData': { text: 'new node' },
-        // isReadOnly: true,
+        isReadOnly: true,
         // enable undo & redo
         'undoManager.isEnabled': false,
         layout: $(go.ForceDirectedLayout, {
@@ -133,12 +142,7 @@ export default {
           infinityDistance: 215
         })
       })
-      // function ttt(e) {
-      //   var element2 = document.getElementById('myTransaction')
-      //   // don't show anything upon the initial layout
-      //   // if (element2.value === 'InitialLayout') str = ''
-      //   element2.value = e.model.toIncrementalJson(e)
-      // }
+      // 节点样式
       this.myDiagram.nodeTemplate = $(
         go.Node,
         'Auto',
@@ -146,6 +150,23 @@ export default {
           cursor: 'pointer',
           // define a tooltip for each node that displays the color as text
           toolTip: $('ToolTip', $(go.TextBlock, { margin: 4 }, new go.Binding('text', 'name'))) // end of Adornment
+        },
+        {
+          // click: function(e, obj) {
+          //   console.log('e:' + e + '---obj:' + JSON.stringify(obj.part.data))
+          //   console.log('Clicked on ' + obj.part.data.key)
+          // }
+          doubleClick: function(e, obj) {
+            console.log('obj:' + JSON.stringify(obj.part.data))
+            var rr = confirm('是否补全所选点' + JSON.stringify(obj.part.data.text))
+            var aim_node = e.diagram.findNodeForKey(obj.part.data.id).data
+            if (rr == true) {
+              e.diagram.model.setDataProperty(aim_node, 'color', 'rgb(0,191,255)')
+            } else {
+              console.log(aim_node)
+              e.diagram.model.removeNodeData(aim_node)
+            }
+          }
         },
         new go.Binding('location', 'loc', go.Point.parse).makeTwoWay(go.Point.stringify),
         // define the node's outer shape, which will surround the TextBlock
@@ -174,15 +195,149 @@ export default {
           new go.Binding('text', 'text').makeTwoWay()
         )
       )
+      // 边样式
+      this.myDiagram.linkTemplate = $(
+        go.Link, // the whole link panel
+        {
+          curve: go.Link.Bezier,
+          adjusting: go.Link.Stretch,
+          reshapable: true,
+          relinkableFrom: true,
+          relinkableTo: true
+        },
+        {
+          cursor: 'pointer',
+          toolTip: $(
+            'ToolTip',
+            { 'Border.fill': 'whitesmoke', 'Border.stroke': 'black' },
+            $(go.TextBlock, { margin: 4 }, new go.Binding('text', '', tooltipTextConverter))
+          )
+          // define a tooltip for each node that displays the color as text
+          // toolTip: $('ToolTip', $(go.TextBlock, { margin: 4 }, new go.Binding('text', 'action'))) // end of Adornment
+        },
+        {
+          // click: function(e, obj) {
+          //   console.log('e:' + e + '---obj:' + JSON.stringify(obj.part.data))
+          //   console.log('Clicked on ' + obj.part.data.key)
+          // }
+          doubleClick: function(e, obj) {
+            console.log('obj:' + JSON.stringify(obj.part.data))
+            var rr = confirm('是否补全所选边' + JSON.stringify(obj.part.data.text))
+            var aim_link = e.diagram.findLinkForKey(obj.part.data.id).data
+            if (rr == true) {
+              e.diagram.model.setDataProperty(aim_link, 'color', 'black')
+            } else {
+              console.log(aim_link)
+              e.diagram.model.removeLinkData(aim_link)
+            }
+          }
+        },
+        new go.Binding('points').makeTwoWay(),
+        new go.Binding('curviness', 'curviness'),
+        $(
+          go.Shape, // the link shape
+          { strokeWidth: 1.5 },
+          new go.Binding('stroke', 'color')
+        ),
+        $(
+          go.Shape, // the arrowhead
+          { toArrow: 'standard', stroke: null }
+        ),
+        $(
+          go.Panel,
+          'Auto',
+          $(
+            go.Shape, // the label background, which becomes transparent around the edges
+            {
+              fill: $(go.Brush, 'Radial', { 0: 'rgb(240, 240, 240)', 0.3: 'rgb(240, 240, 240)', 1: 'rgba(240, 240, 240, 0)' }),
+              stroke: null
+            }
+          ),
+          $(
+            go.TextBlock,
+            'transition', // the label text
+            {
+              textAlign: 'center',
+              font: '10pt helvetica, arial, sans-serif',
+              stroke: 'black',
+              margin: 4,
+              editable: true // editing the text automatically updates the model data
+            },
+            new go.Binding('text', 'text').makeTwoWay()
+          )
+        )
+      )
+      // unlike the normal selection Adornment, this one includes a Button
+      this.myDiagram.nodeTemplate.selectionAdornmentTemplate = $(
+        go.Adornment,
+        'Spot',
+        $(
+          go.Panel,
+          'Auto',
+          $(go.Shape, { fill: null, stroke: 'blue', strokeWidth: 2 }),
+          $(go.Placeholder) // this represents the selected Node
+        )
+        // the button to create a "next" node, at the top-right corner
+        // $(
+        //   'Button',
+        //   {
+        //     alignment: go.Spot.TopRight,
+        //     click: addNodeAndLink // this function is defined below
+        //   },
+        //   $(go.Shape, 'PlusLine', { desiredSize: new go.Size(6, 6) })
+        // ) // end button
+      ) // end Adornment
+      // and adds a link to that new node
+      function addNodeAndLink(e, obj) {
+        var adorn = obj.part
+        e.handled = true
+        var diagram = adorn.diagram
+        diagram.startTransaction('Add State')
+
+        // get the node data for which the user clicked the button
+        var fromNode = adorn.adornedPart
+        var fromData = fromNode.data
+        // create a new "State" data object, positioned off to the right of the adorned Node
+        var toData = { text: 'new' }
+        var p = fromNode.location.copy()
+        p.x += 100
+        toData.loc = go.Point.stringify(p) // the "loc" property is a string, not a Point object
+        // add the new node data to the model
+        var model = diagram.model
+        model.addNodeData(toData)
+
+        // create a link data from the old node data to the new node data
+        var linkdata = {
+          from: model.getKeyForNodeData(fromData), // or just: fromData.id
+          to: model.getKeyForNodeData(toData),
+          text: 'transition'
+        }
+        // and add the link data to the model
+        model.addLinkData(linkdata)
+
+        // select the new Node
+        var newnode = diagram.findNodeForData(toData)
+        diagram.select(newnode)
+
+        diagram.commitTransaction('Add State')
+
+        // if the new node is off-screen, scroll the diagram to show the new node
+        diagram.scrollToRect(newnode.actualBounds)
+      }
+
+      function tooltipTextConverter(person) {
+        var str = ''
+        // console.log(person)
+        // str += 'id: ' + person.id + '\n'
+        str += 'name: ' + person.text + '\n'
+        str += 'source: ' + person.from + '\n'
+        str += 'target: ' + person.to + '\n'
+        str += 'event: ' + person.event + '\n'
+        str += 'condition: ' + person.cond + '\n'
+        str += 'action: ' + person.action + '\n'
+        return str
+      }
       this.myDiagram.toolManager.hoverDelay = 10
-      // //添加监听线生成事件
-      // this.myDiagram.addDiagramListener('LinkDrawn', function(e) {
-      //   console.log('线生成')
-      //
-      //   var data = { test: 'testjson' }
-      //   postData(data)
-      //   // this.postData({ test: 'tessss' })
-      // })
 
       //添加监听线重新连接事件
       this.myDiagram.addDiagramListener('LinkRelinked', function(e) {
@@ -194,25 +349,9 @@ export default {
       this.myDiagram.addDiagramListener('TextEdited', function(e) {
         console.log('文本编辑' + e)
       })
-      // //添加修改事件
-      // this.myDiagram.addDiagramListener('Modified', function(e) {
-      //   console.log('修改' + e)
-      // })
-      // //添加监听节点生成事件
-      // this.myDiagram.addDiagramListener('externalobjectsdropped', function(e) {
-      //   e.subject.each(function(n) {
-      //     console.log('节点生成')
-      //   })
-      // })
-      //
-      // this.myDiagram.addModelChangedListener(function(e) {
-      //   if (e.isTransactionFinished) {
-      //     console.log('剩下的' + e.model.toJson())
-      //     var json = e.model.toIncrementalJson(e)
-      //     console.log('修改的信息' + json)
-      //     // record each Transaction as a JSON-format string
-      //     // ... send to server/database ...
-      //   }
+      // //添加双击事件
+      // this.myDiagram.addDiagramListener('ObjectDoubleClicked', function(e, obj) {
+      //   console.log('双击事件' + obj)
       // })
       // 监听删除事件
       this.myDiagram.addDiagramListener('SelectionDeleted', function(e) {
@@ -253,146 +392,6 @@ export default {
           }
         }
       }
-      function test(str) {
-        console.log(element)
-        element.value = str
-        // console.log(element.value)
-      }
-
-      // unlike the normal selection Adornment, this one includes a Button
-      this.myDiagram.nodeTemplate.selectionAdornmentTemplate = $(
-        go.Adornment,
-        'Spot',
-        $(
-          go.Panel,
-          'Auto',
-          $(go.Shape, { fill: null, stroke: 'blue', strokeWidth: 2 }),
-          $(go.Placeholder) // this represents the selected Node
-        ),
-        // the button to create a "next" node, at the top-right corner
-        $(
-          'Button',
-          {
-            alignment: go.Spot.TopRight,
-            click: addNodeAndLink // this function is defined below
-          },
-          $(go.Shape, 'PlusLine', { desiredSize: new go.Size(6, 6) })
-        ) // end button
-      ) // end Adornment
-      // and adds a link to that new node
-      function addNodeAndLink(e, obj) {
-        var adorn = obj.part
-        e.handled = true
-        var diagram = adorn.diagram
-        diagram.startTransaction('Add State')
-
-        // get the node data for which the user clicked the button
-        var fromNode = adorn.adornedPart
-        var fromData = fromNode.data
-        // create a new "State" data object, positioned off to the right of the adorned Node
-        var toData = { text: 'new' }
-        var p = fromNode.location.copy()
-        p.x += 100
-        toData.loc = go.Point.stringify(p) // the "loc" property is a string, not a Point object
-        // add the new node data to the model
-        var model = diagram.model
-        model.addNodeData(toData)
-
-        // create a link data from the old node data to the new node data
-        var linkdata = {
-          from: model.getKeyForNodeData(fromData), // or just: fromData.id
-          to: model.getKeyForNodeData(toData),
-          text: 'transition'
-        }
-        // and add the link data to the model
-        model.addLinkData(linkdata)
-
-        // select the new Node
-        var newnode = diagram.findNodeForData(toData)
-        diagram.select(newnode)
-
-        diagram.commitTransaction('Add State')
-
-        // if the new node is off-screen, scroll the diagram to show the new node
-        diagram.scrollToRect(newnode.actualBounds)
-      }
-
-      // this.myDiagram.addDiagramListener('addNodeAndLink', function() {
-      //   console.log('test')
-      // })
-      // replace the default Link template in the linkTemplateMap
-      this.myDiagram.linkTemplate = $(
-        go.Link, // the whole link panel
-        {
-          curve: go.Link.Bezier,
-          adjusting: go.Link.Stretch,
-          reshapable: true,
-          relinkableFrom: true,
-          relinkableTo: true
-        },
-        {
-          cursor: 'pointer',
-          toolTip: $(
-            'ToolTip',
-            { 'Border.fill': 'whitesmoke', 'Border.stroke': 'black' },
-            $(go.TextBlock, { margin: 4 }, new go.Binding('text', '', tooltipTextConverter))
-          )
-          // define a tooltip for each node that displays the color as text
-          // toolTip: $('ToolTip', $(go.TextBlock, { margin: 4 }, new go.Binding('text', 'action'))) // end of Adornment
-        },
-        {
-          click: function(e, obj) {
-            console.log('e:' + e + '---obj:' + obj.part.data)
-            console.log('Clicked on ' + obj.part.data.key)
-          }
-        },
-        new go.Binding('points').makeTwoWay(),
-        new go.Binding('curviness', 'curviness'),
-        $(
-          go.Shape, // the link shape
-          { strokeWidth: 1.5 },
-          new go.Binding('stroke', 'color')
-        ),
-        $(
-          go.Shape, // the arrowhead
-          { toArrow: 'standard', stroke: null }
-        ),
-        $(
-          go.Panel,
-          'Auto',
-          $(
-            go.Shape, // the label background, which becomes transparent around the edges
-            {
-              fill: $(go.Brush, 'Radial', { 0: 'rgb(240, 240, 240)', 0.3: 'rgb(240, 240, 240)', 1: 'rgba(240, 240, 240, 0)' }),
-              stroke: null
-            }
-          ),
-          $(
-            go.TextBlock,
-            'transition', // the label text
-            {
-              textAlign: 'center',
-              font: '10pt helvetica, arial, sans-serif',
-              stroke: 'black',
-              margin: 4,
-              editable: true // editing the text automatically updates the model data
-            },
-            new go.Binding('text', 'text').makeTwoWay()
-          )
-        )
-      )
-      function tooltipTextConverter(person) {
-        var str = ''
-        // console.log(person)
-        // str += 'id: ' + person.id + '\n'
-        str += 'name: ' + person.text + '\n'
-        str += 'source: ' + person.from + '\n'
-        str += 'target: ' + person.to + '\n'
-        str += 'event: ' + person.event + '\n'
-        str += 'condition: ' + person.cond + '\n'
-        str += 'action: ' + person.action + '\n'
-        return str
-      }
     },
     judge() {
       this.$http
@@ -406,12 +405,46 @@ export default {
           // this.text_data.nodeDataArray.push(this.nodeDataArray[0])
           // this.text_data.linkDataArray.push(this.linkDataArray[0])
           console.log(this.text_data)
+          this.result(response.data.data_node_add, response.data.data_edge_add)
           this.load()
         })
         .catch(function(error) {
-          console.log(error)
+          // console.log(error)
         })
-      this.dialogVisible = true
+    },
+    result(node, edge) {
+      // todo:展示验证结果
+      console.log(node, edge)
+      this.msg.tip = '检测到模型不完整，建议增加'
+      this.msg.node = 'node: ' + JSON.stringify(node[0].text)
+      this.msg.edge = ' edge: ' + JSON.stringify(edge[0].text)
+      this.msg.node_id = JSON.stringify(node[0].id)
+      this.msg.edge_id = JSON.stringify(edge[0].id)
+      this.textVisible = true
+      this.$http
+        .get('http://127.0.0.1:8000/api/verify_complete')
+        .then(response => {
+          // console.log(response.data)
+          this.linkDataArray = response.data.data_edge
+          this.nodeDataArray = response.data.data_node
+          this.text_data.nodeDataArray = this.nodeDataArray
+          this.text_data.linkDataArray = this.linkDataArray
+          // this.text_data.nodeDataArray.push(this.nodeDataArray[0])
+          // this.text_data.linkDataArray.push(this.linkDataArray[0])
+          console.log(this.text_data)
+          // this.result(response.data.data_node_add, response.data.data_edge_add)
+          this.load()
+        })
+        .catch(function(error) {
+          // console.log(error)
+        })
+    },
+    completeAll() {
+      var aim_link = this.myDiagram.findLinkForKey(this.msg.edge_id).data
+      this.myDiagram.model.setDataProperty(aim_link, 'color', 'black')
+      var aim_node = this.myDiagram.findNodeForKey(this.msg.node_id).data
+      this.myDiagram.model.setDataProperty(aim_node, 'color', 'rgb(0,191,255)')
+      // console.log(this.msg.edge_id)
     }
   },
   created() {
@@ -436,4 +469,17 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.myDiagramDiv {
+  background-color: whitesmoke;
+  border: solid 1px black;
+  width: 100%;
+  height: 480px;
+  margin-top: 20px;
+  //margin-left: 10%;
+}
+.text-path {
+  text-align: center;
+  font-size: x-large;
+}
+</style>

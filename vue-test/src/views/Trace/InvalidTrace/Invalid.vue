@@ -113,10 +113,20 @@
       </el-dialog>
     </div>
     <div class="drawLine" v-show="divDraw">
-      <el-card>
-        <span style="font-size: x-large;margin-left: 40%">失效场景复现</span>
-        <el-button type="danger" @click="closeDivDraw" style="float: right">关闭</el-button>
-        <div id="myDiagramDiv" style="background-color: whitesmoke; border: solid 1px black; width: 100%; height: 520px;margin-top: 20px"></div>
+      <el-card style="height: 560px">
+        <!--      <span style="font-size: x-large;margin-left: 40%">模型可视化</span>-->
+        <el-col :span="12">
+          <span style="font-size: x-large;margin-left: 40%">失效场景复现</span>
+          <div id="myDiagramDiv" class="myDiagramDiv"></div>
+        </el-col>
+        <el-col :span="12">
+          <el-button type="danger" style="float: right" @click="closeDivDraw">关闭</el-button>
+          <div class="text-path">
+            <p>复现路径</p>
+            <br />
+            <span style="white-space: normal">{{ test_draw }}</span>
+          </div>
+        </el-col>
       </el-card>
     </div>
   </div>
@@ -127,6 +137,7 @@ import go from 'gojs'
 const MAKE = go.GraphObject.make
 export default {
   name: 'UsedTrace.vue',
+  inject: ['reload'],
   data() {
     return {
       limit: 4, //每页显示条数
@@ -162,9 +173,9 @@ export default {
         nodeKeyProperty: 'id',
         linkKeyProperty: 'id',
         nodeDataArray: [],
-        linkDataArray: [],
-        test_draw: [1, 2, 2, 3]
-      }
+        linkDataArray: []
+      },
+      test_draw: [1, 2, 2, 3]
     }
   },
   created() {
@@ -316,8 +327,9 @@ export default {
         })
     },
     closeDivDraw() {
-      this.divMain = true
-      this.divDraw = false
+      this.reload()
+      // this.divMain = true
+      // this.divDraw = false
     },
     save() {
       // document.getElementById('mySavedModel').value = this.myDiagram.model.toJson()
@@ -715,4 +727,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.myDiagramDiv {
+  background-color: whitesmoke;
+  border: solid 1px black;
+  width: 100%;
+  height: 500px;
+  //margin-top: 20px;
+}
+.text-path {
+  text-align: center;
+  font-size: xx-large;
+}
+</style>

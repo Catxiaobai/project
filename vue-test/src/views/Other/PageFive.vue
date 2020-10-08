@@ -1,8 +1,18 @@
 <template>
   <div id="sample">
-    <el-card>
-      <span style="font-size: x-large;margin-left: 40%">模型可视化</span>
-      <div id="myDiagramDiv" style="background-color: whitesmoke; border: solid 1px black; width: 100%; height: 520px;margin-top: 20px"></div>
+    <el-card style="height: 580px">
+      <!--      <span style="font-size: x-large;margin-left: 40%">模型可视化</span>-->
+      <el-col :span="12">
+        <span style="font-size: x-large;margin-left: 40%">失效场景复现</span>
+        <div id="myDiagramDiv" class="myDiagramDiv"></div>
+      </el-col>
+      <el-col :span="12">
+        <div class="text-path">
+          <p>复现路径</p>
+          <br />
+          <span>{{ test_draw }}</span>
+        </div>
+      </el-col>
     </el-card>
   </div>
 </template>
@@ -21,10 +31,15 @@ export default {
         nodeKeyProperty: 'id',
         linkKeyProperty: 'id',
         nodeDataArray: [],
-        linkDataArray: [],
-        test_draw: [1, 2, 2, 3]
-      }
+        linkDataArray: []
+      },
+      test_draw: [1, 2, 2, 3],
+      msg: '这是项目的基\n' + '这是项目的\n' + '测试信息\n' + '测试'
     }
+  },
+  created() {
+    this.getData()
+    this.getPathData()
   },
   mounted() {
     this.init()
@@ -169,6 +184,10 @@ export default {
       //添加监听线重新连接事件
       this.myDiagram.addDiagramListener('TextEdited', function(e) {
         console.log('文本编辑' + e)
+      })
+      //添加修改事件
+      this.myDiagram.addDiagramListener('Modified', function(e) {
+        console.log('修改' + e.diagram.model.toJson())
       })
 
       // 监听删除事件
@@ -420,12 +439,20 @@ export default {
       }, 1000)
       //window.setInterval(change, 1000)
     }
-  },
-  created() {
-    this.getData()
-    this.getPathData()
   }
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.myDiagramDiv {
+  background-color: whitesmoke;
+  border: solid 1px black;
+  width: 100%;
+  height: 520px;
+  //margin-top: 20px;
+}
+.text-path {
+  text-align: center;
+  font-size: xx-large;
+}
+</style>
