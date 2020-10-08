@@ -64,6 +64,7 @@
 import { mapState } from 'vuex'
 export default {
   name: 'InnerHeader.vue',
+  inject: ['reload'],
   // computed: {
   //   ...mapState({
   //     current: state => state.inner.currentMenu
@@ -85,7 +86,10 @@ export default {
       this.$router.replace('/trace')
     },
     backLogin() {
-      this.$router.replace('/')
+      // console.log('tets')
+      // this.reload()
+      // this.$router.replace('/')
+      window.location.href = '/'
     }
   }
 }

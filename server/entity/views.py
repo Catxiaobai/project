@@ -269,11 +269,10 @@ def verify_invalid(request):
     request_json = json.loads(request.body)
     aim_id = request_json['invalid']['invalid_id']
     aim_invalid = request_json['invalid']['invalid_content']
-    # print(aim_invalid)
+    print(aim_invalid)
     with open('E:/Code/project301/file/targetInvalid.txt', 'w') as f:  # 设置文件对象
         f.write('Transition:\n')
         f.write(aim_invalid)
-    #     f.write(res.replace('  ', '\n'))  # 将字符串写入文件中
     os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
     try:
         with open('E:/Code/project301/file/path.txt') as f:
@@ -285,11 +284,11 @@ def verify_invalid(request):
             a = 1
         # a = random.randint(0, 1)
         if a == 0:
-            Invalid.objects.filter(id=aim_id).update(invalid_verify="能画出图")
-            res = 'Y'
+            Invalid.objects.filter(id=aim_id).update(invalid_verify="danger")
+            res = 'danger'
         elif a == 1:
-            Invalid.objects.filter(id=aim_id).update(invalid_verify="不能画")
-            res = 'N'
+            Invalid.objects.filter(id=aim_id).update(invalid_verify="success")
+            res = 'success'
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS, 'res': res})
@@ -452,7 +451,7 @@ def verify_del(request):
     return JsonResponse({**error_code.CLACK_SUCCESS, "result": res})
 
 
-#
+# 验证模型的完整性
 def verify_complete(request):
     file_name = 'E:/Code/project301/file/result.txt'
     lines = open(file_name, 'r', encoding='UTF-8').readlines()
@@ -540,6 +539,7 @@ def verify_complete(request):
                          "data_node_add": data_node_add, "data_edge_add": data_edge_add})
 
 
+# 返回前端失效场景的复现路径
 def verify_safe_result(request):
     file_name = 'E:/Code/project301/file/path.txt'
     try:
@@ -551,3 +551,36 @@ def verify_safe_result(request):
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS, "data_path": data_path})
+
+
+# 一次性验证多个失效序列
+def verify_select_invalid(request):
+    request_json = json.loads(request.body)
+    try:
+        for i in range(0, len(request_json)):
+            aim_id = request_json[i]['invalid_id']
+            aim_invalid = request_json[i]['invalid_content']
+            # print(aim_invalid)
+            if not Invalid.objects.filter(id=aim_id).exists():
+                return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+            with open('E:/Code/project301/file/targetInvalid.txt', 'w') as f:  # 设置文件对象
+                f.write('Transition:\n')
+                f.write(aim_invalid)
+            os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
+            with open('E:/Code/project301/file/path.txt') as f:
+                lines = f.read()
+            if len(lines) > 2:
+                # print("len长度"+len(lines))
+                # a = 0
+                Invalid.objects.filter(id=aim_id).update(invalid_verify="danger")
+            else:
+                # a = 1
+                Invalid.objects.filter(id=aim_id).update(invalid_verify="success")
+            # a = random.randint(0, 1)
+            # if a == 0:
+            #
+            # elif a == 1:
+            #
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})

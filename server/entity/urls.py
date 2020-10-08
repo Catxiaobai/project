@@ -41,6 +41,7 @@ urlpatterns = [
     path('verify_add', views.verify_add, name='verify_add_link'),  # 验证对模型的添加操作
     path('verify_del', views.verify_del, name='verify_del_link'),  # 验证对模型的删除操作
     path('verify_complete', views.verify_complete, name='verify_complete'),  # 验证模型完整性
-    path('verify_safe_result', views.verify_safe_result, name='verify_safe_result'),  # 验证模型完整性
+    path('verify_safe_result', views.verify_safe_result, name='verify_safe_result'),  # 返回前端失效场景的复现路径
+    path('verify_select_invalid', views.verify_select_invalid, name='verify_select_invalid'),  # 一次性验证多个失效序列
 
 ]
