@@ -26,15 +26,25 @@
         <el-button type="text" slot="reference">操作提示</el-button>
       </el-popover>
     </div>
-    <el-card>
-      <section class="chart-container" style="margin-left: 25%">
-        <el-row>
-          <el-col :span="12">
-            <div id="chartPie" style="width:100%; height:400px;"></div>
-          </el-col>
-        </el-row>
-      </section>
-    </el-card>
+    <div class="divChart">
+      <el-card>
+        <section class="chart-container" style="margin-left: 20%">
+          <el-row>
+            <el-col :span="12">
+              <div id="chartPie" style="width:100%; height:500px;"></div>
+            </el-col>
+            <el-col :span="12">
+              <div class="divRes">
+                <p>安全性评估结果：</p>
+                <br />
+                <p>危险系数为{{ resData.dataRes }}%</p>
+                <p>此项目存在安全隐患</p>
+              </div>
+            </el-col>
+          </el-row>
+        </section>
+      </el-card>
+    </div>
   </div>
 </template>
 
@@ -50,7 +60,8 @@ export default {
       resData: {
         numDanger: 0,
         numSuccess: 0,
-        numNull: 0
+        numNull: 0,
+        dataRes: 0
       },
       tableData: []
     }
@@ -114,7 +125,7 @@ export default {
               this.resData.numNull++
             }
           }
-          console.log(this.yyy)
+          this.resData.dataRes = ((this.resData.numDanger / this.tableData.length) * 100).toFixed(2)
           this.drawCharts()
         })
         .catch(function(error) {
@@ -146,5 +157,10 @@ export default {
   margin-left: 1100px;
   height: 40px;
   margin-top: -40px;
+}
+.divRes {
+  margin-top: 100px;
+  font-weight: bold;
+  font-size: xx-large;
 }
 </style>

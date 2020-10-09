@@ -80,6 +80,9 @@ export default {
   mounted() {
     this.init()
   },
+  created() {
+    this.getData()
+  },
   methods: {
     showIncremental(str) {
       // show the last transaction as an incremental update in JSON-formatted text
@@ -474,9 +477,6 @@ export default {
       this.myDiagram.model.setDataProperty(aim_node, 'color', 'rgb(0,191,255)')
       // console.log(this.msg.edge_id)
     }
-  },
-  created() {
-    this.getData()
   }
   // watch: {
   //   msg(newVal, oldVal) {
