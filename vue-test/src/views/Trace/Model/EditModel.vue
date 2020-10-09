@@ -1,9 +1,37 @@
 <template>
   <div id="sample">
+    <div class="divHelp">
+      <el-popover placement="bottom" trigger="click">
+        <!--        <el-button slot="reference">click 激活</el-button>-->
+        <p>此页面可以对使用场景进行动态编辑</p>
+        <p>对模型每次操作都会触发验证，提示操作是否可行</p>
+        <br />
+        <p>新增空白节点：在空白处双击鼠标左键</p>
+        <p>新增边：选定一个节点，将鼠标移至节点边缘处，长按鼠标左键，从该节点处延伸至另一节点处即可</p>
+        <p>删除节点：鼠标左键单击进行选定，然后点击键盘上的"delete"或"Backspace"键</p>
+        <p>删除边：鼠标左键单击进行选定，然后点击键盘上的"delete"或"Backspace"键</p>
+        <p>移动节点：鼠标左键单击进行选定，将鼠标移至节点中心处，长按鼠标左键即可拖拽移动</p>
+        <el-button icon="el-icon-message-solid" circle slot="reference"></el-button>
+      </el-popover>
+      <el-popover placement="bottom" trigger="click">
+        <!--        <el-button slot="reference">click 激活</el-button>-->
+        <div>
+          <p>此页面可以对使用场景进行动态编辑</p>
+          <p>对模型每次操作都会触发验证，提示操作是否可行</p>
+          <br />
+          <p>新增空白节点：在空白处双击鼠标左键</p>
+          <p>新增边：选定一个节点，将鼠标移至节点边缘处，长按鼠标左键，从该节点处延伸至另一节点处即可</p>
+          <p>删除节点：鼠标左键单击进行选定，然后点击键盘上的"delete"或"Backspace"键</p>
+          <p>删除边：鼠标左键单击进行选定，然后点击键盘上的"delete"或"Backspace"键</p>
+          <p>移动节点：鼠标左键单击进行选定，将鼠标移至节点中心处，长按鼠标左键即可拖拽移动</p>
+        </div>
+        <el-button type="text" slot="reference">操作提示</el-button>
+      </el-popover>
+    </div>
     <el-card>
       <!--      <el-button type="primary" @click="save">save</el-button>-->
       <!--      <el-button type="primary" @click="load">load</el-button>-->
-      <span style="font-size: x-large;margin-left: 40%">模型可视化</span>
+      <span style="font-size: x-large;margin-left: 40%">模型动态编辑</span>
       <div id="myDiagramDiv" style="background-color: whitesmoke; border: solid 1px black; width: 100%; height: 520px;margin-top: 20px"></div>
       <textarea id="myTransaction" style="width:100%;height:200px" v-show="false"></textarea>
       <textarea id="mytest" v-model="msg" v-show="false" />
@@ -384,4 +412,10 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.divHelp {
+  margin-left: 1100px;
+  height: 40px;
+  margin-top: -40px;
+}
+</style>

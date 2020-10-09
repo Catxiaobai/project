@@ -1,13 +1,41 @@
 <template>
-  <el-card>
-    <section class="chart-container" style="margin-left: 25%">
-      <el-row>
-        <el-col :span="12">
-          <div id="chartPie" style="width:100%; height:400px;"></div>
-        </el-col>
-      </el-row>
-    </section>
-  </el-card>
+  <div>
+    <div class="divHelp">
+      <el-popover placement="bottom" trigger="click">
+        <!--        <el-button slot="reference">click 激活</el-button>-->
+        <p>此页面展示安全性评估结果</p>
+        <!--        <p>对模型每次操作都会触发验证，提示操作是否可行</p>-->
+        <br />
+        <p>danger：存在安全隐患</p>
+        <p>success：在该模型中验证结果为安全</p>
+        <p>null：还未验证的场景</p>
+        <!--        <p>删除边：鼠标左键单击进行选定，然后点击键盘上的"delete"或"Backspace"键</p>-->
+        <!--        <p>移动节点：鼠标左键单击进行选定，将鼠标移至节点中心处，长按鼠标左键即可拖拽移动</p>-->
+        <el-button icon="el-icon-message-solid" circle slot="reference"></el-button>
+      </el-popover>
+      <el-popover placement="bottom" trigger="click">
+        <!--        <el-button slot="reference">click 激活</el-button>-->
+        <div>
+          <p>此页面展示安全性评估结果</p>
+          <!--        <p>对模型每次操作都会触发验证，提示操作是否可行</p>-->
+          <br />
+          <p>danger：存在安全隐患</p>
+          <p>success：在该模型中验证结果为安全</p>
+          <p>null：还未验证的场景</p>
+        </div>
+        <el-button type="text" slot="reference">操作提示</el-button>
+      </el-popover>
+    </div>
+    <el-card>
+      <section class="chart-container" style="margin-left: 25%">
+        <el-row>
+          <el-col :span="12">
+            <div id="chartPie" style="width:100%; height:400px;"></div>
+          </el-col>
+        </el-row>
+      </section>
+    </el-card>
+  </div>
 </template>
 
 <script>
@@ -17,8 +45,13 @@ export default {
   data() {
     return {
       chartPie: null,
-      yyy: 0,
-      nnn: 0,
+      yyy: 2,
+      nnn: 3,
+      resData: {
+        numDanger: 0,
+        numSuccess: 0,
+        numNull: 0
+      },
       tableData: []
     }
   },
@@ -38,20 +71,18 @@ export default {
         legend: {
           orient: 'vertical',
           left: 'left',
-          data: ['失效', '未失效']
+          data: ['danger', 'success', 'null']
         },
         series: [
           {
-            name: '失效序列',
+            name: '失效场景验证',
             type: 'pie',
             radius: '55%',
             center: ['50%', '60%'],
             data: [
-              { value: this.yyy, name: '失效' },
-              { value: this.nnn, name: '未失效' }
-              // { value: 234, name: '联盟广告' },
-              // { value: 135, name: '视频广告' },
-              // { value: 1548, name: '搜索引擎' }
+              { value: this.resData.numDanger, name: 'danger' },
+              { value: this.resData.numSuccess, name: 'success' },
+              { value: this.resData.numNull, name: 'null' }
             ],
             itemStyle: {
               emphasis: {
@@ -75,10 +106,12 @@ export default {
           this.tableData = response.data.invalid_list
           console.log(this.tableData[0].invalid_verify)
           for (var i = 0; i < this.tableData.length; i++) {
-            if (this.tableData[i].invalid_verify == 'Y') {
-              this.yyy++
-            } else if (this.tableData[i].invalid_verify == 'N') {
-              this.nnn++
+            if (this.tableData[i].invalid_verify == 'danger') {
+              this.resData.numDanger++
+            } else if (this.tableData[i].invalid_verify == 'success') {
+              this.resData.numSuccess++
+            } else if (this.tableData[i].invalid_verify == 'null') {
+              this.resData.numNull++
             }
           }
           console.log(this.yyy)
@@ -108,5 +141,10 @@ export default {
 }
 .el-col {
   padding: 30px 20px;
+}
+.divHelp {
+  margin-left: 1100px;
+  height: 40px;
+  margin-top: -40px;
 }
 </style>

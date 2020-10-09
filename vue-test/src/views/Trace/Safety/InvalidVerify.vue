@@ -1,10 +1,34 @@
 <template>
   <div>
+    <div class="divHelp">
+      <el-popover placement="bottom" trigger="click">
+        <!--        <el-button slot="reference">click 激活</el-button>-->
+        <p>此页面可以一次性验证全部场景</p>
+        <p>表格中第一列勾选场景，可以验证或重置所选场景</p>
+        <br />
+        <p>验证：点击验证按钮，将依次验证场景安全性，若判断为危险，则该场景标红显示</p>
+        <p>重置：点击重置按钮即可重置验证结果</p>
+        <p>全部验证结果：在表格右侧会有全部的验证信息结果</p>
+        <el-button icon="el-icon-message-solid" circle slot="reference"></el-button>
+      </el-popover>
+      <el-popover placement="bottom" trigger="click">
+        <!--        <el-button slot="reference">click 激活</el-button>-->
+        <div>
+          <p>此页面可以一次性验证全部场景</p>
+          <p>表格中第一列勾选场景，可以验证或重置所选场景</p>
+          <br />
+          <p>验证：点击验证按钮，将依次验证场景安全性，若判断为危险，则该场景标红显示</p>
+          <p>重置：点击重置按钮即可重置验证结果</p>
+          <p>全部验证结果：在表格右侧会有全部的验证信息结果</p>
+        </div>
+        <el-button type="text" slot="reference">操作提示</el-button>
+      </el-popover>
+    </div>
     <el-card style="width: 100%;height: 600px">
       <el-col :span="19">
         <div class="divForm">
           <span>选择场景进行验证</span>
-          <el-button style="margin-left: 50px" type="primary" :disabled="buttonVerify" @click="verifyAll">验证</el-button>
+          <el-button style="margin-left: 20px" type="primary" :disabled="buttonVerify" @click="verifyAll">验证</el-button>
           <el-button style="margin-left: 50px" type="primary" v-show="buttonReset" @click="handleReset">重置验证结果</el-button>
           <el-table
             ref="multipleTable"
@@ -271,5 +295,10 @@ export default {
     //background: #ebb563;
     font-size: large;
   }
+}
+.divHelp {
+  margin-left: 1100px;
+  height: 40px;
+  margin-top: -40px;
 }
 </style>

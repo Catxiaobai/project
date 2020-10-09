@@ -1,7 +1,8 @@
 <template>
   <div class="bottom">
     <span style="margin-left: 10px;margin-top: 10px">>项目简介</span>
-    <el-select v-model="value" placeholder="请选择项目" style="margin-left: 900px">
+    <!--    todo: 项目选择不起作用-->
+    <el-select v-model="value" placeholder="请选择项目" style="margin-left: 40px">
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"> </el-option>
     </el-select>
     <!--    <el-card class="bottom"></el-card>-->
@@ -33,6 +34,7 @@ export default {
 <style lang="scss" scoped>
 .bottom {
   background-color: #eef4f8;
+  //background-color: #66cff0;
   height: 40px;
 }
 </style>

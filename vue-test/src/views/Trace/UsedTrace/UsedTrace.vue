@@ -1,5 +1,19 @@
 <template>
   <div>
+    <div class="divHelp">
+      <el-popover placement="bottom" title="help" trigger="click">
+        <!--        <el-button slot="reference">click 激活</el-button>-->
+        <p>此页面可以对使用场景进行增删改查操作</p>
+        <el-button icon="el-icon-message-solid" circle slot="reference"></el-button>
+      </el-popover>
+      <el-popover placement="bottom" trigger="click">
+        <!--        <el-button slot="reference">click 激活</el-button>-->
+        <div>
+          <p>此页面可以对使用场景进行增删改查操作</p>
+        </div>
+        <el-button type="text" slot="reference">操作提示</el-button>
+      </el-popover>
+    </div>
     <!--    标题-->
     <!--    <span>项目名称</span>-->
     <el-card class="tableTitle">
@@ -281,14 +295,20 @@ export default {
     }
   },
   mounted() {
-    this.$notify({
-      title: '提示',
-      message: '此页面可以实现对使用场景的增删改查操作',
-      duration: 0,
-      offset: 200
-    })
+    //   this.$notify({
+    //     title: '提示',
+    //     message: '此页面可以实现对使用场景的增删改查操作',
+    //     duration: 0,
+    //     offset: 200
+    //   })
   }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.divHelp {
+  margin-left: 1100px;
+  height: 40px;
+  margin-top: -40px;
+}
+</style>

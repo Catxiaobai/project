@@ -309,7 +309,7 @@ export default {
           if (response.data.error_code === 0) {
             // this.pageList()
             // console.log('验证成功')
-            if (response.data.res === 'Y') {
+            if (response.data.res === 'danger') {
               // todo: 画图
               // this.init()
               this.drawlink()

@@ -1,5 +1,33 @@
 <template>
   <div id="sample">
+    <div class="divHelp">
+      <el-popover placement="bottom" trigger="click">
+        <!--        <el-button slot="reference">click 激活</el-button>-->
+        <p>此页面对模型进行完整性验证</p>
+        <p>点击”完整性验证“按钮，即可开始验证</p>
+        <br />
+        <p style="font-weight: bold">若模型不完整</p>
+        <p>左侧模型图中会提示需要补全的新状态,用红色标出</p>
+        <p>右侧也会显示对应的文字结果</p>
+        <p>可以点击“全部补全”按钮，即可将所有提示的状态全部补全</p>
+        <p>也可以在图中逐个补全，鼠标左键双击待补全的节点或边，会出现提示弹窗，点击确定即可补全</p>
+        <el-button icon="el-icon-message-solid" circle slot="reference"></el-button>
+      </el-popover>
+      <el-popover placement="bottom" trigger="click">
+        <!--        <el-button slot="reference">click 激活</el-button>-->
+        <div>
+          <p>此页面对模型进行完整性验证</p>
+          <p>点击”完整性验证“按钮，即可开始验证</p>
+          <br />
+          <p style="font-weight: bold">若模型不完整</p>
+          <p>左侧模型图中会提示需要补全的新状态,用红色标出</p>
+          <p>右侧也会显示对应的文字结果</p>
+          <p>可以点击“全部补全”按钮，即可将所有提示的状态全部补全</p>
+          <p>也可以在图中逐个补全，鼠标左键双击待补全的节点或边，会出现提示弹窗，点击确定即可补全</p>
+        </div>
+        <el-button type="text" slot="reference">操作提示</el-button>
+      </el-popover>
+    </div>
     <el-card style="height: 600px">
       <el-col :span="14">
         <div id="myDiagramDiv" class="myDiagramDiv"></div>
@@ -481,5 +509,10 @@ export default {
 .text-path {
   text-align: center;
   font-size: x-large;
+}
+.divHelp {
+  margin-left: 1100px;
+  height: 40px;
+  margin-top: -40px;
 }
 </style>

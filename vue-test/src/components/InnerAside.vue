@@ -169,34 +169,34 @@ export default {
               icon: 'more'
             }
           ]
-        },
-        {
-          path: '/titleOther',
-          label: '测试',
-          name: 'titleOther',
-          icon: 's-platform',
-          index: 6,
-          children: [
-            {
-              path: '/pageFive',
-              label: 'pageFive',
-              name: 'pageFive',
-              icon: 'more'
-            },
-            // {
-            //   path: '/safeVerify',
-            //   label: '安全性验证',
-            //   name: 'safeVerify',
-            //   icon: 'more'
-            // },
-            {
-              path: '/pageFour',
-              label: 'pageFour',
-              name: 'pageFour',
-              icon: 'more'
-            }
-          ]
         }
+        // {
+        //   path: '/titleOther',
+        //   label: '测试',
+        //   name: 'titleOther',
+        //   icon: 's-platform',
+        //   index: 6,
+        //   children: [
+        //     {
+        //       path: '/pageFive',
+        //       label: 'pageFive',
+        //       name: 'pageFive',
+        //       icon: 'more'
+        //     },
+        //     // {
+        //     //   path: '/safeVerify',
+        //     //   label: '安全性验证',
+        //     //   name: 'safeVerify',
+        //     //   icon: 'more'
+        //     // },
+        //     {
+        //       path: '/pageFour',
+        //       label: 'pageFour',
+        //       name: 'pageFour',
+        //       icon: 'more'
+        //     }
+        //   ]
+        // }
       ]
     }
   },
