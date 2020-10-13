@@ -27,6 +27,7 @@ class Invalid(models.Model):
     invalid_details = models.TextField(default='')
     invalid_describe = models.TextField(default='')
     invalid_verify = models.TextField(default='null')
+    invalid_type = models.TextField(default='')
 
     def to_dict(self):
         return {
@@ -35,7 +36,8 @@ class Invalid(models.Model):
             'invalid_content': self.invalid_content,
             'invalid_details': self.invalid_details,
             'invalid_describe': self.invalid_describe,
-            'invalid_verify': self.invalid_verify
+            'invalid_verify': self.invalid_verify,
+            'invalid_type': self.invalid_type,
         }
 
 

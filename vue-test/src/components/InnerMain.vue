@@ -1,9 +1,9 @@
 <template>
   <div class="bottom">
     <span class="msg">{{ itemMsg }}</span>
-    <el-select v-model="value" placeholder="请选择项目" style="margin-left: 40px" @change="selectItem(value)" clearable>
-      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"> </el-option>
-    </el-select>
+    <!--    <el-select v-model="value" placeholder="请选择项目" style="margin-left: 40px" @change="selectItem(value)" clearable>-->
+    <!--      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"> </el-option>-->
+    <!--    </el-select>-->
     <!--    <el-card class="bottom"></el-card>-->
   </div>
 </template>
@@ -11,7 +11,7 @@
 <script>
 export default {
   name: 'InnerMain.vue',
-  props: ['itemMsg'],
+  // props: ['itemMsg'],
   data() {
     return {
       options: [
@@ -25,21 +25,27 @@ export default {
           disabled: true
         }
       ],
-      value: ''
+      value: '',
+      itemMsg: '>ATM系统'
     }
   },
   methods: {
-    selectItem(data) {
-      if (data === '选项1') {
-        // todo: 改变项目简介
-
-        this.$emit('transferItemMsg', '>ATM系统')
-        console.log('test')
-      } else if (data === '') {
-        // todo: 改回项目简介
-        this.$emit('transferItemMsg', '>项目简介')
-      }
-    }
+    // selectItem(data) {
+    //   if (data === '选项1') {
+    //     // todo: 改变项目简介
+    //
+    //     this.$emit('transferItemMsg', '>ATM系统')
+    //     console.log('test')
+    //   } else if (data === '') {
+    //     // todo: 改回项目简介
+    //     this.$emit('transferItemMsg', '>项目简介')
+    //   }
+    // }
+  },
+  mounted() {
+    this.bus.$on('transferItemMsg', msg => {
+      this.itemMsg = msg
+    })
   }
 }
 </script>

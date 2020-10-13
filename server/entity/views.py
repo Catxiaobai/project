@@ -17,10 +17,11 @@ from django.shortcuts import render
 # 建模
 def modeling(request):
     os.system('python E:/Code/project301/lwn_Graphic/ConstructModel.py')
+    os.system('python E:/Code/project301/lwn_Graphic/2020-08.py')
     return JsonResponse({**error_code.CLACK_SUCCESS})
 
 
-# 图形化展示模型
+# 图形化展示模型（废弃）
 def show_model(request):
     os.system('python E:/Code/project301/lwn_Graphic/2020-08.py')
     pp = subprocess.Popen('python E:/Code/project301/lwn_Graphic/draw_graph.py')
@@ -51,8 +52,8 @@ def add_model(request):
             f.write('Trace:\n')
             f.write(request_json[i]['value'].replace('  ', '\n'))  # 将字符串写入文件中
             f.write('\n')
-    os.system('python E:/Code/project301/lzy_Complete/Model3/completeModel.py')
-    os.system('python E:/Code/project301/lwn_Graphic/2020-08.py')
+    # os.system('python E:/Code/project301/lzy_Complete/Model3/completeModel.py')
+    # os.system('python E:/Code/project301/lwn_Graphic/2020-08.py')
 
     return JsonResponse({**error_code.CLACK_SUCCESS})
 
@@ -311,6 +312,7 @@ def reset_verify(request):
 # 传递模型数据
 def deliver_model(request):
     file_name = 'E:/Code/project301/file/result.txt'
+    # file_name = 'E:/Code/project301/file/resultModel.txt'
     lines = open(file_name, 'r', encoding='UTF-8').readlines()
     index_line = 0
     data_node = []
@@ -349,11 +351,12 @@ def deliver_model(request):
             action = action[1] if len(action) > 1 else ""
             edge = {"id": test_id, "from": src, "to": tgt, "text": name, "event": event, "cond": cond,
                     "action": action, "color": "black"}
+            # print(edge)
             test_id += 1
             data_edge.append(edge)
 
         index_line += 1
-
+    # print(data_edge)
     return JsonResponse({**error_code.CLACK_SUCCESS, "data_node": data_node, "data_edge": data_edge})
 
 
@@ -392,7 +395,7 @@ def verify_del(request):
     edge = json.loads(request_json['total'])['linkDataArray']
     # print('delete:')
     # print(delete)
-    # # print(node)
+    # print(node)
     # print('edge:')
     # print(edge)
     filepath = 'E:/Code/project301/file/'
@@ -434,6 +437,33 @@ def verify_del(request):
         with open(filepath + 'resultModel.txt', 'wt+', encoding='utf-8') as f:
             f.write(result)
 
+        data_list3 = node
+        result = ''
+        for data_dict in data_list3:
+            if 'text' in data_dict.keys():
+                if data_dict['text'] == "START":
+                    data_dict['text'] = "S0"
+                result = result + 'State:' + '\n' + '\t' + 'label=' + data_dict[
+                    'text'] + '\n' +'\t' + 'name=' + data_dict['name'] + '\n'
+
+        data_list4 = edge
+        # print(data_list2)
+        for data_dict in data_list4:
+            if str(data_dict['from']) == 'TART':
+                data_dict['from'] = '0'
+            elif str(data_dict['to']) == 'TART':
+                data_dict['to'] = '0'
+            result = result + 'Transition:' + '\n' \
+                     + '\t' + 'name=' + str(data_dict['text']) + '\n' \
+                     + '\t' + 'src=' + 'S' + str(data_dict['from']) + '\n' \
+                     + '\t' + 'tgt=' + 'S' + str(data_dict['to']) + '\n' \
+                     + '\t' + 'event=' + str(data_dict['event']) + '\n' \
+                     + '\t' + 'condition=' + str(data_dict['cond']) + '\n' \
+                     + '\t' + 'action=' + str(data_dict['action']) + '\n'
+            # print(result)
+        with open(filepath + 'result.txt', 'wt+', encoding='utf-8') as f:
+            f.write(result)
+
         # 验证程序
         os.system('python E:/Code/project301/lzy_Complete/Model3/judge/judgeFeasibility/delete.py')
 
@@ -449,6 +479,56 @@ def verify_del(request):
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS, "result": res})
+
+
+# 将result.txt文件分解成T2和S6
+def reverse():
+    filepath = 'E:/Code/project301/file/'
+    file_name = 'E:/Code/project301/file/result.txt'
+    lines = open(file_name, 'r', encoding='UTF-8').readlines()
+    index_line = 0
+    S = '{' + '\n'
+    T = ''
+    while index_line < len(lines):
+        if lines[index_line].strip() == "State:":
+            index_line += 1
+            node_num0 = lines[index_line].strip().split('=')[1]
+            node_num = int(node_num0[1:])
+            node_label = lines[index_line].strip().split('=')[1]
+            index_line += 1
+            node_name = lines[index_line].strip().split('=', 1)[1]
+            # data.append({"data": {"id": node_name, "label": node_name, "category": node_category.get(node_name, 2)}})
+            # data.append({"data": {"id": node_name, "label": node_label,"name":node_name}})
+            S = S + '"' + node_label + '"' + ':' + ' ' + '"' +node_name+ '"' + ',' + '\n'
+        if lines[index_line].strip() == "Transition:":
+            index_line += 1
+            name = lines[index_line].strip().split('=', 1)[1]
+            name0 = int(name[1:])
+            index_line += 1
+            src0 = lines[index_line].strip().split('=', 1)[1]
+            src = int(src0[1:])
+            index_line += 1
+            tgt0 = lines[index_line].strip().split('=', 1)[1]
+            tgt = int(tgt0[1:])
+            index_line += 1
+            event = lines[index_line].strip().split('=', 1)
+            event = event[1] if len(event) > 1 else ""
+            index_line += 1
+            cond = lines[index_line].strip().split('=', 1)
+            cond = cond[1] if len(cond) > 1 else ""
+            index_line += 1
+            action = lines[index_line].strip().split('=', 1)
+            action = action[1] if len(action) > 1 else ""
+            T = T + name + ';' + src0 + ';' + tgt0 + ';' + 'event=' + event + ';' + 'condition=' + cond + ';' + 'action=' + action + '\n'
+        index_line += 1
+    S = S.rstrip()
+    S = S.rstrip(',')
+    S = S + '\n' + '}'
+    print(S)
+    with open(filepath+'S2.txt', 'wt+', encoding='utf-8') as f:
+        f.write(S)
+    with open(filepath+'T6.txt', 'wt+', encoding='utf-8') as f:
+        f.write(T)
 
 
 # 验证模型的完整性
@@ -498,6 +578,10 @@ def verify_complete(request):
             data_edge.append(edge)
 
         index_line += 1
+    reverse()
+    print(1)
+    # E:\Code\project301\lzy_Complete\Model5\judgeFeasibility
+    os.system('python E:/Code/project301/lzy_Complete/Model5/judgeFeasibility/judgeModelComplete.py')
     file_name2 = 'E:/Code/project301/file/outNew.txt'
     lines = open(file_name2, 'r', encoding='UTF-8').readlines()
     index_line = 0
@@ -584,3 +668,5 @@ def verify_select_invalid(request):
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
+
+

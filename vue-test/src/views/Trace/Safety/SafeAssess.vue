@@ -27,22 +27,14 @@
       </el-popover>
     </div>
     <div class="divChart">
-      <el-card>
-        <section class="chart-container" style="margin-left: 20%">
-          <el-row>
-            <el-col :span="12">
-              <div id="chartPie" style="width:100%; height:500px;"></div>
-            </el-col>
-            <el-col :span="12">
-              <div class="divRes">
-                <p>安全性评估结果：</p>
-                <br />
-                <p>危险系数为{{ resData.dataRes }}%</p>
-                <p>此项目存在安全隐患</p>
-              </div>
-            </el-col>
-          </el-row>
+      <el-card style="height: 600px">
+        <section class="chart-container">
+          <div id="chartPie" class="divChartPie"></div>
         </section>
+        <div class="divMsg">
+          <p>危险指数为{{ resData.dataRes }}%</p>
+          <p>此项目存在安全隐患</p>
+        </div>
       </el-card>
     </div>
   </div>
@@ -71,8 +63,8 @@ export default {
       this.chartPie = echarts.init(document.getElementById('chartPie'))
       this.chartPie.setOption({
         title: {
-          text: 'Evaluation Result',
-          subtext: '安全性评估结果',
+          text: '安全性评估结果',
+          // subtext: '安全性评估结果',
           x: 'center'
         },
         tooltip: {
@@ -81,6 +73,7 @@ export default {
         },
         legend: {
           orient: 'vertical',
+          bottom: 0,
           left: 'left',
           data: ['danger', 'success', 'null']
         },
@@ -146,13 +139,18 @@ export default {
 </script>
 
 <style scoped>
+.divChart {
+  width: 100%;
+  height: 600px;
+}
 .chart-container {
   width: 100%;
-  float: left;
+  /*float: right;*/
+  height: 500px;
 }
-.el-col {
-  padding: 30px 20px;
-}
+/*.el-col {*/
+/*  padding: 30px 20px;*/
+/*}*/
 .divHelp {
   margin-left: 1100px;
   height: 40px;
@@ -162,5 +160,16 @@ export default {
   margin-top: 100px;
   font-weight: bold;
   font-size: xx-large;
+}
+.divChartPie {
+  width: 50%;
+  height: 400px;
+  margin-left: 25%;
+}
+.divMsg {
+  margin-left: 40%;
+  margin-top: -50px;
+  /*background: yellow;*/
+  font-size: x-large;
 }
 </style>

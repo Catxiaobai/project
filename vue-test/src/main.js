@@ -17,6 +17,8 @@ Vue.prototype.$http = http
 
 Vue.config.productionTip = false
 
+Vue.prototype.bus = new Vue()
+
 new Vue({
   router,
   store,

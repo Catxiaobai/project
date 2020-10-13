@@ -41,7 +41,7 @@
             :header-cell-style="{ background: '#eef1f6', color: '#606266' }"
           >
             <el-table-column type="selection" width="40px"> </el-table-column>
-            <el-table-column label="Id" width="50px" align="center">
+            <el-table-column label="序号" width="50px" align="center">
               <template slot-scope="scope">
                 <span style="margin-left: 10px">{{ scope.row.invalid_id }}</span>
               </template>
@@ -86,7 +86,7 @@
       <el-col :span="4">
         <div class="divInfo" v-show="true">
           <el-card class="cardInfo">
-            <p>总场景数：{{ total }}</p>
+            <p>ATM系统可能相关的失效场景数：{{ total }}</p>
             <br />
             <p>已验证个数：{{ msg.numVerify }}</p>
             <p>未验证个数：{{ msg.numNoVerify }}</p>
@@ -278,7 +278,7 @@ export default {
   background: oldlace;
 }
 .el-table .danger-row {
-  background: #f56c6c;
+  background: pink;
 }
 .el-table .success-row {
   background: #f0f9eb;

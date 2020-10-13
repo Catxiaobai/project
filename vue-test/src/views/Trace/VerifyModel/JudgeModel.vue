@@ -37,6 +37,8 @@
         <div class="text-path">
           <p>验证结果</p>
           <br />
+          <p style="background: blanchedalmond">{{ msg.res }}</p>
+          <br />
           <p>{{ msg.tip }}</p>
           <p>{{ msg.node }}</p>
           <p>{{ msg.edge }}</p>
@@ -64,6 +66,7 @@ export default {
         linkDataArray: []
       },
       msg: {
+        res: '',
         tip: '',
         node: '',
         edge: '',
@@ -163,7 +166,7 @@ export default {
         'toolManager.mouseWheelBehavior': go.ToolManager.WheelZoom,
         // support double-click in background creating a new node
         'clickCreatingTool.archetypeNodeData': { text: 'new node' },
-        isReadOnly: true,
+        // isReadOnly: true,
         // enable undo & redo
         'undoManager.isEnabled': false,
         layout: $(go.ForceDirectedLayout, {
@@ -446,29 +449,30 @@ export default {
     result(node, edge) {
       // todo:展示验证结果
       console.log(node, edge)
-      this.msg.tip = '检测到模型不完整，建议增加'
+      this.msg.res = '检测到模型不完整'
+      this.msg.tip = '建议增加: '
       this.msg.node = 'node: ' + JSON.stringify(node[0].text)
       this.msg.edge = ' edge: ' + JSON.stringify(edge[0].text)
       this.msg.node_id = JSON.stringify(node[0].id)
       this.msg.edge_id = JSON.stringify(edge[0].id)
       this.textVisible = true
-      this.$http
-        .get('http://127.0.0.1:8000/api/verify_complete')
-        .then(response => {
-          // console.log(response.data)
-          this.linkDataArray = response.data.data_edge
-          this.nodeDataArray = response.data.data_node
-          this.text_data.nodeDataArray = this.nodeDataArray
-          this.text_data.linkDataArray = this.linkDataArray
-          // this.text_data.nodeDataArray.push(this.nodeDataArray[0])
-          // this.text_data.linkDataArray.push(this.linkDataArray[0])
-          console.log(this.text_data)
-          // this.result(response.data.data_node_add, response.data.data_edge_add)
-          this.load()
-        })
-        .catch(function(error) {
-          // console.log(error)
-        })
+      // this.$http
+      //   .get('http://127.0.0.1:8000/api/verify_complete')
+      //   .then(response => {
+      //     // console.log(response.data)
+      //     this.linkDataArray = response.data.data_edge
+      //     this.nodeDataArray = response.data.data_node
+      //     this.text_data.nodeDataArray = this.nodeDataArray
+      //     this.text_data.linkDataArray = this.linkDataArray
+      //     // this.text_data.nodeDataArray.push(this.nodeDataArray[0])
+      //     // this.text_data.linkDataArray.push(this.linkDataArray[0])
+      //     console.log(this.text_data)
+      //     // this.result(response.data.data_node_add, response.data.data_edge_add)
+      //     this.load()
+      //   })
+      //   .catch(function(error) {
+      //     // console.log(error)
+      //   })
     },
     completeAll() {
       var aim_link = this.myDiagram.findLinkForKey(this.msg.edge_id).data

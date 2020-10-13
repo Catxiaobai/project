@@ -1,0 +1,1 @@
+t13, S2, S4, GetBalance(), (y>=38) & (y<=49), Write("Blance=",B);x=0;y=0,

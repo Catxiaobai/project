@@ -74,7 +74,7 @@ export default {
           this.nodeDataArray = response.data.data_node
           this.text_data.nodeDataArray = this.nodeDataArray
           this.text_data.linkDataArray = this.linkDataArray
-          // console.log(this.text_data)
+          console.log(this.text_data)
           this.load()
         })
         .catch(function(error) {

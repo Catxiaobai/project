@@ -3,11 +3,11 @@
     <!--    <div class="divHome">-->
     <!--      <inner-main :item-msg="itemMsg" style="margin-top: 40px"></inner-main>-->
     <!--    </div>-->
-    <!--    <div class="selectItem">-->
-    <!--      <el-select v-model="value" placeholder="请选择项目" style="margin-left: 40px" @change="selectItem(value)" clearable>-->
-    <!--        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"> </el-option>-->
-    <!--      </el-select>-->
-    <!--    </div>-->
+    <div class="selectItem">
+      <el-select v-model="value" placeholder="请选择项目" style="margin-left: 40px" @change="selectItem(value)" clearable>
+        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"> </el-option>
+      </el-select>
+    </div>
     <div>
       <el-card>
         <el-image :src="src1" alt="" style="height: 420px;width: 100%"></el-image>
@@ -37,7 +37,7 @@ export default {
           disabled: true
         }
       ],
-      value: '',
+      value: '1',
       itemMsg: '>项目简介',
       msg:
         '    平台基于软件场景进行软件系统安全性分析验证。' +
@@ -45,15 +45,15 @@ export default {
     }
   },
   methods: {
-    // selectItem(data) {
-    //   if (data === '1') {
-    //
-    //     this.$emit('transferItemMsg', '>ATM系统')
-    //     console.log('test')
-    //   } else if (data === '') {
-    //     this.$emit('transferItemMsg', '>项目简介')
-    //   }
-    // }
+    selectItem(data) {
+      if (data === '1') {
+        this.bus.$emit('transferItemMsg', '>ATM系统')
+        // this.$emit('transferItemMsg', '>ATM系统')
+        console.log('test')
+      } else if (data === '') {
+        this.bus.$emit('transferItemMsg', '>项目简介')
+      }
+    }
   }
 }
 </script>

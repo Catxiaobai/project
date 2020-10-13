@@ -1,7 +1,7 @@
 Transition:
-name=T62
-src=S2
+name=T34
+src=S3
 tgt=S4
-event=GetBalance()
-cond= 
-action=Write("your balance",B)
+event=Enter_amount(w)
+cond=!(w<=B)
+action=Give_money,B=B-w,Write("your balance",B)
