@@ -152,7 +152,7 @@ export default {
           children: [
             {
               path: '/invalidVerify',
-              label: '安全性验证',
+              label: '安全性分析',
               name: 'invalidVerify',
               icon: 'more'
             },

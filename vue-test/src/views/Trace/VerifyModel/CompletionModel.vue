@@ -14,11 +14,17 @@
             <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic" style="margin-top: 30px">
               <el-form-item
                 v-for="(domain, index) in dynamicValidateForm.domains"
-                :label="'待补全状态' + index"
+                :label="'待补全信息' + index"
                 :key="domain.key"
                 :prop="'domains.' + index + '.value'"
               >
-                <el-input v-model="domain.value" placeholder="未定" style="width: 80%" type="textarea" :rows="7"></el-input>
+                <el-input
+                  v-model="domain.value"
+                  placeholder="{'type':'node','text':'S5','name':'状态5'}"
+                  style="width: 80%"
+                  type="textarea"
+                  :rows="4"
+                ></el-input>
                 <el-button @click.prevent="removeDomain(domain)" style="margin-left: 10px">删除</el-button>
               </el-form-item>
               <el-form-item>

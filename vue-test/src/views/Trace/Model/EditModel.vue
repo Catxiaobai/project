@@ -26,6 +26,8 @@
           <p>删除节点：鼠标左键单击进行选定，然后点击键盘上的"delete"或"Backspace"键</p>
           <p>删除边：鼠标左键单击进行选定，然后点击键盘上的"delete"或"Backspace"键</p>
           <p>移动节点：鼠标左键单击进行选定，将鼠标移至节点中心处，长按鼠标左键即可拖拽移动</p>
+          <br />
+          <p>模型还原：将模型还原至未修改前的初始状态</p>
         </div>
         <el-button type="text" slot="reference">操作提示</el-button>
       </el-popover>
@@ -52,6 +54,7 @@ import go from 'gojs'
 const MAKE = go.GraphObject.make
 export default {
   name: 'PageThree.vue',
+  inject: ['reload'],
   data() {
     return {
       nodeDataArray: [],
@@ -340,6 +343,8 @@ export default {
           postDelData(data)
         })
       })
+      // //test
+      // this.myDiagram.commandHandler.canDeleteSelection = false
       // 监听添加线事件
       this.myDiagram.addDiagramListener('LinkDrawn', function(e) {
         console.log('add:' + JSON.stringify(e.subject.data))
@@ -401,11 +406,30 @@ export default {
       }
     },
     reduction() {
-      console.log('模型还原')
+      this.$http
+        .get('http://127.0.0.1:8000/api/recovery_model')
+        .then(response => {
+          console.log(response.data)
+          this.reload()
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+    },
+    saveModel() {
+      this.$http
+        .get('http://127.0.0.1:8000/api/save_model')
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     }
   },
   created() {
     this.getData()
+    this.saveModel()
   }
 }
 </script>

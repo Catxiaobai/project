@@ -31,7 +31,8 @@
     <el-card style="height: 600px">
       <el-col :span="14">
         <div id="myDiagramDiv" class="myDiagramDiv"></div>
-        <el-button type="primary" style="margin-left: 45%;margin-top: 10px" @click="judge">完整性验证</el-button>
+        <el-button type="primary" style="margin-left: 25%;margin-top: 10px">模型还原</el-button>
+        <el-button type="primary" style="margin-left: 60px" @click="judge">完整性验证</el-button>
       </el-col>
       <el-col :span="10">
         <div class="text-path">
@@ -407,6 +408,7 @@ export default {
         var data = { total: e.diagram.model.toJson(), add: JSON.stringify(e.subject.data) }
         postData(data)
       })
+
       // 向后端传递变化信息
       function postData(data) {
         var httpRequest = new XMLHttpRequest() //第一步：创建需要的对象
@@ -439,40 +441,50 @@ export default {
           // this.text_data.nodeDataArray.push(this.nodeDataArray[0])
           // this.text_data.linkDataArray.push(this.linkDataArray[0])
           console.log(this.text_data)
-          this.result(response.data.data_node_add, response.data.data_edge_add)
+          this.result(response.data.data_node_add, response.data.data_edge_add, response.data.res)
           this.load()
         })
         .catch(function(error) {
           // console.log(error)
         })
     },
-    result(node, edge) {
+    result(node, edge, res) {
       // todo:展示验证结果
-      console.log(node, edge)
-      this.msg.res = '检测到模型不完整'
-      this.msg.tip = '建议增加: '
-      this.msg.node = 'node: ' + JSON.stringify(node[0].text)
-      this.msg.edge = ' edge: ' + JSON.stringify(edge[0].text)
-      this.msg.node_id = JSON.stringify(node[0].id)
-      this.msg.edge_id = JSON.stringify(edge[0].id)
-      this.textVisible = true
-      // this.$http
-      //   .get('http://127.0.0.1:8000/api/verify_complete')
-      //   .then(response => {
-      //     // console.log(response.data)
-      //     this.linkDataArray = response.data.data_edge
-      //     this.nodeDataArray = response.data.data_node
-      //     this.text_data.nodeDataArray = this.nodeDataArray
-      //     this.text_data.linkDataArray = this.linkDataArray
-      //     // this.text_data.nodeDataArray.push(this.nodeDataArray[0])
-      //     // this.text_data.linkDataArray.push(this.linkDataArray[0])
-      //     console.log(this.text_data)
-      //     // this.result(response.data.data_node_add, response.data.data_edge_add)
-      //     this.load()
-      //   })
-      //   .catch(function(error) {
-      //     // console.log(error)
-      //   })
+      console.log(node, edge, res)
+      if (res === 'Y') {
+        this.msg.res = '检测到模型完整'
+        this.msg.tip = ''
+        this.msg.node = ''
+        this.msg.edge = ''
+        this.msg.node_id = ''
+        this.msg.edge_id = ''
+        // this.textVisible = true
+      } else if (res === 'N') {
+        this.msg.res = '检测到模型不完整'
+        this.msg.tip = '建议添加：'
+        this.msg.node = 'node: ' + JSON.stringify(node[0].text)
+        this.msg.edge = ' edge: ' + JSON.stringify(edge[0].text)
+        this.msg.node_id = JSON.stringify(node[0].id)
+        this.msg.edge_id = JSON.stringify(edge[0].id)
+        this.textVisible = true
+      }
+      this.$http
+        .get('http://127.0.0.1:8000/api/verify_complete')
+        .then(response => {
+          // console.log(response.data)
+          this.linkDataArray = response.data.data_edge
+          this.nodeDataArray = response.data.data_node
+          this.text_data.nodeDataArray = this.nodeDataArray
+          this.text_data.linkDataArray = this.linkDataArray
+          // this.text_data.nodeDataArray.push(this.nodeDataArray[0])
+          // this.text_data.linkDataArray.push(this.linkDataArray[0])
+          console.log(this.text_data)
+          // this.result(response.data.data_node_add, response.data.data_edge_add)
+          this.load()
+        })
+        .catch(function(error) {
+          // console.log(error)
+        })
     },
     completeAll() {
       var aim_link = this.myDiagram.findLinkForKey(this.msg.edge_id).data

@@ -78,7 +78,7 @@
             layout="total, sizes, prev, pager, next, jumper"
             background
             :total="total"
-            style="margin-left: 30%;margin-top: 10px"
+            style="margin-left: 30%;margin-top: 20px"
           >
           </el-pagination>
         </div>
@@ -289,7 +289,7 @@ export default {
   //background: #ebb563;
   width: 100%;
   height: 100%;
-  margin-top: 200px;
+  margin-top: 100px;
   margin-left: 25px;
   .cardInfo {
     //background: #ebb563;

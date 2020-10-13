@@ -274,7 +274,8 @@ def verify_invalid(request):
     with open('E:/Code/project301/file/targetInvalid.txt', 'w') as f:  # 设置文件对象
         f.write('Transition:\n')
         f.write(aim_invalid)
-    os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
+    # os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
+    os.system('py -2 E:/Code/project301/lxd_Safety/newVerify/Main.py')
     try:
         with open('E:/Code/project301/file/path.txt') as f:
             lines = f.read()
@@ -484,8 +485,8 @@ def verify_del(request):
 # 将result.txt文件分解成T2和S6
 def reverse():
     filepath = 'E:/Code/project301/file/'
-    file_name = 'E:/Code/project301/file/result.txt'
-    lines = open(file_name, 'r', encoding='UTF-8').readlines()
+    file_name = 'result.txt'
+    lines = open(filepath+file_name, 'r', encoding='UTF-8').readlines()
     index_line = 0
     S = '{' + '\n'
     T = ''
@@ -499,32 +500,58 @@ def reverse():
             node_name = lines[index_line].strip().split('=', 1)[1]
             # data.append({"data": {"id": node_name, "label": node_name, "category": node_category.get(node_name, 2)}})
             # data.append({"data": {"id": node_name, "label": node_label,"name":node_name}})
-            S = S + '"' + node_label + '"' + ':' + ' ' + '"' +node_name+ '"' + ',' + '\n'
+            S = S + '"' + node_label + '"' + ':' + ' ' +'"' + node_name +'"'+ ',' + '\n'
         if lines[index_line].strip() == "Transition:":
             index_line += 1
             name = lines[index_line].strip().split('=', 1)[1]
-            name0 = int(name[1:])
             index_line += 1
-            src0 = lines[index_line].strip().split('=', 1)[1]
-            src = int(src0[1:])
+            src = lines[index_line].strip().split('=', 1)[1]
             index_line += 1
-            tgt0 = lines[index_line].strip().split('=', 1)[1]
-            tgt = int(tgt0[1:])
+            tgt = lines[index_line].strip().split('=', 1)[1]
             index_line += 1
             event = lines[index_line].strip().split('=', 1)
-            event = event[1] if len(event) > 1 else ""
+            event = event[1]
             index_line += 1
             cond = lines[index_line].strip().split('=', 1)
-            cond = cond[1] if len(cond) > 1 else ""
+            cond = cond[1]
+            if cond == '':
+                cond = 'null'
+            cond = cond.replace('&', ',')
+            cond = cond.replace('(', '')
+            cond = cond.replace(')', '')
+            lastCond1 = cond.strip().split(',')
+            j = 0
+            while j <= len(lastCond1):
+                if j < len(lastCond1):
+                    if "!=" not in lastCond1[j] and ">=" not in lastCond1[j] and "<=" not in lastCond1[j] and "==" in \
+                            lastCond1[j]:
+                        lastCond1[j] = lastCond1[j].replace("==", "=")
+                    if j + 1 < len(lastCond1):
+                        re = []
+                        re0 = ''
+                        er = []
+                        er0 = ''
+                        if "<=" in lastCond1[j + 1]:
+                            re = lastCond1[j + 1].split("<=")
+                            re0 = lastCond1[j + 1].split("<=")[0]
+                            if ">=" in lastCond1[j]:
+                                er = lastCond1[j].split(">=")
+                                er0 = lastCond1[j].split(">=")[0]
+                                if er[0] == re[0]:
+                                    lastCond1[j] = er[1] + '<=' + er0 + '<=' + re[1]
+                                    del lastCond1[j + 1]
+                j = j + 1
+            cond = ",".join(lastCond1)
+            cond = cond.replace(' ', '')
+            print(cond)
             index_line += 1
             action = lines[index_line].strip().split('=', 1)
-            action = action[1] if len(action) > 1 else ""
-            T = T + name + ';' + src0 + ';' + tgt0 + ';' + 'event=' + event + ';' + 'condition=' + cond + ';' + 'action=' + action + '\n'
+            action = action[1].replace(';', ',')
+            T = T + name + ';' + src + ';' + tgt + ';' + 'event=' + event + ';' + 'condition=' + cond + ';' + 'action=' + action + '\n'
         index_line += 1
     S = S.rstrip()
     S = S.rstrip(',')
     S = S + '\n' + '}'
-    print(S)
     with open(filepath+'S2.txt', 'wt+', encoding='utf-8') as f:
         f.write(S)
     with open(filepath+'T6.txt', 'wt+', encoding='utf-8') as f:
@@ -578,14 +605,19 @@ def verify_complete(request):
             data_edge.append(edge)
 
         index_line += 1
-    reverse()
-    print(1)
+    # print(1)
     # E:\Code\project301\lzy_Complete\Model5\judgeFeasibility
     os.system('python E:/Code/project301/lzy_Complete/Model5/judgeFeasibility/judgeModelComplete.py')
     file_name2 = 'E:/Code/project301/file/outNew.txt'
     lines = open(file_name2, 'r', encoding='UTF-8').readlines()
     index_line = 0
-    if os.path.getsize(file_name2):
+    res = 0
+    print(lines[0])
+    if lines[0] =='Y\n':
+        res = 'Y'
+    elif lines[0]=='N\n':
+        res = 'N'
+        index_line += 1
         while index_line < len(lines):
             edge_name = lines[index_line].strip().split(',')[0]
             edge_num = int(edge_name[1:])
@@ -603,15 +635,15 @@ def verify_complete(request):
                 if src0 == data_dict['id']:
                     t = 0
             if t == 1:
-                data_node_add.append({"id": src0, "text": src, 'name': '', 'color': 'red'})
-                data_node.append({"id": src0, "text": src, 'name': '', 'color': 'red'})
+                data_node_add.append({"id": src0, "text": src, 'name': src, 'color': 'red'})
+                data_node.append({"id": src0, "text": src, 'name': src, 'color': 'red'})
             t = 1
             for data_dict in data_node:
                 if tgt0 == data_dict['id']:
                     t = 0
             if t == 1:
-                data_node_add.append({"id": tgt0, "text": tgt, 'name': ''})
-                data_node.append({"id": tgt0, "text": tgt, 'name': '', 'color': 'red'})
+                data_node_add.append({"id": tgt0, "text": tgt, 'name': tgt})
+                data_node.append({"id": tgt0, "text": tgt, 'name': tgt, 'color': 'red'})
             edge = {"id": edge_num, "from": src0, "to": tgt0, "text": edge_name, "event": event, "cond": cond,
                     "action": action, "color": 'red'}
             index_line += 1
@@ -620,7 +652,7 @@ def verify_complete(request):
     # print(data_edge)
     # print(data_node)
     return JsonResponse({**error_code.CLACK_SUCCESS, "data_node": data_node, "data_edge": data_edge,
-                         "data_node_add": data_node_add, "data_edge_add": data_edge_add})
+                         "data_node_add": data_node_add, "data_edge_add": data_edge_add, "res": res})
 
 
 # 返回前端失效场景的复现路径
@@ -669,4 +701,23 @@ def verify_select_invalid(request):
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
 
+
+# 模型还原成编辑前的样子
+def recovery_model(request):
+    filepath = 'E:/Code/project301/file/'
+    with open(filepath+'result.txt', 'wt+', encoding='utf-8') as f:
+        f.write(open(filepath+'resultSave.txt', 'r',encoding='utf-8').read())
+    with open(filepath + 'resultModel.txt', 'wt+', encoding='utf-8') as f:
+        f.write(open(filepath + 'resultModelSave.txt', 'r',encoding='utf-8').read())
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 保存编辑前的模型样子
+def save_model(request):
+    filepath = 'E:/Code/project301/file/'
+    with open(filepath+'resultSave.txt', 'wt+',encoding='utf-8') as f:
+        f.write(open(filepath+'result.txt', 'r',encoding='utf-8').read())
+    with open(filepath + 'resultModelSave.txt', 'wt+',encoding='utf-8') as f:
+        f.write(open(filepath + 'resultModel.txt', 'r',encoding='utf-8').read())
+    return JsonResponse({**error_code.CLACK_SUCCESS})
 

@@ -1036,14 +1036,26 @@ class EFSM:
         if eventSequence!=[]:
             print 'test event squence:', eventSequence
             if noinput==0:
+                path_data = []
+
                 print ' test data:',
+                path_data.append('test data:')
                 for var in self.pathVarValue:
                     print var,
+                    path_data.append(var)
                     if var in varType:
                         if varType[var]=="chr":
-                            print ':' ,chr(self.pathVarValue[var]),                
-                    else: print ':',self.pathVarValue[var],
+                            print ':' ,chr(self.pathVarValue[var]),
+                            path_data.append(chr(self.pathVarValue[var]))
+                    else:
+                        print ':',self.pathVarValue[var],
+                        path_data.append(self.pathVarValue[var])
                 print
+                filepath = 'E:/Code/project301/file/'
+                filename = 'test_data.txt'
+                with open(filepath+filename, 'w') as file_object:
+                    file_object.truncate()
+                    file_object.write(str(path_data))
         
 
 
@@ -1307,6 +1319,10 @@ class EFSM:
                     population = gaSample.basicSurvive(oldInvidualFit, invidualFitness,population)
                     if repeat == 0 and j >= 10000:
                         print 'this path is not feasible'
+                        filepath = 'E:/Code/project301/file/'
+                        filename = 'test_data.txt'
+                        with open(filepath+filename, 'w') as file_object:
+                            file_object.truncate()
                         return 0
             return 1
         else:

@@ -19,8 +19,6 @@ eventSort = 0 # 事件变量少优先
 penaltyValue = 0 #惩罚值小优先
 togeSort = 0 # 所有排序准则一起排序
 
-
-
 #新迁移优先
 newtransort = 0
 # 权重
@@ -38,18 +36,17 @@ def numMap(num):
 
 # 获取用于序列生成的目标分支
 def getTargetBranch(targetBranch):
-
     return targetBranch
 
 # 获取用于序列生成的模型
 def getGenerateModule():
     print('config')
-    modelfiledir = 'model/'
+    filepath = 'E:/Code/project301/file/'
     # modelfile = "efsm_atm1.txt"
     # modelfile = "lift_EFSM.txt"
-    modelfile = "resultModel2.txt"
+    modelfile = "resultModel.txt"
 
-    inputfile = modelfiledir + modelfile
+    inputfile = filepath + modelfile
     return inputfile
 if __name__ == '__main__':
     getGenerateModule()

@@ -5,7 +5,7 @@ import types
 import re
 import EFSM
 import config
-
+import sclexer
 SM = EFSM.efsmFromFile(config.getGenerateModule())  # 对efsm类实例化
 #----------------rinsmq
 # print ('rinsmq')
@@ -127,24 +127,36 @@ def getSecondOppositeBranch(targetedTran):
     # print 'TranWithSameEvent=',TranWithSameEvent
     return gjsjylgxpx(targetedTran, TranWithSameEvent)
 
-
-f = open("failureTran/target.txt", 'r')
-targetList=[]
-targetList = f.readlines()
-f.close()
+from kvparser import Parser, ListParser
+filepath = 'E:/Code/project301/file/'
+f = open(filepath+"targetInvalid.txt")
+# targetList=[]
+# targetList = f.readlines()
+# print (f)
+file=f.read()
+SMBlockList = ListParser().parse(file)
 s = []
 k=0
 targetbranchlist=[]
+# print ('zhixingzheli')
+# print (SMBlockList)
+(trans, name, srcName, tgtName, event, cond, action) = [item[1] for item in SMBlockList]
+if srcName != '':  # old code is !=''
+    src = SM.state(srcName)
+if tgtName != '':
+    tgt = SM.state(tgtName)
+print (name, srcName, tgtName, event, cond, action)
+targetbranchlist.append(EFSM.Transition(name, src, tgt, event, cond, action))
 
-for item in targetList:
-    s.append(item.split(', '))
-    print s
-    #需要修改成<name, src，tgt，event，cond，action>
-    src = SM.state(s[k][1])
-    tgt = SM.state(s[k][2])
-    targetbranchlist.append(EFSM.Transition(s[k][0], src, tgt, s[k][3], s[k][4], s[k][5]))
-    k+=1
-
+# for item in targetList:
+#     s.append(item.split(', '))
+#     print s
+#     #需要修改成<name, src，tgt，event，cond，action>
+#     src = SM.state(s[k][1])
+#     tgt = SM.state(s[k][2])
+#     targetbranchlist.append(EFSM.Transition(s[k][0], src, tgt, s[k][3], s[k][4], s[k][5]))
+#     k+=1
+f.close()
 def targetBranch():
     return targetbranchlist[0]
 

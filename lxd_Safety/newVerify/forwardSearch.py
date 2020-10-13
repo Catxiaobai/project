@@ -180,6 +180,7 @@ class PartialList:
         # firsttime = time.time()
         tmplist = self.tranlist[-1].getCandidatelist()  # 获取栈顶迁移的前序迁移
         print self.tranlist
+        print self.tranlist[-1].sortedflag
         # random.shuffle(tmplist)
         firsttime = time.time()
         if self.tranlist[-1].sortedflag == 0:
@@ -332,6 +333,7 @@ class PartialList:
         return 1
     #返回是否搜索到模型开始节点
     def isComplete(self):
+        print ('iscomplete',self.useList)
         if len(self.tranlist) == 0:  # 部分序列为空
             return 0
         if self.tranlist[-1].tran.src.name == "START" and len(self.useList) == 0:  # 成功的情况
@@ -531,10 +533,10 @@ def search():
                 if partialList.isComplete() == 0 and len(partialList.targetBranchSrcList) > 0:
                     print '执行newTargetSrc'
                     partialList.newTargetSrc()
-                print "一次执行前的部分序列%s %s" % (partialList, time.time() - starttime)
+                # print "一次执行前的部分序列%s %s" % (partialList, time.time() - starttime)
                 # print '获取前序迁移候选集合：'
                 candidateList = partialList.getCandidatelist
-                print "前序候选迁移集合:%s" % (candidateList)
+                # print "前序候选迁移集合:%s" % (candidateList)
                 print len(candidateList)
                 if len(candidateList) == 0:
                     if config.back == 1:
@@ -824,7 +826,7 @@ def search():
     global selecenumber
     global successnumber
     sequencenumber=len(psDict)
-    print "生成序列条数为%s" % sequencenumber
+    # print "生成序列条数为%s" % sequencenumber
     if sequencenumber==0:
         generationtime=0
         generationsorttime=0
@@ -834,11 +836,11 @@ def search():
     else:
         successnumber = 1
         generationtime = res / len(psDict)
-        print "序列生成平均时间为%s" % (generationtime)
+        # print "序列生成平均时间为%s" % (generationtime)
 
         generationsorttime = res1 / len(psDict1)
         # print "优先级排序时间: %s"%(partialList.sorttime)
-        print "优先级排序平均时间: %s" % (generationsorttime)
+        # print "优先级排序平均时间: %s" % (generationsorttime)
 
         sequencelength=float(res3)/float(len(psDict1))
         print "平均序列长度:"

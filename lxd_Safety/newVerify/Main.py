@@ -36,13 +36,21 @@ while obtain_efsm_info.targetbranchlist and flag <= len(obtain_efsm_info.targetb
 
 
 
-print "生成序列条数为%s" % number
-if number!=0:
-
-    SM = obtain_efsm_info.returnSM()
-    SM.testGen(pathT)
-    # path = SM.allPathNum()
-    # print path
+    # print "生成序列条数为%s" % number
+    if number!=0:
+        filepath = 'E:/Code/project301/file/'
+        filename = 'path.txt'
+        with open(filepath+filename, 'w') as file_object:
+            path_num = []
+            for path in pathT:
+                path_num.append(int(path[1:]))
+            file_object.write(str(path_num))
+        # SM = obtain_efsm_info.returnSM()
+        # flag = SM.testGen(pathT)
+        # if flag == 1:
+        #     print ('生成迁移路径')
+        # path = SM.allPathNum()
+        # print path
 
 
 
