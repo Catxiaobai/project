@@ -7,7 +7,7 @@
       </el-upload>
       <span style="font-size: 20px;margin-top: 100px">点击下载样例文本:</span>
       <i :class="'el-icon-tickets'" style="font-size: 16px;margin-top: 10px;margin-left:10px;color: #38b2ff"></i>
-      <a href="/失效序列(标准化).txt" download="失效场景样例文本.txt" style="color: #38b2ff">失效场景样例文本.txt</a>
+      <a href="/风险序列(标准化).txt" download="风险场景样例文本.txt" style="color: #38b2ff">风险场景样例文本.txt</a>
     </el-card>
 
     <el-card style="margin-top: 20px">

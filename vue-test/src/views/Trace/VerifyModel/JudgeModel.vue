@@ -31,7 +31,7 @@
     <el-card style="height: 600px">
       <el-col :span="14">
         <div id="myDiagramDiv" class="myDiagramDiv"></div>
-        <el-button type="primary" style="margin-left: 25%;margin-top: 10px">模型还原</el-button>
+        <el-button type="primary" style="margin-left: 25%;margin-top: 10px" @click="reduction">模型还原</el-button>
         <el-button type="primary" style="margin-left: 60px" @click="judge">完整性验证</el-button>
       </el-col>
       <el-col :span="10">
@@ -55,6 +55,7 @@ import go from 'gojs'
 const MAKE = go.GraphObject.make
 export default {
   name: 'PageThree.vue',
+  inject: ['reload'],
   data() {
     return {
       nodeDataArray: [],
@@ -71,8 +72,8 @@ export default {
         tip: '',
         node: '',
         edge: '',
-        node_id: '',
-        edge_id: ''
+        node_id: [],
+        edge_id: []
       },
       msgNode: '',
       msgEdge: '',
@@ -196,6 +197,8 @@ export default {
             var rr = confirm('是否补全所选点' + JSON.stringify(obj.part.data.text))
             var aim_node = e.diagram.findNodeForKey(obj.part.data.id).data
             if (rr == true) {
+              var data = { node: aim_node }
+              postData(data)
               e.diagram.model.setDataProperty(aim_node, 'color', 'rgb(0,191,255)')
             } else {
               console.log(aim_node)
@@ -259,10 +262,12 @@ export default {
             console.log('obj:' + JSON.stringify(obj.part.data))
             var rr = confirm('是否补全所选边' + JSON.stringify(obj.part.data.text))
             var aim_link = e.diagram.findLinkForKey(obj.part.data.id).data
+            console.log(aim_link)
             if (rr == true) {
+              var data = { edge: aim_link }
+              postData(data)
               e.diagram.model.setDataProperty(aim_link, 'color', 'black')
             } else {
-              console.log(aim_link)
               e.diagram.model.removeLinkData(aim_link)
             }
           }
@@ -412,7 +417,7 @@ export default {
       // 向后端传递变化信息
       function postData(data) {
         var httpRequest = new XMLHttpRequest() //第一步：创建需要的对象
-        httpRequest.open('POST', 'http://127.0.0.1:8000/api/verify_action', true) //第二步：打开连接
+        httpRequest.open('POST', 'http://127.0.0.1:8000/api/save_node_and_link', true) //第二步：打开连接
         httpRequest.setRequestHeader('Content-type', 'application/json') //设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
         httpRequest.send(JSON.stringify(data)) //发送请求 将情头体写在send中
         /**
@@ -456,16 +461,24 @@ export default {
         this.msg.tip = ''
         this.msg.node = ''
         this.msg.edge = ''
-        this.msg.node_id = ''
-        this.msg.edge_id = ''
-        // this.textVisible = true
+        this.msg.node_id = []
+        this.msg.edge_id = []
+        this.textVisible = false
       } else if (res === 'N') {
         this.msg.res = '检测到模型不完整'
         this.msg.tip = '建议添加：'
-        this.msg.node = 'node: ' + JSON.stringify(node[0].text)
-        this.msg.edge = ' edge: ' + JSON.stringify(edge[0].text)
-        this.msg.node_id = JSON.stringify(node[0].id)
-        this.msg.edge_id = JSON.stringify(edge[0].id)
+        this.msg.node = 'node: '
+        for (var i = 0; i < node.length; i++) {
+          this.msg.node += JSON.stringify(node[i].text)
+          this.msg.node_id.push(JSON.stringify(node[i].id))
+        }
+        this.msg.edge = ' edge: '
+        for (var j = 0; j < edge.length; j++) {
+          this.msg.edge += JSON.stringify(edge[j].text)
+          this.msg.edge_id.push(JSON.stringify(edge[j].id))
+        }
+        // this.msg.node_id = JSON.stringify(node[0].id)
+        // this.msg.edge_id = JSON.stringify(edge[0].id)
         this.textVisible = true
       }
       this.$http
@@ -487,11 +500,52 @@ export default {
         })
     },
     completeAll() {
-      var aim_link = this.myDiagram.findLinkForKey(this.msg.edge_id).data
-      this.myDiagram.model.setDataProperty(aim_link, 'color', 'black')
-      var aim_node = this.myDiagram.findNodeForKey(this.msg.node_id).data
-      this.myDiagram.model.setDataProperty(aim_node, 'color', 'rgb(0,191,255)')
-      // console.log(this.msg.edge_id)
+      for (var i = 0; i < this.msg.edge_id.length; i++) {
+        var aim_link = this.myDiagram.findLinkForKey(this.msg.edge_id[i]).data
+        this.myDiagram.model.setDataProperty(aim_link, 'color', 'black')
+      }
+      for (var j = 0; j < this.msg.node_id.length; j++) {
+        var aim_node = this.myDiagram.findNodeForKey(this.msg.node_id[j]).data
+        this.myDiagram.model.setDataProperty(aim_node, 'color', 'rgb(0,191,255)')
+      }
+
+      console.log(this.text_data)
+      // todo: 将数据保存到result文件中
+      this.$http
+        .post('http://127.0.0.1:8000/api/save_integrity_verification', { total: this.text_data })
+        .then(response => {
+          console.log(response.data)
+          // if (response.data.error_code === 0) {
+          //   this.$message({
+          //     type: 'success',
+          //     message: response.data.result
+          //   })
+          // }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+    },
+    reduction() {
+      this.$http
+        .get('http://127.0.0.1:8000/api/recovery_origin_model')
+        .then(response => {
+          console.log(response.data)
+          this.reload()
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+    },
+    saveModel() {
+      this.$http
+        .get('http://127.0.0.1:8000/api/save_model')
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     }
   }
   // watch: {

@@ -54,6 +54,7 @@ def judgeModelComplete1():
             else:
                 condition= "condition="
                 cond1=cond1.split(" & ")
+                print(cond1)
                 condList=[]
                 for i in range(0,len(cond1)):
                     item=cond1[i].split("(")[1].split(")")[0]
@@ -104,6 +105,16 @@ def judgeModelComplete1():
             name,src, tgt, event, condition, action = "", "", "", "", "",""
             cond2=""
     print(State2)
+    stateLabel = []
+    for key in State2.keys():
+        stateLabel.append(key)
+    print(stateLabel)
+    maxStateLabel = 0 #计算当前状态标签的最大值
+    for i in range(0, len(stateLabel)):
+            item= int(stateLabel[i].split("S")[1])
+            if maxStateLabel<int(item):
+                maxStateLabel=item
+    print(maxStateLabel)
     print(T)
     print(T2)
     newState = copy.deepcopy(State2)  # 将状态列表复制一份
@@ -243,12 +254,13 @@ def judgeModelComplete1():
     forCompleteT = []  # 新加入的待推荐的迁移
     if len(counterCondSet) > 0:
         # print(counterCondSet)
+        countValue= 1
         for key, value in counterCondSet.items():
             # 需要补全的迁移及后续迁移
             needChangeCond = key
             newSatateLabel = ""
             completeT = []
-            flag = 0
+            flag = 1
             for j in range(0, len(T)):
                 t = T[j][0]
                 src = T[j][1]
@@ -276,21 +288,19 @@ def judgeModelComplete1():
                     completeT.append(target1)
                     break
             # print(completeT)
+            print("需要："+needChangeCond)
             if "!=" in needChangeCond:
                 newChangeCond = needChangeCond.split("!=")[0] + "=" + needChangeCond.split("!=")[1]
             elif "<=" in needChangeCond:
-                newChangeCond = needChangeCond.split("<=")[1]
-                leftCond = needChangeCond.split("<=")[0]
-                if "<=" in newChangeCond:
-                    var = newChangeCond.split("<=")[0]
-                    varMaxVule = newChangeCond.split("<=")[1]
-                    varMinValue = leftCond
-                    if varMaxVule != '0':
-                        newChangeCond = var + ">" + varMaxVule
+                newChangeCond = needChangeCond.split("<=")
+                # print(newChangeCond)
+                if len(newChangeCond)==3:
+                    if newChangeCond[0]!='0':
+                        newChangeCond="("+newChangeCond[1]+"<"+newChangeCond[0]+") | ("+newChangeCond[1]+">"+newChangeCond[2]+")"
                     else:
-                        newChangeCond = var + "<" + varMinValue + "V" + var + ">" + varMaxVule
+                        newChangeCond = newChangeCond[1] + ">" +newChangeCond[2]
                 else:
-                    newChangeCond = leftCond + ">" + newChangeCond
+                    newChangeCond = newChangeCond[0] + ">" + newChangeCond[1]
             elif ">=" in needChangeCond:
                 newChangeCond = needChangeCond.split(">=")[0] + "<" + needChangeCond.split(">=")[1]
             elif "=" in needChangeCond:
@@ -313,12 +323,15 @@ def judgeModelComplete1():
                     newChangeCond = leftCond + ">=" + newChangeCond
             # print(newChangeCond)
             # print(needChangeCond)
+
             newCond = completeT[3].split(needChangeCond)[0] + newChangeCond + completeT[3].split(needChangeCond)[1]
-            newSatateLabel = "S" + str(len(State2))
+            print(newCond)
+            newSatateLabel = "S" + str(maxStateLabel+countValue)
             newCond2 = newCond.split("condition:")[1]  # 推荐加入的对立分支条件
-            # print(T)
+            l=len(T)
+            maxTLabel=T[l-1][0].split("t")[1]
             addT=[]
-            label = "t" + str(len(T) + 1)
+            label = "t" + str(int(maxTLabel)+ countValue)
             addT.append(label)
             addT.append(src)
             addT.append(newSatateLabel)
@@ -327,15 +340,16 @@ def judgeModelComplete1():
             addaction = "action=null"
             addT.append(addevent)
             addnewCond2=addnewCond
+            print(addnewCond2)
             if "," in addnewCond2:
                 lastCond = addnewCond2.split("condition=")
                 lastCond1 = lastCond[1].split(",")
-                # print(lastCond1)
+                print(lastCond1)
                 for j in range(0, len(lastCond1)):
                     if "!=" not in lastCond1[j] and ">=" not in lastCond1[j] and "<=" not in lastCond1[j] and "=" in \
                             lastCond1[j]:
                         lastCond1[j] = lastCond1[j].replace("=", "==")
-                    if "<=" in lastCond1[j]:
+                    if "<=" in lastCond1[j] and ") | (" not in lastCond1[j]:
                         re = lastCond1[j].split("<=")
                         # print(re)
                         if len(re) > 2:
@@ -343,6 +357,7 @@ def judgeModelComplete1():
                         else:
                             lastCond1[j] = re[1] + "<=" + re[0]
                     lastCond1[j] = "(" + lastCond1[j] + ")"
+                    print(lastCond1)
                 addnewCond2= "condition=" + " & ".join(lastCond1)
             else:
                 lastCond = addnewCond2.split("condition=")
@@ -357,11 +372,20 @@ def judgeModelComplete1():
                         if len(re) > 2:
                             lastCond[1] = "(" + re[1] + ">=" + re[0] + ") & (" + re[1] + "<=" + re[2] + ")"
                         else:
-                            lastCond[1] = re[0] + "<=" + re[1]
-                addnewCond= "condition=" + lastCond[1]
+                            lastCond[1] ="("+re[0] + "<=" + re[1]+")"
+                    if ">=" in lastCond[1]:
+                        re = lastCond[1].split(">=")
+                        # print(re)
+                        lastCond[1] = "(" + re[0] + ">=" + re[1] + ")"
+                    if ">" in lastCond[1]:
+                        re = lastCond[1].split(">")
+                        # print(re)
+                        lastCond[1] = "(" + re[0] + ">" + re[1] + ")"
+                addnewCond2= "condition=" + lastCond[1]
             addT.append(addnewCond2)
             addT.append(addaction)
             forCompleteT.append(addT)
+            countValue+=1
         print(forCompleteT)
         savedStdout = sys.stdout  # 保存标准输出流
         with open(filepath+'target2.txt', 'w+') as file:
@@ -381,6 +405,7 @@ def judgeModelComplete1():
                     action=""
                 print(label+", "+src+ ", " +target+ ", " + event + ", " + condition + ", " +action+",")
         sys.stdout = savedStdout  # 恢复标准输出流
+    print(forCompleteT)
     if len(forCompleteT)>0:
         # 可行的迁移
         feasibleT=[]
@@ -394,23 +419,22 @@ def judgeModelComplete1():
             savedStdout = sys.stdout  # 保存标准输出流
             with open(filepath+'outNew.txt', 'w+') as file:
                 sys.stdout = file  # 标准输出重定向至文件
-                # print("模型不完整，请补全：")
+                print("N")
                 # for key, value in State2.items():
                 #     print(key + "->" + value)
-                # for i in range(len(feasibleT)):
-                #     # print("需要修改的条件所在的迁移为：")
-                #     # print(completeT)
-                #     # print("需要修改为其对立条件的条件分支:" + needChangeCond)
-                #     print("推荐补全的迁移为:")
-                print("N")
-                print(feasibleT[i][0] + ", " + feasibleT[i][1] + ", " + feasibleT[i][2] + ", " + feasibleT[i][
+                # print("推荐补全的迁移为:")
+                for i in range(len(feasibleT)):
+                    # print("需要修改的条件所在的迁移为：")
+                    # print(completeT)
+                    # print("需要修改为其对立条件的条件分支:" + needChangeCond)
+                    print(feasibleT[i][0] + ", " + feasibleT[i][1] + ", " + feasibleT[i][2] + ", " + feasibleT[i][
                         3] + ", " + feasibleT[i][4] + ", " + feasibleT[i][5])
             sys.stdout = savedStdout  # 恢复标准输出流
             counterCondSet.clear()
         else:
             print("模型完整")
             savedStdout = sys.stdout  # 保存标准输出流
-            with open('out.txt', 'w+') as file1:
+            with open(filepath+'outNew.txt', 'w+') as file1:
                 sys.stdout = file1  # 标准输出重定向至文件
                 print("Y")
                 # for key, value in State2.items():

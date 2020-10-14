@@ -80,6 +80,7 @@ class PartialList:
             self.targetBranch.action = self.targetBranch.action.replace('.', '')
 
         self.targetBranchSrcList = obtain_efsm_info.getOppositeBranch(self.targetBranch)
+        # self.targetBranchSrcList = obtain_efsm_info.getSecondOppositeBranch(self.targetBranch) #2020/10/14 11/35
         self.useList = []
         self.tranlist = []
         self.eventDefList = set
@@ -469,6 +470,14 @@ def search():
                 partialList.removeCandidate(selectedTran)
                 # print partialList.top().getCandidatelist()
                 if selectedTran.tran == partialList.top().tran:  # 最优先候选迁移是序列首个迁移本身的情况
+                    continue
+                pb = 0
+                for i in range(len(partialList.tranlist)):
+                    # 候选迁移在部分序列中出现，且只有一个候选迁移
+                    if partialList.tranlist[i].tran == selectedTran.tran and len(partialList.tranlist[-1].Candidatelist)==1:
+                        pb = 1
+                        break
+                if pb == 1:
                     continue
                 isFeasibility = True
                 # 判断是否矛盾变量冲突

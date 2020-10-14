@@ -4,10 +4,10 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-    <content url="file://E:/EFSM_test_generated" />
-    <content url="file://E:/efsmGA" />
-    <content url="file://E:/writetest" />
-    <orderEntry type="jdk" jdkName="Python 2.7 (3)" jdkType="Python SDK" />
+    <content url="file://$MODULE_DIR$/../../../../EFSM_test_generated" />
+    <content url="file://$MODULE_DIR$/../../../../efsmGA" />
+    <content url="file://$MODULE_DIR$/../../../../writetest" />
+    <orderEntry type="jdk" jdkName="Python 2.7 (4)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

@@ -3,7 +3,7 @@
     <div class="invalidForm" v-show="divMain">
       <!--    标题-->
       <el-card class="tableTitle">
-        <span style="font-size: 20px">当前项目共有{{ total }}条失效场景</span>
+        <span style="font-size: 20px">当前项目共有{{ total }}条风险场景</span>
         <el-input v-model="search" placeholder="输入关键字搜索" style="margin-left: 30px; width: 300px" @input="pageList" />
         <el-button size="20px" type="success" style="margin-left: 480px" @click="handleAdd" icon="el-icon-plus">添加新场景</el-button>
         <!--      </el-card>-->
@@ -20,7 +20,7 @@
               <span style="margin-left: 10px">{{ scope.row.invalid_name }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="失效场景" align="center">
+          <el-table-column label="风险场景" align="center">
             <template slot-scope="scope">
               <span style="margin-left: 10px">{{ scope.row.invalid_content }}</span>
             </template>
@@ -30,7 +30,7 @@
               <el-button size="mini" type="info" @click="handleShow(scope.$index, scope.row)">查看</el-button>
               <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
               <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-              <el-button size="mini" type="warning" @click="handleVerify(scope.$index, scope.row)">复现</el-button>
+              <el-button size="mini" type="warning" @click="handleVerify(scope.$index, scope.row)">触发</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -103,9 +103,9 @@
           <el-button type="primary" @click="handleEditCommit">确 定</el-button>
         </div>
       </el-dialog>
-      <!--    提示不能复现的弹窗-->
+      <!--    提示不能触发的弹窗-->
       <el-dialog title="提示" :visible.sync="dialogVerify" width="30%">
-        <span>此场景无法复现，验证结果为安全</span>
+        <span>此场景无法触发，验证结果为安全</span>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVerify = false">取 消</el-button>
           <el-button type="primary" @click="dialogVerify = false">确 定</el-button>
@@ -116,13 +116,13 @@
       <el-card style="height: 560px">
         <!--      <span style="font-size: x-large;margin-left: 40%">模型可视化</span>-->
         <el-col :span="12">
-          <span style="font-size: x-large;margin-left: 40%">失效场景复现</span>
+          <span style="font-size: x-large;margin-left: 40%">风险场景触发</span>
           <div id="myDiagramDiv" class="myDiagramDiv"></div>
         </el-col>
         <el-col :span="12">
           <el-button type="danger" style="float: right" @click="closeDivDraw">关闭</el-button>
           <div class="text-path">
-            <p>复现路径</p>
+            <p>触发路径</p>
             <br />
             <span style="white-space: normal">{{ test_draw }}</span>
           </div>
@@ -175,13 +175,12 @@ export default {
         nodeDataArray: [],
         linkDataArray: []
       },
-      test_draw: [1, 2, 2, 3]
+      test_draw: []
     }
   },
   created() {
     this.pageList()
     this.getData()
-    this.getPathData()
   },
   methods: {
     pageList() {
@@ -312,12 +311,13 @@ export default {
             if (response.data.res === 'danger') {
               // todo: 画图
               // this.init()
+              this.getPathData()
               this.drawlink()
               this.divDraw = true
               this.divMain = false
               // window.open('http://localhost:2333/#/pageFive')
             } else {
-              // todo: 弹窗提示不能复现
+              // todo: 弹窗提示不能触发
               this.dialogVerify = true
             }
           }

@@ -18,6 +18,11 @@ from django.shortcuts import render
 def modeling(request):
     os.system('python E:/Code/project301/lwn_Graphic/ConstructModel.py')
     os.system('python E:/Code/project301/lwn_Graphic/2020-08.py')
+    filepath = 'E:/Code/project301/file/'
+    with open(filepath + 'resultSaveCreate.txt', 'wt+', encoding='utf-8') as f:
+        f.write(open(filepath + 'result.txt', 'r', encoding='utf-8').read())
+    with open(filepath + 'resultModelSaveCreate.txt', 'wt+', encoding='utf-8') as f:
+        f.write(open(filepath + 'resultModel.txt', 'r', encoding='utf-8').read())
     return JsonResponse({**error_code.CLACK_SUCCESS})
 
 
@@ -246,7 +251,7 @@ def import_invalid(request):
             # 判断是否是Transition
             if lines[index] == "Transition:":
                 index += 1
-                new_name = "失效场景" + str(latest_id)
+                new_name = "风险场景" + str(latest_id)
                 latest_id += 1
                 new_content = ""
                 new_details = "暂无文字表述"
@@ -274,9 +279,10 @@ def verify_invalid(request):
     with open('E:/Code/project301/file/targetInvalid.txt', 'w') as f:  # 设置文件对象
         f.write('Transition:\n')
         f.write(aim_invalid)
-    # os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
-    os.system('py -2 E:/Code/project301/lxd_Safety/newVerify/Main.py')
     try:
+        os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
+        # os.system('py -2 E:/Code/project301/lxd_Safety/newVerify/Main.py')
+
         with open('E:/Code/project301/file/path.txt') as f:
             lines = f.read()
         if len(lines) > 2:
@@ -289,8 +295,8 @@ def verify_invalid(request):
             Invalid.objects.filter(id=aim_id).update(invalid_verify="danger")
             res = 'danger'
         elif a == 1:
-            Invalid.objects.filter(id=aim_id).update(invalid_verify="success")
-            res = 'success'
+            Invalid.objects.filter(id=aim_id).update(invalid_verify="safe")
+            res = 'safe'
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS, 'res': res})
@@ -400,17 +406,7 @@ def verify_del(request):
     # print('edge:')
     # print(edge)
     filepath = 'E:/Code/project301/file/'
-    filename1 = 'change.json'
-    filename2 = 'node.json'
-    filename3 = 'edge.json'
     try:
-        # with open(filepath+filename1, 'w') as f:
-        #     json.dump(delete, f)
-        # with open(filepath + filename2, 'w') as f:
-        #     json.dump(node, f)
-        # with open(filepath + filename3, 'w') as f:
-        #     json.dump(edge, f)
-
         data_list1 = node
         result = ''
         for data_dict in data_list1:
@@ -445,7 +441,7 @@ def verify_del(request):
                 if data_dict['text'] == "START":
                     data_dict['text'] = "S0"
                 result = result + 'State:' + '\n' + '\t' + 'label=' + data_dict[
-                    'text'] + '\n' +'\t' + 'name=' + data_dict['name'] + '\n'
+                    'text'] + '\n' + '\t' + 'name=' + data_dict['name'] + '\n'
 
         data_list4 = edge
         # print(data_list2)
@@ -480,82 +476,6 @@ def verify_del(request):
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS, "result": res})
-
-
-# 将result.txt文件分解成T2和S6
-def reverse():
-    filepath = 'E:/Code/project301/file/'
-    file_name = 'result.txt'
-    lines = open(filepath+file_name, 'r', encoding='UTF-8').readlines()
-    index_line = 0
-    S = '{' + '\n'
-    T = ''
-    while index_line < len(lines):
-        if lines[index_line].strip() == "State:":
-            index_line += 1
-            node_num0 = lines[index_line].strip().split('=')[1]
-            node_num = int(node_num0[1:])
-            node_label = lines[index_line].strip().split('=')[1]
-            index_line += 1
-            node_name = lines[index_line].strip().split('=', 1)[1]
-            # data.append({"data": {"id": node_name, "label": node_name, "category": node_category.get(node_name, 2)}})
-            # data.append({"data": {"id": node_name, "label": node_label,"name":node_name}})
-            S = S + '"' + node_label + '"' + ':' + ' ' +'"' + node_name +'"'+ ',' + '\n'
-        if lines[index_line].strip() == "Transition:":
-            index_line += 1
-            name = lines[index_line].strip().split('=', 1)[1]
-            index_line += 1
-            src = lines[index_line].strip().split('=', 1)[1]
-            index_line += 1
-            tgt = lines[index_line].strip().split('=', 1)[1]
-            index_line += 1
-            event = lines[index_line].strip().split('=', 1)
-            event = event[1]
-            index_line += 1
-            cond = lines[index_line].strip().split('=', 1)
-            cond = cond[1]
-            if cond == '':
-                cond = 'null'
-            cond = cond.replace('&', ',')
-            cond = cond.replace('(', '')
-            cond = cond.replace(')', '')
-            lastCond1 = cond.strip().split(',')
-            j = 0
-            while j <= len(lastCond1):
-                if j < len(lastCond1):
-                    if "!=" not in lastCond1[j] and ">=" not in lastCond1[j] and "<=" not in lastCond1[j] and "==" in \
-                            lastCond1[j]:
-                        lastCond1[j] = lastCond1[j].replace("==", "=")
-                    if j + 1 < len(lastCond1):
-                        re = []
-                        re0 = ''
-                        er = []
-                        er0 = ''
-                        if "<=" in lastCond1[j + 1]:
-                            re = lastCond1[j + 1].split("<=")
-                            re0 = lastCond1[j + 1].split("<=")[0]
-                            if ">=" in lastCond1[j]:
-                                er = lastCond1[j].split(">=")
-                                er0 = lastCond1[j].split(">=")[0]
-                                if er[0] == re[0]:
-                                    lastCond1[j] = er[1] + '<=' + er0 + '<=' + re[1]
-                                    del lastCond1[j + 1]
-                j = j + 1
-            cond = ",".join(lastCond1)
-            cond = cond.replace(' ', '')
-            print(cond)
-            index_line += 1
-            action = lines[index_line].strip().split('=', 1)
-            action = action[1].replace(';', ',')
-            T = T + name + ';' + src + ';' + tgt + ';' + 'event=' + event + ';' + 'condition=' + cond + ';' + 'action=' + action + '\n'
-        index_line += 1
-    S = S.rstrip()
-    S = S.rstrip(',')
-    S = S + '\n' + '}'
-    with open(filepath+'S2.txt', 'wt+', encoding='utf-8') as f:
-        f.write(S)
-    with open(filepath+'T6.txt', 'wt+', encoding='utf-8') as f:
-        f.write(T)
 
 
 # 验证模型的完整性
@@ -613,9 +533,9 @@ def verify_complete(request):
     index_line = 0
     res = 0
     print(lines[0])
-    if lines[0] =='Y\n':
+    if lines[0] == 'Y\n':
         res = 'Y'
-    elif lines[0]=='N\n':
+    elif lines[0] == 'N\n':
         res = 'N'
         index_line += 1
         while index_line < len(lines):
@@ -702,22 +622,202 @@ def verify_select_invalid(request):
     return JsonResponse({**error_code.CLACK_SUCCESS})
 
 
-# 模型还原成编辑前的样子
+# 模型还原成单次编辑前的样子
 def recovery_model(request):
     filepath = 'E:/Code/project301/file/'
-    with open(filepath+'result.txt', 'wt+', encoding='utf-8') as f:
-        f.write(open(filepath+'resultSave.txt', 'r',encoding='utf-8').read())
+    with open(filepath + 'result.txt', 'wt+', encoding='utf-8') as f:
+        f.write(open(filepath + 'resultSave.txt', 'r', encoding='utf-8').read())
     with open(filepath + 'resultModel.txt', 'wt+', encoding='utf-8') as f:
-        f.write(open(filepath + 'resultModelSave.txt', 'r',encoding='utf-8').read())
+        f.write(open(filepath + 'resultModelSave.txt', 'r', encoding='utf-8').read())
     return JsonResponse({**error_code.CLACK_SUCCESS})
 
 
 # 保存编辑前的模型样子
 def save_model(request):
     filepath = 'E:/Code/project301/file/'
-    with open(filepath+'resultSave.txt', 'wt+',encoding='utf-8') as f:
-        f.write(open(filepath+'result.txt', 'r',encoding='utf-8').read())
-    with open(filepath + 'resultModelSave.txt', 'wt+',encoding='utf-8') as f:
-        f.write(open(filepath + 'resultModel.txt', 'r',encoding='utf-8').read())
+    with open(filepath + 'resultSave.txt', 'wt+', encoding='utf-8') as f:
+        f.write(open(filepath + 'result.txt', 'r', encoding='utf-8').read())
+    with open(filepath + 'resultModelSave.txt', 'wt+', encoding='utf-8') as f:
+        f.write(open(filepath + 'resultModel.txt', 'r', encoding='utf-8').read())
     return JsonResponse({**error_code.CLACK_SUCCESS})
 
+
+# 补全完整性验证的结果
+def save_integrity_verification(request):
+    request_json = json.loads(request.body)
+    # print(request_json['total']['nodeDataArray'])
+    # test = json.loads(request_json['total'])
+    # print(test)
+    node = request_json['total']['nodeDataArray']
+    edge = request_json['total']['linkDataArray']
+    # print('delete:')
+    # print(delete)
+    # print(node)
+    # print('edge:')
+    # print(edge)
+    filepath = 'E:/Code/project301/file/'
+    try:
+        data_list1 = node
+        result = ''
+        for data_dict in data_list1:
+            if 'text' in data_dict.keys():
+                if data_dict['text'] == "S0":
+                    data_dict['text'] = "START"
+                result = result + 'State:' + '\n' + '\t' + 'name=' + data_dict[
+                    'text'] + '\n'
+
+        data_list2 = edge
+        # print(data_list2)
+        for data_dict in data_list2:
+            if str(data_dict['from']) == '0':
+                data_dict['from'] = 'TART'
+            elif str(data_dict['to']) == '0':
+                data_dict['to'] = 'TART'
+            result = result + 'Transition:' + '\n' \
+                     + '\t' + 'name=' + str(data_dict['text']) + '\n' \
+                     + '\t' + 'src=' + 'S' + str(data_dict['from']) + '\n' \
+                     + '\t' + 'tgt=' + 'S' + str(data_dict['to']) + '\n' \
+                     + '\t' + 'event=' + str(data_dict['event']) + '\n' \
+                     + '\t' + 'condition=' + str(data_dict['cond']) + '\n' \
+                     + '\t' + 'action=' + str(data_dict['action']) + '\n'
+            # print(result)
+        with open(filepath + 'resultModel.txt', 'wt+', encoding='utf-8') as f:
+            f.write(result)
+
+        data_list3 = node
+        result = ''
+        for data_dict in data_list3:
+            if 'text' in data_dict.keys():
+                if data_dict['text'] == "START":
+                    data_dict['text'] = "S0"
+                result = result + 'State:' + '\n' + '\t' + 'label=' + data_dict[
+                    'text'] + '\n' + '\t' + 'name=' + data_dict['name'] + '\n'
+
+        data_list4 = edge
+        # print(data_list2)
+        for data_dict in data_list4:
+            if str(data_dict['from']) == 'TART':
+                data_dict['from'] = '0'
+            elif str(data_dict['to']) == 'TART':
+                data_dict['to'] = '0'
+            result = result + 'Transition:' + '\n' \
+                     + '\t' + 'name=' + str(data_dict['text']) + '\n' \
+                     + '\t' + 'src=' + 'S' + str(data_dict['from']) + '\n' \
+                     + '\t' + 'tgt=' + 'S' + str(data_dict['to']) + '\n' \
+                     + '\t' + 'event=' + str(data_dict['event']) + '\n' \
+                     + '\t' + 'condition=' + str(data_dict['cond']) + '\n' \
+                     + '\t' + 'action=' + str(data_dict['action']) + '\n'
+            # print(result)
+        with open(filepath + 'result.txt', 'wt+', encoding='utf-8') as f:
+            f.write(result)
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 补全完整性的点或边
+def save_node_and_link(request):
+    request_json = json.loads(request.body)
+    file_name = 'E:/Code/project301/file/result.txt'
+    lines = open(file_name, 'r', encoding='UTF-8').readlines()
+    index_line = 0
+    Sr = ''
+    Sm = ''
+    Tr = ''
+    Tm = ''
+    while index_line < len(lines):
+        if lines[index_line].strip() == "State:":
+            index_line += 1
+            node_num0 = lines[index_line].strip().split('=')[1]
+            node_num = int(node_num0[1:])
+            node_label = lines[index_line].strip().split('=')[1]
+            index_line += 1
+            node_name = lines[index_line].strip().split('=', 1)[1]
+            # data.append({"data": {"id": node_name, "label": node_name, "category": node_category.get(node_name, 2)}})
+            # data.append({"data": {"id": node_name, "label": node_label,"name":node_name}})
+            Sr = Sr + 'State:' + '\n' + '\t' + 'label=' + node_num0 + '\n' + '\t' + 'name=' + node_name + '\n'
+            Sm = Sm + 'State:' + '\n' + '\t' + 'name=' + node_num0 + '\n'
+        if lines[index_line].strip() == "Transition:":
+            index_line += 1
+            name = lines[index_line].strip().split('=', 1)[1]
+            name0 = int(name[1:])
+            index_line += 1
+            src0 = lines[index_line].strip().split('=', 1)[1]
+            src = int(src0[1:])
+            index_line += 1
+            tgt0 = lines[index_line].strip().split('=', 1)[1]
+            tgt = int(tgt0[1:])
+            index_line += 1
+            event = lines[index_line].strip().split('=', 1)
+            event = event[1] if len(event) > 1 else ""
+            index_line += 1
+            cond = lines[index_line].strip().split('=', 1)
+            cond = cond[1] if len(cond) > 1 else ""
+            index_line += 1
+            action = lines[index_line].strip().split('=', 1)
+            action = action[1] if len(action) > 1 else ""
+            Tr = Tr + 'Transition:' + '\n' \
+                 + '\t' + 'name=' + name + '\n' \
+                 + '\t' + 'src=' + src0 + '\n' \
+                 + '\t' + 'tgt=' + tgt0 + '\n' \
+                 + '\t' + 'event=' + event + '\n' \
+                 + '\t' + 'condition=' + cond + '\n' \
+                 + '\t' + 'action=' + action + '\n'
+            Tm = Tm + 'Transition:' + '\n' \
+                 + '\t' + 'name=' + name + '\n' \
+                 + '\t' + 'src=' + src0 + '\n' \
+                 + '\t' + 'tgt=' + tgt0 + '\n' \
+                 + '\t' + 'event=' + event + '\n' \
+                 + '\t' + 'condition=' + cond + '\n' \
+                 + '\t' + 'action=' + action + '\n'
+        index_line += 1
+    if 'node' in request_json:
+        node = request_json['node']
+        print(node)
+        if 'text' in node.keys():
+            if node['text'] == "S0":
+                node['text'] = "START"
+            Sr = Sr + 'State:' + '\n' + '\t' + 'label=' + node[
+                'text'] + '\n' + '\t' + 'name=' + node['name'] + '\n'
+            Sm = Sm + 'State:' + '\n' + '\t' + 'name=' + node[
+                'text'] + '\n'
+            print(Sr)
+            print(Sm)
+        # print(Sr)
+        # print(Sm)
+    elif 'edge' in request_json:
+        edge = request_json['edge']
+        print(edge)
+        if str(edge['from']) == '0':
+            edge['from'] = 'TART'
+        elif str(edge['to']) == '0':
+            edge['to'] = 'TART'
+        Tr = Tr + 'Transition:' + '\n' \
+             + '\t' + 'name=' + str(edge['text']) + '\n' \
+             + '\t' + 'src=' + 'S' + str(edge['from']) + '\n' \
+             + '\t' + 'tgt=' + 'S' + str(edge['to']) + '\n' \
+             + '\t' + 'event=' + str(edge['event']) + '\n' \
+             + '\t' + 'condition=' + str(edge['cond']) + '\n' \
+             + '\t' + 'action=' + str(edge['action']) + '\n'
+        Tm = Tm + 'Transition:' + '\n' \
+             + '\t' + 'name=' + str(edge['text']) + '\n' \
+             + '\t' + 'src=' + 'S' + str(edge['from']) + '\n' \
+             + '\t' + 'tgt=' + 'S' + str(edge['to']) + '\n' \
+             + '\t' + 'event=' + str(edge['event']) + '\n' \
+             + '\t' + 'condition=' + str(edge['cond']) + '\n' \
+             + '\t' + 'action=' + str(edge['action']) + '\n'
+    with open('E:/Code/project301/file/result.txt', 'wt+', encoding='utf-8') as f:
+        f.write(Sr + Tr)
+    with open('E:/Code/project301/file/resultModel.txt', 'wt+', encoding='utf-8') as f:
+        f.write(Sm + Tm)
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 还原为刚建模的样子
+def recovery_origin_model(request):
+    filepath = 'E:/Code/project301/file/'
+    with open(filepath + 'result.txt', 'wt+', encoding='utf-8') as f:
+        f.write(open(filepath + 'resultSaveCreate.txt', 'r', encoding='utf-8').read())
+    with open(filepath + 'resultModel.txt', 'wt+', encoding='utf-8') as f:
+        f.write(open(filepath + 'resultModelSaveCreate.txt', 'r', encoding='utf-8').read())
+    return JsonResponse({**error_code.CLACK_SUCCESS})

@@ -1,12 +1,12 @@
-t1;S1;S0;event=Cancel();condition=null;action=Write("Canceling"),return_card()
-t2;S4;S0;event=Cancel();condition=null;action=Write("Canceling"),return_card()
-t3;S2;S0;event=Cancel();condition=null;action=Write("Canceling"),return_card()
-t4;S4;S2;event=Return();condition=null;action=Write("Select Withdrawal/GetBalance/Cancel")
-t5;S0;S1;event=Card(pin,B);condition=null;action=Write("Enter Pin"),attempts=0
-t6;S1;S0;event=Enter_pin(p);condition=p!=pin,attempts=2;action=Write(""Password error number exceeded"),return_card(),attempts=attempts+1
-t7;S1;S0;event=Enter_pin(p);condition=null;action=Write("Verify password timeout"),return_card()
-t8;S3;S4;event=Enter_amount(w);condition=w<=B;action=give_money(),B=B-w,Write("your balance",B)
-t9;S2;S4;event=GetBalance();condition=null;action=Write("your balance",B)
-t10;S2;S3;event=Withdrawal();condition=null;action=Write("Enter amount")
-t11;S1;S2;event=Enter_pin(p);condition=p=pin,0<=attempts<=2;action=Write("Select Withdrawal/GetBalance/Cancel"),attempts=attempts+1
-t12;S1;S1;event=Enter_pin(p);condition=p!=pin,0<=attempts<=1;action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
+t1;S2;S0;event=Cancel();condition=null;action=Write("Canceling"),return_card()
+t2;S4;S2;event=Return();condition=null;action=Write("Select Withdrawal/GetBalance/Cancel")
+t3;S0;S1;event=Card(pin,B);condition=null;action=Write("Enter Pin"),attempts=0
+t4;S2;S4;event=GetBalance();condition=null;action=Write("your balance",B)
+t5;S1;S0;event=Cancel();condition=null;action=Write("Canceling"),return_card()
+t6;S1;S0;event=Enter_pin(p);condition=null;action=Write("Verify password timeout"),return_card()
+t7;S2;S3;event=Withdrawal();condition=null;action=Write("Enter amount")
+t8;S1;S0;event=Enter_pin(p);condition=p!=pin,attempts=2;action=Write("Password error number exceeded"),return_card(),attempts=attempts+1
+t9;S4;S0;event=Cancel();condition=null;action=Write("Canceling"),return_card()
+t10;S3;S4;event=Enter_amount(w);condition=w<=B;action=give_money(),B=B-w,Write("your balance",B)
+t11;S1;S1;event=Enter_pin(p);condition=p!=pin,0<=attempts<=1;action=Write("Wrong Pin ReEnter"),attempts=attempts+1
+t12;S1;S2;event=Enter_pin(p);condition=p=pin,0<=attempts<=2;action=Write("Select Withdrawal/GetBalance/Cancel"),attempts=attempts+1

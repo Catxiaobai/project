@@ -141,5 +141,5 @@ def execute():
     #print(format(length/count,'.2f'))
     #print "平均选择次数:"
     #print(format(select/count, '.2f'))
+    # print (pathT)
     return pathT
-

@@ -24,7 +24,7 @@
         <el-button type="text" slot="reference">操作提示</el-button>
       </el-popover>
     </div>
-    <el-card style="width: 100%;height: 600px">
+    <el-card style="width: 100%;height: 600px" class="cardTest">
       <el-col :span="19">
         <div class="divForm">
           <span>选择场景进行验证</span>
@@ -51,7 +51,7 @@
                 <span style="margin-left: 10px">{{ scope.row.invalid_name }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="失效场景" width="640px" align="center">
+            <el-table-column label="风险场景" width="626px" align="center">
               <template slot-scope="scope">
                 <span style="margin-left: 10px">{{ scope.row.invalid_content }}</span>
               </template>
@@ -73,7 +73,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="page"
-            :page-sizes="[1, 2, 4, 7, 10]"
+            :page-sizes="[1, 2, 4, 6, 10]"
             :page-size="limit"
             layout="total, sizes, prev, pager, next, jumper"
             background
@@ -86,7 +86,7 @@
       <el-col :span="4">
         <div class="divInfo" v-show="true">
           <el-card class="cardInfo">
-            <p>ATM系统可能相关的失效场景数：{{ total }}</p>
+            <p>ATM系统可能相关的风险场景数：{{ total }}</p>
             <br />
             <p>已验证个数：{{ msg.numVerify }}</p>
             <p>未验证个数：{{ msg.numNoVerify }}</p>
@@ -107,7 +107,7 @@ export default {
     return {
       tableData: [],
       multipleSelection: [],
-      limit: 7, //每页显示条数
+      limit: 6, //每页显示条数
       total: null, //trace总数
       page: 1, //第几页
       buttonReset: false, //重置按钮
@@ -189,7 +189,7 @@ export default {
         } else if (this.tableData[tt].invalid_verify === 'danger') {
           this.msg.numVerify++
           this.msg.numDanger++
-        } else if (this.tableData[tt].invalid_verify === 'success') {
+        } else if (this.tableData[tt].invalid_verify === 'safe') {
           this.msg.numSuccess++
           this.msg.numVerify++
         }
@@ -227,7 +227,7 @@ export default {
     },
     tableRowClassName({ row, rowIndex }) {
       // console.log(row.invalid_verify)
-      if (row.invalid_verify === 'success') {
+      if (row.invalid_verify === 'safe') {
         return 'success-row'
       } else if (row.invalid_verify === 'danger') {
         return 'danger-row'
@@ -264,7 +264,6 @@ export default {
       }
     },
     verifyAll() {
-      // todo: 计算不合理
       // this.msg.numVerify = this.infoVerify.length
       // this.msg.numNoVerify = this.total - this.msg.numVerify
       this.handleVerify(this.infoVerify, 0)
@@ -300,5 +299,8 @@ export default {
   margin-left: 1100px;
   height: 40px;
   margin-top: -40px;
+}
+.cardTest {
+  overflow-y: scroll;
 }
 </style>

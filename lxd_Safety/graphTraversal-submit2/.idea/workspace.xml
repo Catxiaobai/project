@@ -20,93 +20,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b8c5a93-dbed-434f-a95f-0f1637057fe7" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/../../djangoProject/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../djangoProject/mysite/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../djangoProject/mysite/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../djangoProject/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../djangoProject/mysite/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/StateSet.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/StateSet.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/Trace1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/Trace1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../file/T6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/T6.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../file/TraceSet.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/TraceSet.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../file/TransSet.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/TransSet.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lwn_Graphic/ConstructModel1.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lwn_Graphic/draw_graph2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../lzy_Complete/Model3/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../lzy_Complete/Model3/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/ConstructModel1.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../lzy_Complete/Model3/ConstructModel1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/Model1.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/S1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/S2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/StateSet.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/T1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/T8.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/Trace1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/TraceSet.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/TransSet.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/addTrace.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/completeModel1.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/efsm1.gv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/efsm1.gv.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/judgeModelComplete.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../lzy_Complete/Model3/judgeModelComplete.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/out.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/result.dot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/result.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/result1.dot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/result1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/.idea/Model3_2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/.vscode/settings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/.idea/Model3.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/.vscode/settings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/ConstructModel1.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/Model1.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/S1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/S2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/StateSet.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/T1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/T8.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/Trace1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/TraceSet.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/TransSet.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/addTrace.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/completeModel1.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/efsm1.gv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/efsm1.gv.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/judgeModelComplete.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/out.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/result.dot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/result.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/result1.dot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/Model3/result1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/S1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/S2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/StateSet.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/T8.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/TraceSet.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/TransSet.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/__MACOSX/Model3/._.DS_Store" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/__MACOSX/Model3/._Trace1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/__MACOSX/Model3/._completeModel1.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/__MACOSX/Model3/._efsm1.gv.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/__MACOSX/Model3/._judgeModelComplete.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/__MACOSX/Model3/._result.dot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/efsm1.gv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/efsm1.gv.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/out.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/result1.dot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model3_2/result1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/Model/CreateModel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/Model/CreateModel.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/Model/ShowModel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/Model/ShowModel.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/Safety/SafeVerify.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/Safety/SafeVerify.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/UsedTrace/Used.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/UsedTrace/Used.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../file/out.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/out.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../file/outNew.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/outNew.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../file/path.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/path.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../file/result.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/result.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../file/result1.dot" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/result1.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../file/resultModel.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/resultModel.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../file/resultModel2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/resultModel2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../file/resultModelSave.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/resultModelSave.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../file/resultSave.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/resultSave.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../file/target2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/target2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../file/targetInvalid.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/targetInvalid.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../file/webchess.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/webchess.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/graphTraversal.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/graphTraversal.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/efsmGA/GA/search3.py" beforeDir="false" afterPath="$PROJECT_DIR$/efsmGA/GA/search3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handle/generate_and_execute_search3.py" beforeDir="false" afterPath="$PROJECT_DIR$/handle/generate_and_execute_search3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model5/judgeFeasibility/judgeModelComplete.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../lzy_Complete/Model5/judgeFeasibility/judgeModelComplete.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/../../server/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../server/entity/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../server/entity/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../server/entity/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../server/entity/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../vue-test/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/debug.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../vue-test/public/失效序列(标准化).txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/public/风险序列(标准化).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../vue-test/src/components/InnerAside.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/components/InnerAside.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Home/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Home/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/InvalidTrace/ImportInvalidTrace.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/InvalidTrace/ImportInvalidTrace.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/InvalidTrace/Invalid.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/InvalidTrace/Invalid.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/Safety/InvalidVerify.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/Safety/InvalidVerify.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/Safety/SafeAssess.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/Safety/SafeAssess.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/VerifyModel/CompletionModel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/VerifyModel/CompletionModel.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/VerifyModel/JudgeModel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/VerifyModel/JudgeModel.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -162,29 +108,7 @@
       <recent name="E:\graphTraversal-submit2\handle" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.project_gui">
-    <configuration name="generateGraph" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="graphTraversal" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/execution" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/execution/generateGraph.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.generate_and_execute_search3">
     <configuration name="generate_and_execute_search3" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="graphTraversal" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -221,6 +145,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/execution/new_gui.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="obtain_efsm_info" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="graphTraversal" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/efsmGA/GA" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/efsmGA/GA/obtain_efsm_info.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -290,18 +236,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.generate_and_execute_search3" />
-      <item itemvalue="Python.generateGraph" />
       <item itemvalue="Python.project_gui" />
       <item itemvalue="Python.new_gui" />
       <item itemvalue="Python.search3" />
+      <item itemvalue="Python.obtain_efsm_info" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.project_gui" />
         <item itemvalue="Python.generate_and_execute_search3" />
+        <item itemvalue="Python.obtain_efsm_info" />
+        <item itemvalue="Python.project_gui" />
         <item itemvalue="Python.search3" />
         <item itemvalue="Python.new_gui" />
-        <item itemvalue="Python.generateGraph" />
       </list>
     </recent_temporary>
   </component>
@@ -390,6 +336,7 @@
       <workItem from="1598437091596" duration="163000" />
       <workItem from="1598443238701" duration="867000" />
       <workItem from="1598616751346" duration="1630000" />
+      <workItem from="1602647757595" duration="2011000" />
     </task>
     <servers />
   </component>
@@ -438,56 +385,37 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1598353687110">
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1602647899393">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1598353687110" />
-    <state width="1493" height="127" key="GridCell.Tab.0.bottom" timestamp="1598618390312">
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1602647899393" />
+    <state width="1493" height="179" key="GridCell.Tab.0.bottom" timestamp="1602651515321">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1345" height="566" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1596600514411" />
-    <state width="1493" height="127" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1598618390312" />
-    <state width="1493" height="127" key="GridCell.Tab.0.center" timestamp="1598618390312">
+    <state width="1493" height="179" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1602651515321" />
+    <state width="1493" height="179" key="GridCell.Tab.0.center" timestamp="1602651515321">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1345" height="566" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1596600514411" />
-    <state width="1493" height="127" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1598618390312" />
-    <state width="1493" height="127" key="GridCell.Tab.0.left" timestamp="1598618390312">
+    <state width="1493" height="179" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1602651515321" />
+    <state width="1493" height="179" key="GridCell.Tab.0.left" timestamp="1602651515321">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1345" height="566" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1596600514411" />
-    <state width="1493" height="127" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1598618390312" />
-    <state width="1493" height="127" key="GridCell.Tab.0.right" timestamp="1598618390312">
+    <state width="1493" height="179" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1602651515321" />
+    <state width="1493" height="179" key="GridCell.Tab.0.right" timestamp="1602651515321">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1345" height="566" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1596600514411" />
-    <state width="1493" height="127" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1598618390312" />
-    <state width="1345" height="216" key="GridCell.Tab.1.bottom" timestamp="1590405524593">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1345" height="216" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1590405524593" />
-    <state width="1345" height="216" key="GridCell.Tab.1.center" timestamp="1590405524593">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1345" height="216" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1590405524593" />
-    <state width="1345" height="216" key="GridCell.Tab.1.left" timestamp="1590405524593">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1345" height="216" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1590405524593" />
-    <state width="1345" height="216" key="GridCell.Tab.1.right" timestamp="1590405524593">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1345" height="216" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1590405524593" />
+    <state width="1493" height="179" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1602651515321" />
     <state x="363" y="188" key="com.intellij.ide.util.TipDialog" timestamp="1596595007332">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="363" y="188" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1596595007332" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1590452108034">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1590452108034" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1359,5 +1287,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/graphTraversal_submit2$project_gui.coverage" NAME="project_gui Coverage Results" MODIFIED="1598617954432" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/execution" />
+    <SUITE FILE_PATH="coverage/graphTraversal_submit2$generate_and_execute_search3.coverage" NAME="generate_and_execute_search3 Coverage Results" MODIFIED="1602648806262" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/handle" />
   </component>
 </project>

@@ -29,7 +29,7 @@ target:S8:输入密码页
 source:S8:输入密码页
 event:Enter_pin(p)
 condition:p!=pin,attempts=0
-action:Write("Wrong Pin,ReEnter"),attempts=attempts+1
+action:Write("Wrong Pin ReEnter"),attempts=attempts+1
 target:S9:输入密码页
 source:S9:输入密码页
 event:Cancel()
@@ -45,17 +45,17 @@ target:S12:输入密码页
 source:S12:输入密码页
 event:Enter_pin(p)
 condition:p!=pin,attempts=0
-action:Write("Wrong Pin,ReEnter"),attempts=attempts+1
+action:Write("Wrong Pin ReEnter"),attempts=attempts+1
 target:S13:输入密码页
 source:S13:输入密码页
 event:Enter_pin(p)
 condition:p!=pin,attempts=1
-action:Write("Wrong Pin,ReEnter"),attempts=attempts+1
+action:Write("Wrong Pin ReEnter"),attempts=attempts+1
 target:S14:输入密码页
 source:S14:输入密码页
 event:Enter_pin(p)
 condition:p!=pin,attempts=2
-action:Write(""Password error number exceeded"),return_card(),attempts=attempts+1
+action:Write("Password error number exceeded"),return_card(),attempts=attempts+1
 target:S15:初始页面
 Trace:
 source:S16:初始页面
@@ -97,7 +97,7 @@ target:S39:输入密码页
 source:S39:输入密码页
 event:Enter_pin(p)
 condition:p!=pin,attempts=0
-action:Write("Wrong Pin,ReEnter"),attempts=attempts+1
+action:Write("Wrong Pin ReEnter"),attempts=attempts+1
 target:S40:输入密码页
 source:S40:输入密码页
 event:Enter_pin(p)
@@ -133,12 +133,12 @@ target:S47:输入密码页
 source:S47:输入密码页
 event:Enter_pin(p)
 condition:p!=pin,attempts=0
-action:Write("Wrong Pin,ReEnter"),attempts=attempts+1
+action:Write("Wrong Pin ReEnter"),attempts=attempts+1
 target:S48:输入密码页
 source:S48:输入密码页
 event:Enter_pin(p)
 condition:p!=pin,attempts=1
-action:Write("Wrong Pin,ReEnter"),attempts=attempts+1
+action:Write("Wrong Pin ReEnter"),attempts=attempts+1
 target:S49:输入密码页
 source:S49:输入密码页
 event:Enter_pin(p)
@@ -174,12 +174,12 @@ target:S73:输入密码页
 source:S73:输入密码页
 event:Enter_pin(p)
 condition:p!=pin,attempts=0
-action:Write("Wrong Pin,ReEnter"),attempts=attempts+1
+action:Write("Wrong Pin ReEnter"),attempts=attempts+1
 target:S74:输入密码页
 source:S74:输入密码页
 event:Enter_pin(p)
 condition:p!=pin,attempts=1
-action:Write("Wrong Pin,ReEnter"),attempts=attempts+1
+action:Write("Wrong Pin ReEnter"),attempts=attempts+1
 target:S75:输入密码页
 source:S75:输入密码页
 event:Enter_pin(p)
@@ -231,7 +231,7 @@ target:S86:输入密码页
 source:S86:输入密码页
 event:Enter_pin(p)
 condition:p!=pin,attempts=0
-action:Write("Wrong Pin,ReEnter"),attempts=attempts+1
+action:Write("Wrong Pin ReEnter"),attempts=attempts+1
 target:S87:输入密码页
 source:S87:输入密码页
 event:Enter_pin(p)
@@ -257,12 +257,12 @@ target:S92:输入密码页
 source:S92:输入密码页
 event:Enter_pin(p)
 condition:p!=pin,attempts=0
-action:Write("Wrong Pin,ReEnter"),attempts=attempts+1
+action:Write("Wrong Pin ReEnter"),attempts=attempts+1
 target:S93:输入密码页
 source:S93:输入密码页
 event:Enter_pin(p)
 condition:p!=pin,attempts=1
-action:Write("Wrong Pin,ReEnter"),attempts=attempts+1
+action:Write("Wrong Pin ReEnter"),attempts=attempts+1
 target:S94:输入密码页
 source:S94:输入密码页
 event:Enter_pin(p)
@@ -314,7 +314,7 @@ target:S105:输入密码页
 source:S105:输入密码页
 event:Enter_pin(p)
 condition:p!=pin,attempts=0
-action:Write("Wrong Pin,ReEnter"),attempts=attempts+1
+action:Write("Wrong Pin ReEnter"),attempts=attempts+1
 target:S106:输入密码页
 source:S106:输入密码页
 event:Enter_pin(p)
@@ -345,12 +345,12 @@ target:S112:输入密码页
 source:S112:输入密码页
 event:Enter_pin(p)
 condition:p!=pin,attempts=0
-action:Write("Wrong Pin,ReEnter"),attempts=attempts+1
+action:Write("Wrong Pin ReEnter"),attempts=attempts+1
 target:S113:输入密码页
 source:S113:输入密码页
 event:Enter_pin(p)
 condition:p!=pin,attempts=1
-action:Write("Wrong Pin,ReEnter"),attempts=attempts+1
+action:Write("Wrong Pin ReEnter"),attempts=attempts+1
 target:S114:输入密码页
 source:S114:输入密码页
 event:Enter_pin(p)

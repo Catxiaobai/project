@@ -121,7 +121,7 @@ export default {
         },
         {
           path: '/titleInvalid',
-          label: '失效场景维护',
+          label: '风险场景维护',
           name: 'titleInvalid',
           icon: 's-release',
           index: 2,

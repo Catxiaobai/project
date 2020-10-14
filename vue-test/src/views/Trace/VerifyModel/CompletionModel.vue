@@ -20,10 +20,10 @@
               >
                 <el-input
                   v-model="domain.value"
-                  placeholder="{'type':'node','text':'S5','name':'状态5'}"
+                  placeholder="{'type':'node','text':'S5','name':'状态5'} {'type':'edge','from':3,'to':5,'name':'t13','event':'Enter_amount(w)','cond':'(w>B)','action':'null'}"
                   style="width: 80%"
                   type="textarea"
-                  :rows="4"
+                  :rows="5"
                 ></el-input>
                 <el-button @click.prevent="removeDomain(domain)" style="margin-left: 10px">删除</el-button>
               </el-form-item>

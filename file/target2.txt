@@ -1,1 +1,1 @@
-t13, S3, S5, Enter_amount(w), w>B, ,
+t13, S3, S5, Enter_amount(w), (w>B), ,
