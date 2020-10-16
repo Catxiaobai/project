@@ -1,34 +1,34 @@
 digraph g {
- S2 -> S0 [ label="t1
-event=Cancel()
-condition=null" ];
- S4 -> S2 [ label="t2
-event=Return()
-condition=null" ];
- S0 -> S1 [ label="t3
+ S0 -> S1 [ label="t1
 event=Card(pin,B)
 condition=null" ];
- S2 -> S4 [ label="t4
-event=GetBalance()
-condition=null" ];
- S1 -> S0 [ label="t5
-event=Cancel()
-condition=null" ];
- S1 -> S0 [ label="t6
+ S1 -> S0 [ label="t2
 event=Enter_pin(p)
 condition=null" ];
- S2 -> S3 [ label="t7
+ S2 -> S3 [ label="t3
 event=Withdrawal()
 condition=null" ];
- S1 -> S0 [ label="t8
-event=Enter_pin(p)
-condition=p!=pin,attempts=2" ];
- S4 -> S0 [ label="t9
+ S2 -> S0 [ label="t4
 event=Cancel()
 condition=null" ];
- S3 -> S4 [ label="t10
+ S1 -> S0 [ label="t5
+event=Enter_pin(p)
+condition=p!=pin,attempts=2" ];
+ S4 -> S0 [ label="t6
+event=Cancel()
+condition=null" ];
+ S1 -> S0 [ label="t7
+event=Cancel()
+condition=null" ];
+ S3 -> S4 [ label="t8
 event=Enter_amount(w)
 condition=w<=B" ];
+ S2 -> S4 [ label="t9
+event=GetBalance()
+condition=null" ];
+ S4 -> S2 [ label="t10
+event=Return()
+condition=null" ];
  S1 -> S1 [ label="t11
 event=Enter_pin(p)
 condition=p!=pin,0<=attempts<=1" ];

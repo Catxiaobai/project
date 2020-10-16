@@ -19,42 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1b8c5a93-dbed-434f-a95f-0f1637057fe7" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../../file/T6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/T6.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/TraceSet.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/TraceSet.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/TransSet.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/TransSet.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/out.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/out.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/outNew.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/outNew.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/path.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/path.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/result.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/result.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/result1.dot" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/result1.dot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/resultModel.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/resultModel.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/resultModel2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/resultModel2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/resultModelSave.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/resultModelSave.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/resultSave.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/resultSave.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/target2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/target2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/targetInvalid.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/targetInvalid.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../file/webchess.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../file/webchess.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/graphTraversal.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/graphTraversal.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/efsmGA/GA/search3.py" beforeDir="false" afterPath="$PROJECT_DIR$/efsmGA/GA/search3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handle/generate_and_execute_search3.py" beforeDir="false" afterPath="$PROJECT_DIR$/handle/generate_and_execute_search3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lzy_Complete/Model5/judgeFeasibility/judgeModelComplete.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../lzy_Complete/Model5/judgeFeasibility/judgeModelComplete.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/../../server/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../server/entity/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../server/entity/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../server/entity/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../server/entity/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../vue-test/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/debug.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../vue-test/public/失效序列(标准化).txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/public/风险序列(标准化).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../vue-test/src/components/InnerAside.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/components/InnerAside.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Home/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Home/Home.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/InvalidTrace/ImportInvalidTrace.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/InvalidTrace/ImportInvalidTrace.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/InvalidTrace/Invalid.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/InvalidTrace/Invalid.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/Safety/InvalidVerify.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/Safety/InvalidVerify.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/Safety/SafeAssess.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/Safety/SafeAssess.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/VerifyModel/CompletionModel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/VerifyModel/CompletionModel.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../vue-test/src/views/Trace/VerifyModel/JudgeModel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../vue-test/src/views/Trace/VerifyModel/JudgeModel.vue" afterDir="false" />
-    </list>
+    <list default="true" id="1b8c5a93-dbed-434f-a95f-0f1637057fe7" name="Default" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -97,7 +62,7 @@
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="linkk&#9;null&#9;null&#10;GeneticAlgorithm&#9;null&#9;null&#10;creatStartPopulation&#9;null&#9;null&#10;obtainIndividualFitness&#9;null&#9;null&#10;pathInputVar&#9;null&#9;null&#10;repeatTrans&#9;null&#9;null&#10;pathProProcess&#9;null&#9;null&#10;initTranVarFuncList&#9;null&#9;null&#10;identifyLeftRight&#9;null&#9;null&#10;branchDistanceCompute&#9;null&#9;null&#10;executePath&#9;null&#9;null&#10;testGenforPath&#9;null&#9;null&#10;allPathNum&#9;null&#9;null&#10;initEFSM&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../server" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -337,6 +302,7 @@
       <workItem from="1598443238701" duration="867000" />
       <workItem from="1598616751346" duration="1630000" />
       <workItem from="1602647757595" duration="2011000" />
+      <workItem from="1602651619147" duration="18000" />
     </task>
     <servers />
   </component>
@@ -388,10 +354,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1602647899393">
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1602651635629">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1602647899393" />
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1602651635629" />
     <state width="1493" height="179" key="GridCell.Tab.0.bottom" timestamp="1602651515321">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

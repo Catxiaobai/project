@@ -407,7 +407,7 @@ export default {
     },
     reduction() {
       this.$http
-        .get('http://127.0.0.1:8000/api/recovery_model')
+        .get('http://127.0.0.1:8000/api/recovery_origin_model')
         .then(response => {
           console.log(response.data)
           this.reload()
@@ -429,7 +429,7 @@ export default {
   },
   created() {
     this.getData()
-    this.saveModel()
+    // this.saveModel()
   }
 }
 </script>

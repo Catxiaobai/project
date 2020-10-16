@@ -16,8 +16,8 @@ from django.shortcuts import render
 
 # 建模
 def modeling(request):
-    os.system('python E:/Code/project301/lwn_Graphic/ConstructModel.py')
-    os.system('python E:/Code/project301/lwn_Graphic/2020-08.py')
+    # os.system('python E:/Code/project301/lwn_Graphic/ConstructModel.py')
+    # os.system('python E:/Code/project301/lwn_Graphic/2020-08.py')
     filepath = 'E:/Code/project301/file/'
     with open(filepath + 'resultSaveCreate.txt', 'wt+', encoding='utf-8') as f:
         f.write(open(filepath + 'result.txt', 'r', encoding='utf-8').read())
@@ -555,17 +555,17 @@ def verify_complete(request):
                 if src0 == data_dict['id']:
                     t = 0
             if t == 1:
-                data_node_add.append({"id": src0, "text": src, 'name': src, 'color': 'red'})
-                data_node.append({"id": src0, "text": src, 'name': src, 'color': 'red'})
+                data_node_add.append({"id": src0, "text": src, 'name': src, 'color': 'pink'})
+                data_node.append({"id": src0, "text": src, 'name': src, 'color': 'pink'})
             t = 1
             for data_dict in data_node:
                 if tgt0 == data_dict['id']:
                     t = 0
             if t == 1:
                 data_node_add.append({"id": tgt0, "text": tgt, 'name': tgt})
-                data_node.append({"id": tgt0, "text": tgt, 'name': tgt, 'color': 'red'})
+                data_node.append({"id": tgt0, "text": tgt, 'name': tgt, 'color': 'pink'})
             edge = {"id": edge_num, "from": src0, "to": tgt0, "text": edge_name, "event": event, "cond": cond,
-                    "action": action, "color": 'red'}
+                    "action": action, "color": 'pink'}
             index_line += 1
             data_edge_add.append(edge)
             data_edge.append(edge)
@@ -730,12 +730,15 @@ def save_node_and_link(request):
             index_line += 1
             node_num0 = lines[index_line].strip().split('=')[1]
             node_num = int(node_num0[1:])
+
             node_label = lines[index_line].strip().split('=')[1]
             index_line += 1
             node_name = lines[index_line].strip().split('=', 1)[1]
             # data.append({"data": {"id": node_name, "label": node_name, "category": node_category.get(node_name, 2)}})
             # data.append({"data": {"id": node_name, "label": node_label,"name":node_name}})
             Sr = Sr + 'State:' + '\n' + '\t' + 'label=' + node_num0 + '\n' + '\t' + 'name=' + node_name + '\n'
+            if node_num0 == "S0":
+                node_num0 = "START"
             Sm = Sm + 'State:' + '\n' + '\t' + 'name=' + node_num0 + '\n'
         if lines[index_line].strip() == "Transition:":
             index_line += 1
@@ -744,9 +747,11 @@ def save_node_and_link(request):
             index_line += 1
             src0 = lines[index_line].strip().split('=', 1)[1]
             src = int(src0[1:])
+
             index_line += 1
             tgt0 = lines[index_line].strip().split('=', 1)[1]
             tgt = int(tgt0[1:])
+
             index_line += 1
             event = lines[index_line].strip().split('=', 1)
             event = event[1] if len(event) > 1 else ""
@@ -763,6 +768,10 @@ def save_node_and_link(request):
                  + '\t' + 'event=' + event + '\n' \
                  + '\t' + 'condition=' + cond + '\n' \
                  + '\t' + 'action=' + action + '\n'
+            if src0 == "S0":
+                src0 = "START"
+            if tgt0 == "S0":
+                tgt0 = "START"
             Tm = Tm + 'Transition:' + '\n' \
                  + '\t' + 'name=' + name + '\n' \
                  + '\t' + 'src=' + src0 + '\n' \
@@ -775,10 +784,11 @@ def save_node_and_link(request):
         node = request_json['node']
         print(node)
         if 'text' in node.keys():
-            if node['text'] == "S0":
-                node['text'] = "START"
+
             Sr = Sr + 'State:' + '\n' + '\t' + 'label=' + node[
                 'text'] + '\n' + '\t' + 'name=' + node['name'] + '\n'
+            if node['text'] == "S0":
+                node['text'] = "START"
             Sm = Sm + 'State:' + '\n' + '\t' + 'name=' + node[
                 'text'] + '\n'
             print(Sr)
@@ -788,10 +798,6 @@ def save_node_and_link(request):
     elif 'edge' in request_json:
         edge = request_json['edge']
         print(edge)
-        if str(edge['from']) == '0':
-            edge['from'] = 'TART'
-        elif str(edge['to']) == '0':
-            edge['to'] = 'TART'
         Tr = Tr + 'Transition:' + '\n' \
              + '\t' + 'name=' + str(edge['text']) + '\n' \
              + '\t' + 'src=' + 'S' + str(edge['from']) + '\n' \
@@ -799,6 +805,10 @@ def save_node_and_link(request):
              + '\t' + 'event=' + str(edge['event']) + '\n' \
              + '\t' + 'condition=' + str(edge['cond']) + '\n' \
              + '\t' + 'action=' + str(edge['action']) + '\n'
+        if str(edge['from']) == '0':
+            edge['from'] = 'TART'
+        elif str(edge['to']) == '0':
+            edge['to'] = 'TART'
         Tm = Tm + 'Transition:' + '\n' \
              + '\t' + 'name=' + str(edge['text']) + '\n' \
              + '\t' + 'src=' + 'S' + str(edge['from']) + '\n' \
