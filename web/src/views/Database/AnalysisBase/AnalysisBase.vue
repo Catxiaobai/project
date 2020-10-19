@@ -1,10 +1,10 @@
 <template>
-  <div>要素列表生成</div>
+  <div id="analysisBase">分析数据库</div>
 </template>
 
 <script>
 export default {
-  name: 'FeatureListGeneration.vue'
+  name: 'AnalysisBase.vue'
 }
 </script>
 

@@ -1,10 +1,10 @@
 <template>
-  <div>场景要素建模</div>
+  <div id="requirement">需求管理</div>
 </template>
 
 <script>
 export default {
-  name: 'SceneElementModeling.vue'
+  name: 'Requirements.vue'
 }
 </script>
 

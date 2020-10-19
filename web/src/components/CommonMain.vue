@@ -12,8 +12,8 @@ export default {
 
 <style scoped lang="scss">
 #common-main {
-  background: red;
-  height: 100px;
+  background: whitesmoke;
+  height: 100%;
   width: 100%;
 }
 </style>

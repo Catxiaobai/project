@@ -1,10 +1,10 @@
 <template>
-  <div id="item"></div>
+  <div id="generalRules">通用规则设置</div>
 </template>
 
 <script>
 export default {
-  name: 'Item.vue'
+  name: 'GeneralRules.vue'
 }
 </script>
 

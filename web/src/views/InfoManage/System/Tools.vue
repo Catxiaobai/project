@@ -1,10 +1,10 @@
 <template>
-  <div>功能场景导入</div>
+  <div id="tools">工具说明</div>
 </template>
 
 <script>
 export default {
-  name: 'FunctionModelImport.vue'
+  name: 'Tools.vue'
 }
 </script>
 

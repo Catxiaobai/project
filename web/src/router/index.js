@@ -19,10 +19,20 @@ const routes = [
     component: () => import('@/views/Main'),
     children: [
       {
-        path: '/featureListGeneration',
-        name: 'featureListGeneration',
-        component: () => import('@/views/Item/Sub_scene_modeling/FeatureListGeneration')
+        path: '/home',
+        name: 'home',
+        component: () => import('@/views/Home/Home')
+      },
+      {
+        path: '/infoManage/item',
+        name: 'item',
+        component: () => import('@/views/InfoManage/Item/Item')
       }
+      // {
+      //   path: '/featureListGeneration',
+      //   name: 'featureListGeneration',
+      //   component: () => import('@/views/Item/Sub_scene_modeling/FeatureListGeneration')
+      // }
     ]
   }
 ]

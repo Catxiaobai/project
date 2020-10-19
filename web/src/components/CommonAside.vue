@@ -4,7 +4,7 @@
       <el-menu id="menu">
         <el-menu-item id="noChildren" :index="item.path" v-for="item in noChildren" :key="item.path" @click="clickMenu(item)">
           <i :class="'el-icon-' + item.icon"></i>
-          <span slot="title">{{ item.label }}</span>
+          <span class="name" slot="title">{{ item.label }}</span>
         </el-menu-item>
         <el-submenu id="hasChildren" :index="item.path" v-for="item in hasChildren" :key="item.path" @click="clickMenu(item)">
           <template slot="title" id="title">
@@ -29,154 +29,23 @@ export default {
   name: 'CommonAside.vue',
   data() {
     return {
-      asideMenu: [
-        {
-          path: '/one',
-          name: 'one',
-          label: '子场景建模',
-          icon: 's-claim',
-          children: [
-            {
-              path: '/login',
-              name: 'login',
-              label: '功能模型导入'
-            },
-            {
-              path: '/login',
-              name: 'login',
-              label: '场景要素建模'
-            },
-            {
-              path: '/login',
-              name: 'login',
-              label: '要素列表生成'
-            }
-          ]
-        },
-        {
-          path: '/two',
-          name: 'two',
-          label: '综合场景建模',
-          icon: 's-claim',
-          children: [
-            {
-              path: '/login',
-              name: 'login',
-              label: '外部交联环境建模'
-            },
-            {
-              path: '/login',
-              name: 'login',
-              label: '功能处理建模'
-            },
-            {
-              path: '/login',
-              name: 'login',
-              label: '功能层次建模'
-            },
-            {
-              path: '/login',
-              name: 'login',
-              label: '状态迁移建模'
-            }
-          ]
-        },
-        {
-          path: '/three',
-          name: 'three',
-          label: '安全性分析',
-          icon: 's-claim',
-          children: [
-            {
-              path: '/login',
-              name: 'login',
-              label: '分析规则管理'
-            },
-            {
-              path: '/login',
-              name: 'login',
-              label: '分析实施'
-            },
-            {
-              path: '/login',
-              name: 'login',
-              label: '软件安全性需求提取'
-            }
-          ]
-        },
-        {
-          path: '/four',
-          name: 'four',
-          label: '安全性设计核查',
-          icon: 's-claim',
-          children: [
-            {
-              path: '/login',
-              name: 'login',
-              label: '设计准则管理'
-            },
-            {
-              path: '/login',
-              name: 'login',
-              label: '设计核查实施'
-            },
-            {
-              path: '/login',
-              name: 'login',
-              label: '设计完善措施'
-            }
-          ]
-        },
-        {
-          path: '/five',
-          name: 'five',
-          label: '安全性数据库',
-          icon: 's-claim',
-          children: [
-            {
-              path: '/login',
-              name: 'login',
-              label: '软件失效数据管理'
-            },
-            {
-              path: '/login',
-              name: 'login',
-              label: '系统危险数据管理'
-            },
-            {
-              path: '/login',
-              name: 'login',
-              label: '安全性分析规则管理'
-            },
-            {
-              path: '/login',
-              name: 'login',
-              label: '设计准则管理'
-            }
-          ]
-        },
-        {
-          path: '/six',
-          name: 'six',
-          label: '分析报告生成',
-          icon: 's-claim',
-          children: [
-            {
-              path: '/login',
-              name: 'login',
-              label: '报告生成'
-            }
-          ]
-        }
-      ]
+      asideMenu: []
     }
+  },
+  mounted() {
+    this.getMenu()
   },
   methods: {
     clickMenu(item) {
       if (this.$route.name !== item.name) {
         this.$router.push({ name: item.name })
       }
-      this.$store.commit('selectMenu', item)
+      // this.$store.commit('selectMenu', item)
+    },
+    getMenu() {
+      this.bus.$on('transferMenuData', msg => {
+        this.asideMenu = msg
+      })
     }
   },
   computed: {
@@ -194,7 +63,7 @@ export default {
 #common-aside {
   background: lightyellow;
   width: 100%;
-  height: 600px;
+  height: 634px;
   font-weight: bold;
   display: flex;
   #aside-content {
@@ -212,9 +81,9 @@ export default {
         #child {
           background: whitesmoke;
         }
-        .name {
-          font-size: 14px;
-        }
+      }
+      .name {
+        font-size: 14px;
       }
     }
   }
