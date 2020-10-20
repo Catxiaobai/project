@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/main'
+    redirect: '/login'
   },
   {
     path: '/login',
@@ -19,7 +19,7 @@ const routes = [
     component: () => import('@/views/Main'),
     children: [
       {
-        path: '/home',
+        path: '/main',
         name: 'home',
         component: () => import('@/views/Home/Home')
       },
@@ -27,12 +27,72 @@ const routes = [
         path: '/infoManage/item',
         name: 'item',
         component: () => import('@/views/InfoManage/Item/Item')
+      },
+      {
+        path: '/safetyAnalysis/analysisRules/generalRules',
+        name: 'generalRules',
+        component: () => import('@/views/SafetyAnalysis/AnalysisRules/GeneralRules')
+      },
+      {
+        path: '/safetyAnalysis/analysisRules/specialRules',
+        name: 'specialRules',
+        component: () => import('@/views/SafetyAnalysis/AnalysisRules/SpecialRules')
+      },
+      {
+        path: '/safetyAnalysis/implement/check',
+        name: 'check',
+        component: () => import('@/views/SafetyAnalysis/Implement/Check')
+      },
+      {
+        path: '/safetyAnalysis/implement/demandExtraction',
+        name: 'demandExtraction',
+        component: () => import('@/views/SafetyAnalysis/Implement/DemandExtraction')
+      },
+      {
+        path: '/safetyAnalysis/implement/failureAnalysis',
+        name: 'failureAnalysis',
+        component: () => import('@/views/SafetyAnalysis/Implement/FailureAnalysis')
+      },
+      {
+        path: '/safetyAnalysis/modeling/subScene',
+        name: 'subScene',
+        component: () => import('@/views/SafetyAnalysis/Modeling/SubScene')
+      },
+      {
+        path: '/safetyAnalysis/modeling/complexScene',
+        name: 'complexScene',
+        component: () => import('@/views/SafetyAnalysis/Modeling/ComplexScene')
+      },
+      {
+        path: '/safetyAnalysis/modeling/listGeneration',
+        name: 'listGeneration',
+        component: () => import('@/views/SafetyAnalysis/Modeling/ListGeneration')
+      },
+      {
+        path: '/safetyAnalysis/requirements/requirements',
+        name: 'requirements',
+        component: () => import('@/views/SafetyAnalysis/Requirements/Requirements')
+      },
+      {
+        path: '/safetyDesign/complete/complete',
+        name: 'complete',
+        component: () => import('@/views/SafetyDesign/Complete/Complete')
+      },
+      {
+        path: '/safetyDesign/criteria/generalCriteria',
+        name: 'generalCriteria',
+        component: () => import('@/views/SafetyDesign/Criteria/GeneralCriteria')
+      },
+      {
+        path: '/safetyDesign/criteria/specialCriteria',
+        name: 'specialCriteria',
+        component: () => import('@/views/SafetyDesign/Criteria/SpecialCriteria')
+      },
+      {
+        path: '/safetyDesign/verification/verification',
+        name: 'verification',
+        component: () => import('@/views/SafetyDesign/Verification/Verification')
       }
-      // {
-      //   path: '/featureListGeneration',
-      //   name: 'featureListGeneration',
-      //   component: () => import('@/views/Item/Sub_scene_modeling/FeatureListGeneration')
-      // }
     ]
   }
 ]

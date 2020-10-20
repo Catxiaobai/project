@@ -29,7 +29,37 @@ export default {
   name: 'CommonAside.vue',
   data() {
     return {
-      asideMenu: []
+      asideMenu: [
+        {
+          path: '/infoManage/system',
+          name: 'system',
+          label: '系统管理',
+          icon: 's-claim',
+          children: [
+            {
+              path: '/personnel',
+              name: 'personnel',
+              label: '人员管理'
+            },
+            {
+              path: '/authority',
+              name: 'authority',
+              label: '权限管理'
+            },
+            {
+              path: '/tools',
+              name: 'tools',
+              label: '工具说明'
+            }
+          ]
+        },
+        {
+          path: '/infoManage/item',
+          name: 'item',
+          label: '项目管理',
+          icon: 's-claim'
+        }
+      ]
     }
   },
   mounted() {

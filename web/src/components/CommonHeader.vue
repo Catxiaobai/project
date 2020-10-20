@@ -1,5 +1,5 @@
 <template>
-  <div id="common-header">
+  <div id="common-header" class="common-header">
     <div id="top">
       <div id="left-content">
         <div id="imgLogo">
@@ -17,13 +17,25 @@
       </div>
     </div>
     <div id="bottom">
-      <el-menu id="headMenu" mode="horizontal" @select="handleSelect" text-color="#fff" active-text-color="#ffd04b">
-        <el-menu-item index="0">软件安全性分析</el-menu-item>
-        <el-menu-item index="1">软件安全性设计</el-menu-item>
-        <el-menu-item index="2">平台信息管理</el-menu-item>
-        <el-menu-item index="3">安全性数据库管理</el-menu-item>
-        <!--        <el-menu-item index="4">项目管理</el-menu-item>-->
-      </el-menu>
+      <div id="mainMenu">
+        <el-menu id="headMenu" default-active="2" mode="horizontal" @select="handleSelect" text-color="#fff" active-text-color="#ffd04b">
+          <!--        <el-menu-item index="0">软件安全性分析</el-menu-item>-->
+          <!--        <el-menu-item index="1">软件安全性设计</el-menu-item>-->
+          <el-menu-item index="2">平台信息管理</el-menu-item>
+          <el-menu-item index="3">安全性数据库管理</el-menu-item>
+          <!--        <el-menu-item index="4">项目管理</el-menu-item>-->
+        </el-menu>
+      </div>
+      <div id="subMenu" v-show="divSubMenuVisible">
+        <div id="itemTitle" class="itemTitle">
+          <span>项目一</span>
+          <el-button icon="el-icon-close" circle @click="closeSubMenu"></el-button>
+        </div>
+        <div id="itemMenu" class="itemMenu">
+          <el-button @click="selectAnalysis">软件安全性分析</el-button>
+          <el-button @click="selectDesign">软件安全性设计</el-button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -36,132 +48,133 @@ export default {
       title: '基于使用场景的软件安全性分析与设计工具',
       imgLogo: require('@/assets/images/logo.png'),
       activeIndex: '1',
+      divSubMenuVisible: true,
       headMenu: [],
       menuList: [
         [
           {
-            path: '/one',
-            name: 'one',
+            path: '/safetyAnalysis/modeling',
+            name: 'modeling',
             label: '使用场景建模',
             icon: 's-claim',
             children: [
               {
-                path: '/login',
-                name: 'login',
+                path: '/subScene',
+                name: 'subScene',
                 label: '子使用场景建模'
               },
               {
-                path: '/login',
-                name: 'login',
+                path: '/complexScene',
+                name: 'complexScene',
                 label: '综合场景建模'
               },
               {
-                path: '/login',
-                name: 'login',
+                path: '/listGeneration',
+                name: 'listGeneration',
                 label: '模型列表生成'
               }
             ]
           },
           {
-            path: '/two',
-            name: 'two',
+            path: '/safetyAnalysis/analysisRules',
+            name: 'analysisRules',
             label: '分析规则设置',
             icon: 's-claim',
             children: [
               {
-                path: '/login',
-                name: 'login',
+                path: '/specialRules',
+                name: 'specialRules',
                 label: '项目分析规则设置'
               },
               {
-                path: '/login',
-                name: 'login',
+                path: '/generalRules',
+                name: 'generalRules',
                 label: '通用分析规则选择'
               }
             ]
           },
           {
-            path: '/three',
-            name: 'three',
+            path: '/safetyAnalysis/implement',
+            name: 'implement',
             label: '分析实施',
             icon: 's-claim',
             children: [
               {
-                path: '/login',
-                name: 'login',
+                path: '/check',
+                name: 'check',
                 label: '模型检验'
               },
               {
-                path: '/login',
-                name: 'login',
+                path: '/failureAnalysis',
+                name: 'failureAnalysis',
                 label: '失效分析'
               },
               {
-                path: '/login',
-                name: 'login',
+                path: '/demandExtraction',
+                name: 'demandExtraction',
                 label: '软件安全性需求提取'
               }
             ]
           },
           {
-            path: '/four',
-            name: 'four',
+            path: '/safetyAnalysis/requirements',
+            name: 'requirements',
             label: '软件安全性需求管理',
             icon: 's-claim'
           }
         ],
         [
           {
-            path: '/three',
-            name: 'three',
+            path: '/safetyDesign/criteria',
+            name: 'criteria',
             label: '设计准则设置',
             icon: 's-claim',
             children: [
               {
-                path: '/login',
-                name: 'login',
+                path: '/generalCriteria',
+                name: 'generalCriteria',
                 label: '通用设计准则选择'
               },
               {
-                path: '/login',
-                name: 'login',
+                path: '/specialCriteria',
+                name: 'specialCriteria',
                 label: '专用设计准则设置'
               }
             ]
           },
           {
-            path: '/four',
-            name: 'four',
+            path: '/safetyDesign/verification',
+            name: 'verification',
             label: '核查实施',
             icon: 's-claim'
           },
           {
-            path: '/four',
-            name: 'four',
+            path: '/safetyDesign/complete',
+            name: 'complete',
             label: '设计完善',
             icon: 's-claim'
           }
         ],
         [
           {
-            path: '/five',
-            name: 'five',
+            path: '/infoManage/system',
+            name: 'system',
             label: '系统管理',
             icon: 's-claim',
             children: [
               {
-                path: '/login',
-                name: 'login',
+                path: '/personnel',
+                name: 'personnel',
                 label: '人员管理'
               },
               {
-                path: '/login',
-                name: 'login',
+                path: '/authority',
+                name: 'authority',
                 label: '权限管理'
               },
               {
-                path: '/login',
-                name: 'login',
+                path: '/tools',
+                name: 'tools',
                 label: '工具说明'
               }
             ]
@@ -175,14 +188,14 @@ export default {
         ],
         [
           {
-            path: '/six',
-            name: 'six',
+            path: '/database/analysisBase',
+            name: 'analysisBase',
             label: '分析规则库',
             icon: 's-claim'
           },
           {
-            path: '/six',
-            name: 'six',
+            path: '/database/designBase',
+            name: 'designBase',
             label: '设计规则库',
             icon: 's-claim'
           }
@@ -196,8 +209,17 @@ export default {
       console.log(this.menuList[key])
       this.bus.$emit('transferMenuData', this.menuList[key])
     },
+    selectAnalysis() {
+      this.bus.$emit('transferMenuData', this.menuList[0])
+    },
+    selectDesign() {
+      this.bus.$emit('transferMenuData', this.menuList[1])
+    },
+    closeSubMenu() {
+      this.divSubMenuVisible = false
+    },
     gotoHome() {
-      this.$router.replace('/home')
+      this.$router.replace('/main')
     },
     gotoLogin() {
       // window.location.href = '/'
@@ -243,10 +265,48 @@ export default {
   }
   #bottom {
     height: 100%;
-    background: skyblue;
-    #headMenu {
-      background-color: #545c64;
+    width: 100%;
+    background: #545c64;
+    display: flex;
+    #mainMenu {
+      #headMenu {
+        background-color: #545c64;
+      }
     }
+    #subMenu {
+      width: 400px;
+      height: 100%;
+      background: greenyellow;
+      #itemTitle {
+        height: 40%;
+        margin-top: 5.5px;
+        margin-left: 45%;
+        //text-align: center;
+        //background: greenyellow;
+      }
+      #itemMenu {
+        height: 50%;
+        margin-top: 0;
+        background: yellow;
+      }
+    }
+  }
+}
+</style>
+<style lang="scss">
+.itemMenu {
+  .el-button {
+    height: 30px;
+    width: 50%;
+    margin: 0;
+  }
+}
+.itemTitle {
+  .el-button {
+    //height: 10px;
+    //border: 0;
+    padding: 0;
+    margin: 0 0 0 60%;
   }
 }
 </style>
