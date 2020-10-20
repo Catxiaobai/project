@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import http from '@/api/config'
 import store from './store'
 
 // 全局配置
@@ -12,6 +13,7 @@ import ElementUI from 'element-ui'
 
 Vue.use(ElementUI)
 Vue.prototype.bus = new Vue()
+Vue.prototype.$http = http
 
 Vue.config.productionTip = false
 new Vue({

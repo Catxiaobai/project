@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'entity.apps.EntityConfig',
+    'newfirst'
 ]
 
 MIDDLEWARE = [

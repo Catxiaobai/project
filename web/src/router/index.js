@@ -92,6 +92,31 @@ const routes = [
         path: '/safetyDesign/verification/verification',
         name: 'verification',
         component: () => import('@/views/SafetyDesign/Verification/Verification')
+      },
+      {
+        path: '/infoManage/system/authority',
+        name: 'authority',
+        component: () => import('@/views/InfoManage/System/Authority')
+      },
+      {
+        path: '/infoManage/system/personnel',
+        name: 'personnel',
+        component: () => import('@/views/InfoManage/System/Personnel')
+      },
+      {
+        path: '/infoManage/system/tools',
+        name: 'tools',
+        component: () => import('@/views/InfoManage/System/Tools')
+      },
+      {
+        path: '/database/analysisBase/analysisBase',
+        name: 'analysisBase',
+        component: () => import('@/views/Database/AnalysisBase/AnalysisBase')
+      },
+      {
+        path: '/database/designBase/designBase',
+        name: 'designBase',
+        component: () => import('@/views/Database/DesignBase/DesignBase')
       }
     ]
   }

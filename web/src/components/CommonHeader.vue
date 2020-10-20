@@ -18,24 +18,34 @@
     </div>
     <div id="bottom">
       <div id="mainMenu">
-        <el-menu id="headMenu" default-active="2" mode="horizontal" @select="handleSelect" text-color="#fff" active-text-color="#ffd04b">
-          <!--        <el-menu-item index="0">软件安全性分析</el-menu-item>-->
-          <!--        <el-menu-item index="1">软件安全性设计</el-menu-item>-->
-          <el-menu-item index="2">平台信息管理</el-menu-item>
-          <el-menu-item index="3">安全性数据库管理</el-menu-item>
+        <el-menu id="el-menu" default-active="2" mode="horizontal" @select="handleSelect" text-color="#fff" active-text-color="#ffd04b">
+          <div id="headMenu">
+            <el-menu-item index="2">平台信息管理</el-menu-item>
+            <el-menu-item index="3">安全性数据库管理</el-menu-item>
+          </div>
+          <div id="itemMenu" class="itemMenu" v-show="divSubMenuVisible">
+            <span style="text-align: center;margin-top: 15px;font-family: 华文行楷;font-size: 24px;width: 100px">
+              {{ itemInfo.item_name }}
+            </span>
+            <el-menu-item index="0">软件安全性分析</el-menu-item>
+            <el-menu-item index="1">软件安全性设计</el-menu-item>
+            <el-button icon="el-icon-close" circle @click="closeSubMenu"></el-button>
+          </div>
           <!--        <el-menu-item index="4">项目管理</el-menu-item>-->
         </el-menu>
       </div>
-      <div id="subMenu" v-show="divSubMenuVisible">
-        <div id="itemTitle" class="itemTitle">
-          <span>项目一</span>
-          <el-button icon="el-icon-close" circle @click="closeSubMenu"></el-button>
-        </div>
-        <div id="itemMenu" class="itemMenu">
-          <el-button @click="selectAnalysis">软件安全性分析</el-button>
-          <el-button @click="selectDesign">软件安全性设计</el-button>
-        </div>
-      </div>
+      <!--      <div id="subMenu" v-show="divSubMenuVisible">-->
+      <!--        <div id="itemTitle" class="itemTitle">-->
+      <!--          <span>{{ itemInfo.item_name }}</span>-->
+      <!--          <el-button icon="el-icon-close" circle @click="closeSubMenu"></el-button>-->
+      <!--        </div>-->
+      <!--        <div id="itemMenu" class="itemMenu">-->
+      <!--          <el-button @click="selectAnalysis">软件安全性分析</el-button>-->
+      <!--          <el-button @click="selectDesign">软件安全性设计</el-button>-->
+      <!--          &lt;!&ndash;            <el-menu-item index="0">软件安全性分析</el-menu-item>&ndash;&gt;-->
+      <!--          &lt;!&ndash;            <el-menu-item index="1">软件安全性设计</el-menu-item>&ndash;&gt;-->
+      <!--        </div>-->
+      <!--      </div>-->
     </div>
   </div>
 </template>
@@ -47,8 +57,15 @@ export default {
     return {
       title: '基于使用场景的软件安全性分析与设计工具',
       imgLogo: require('@/assets/images/logo.png'),
-      activeIndex: '1',
-      divSubMenuVisible: true,
+      activeIndex: '2',
+      divSubMenuVisible: false,
+      itemInfo: {
+        item_content: '',
+        item_date: null,
+        item_id: 0,
+        item_introduction: '',
+        item_name: ''
+      },
       headMenu: [],
       menuList: [
         [
@@ -196,12 +213,16 @@ export default {
           {
             path: '/database/designBase',
             name: 'designBase',
-            label: '设计规则库',
+            label: '设计准则库',
             icon: 's-claim'
           }
         ]
       ]
     }
+  },
+  mounted() {
+    this.getItemInfo()
+    this.activeIndex = this.$route.path
   },
   methods: {
     handleSelect(key, keyPath) {
@@ -217,6 +238,7 @@ export default {
     },
     closeSubMenu() {
       this.divSubMenuVisible = false
+      this.bus.$emit('transferMenuData', this.menuList[2])
     },
     gotoHome() {
       this.$router.replace('/main')
@@ -224,6 +246,15 @@ export default {
     gotoLogin() {
       // window.location.href = '/'
       this.$router.replace('/login')
+    },
+    getItemInfo() {
+      this.bus.$on('itemInfo', msg => {
+        this.itemInfo = msg
+        console.log(this.itemInfo)
+        this.divSubMenuVisible = true
+      })
+
+      // this.divSubMenuVisible = true
     }
   }
 }
@@ -265,40 +296,65 @@ export default {
   }
   #bottom {
     height: 100%;
-    width: 100%;
+    //width: 100%;
     background: #545c64;
     display: flex;
     #mainMenu {
-      #headMenu {
-        background-color: #545c64;
-      }
-    }
-    #subMenu {
-      width: 400px;
       height: 100%;
-      background: greenyellow;
-      #itemTitle {
-        height: 40%;
-        margin-top: 5.5px;
-        margin-left: 45%;
-        //text-align: center;
-        //background: greenyellow;
-      }
-      #itemMenu {
-        height: 50%;
-        margin-top: 0;
-        background: yellow;
+      //width: 60%;
+      #el-menu {
+        display: flex;
+        height: 100%;
+        width: 100%;
       }
     }
+    //#subMenu {
+    //  width: 400px;
+    //  height: 100%;
+    //  //background: greenyellow;
+    //  #itemTitle {
+    //    height: 40%;
+    //    margin-top: 5.5px;
+    //    margin-left: 45%;
+    //    //text-align: center;
+    //    background: greenyellow;
+    //  }
+    //  #itemMenu {
+    //    height: 50%;
+    //    margin-top: 0;
+    //    background: yellow;
+    //  }
+    //}
   }
+}
+
+#itemMenu {
+  //background: white;
+  //background: #545c64;
+  display: flex;
+  //height: 80%;
+}
+#headMenu {
+  //background: gold;
+  background: #545c64;
+  display: flex;
 }
 </style>
 <style lang="scss">
 .itemMenu {
+  .el-menu-item {
+    height: 95%;
+    //margin-top: 10px;
+    background: #545c64;
+    //display: flex;
+  }
   .el-button {
-    height: 30px;
-    width: 50%;
-    margin: 0;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin-top: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
   }
 }
 .itemTitle {
