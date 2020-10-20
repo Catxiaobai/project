@@ -75,15 +75,59 @@ export default {
             label: '使用场景建模',
             icon: 's-claim',
             children: [
+              // {
+              //   path: '/subScene',
+              //   name: 'subScene',
+              //   label: '子使用场景建模',
+              //   children: [
+              //     {
+              //       path: '/subSceneInfo',
+              //       name: 'subSceneInfo',
+              //       label: '子使用场景描述'
+              //     },
+              //     {
+              //       path: '/subSceneModel',
+              //       name: 'subSceneModel',
+              //       label: '子使用场景建模'
+              //     }
+              //   ]
+              // },
               {
-                path: '/subScene',
-                name: 'subScene',
-                label: '子使用场景建模'
+                path: '/subSceneInfo',
+                name: 'subSceneInfo',
+                label: '子使用场景描述'
               },
               {
-                path: '/complexScene',
-                name: 'complexScene',
-                label: '综合场景建模'
+                path: '/subSceneModel',
+                name: 'subSceneModel',
+                label: '子使用场景建模'
+              },
+              // {
+              //   path: '/complexScene',
+              //   name: 'complexScene',
+              //   label: '综合场景建模',
+              //   children: [
+              //     {
+              //       path: '/complexSceneInfo',
+              //       name: 'complexSceneInfo',
+              //       label: '综合使用场景描述'
+              //     },
+              //     {
+              //       path: '/complexSceneModel',
+              //       name: 'complexSceneModel',
+              //       label: '综合使用场景建模'
+              //     }
+              //   ]
+              // },
+              {
+                path: '/complexSceneInfo',
+                name: 'complexSceneInfo',
+                label: '综合使用场景描述'
+              },
+              {
+                path: '/complexSceneModel',
+                name: 'complexSceneModel',
+                label: '综合使用场景建模'
               },
               {
                 path: '/listGeneration',

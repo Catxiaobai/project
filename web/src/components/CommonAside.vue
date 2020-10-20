@@ -6,6 +6,20 @@
           <i :class="'el-icon-' + item.icon"></i>
           <span class="name" slot="title">{{ item.label }}</span>
         </el-menu-item>
+        <!--        <el-submenu id="noGrandChildren" :index="item.path" v-for="item in noGrandchildren" :key="item.path" @click="clickMenu(item)">-->
+        <!--          <template slot="title" id="title">-->
+        <!--            <i :class="'el-icon-' + item.icon"></i>-->
+        <!--            <span class="name">{{ item.label }}</span>-->
+        <!--          </template>-->
+        <!--          <el-menu-item-group id="child">-->
+        <!--            <el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.path" @click="clickMenu(subItem)">-->
+        <!--              <template slot="title">-->
+        <!--                <i :class="'el-icon-caret-right'"></i>-->
+        <!--                <span class="name">{{ subItem.label }}</span>-->
+        <!--              </template>-->
+        <!--            </el-menu-item>-->
+        <!--          </el-menu-item-group>-->
+        <!--        </el-submenu>-->
         <el-submenu id="hasChildren" :index="item.path" v-for="item in hasChildren" :key="item.path" @click="clickMenu(item)">
           <template slot="title" id="title">
             <i :class="'el-icon-' + item.icon"></i>
@@ -13,8 +27,10 @@
           </template>
           <el-menu-item-group id="child">
             <el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.path" @click="clickMenu(subItem)">
-              <i :class="'el-icon-caret-right'"></i>
-              <span class="name">{{ subItem.label }}</span>
+              <template slot="title">
+                <i :class="'el-icon-caret-right'"></i>
+                <span class="name">{{ subItem.label }}</span>
+              </template>
             </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
@@ -83,7 +99,21 @@ export default {
       return this.asideMenu.filter(item => !item.children)
     },
     hasChildren() {
+      console.log(
+        'hasChildren',
+        this.asideMenu.filter(item => item.children)
+      )
       return this.asideMenu.filter(item => item.children)
+    },
+    noGrandchildren() {
+      console.log(
+        'noGrandchildren',
+        this.asideMenu.filter(item => item.children).filter(item => item.children.children)
+      )
+      return this.asideMenu.filter(item => item.children).filter(item => !item.children.children)
+    },
+    hasGrandchildren() {
+      return this.asideMenu.filter(item => item.children.children)
     }
   }
 }

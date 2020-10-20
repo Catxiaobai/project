@@ -117,6 +117,26 @@ const routes = [
         path: '/database/designBase/designBase',
         name: 'designBase',
         component: () => import('@/views/Database/DesignBase/DesignBase')
+      },
+      {
+        path: '/subSceneInfo',
+        name: 'subSceneInfo',
+        component: () => import('@/views/SafetyAnalysis/Modeling/SubScene/SubSceneInfo')
+      },
+      {
+        path: '/subSceneModel',
+        name: 'subSceneModel',
+        component: () => import('@/views/SafetyAnalysis/Modeling/SubScene/SubSceneModel')
+      },
+      {
+        path: '/complexSceneInfo',
+        name: 'complexSceneInfo',
+        component: () => import('@/views/SafetyAnalysis/Modeling/ComplexScene/ComplexSceneInfo')
+      },
+      {
+        path: '/complexSceneModel',
+        name: 'complexSceneModel',
+        component: () => import('@/views/SafetyAnalysis/Modeling/ComplexScene/ComplexSceneModel')
       }
     ]
   }

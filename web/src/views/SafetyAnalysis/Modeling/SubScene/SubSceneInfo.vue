@@ -17,9 +17,11 @@
     <!--    标题-->
     <!--    <span>项目名称</span>-->
     <el-card class="tableTitle">
-      <span style="font-size: 20px">当前项目共有{{ total }}条使用场景</span>
-      <el-input v-model="search" placeholder="输入关键字搜索" style="margin-left: 30px; width: 300px" @input="pageList" />
-      <el-button size="20px" type="success" style="margin-left: 480px" @click="handleAdd" icon="el-icon-plus">添加新场景</el-button>
+      <span style="font-size: large;margin-left: 10px;margin-right: 10px">选择模型类型</span>
+      <el-select v-model="value" placeholder="请选择">
+        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+      </el-select>
+      <el-button size="20px" type="success" style="margin-left: 580px" @click="handleAdd" icon="el-icon-plus">添加新场景</el-button>
       <!--    </el-card>-->
       <!--    &lt;!&ndash;    表格内容&ndash;&gt;-->
       <!--    <el-card class="traceTable" style="margin-top: 20px">-->
@@ -34,18 +36,7 @@
             <span style="margin-left: 10px">{{ scope.row.trace_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          label="类型"
-          width="180px"
-          align="center"
-          :filters="[
-            { text: '状态机', value: '状态机' },
-            { text: '时序图', value: '时序图' },
-            { text: '用例图', value: '用例图' },
-            { text: '活动图', value: '活动图' }
-          ]"
-          :filter-method="filterTag"
-        >
+        <el-table-column label="类型" width="180px" align="center">
           <template>
             <span style="margin-left: 10px">状态机</span>
           </template>
@@ -169,7 +160,26 @@ export default {
         content: [{ required: true, message: '不能为空', trigger: 'blur' }],
         details: [{ required: true, message: '不能为空', trigger: 'blur' }],
         describe: [{ required: true, message: '不能为空', trigger: 'blur' }]
-      }
+      },
+      options: [
+        {
+          value: '状态机',
+          label: '状态机'
+        },
+        {
+          value: '时序图',
+          label: '时序图'
+        },
+        {
+          value: '用例图',
+          label: '用例图'
+        },
+        {
+          value: '活动图',
+          label: '活动图'
+        }
+      ],
+      value: '状态机'
     }
   },
   created() {
