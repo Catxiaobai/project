@@ -14,12 +14,32 @@
             <span style="margin-left: 10px">{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="名称" width="180px" align="center">
+        <!--        <el-table-column label="名称" width="180px" align="center">-->
+        <!--          <template slot-scope="scope">-->
+        <!--            <span style="margin-left: 10px">{{ scope.row.name }}</span>-->
+        <!--          </template>-->
+        <!--        </el-table-column>-->
+        <el-table-column
+          label="类别"
+          width="180"
+          :filters="[
+            { text: '外部接口', value: '外部接口' },
+            { text: '功能处理', value: '功能处理' },
+            { text: '功能层次', value: '功能层次' },
+            { text: '状态迁移', value: '状态迁移' },
+            { text: '其他', value: '其他' }
+          ]"
+          :filter-method="filterTag"
+          filter-placement="bottom-end"
+        >
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.name }}</span>
+            <span style="margin-left: 10px">{{ scope.row.type }}</span>
           </template>
+          <!--          <template slot-scope="scope">-->
+          <!--            <el-tag :type="scope.row.type === '属性一' ? 'primary' : 'success'" disable-transitions>{{ scope.row.type }}</el-tag>-->
+          <!--          </template>-->
         </el-table-column>
-        <el-table-column label="项目介绍" align="center">
+        <el-table-column label="规则描述" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.content }}</span>
           </template>
@@ -40,31 +60,12 @@
         <!--          :filter-method="filterHandler"-->
         <!--        >-->
         <!--        </el-table-column>-->
-        <el-table-column
-          label="类型"
-          width="180"
-          :filters="[
-            { text: '外部接口', value: '外部接口' },
-            { text: '功能处理', value: '功能处理' },
-            { text: '功能层次', value: '功能层次' },
-            { text: '状态迁移', value: '状态迁移' },
-            { text: '其他', value: '其他' }
-          ]"
-          :filter-method="filterTag"
-          filter-placement="bottom-end"
-        >
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.type }}</span>
-          </template>
-          <!--          <template slot-scope="scope">-->
-          <!--            <el-tag :type="scope.row.type === '属性一' ? 'primary' : 'success'" disable-transitions>{{ scope.row.type }}</el-tag>-->
-          <!--          </template>-->
-        </el-table-column>
+
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <!--            <el-button size="mini" type="success" @click="handleOpen(scope.$index, scope.row)">打开</el-button>-->
-            <el-button size="mini" type="info" @click="handleShow(scope.$index, scope.row)">查看</el-button>
-            <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <!--            <el-button size="mini" type="info" @click="handleShow(scope.$index, scope.row)">查看</el-button>-->
+            <el-button size="mini" type="success" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>

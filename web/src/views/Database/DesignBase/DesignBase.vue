@@ -14,18 +14,8 @@
             <span style="margin-left: 10px">{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="名称" width="180px" align="center">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.name }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="项目介绍" align="center">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.content }}</span>
-          </template>
-        </el-table-column>
         <el-table-column
-          label="分组"
+          label="要素"
           width="180"
           :filters="[
             { text: '接口相关', value: '接口相关' },
@@ -43,16 +33,26 @@
           <!--            <el-tag :type="scope.row.type === '属性一' ? 'primary' : 'success'" disable-transitions>{{ scope.row.type }}</el-tag>-->
           <!--          </template>-->
         </el-table-column>
-        <el-table-column label="类型" width="180">
+        <el-table-column label="类别" width="180">
           <template slot-scope="scope">
             <el-tag :type="scope.row.type === '硬件相关' ? 'primary' : 'success'" disable-transitions>{{ scope.row.type }}</el-tag>
+          </template>
+        </el-table-column>
+        <!--        <el-table-column label="名称" width="180px" align="center">-->
+        <!--          <template slot-scope="scope">-->
+        <!--            <span style="margin-left: 10px">{{ scope.row.name }}</span>-->
+        <!--          </template>-->
+        <!--        </el-table-column>-->
+        <el-table-column label="准则描述" align="center">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.content }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <!--            <el-button size="mini" type="success" @click="handleOpen(scope.$index, scope.row)">打开</el-button>-->
-            <el-button size="mini" type="info" @click="handleShow(scope.$index, scope.row)">查看</el-button>
-            <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <!--            <el-button size="mini" type="info" @click="handleShow(scope.$index, scope.row)">查看</el-button>-->
+            <el-button size="mini" type="success" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -81,64 +81,7 @@ export default {
       total: 0, //项目总数
       page: 1, //第几页
       search: '', //搜索框
-      tableData: [
-        {
-          id: '1',
-          name: '设计准则一',
-          content: '不知道是什么东西',
-          group: '接口相关',
-          type: '与硬件相关'
-        },
-        {
-          id: '2',
-          name: '设计准则二',
-          content: '不知道是什么东西',
-          group: '接口相关',
-          type: '软件模型间接口'
-        },
-        {
-          id: '3',
-          name: '设计准则三',
-          content: '不知道是什么东西',
-          group: '接口相关',
-          type: '软件模型间接口'
-        },
-        {
-          id: '2',
-          name: '设计准则二',
-          content: '不知道是什么东西',
-          group: '功能处理',
-          type: '软件模型间接口'
-        },
-        {
-          id: '3',
-          name: '设计准则三',
-          content: '不知道是什么东西',
-          group: '功能划分',
-          type: '属性二'
-        },
-        {
-          id: '4',
-          name: '设计准则四',
-          content: '不知道是什么东西',
-          group: '状态迁移',
-          type: '属性一'
-        },
-        {
-          id: '5',
-          name: '设计准则五',
-          content: '不知道是什么东西',
-          group: '其他',
-          type: '属性一'
-        },
-        {
-          id: '6',
-          name: '设计准则六',
-          content: '不知道是什么东西',
-          group: '其他',
-          type: '属性二'
-        }
-      ]
+      tableData: []
     }
   },
   created() {

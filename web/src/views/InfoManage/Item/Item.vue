@@ -75,7 +75,7 @@ export default {
       this.$http
         .get('http://127.0.0.1:8000/api/item_list')
         .then(response => {
-          console.log(response.data.item_list)
+          // console.log(response.data.item_list)
           this.data = response.data.item_list
           this.getList()
         })
