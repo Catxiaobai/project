@@ -4,12 +4,12 @@
       <div class="divForm">
         <span>选择规则</span>
         <el-button style="margin-left: 50px" type="primary" v-show="buttonShow" @click="handleReset">确定</el-button>
-        <el-radio-group v-model="radio" v-show="buttonShow" style="margin-left: 20px">
-          <el-radio :label="1">状态机</el-radio>
-          <el-radio :label="2">时序图</el-radio>
-          <el-radio :label="3">用例图</el-radio>
-          <el-radio :label="4">活动图</el-radio>
-        </el-radio-group>
+        <el-checkbox-group v-model="radio" v-show="buttonShow" style="margin-left: 250px;margin-top: -25px">
+          <el-checkbox :label="1">状态机</el-checkbox>
+          <el-checkbox :label="2">时序图</el-checkbox>
+          <el-checkbox :label="3">用例图</el-checkbox>
+          <el-checkbox :label="4">活动图</el-checkbox>
+        </el-checkbox-group>
         <el-table
           ref="multipleTable"
           :data="tableData"
@@ -91,7 +91,7 @@ export default {
       search: '', //搜索框
       tableData: [],
       buttonShow: false,
-      radio: '3'
+      radio: []
     }
   },
   created() {

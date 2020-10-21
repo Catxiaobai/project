@@ -18,7 +18,7 @@
     <!--    <span>项目名称</span>-->
     <el-card class="tableTitle">
       <span style="font-size: large;margin-left: 10px;margin-right: 10px">选择模型类型</span>
-      <el-select v-model="value" placeholder="请选择">
+      <el-select v-model="value" placeholder="请选择" @change="onChange">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
       </el-select>
       <el-button size="20px" type="success" style="margin-left: 580px" @click="handleAdd" icon="el-icon-plus">添加新场景</el-button>
@@ -193,6 +193,7 @@ export default {
         .then(response => {
           // console.log(response.data.trace_list)
           this.data = response.data.trace_list
+          this.data2 = response.data.trace_list
           this.getList()
         })
         .catch(function(error) {
@@ -320,6 +321,15 @@ export default {
     },
     filterTag(value, row) {
       return row.type === value
+    },
+    onChange(value) {
+      console.log(value)
+      if (value != '状态机') {
+        this.data = []
+      } else {
+        this.data = this.data2
+      }
+      this.getList()
     }
   },
   mounted() {

@@ -36,11 +36,12 @@
       <!--      <el-button type="primary" @click="save">save</el-button>-->
       <!--      <el-button type="primary" @click="load">load</el-button>-->
       <span style="font-size: large;margin-left: 10px;margin-right: 10px">选择模型类型</span>
-      <el-select v-model="value" placeholder="请选择">
+      <el-select v-model="value" placeholder="请选择" @change="onChange">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
       </el-select>
       <el-button type="primary" style="margin-left: 60%" @click="reduction">模型还原</el-button>
-      <div id="myDiagramDiv" style="background-color: whitesmoke; border: solid 1px black; width: 100%; height: 520px;margin-top: 20px"></div>
+      <div v-show="test2" style="background-color: whitesmoke; border: solid 1px black; width: 100%; height: 520px;margin-top: 20px"></div>
+      <div id="myDiagramDiv" v-show="test1" style="background-color: whitesmoke; border: solid 1px black; width: 100%; height: 520px;margin-top: 20px"></div>
       <textarea id="myTransaction" style="width:100%;height:200px" v-show="false"></textarea>
       <textarea id="mytest" v-model="msg" v-show="false" />
       <!--      <input id="mytest" value="test" @change="postData('test')" />-->
@@ -89,7 +90,9 @@ export default {
           label: '活动图'
         }
       ],
-      value: '状态机'
+      value: '状态机',
+      test1: true,
+      test2: false
     }
   },
   mounted() {
@@ -137,22 +140,6 @@ export default {
           console.log(error)
         })
     },
-    // postData(data) {
-    //   this.$http
-    //     .post('http://127.0.0.1:8000/api/verify_action', { add: data })
-    //     .then(response => {
-    //       console.log(response.data)
-    //       if (response.data.error_code === 0) {
-    //         this.$message({
-    //           type: 'success',
-    //           message: response.data.result
-    //         })
-    //       }
-    //     })
-    //     .catch(function(error) {
-    //       console.log(error)
-    //     })
-    // },
     init() {
       var element = document.getElementById('mytest')
       var $ = go.GraphObject.make
@@ -447,6 +434,16 @@ export default {
         .catch(function(error) {
           console.log(error)
         })
+    },
+    onChange(value) {
+      console.log(value)
+      if (value != '状态机') {
+        this.test2 = true
+        this.test1 = false
+      } else {
+        this.test2 = false
+        this.test1 = true
+      }
     }
   },
   created() {

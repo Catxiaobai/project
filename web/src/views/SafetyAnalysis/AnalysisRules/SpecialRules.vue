@@ -49,8 +49,8 @@
           </el-table-column>
           <el-table-column label="所属通用规则" width="180">
             <template slot-scope="scope">
-              <span style="margin-left: 10px" v-show="!test1">{{ scope.row.aas }}</span>
-              <el-select v-model="scope.row.ass" placeholder="请选择" v-show="test1">
+              <span style="margin-left: 10px" v-show="!test1">{{ scope.row.name }}</span>
+              <el-select v-model="scope.row.name" placeholder="请选择" v-show="test1">
                 <el-option v-for="item in options3" :key="item.value" :label="item.label" :value="item.value"> </el-option>
               </el-select>
             </template>
@@ -104,7 +104,15 @@ export default {
       total: 0, //项目总数
       page: 1, //第几页
       search: '', //搜索框
-      tableData: [],
+      tableData: [
+        {
+          id: 0,
+          name: '通用规则1',
+          content: '这是规则描述',
+          group: '状态机',
+          type: '外部接口'
+        }
+      ],
       buttonShow: false,
       options: [
         {
