@@ -109,15 +109,7 @@ export default {
   name: 'AnalysisBase.vue',
   data() {
     return {
-      tableData: [
-        {
-          id: 1,
-          name: '这是名称',
-          type: '这是类型',
-          describe: '这是描述',
-          remark: '这是备注'
-        }
-      ],
+      tableData: [],
       filterData: [
         { text: '外部接口', value: '外部接口' },
         { text: '功能处理', value: '功能处理' },
@@ -194,7 +186,7 @@ export default {
       this.$http
         .get('http://127.0.0.1:8000/api/analysis_rule_list')
         .then(response => {
-          // console.log(response.data.item_list)
+          // console.log(response.data.analysis_list)
           this.data = response.data.analysis_list
           this.getList()
         })

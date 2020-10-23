@@ -28,4 +28,11 @@ urlpatterns = [
     path('add_design_criteria', views.add_design_criteria, name='add_design_criteria'),  # 添加设计准则
     path('edit_design_criteria', views.edit_design_criteria, name='edit_design_criteria'),  # 编辑设计准则
     path('delete_design_criteria', views.delete_design_criteria, name='delete_design_criteria'),  # 删除设计准则
+    path('add_item', views.add_item, name='add_item'),  # 添加项目
+    path('edit_item', views.edit_item, name='edit_item'),  # 编辑项目
+    path('delete_item', views.delete_item, name='delete_item'),  # 删除项目
+    path('scenes_list', views.scenes_list, name='scenes_list'),  # 场景列表
+    path('add_scenes', views.add_scenes, name='add_scenes'),  # 添加场景
+    path('edit_scenes', views.edit_scenes, name='edit_scenes'),  # 编辑场景
+    path('delete_scenes', views.delete_scenes, name='delete_scenes'),  # 删除场景
 ]

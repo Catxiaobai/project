@@ -29,8 +29,8 @@ class Item(models.Model):
     item_name = models.TextField(default='', unique=True)
     item_content = models.TextField(default='')
     item_introduction = models.TextField(default='')
-    item_date = models.DateTimeField(default='')
-    item_leader = models.ForeignKey(Personnel, on_delete=models.CASCADE)
+    # item_date = models.DateTimeField(default='')
+    # item_leader = models.ForeignKey(Personnel, on_delete=models.CASCADE)
 
     def to_dict(self):
         return {
@@ -38,7 +38,7 @@ class Item(models.Model):
             'item_name': self.item_name,
             'item_content': self.item_content,
             'item_introduction': self.item_introduction,
-            'item_date': self.item_date,
+            # 'item_date': self.item_date,
             # 'item_leader': self.item_leader,
         }
 
@@ -74,4 +74,23 @@ class AnalysisRules(models.Model):
             'describe': self.describe,
             'remark': self.remark,
             'type': self.type,
+        }
+
+
+# 分析规则
+class Scenes(models.Model):
+    element = models.TextField(default='')
+    content = models.TextField(default='')
+    type = models.TextField(default='')
+    name = models.TextField(default='', unique=True)
+    describe = models.TextField(default='')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'element': self.element,
+            'type': self.type,
+            'describe': self.describe,
+            'content': self.content,
         }

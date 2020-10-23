@@ -33,7 +33,7 @@ export default {
 <style scoped>
 #el-header {
   padding: 0;
-  height: 120px !important;
+  height: 117px !important;
 }
 #el-aside {
   width: 260px !important;

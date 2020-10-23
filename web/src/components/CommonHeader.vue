@@ -46,6 +46,13 @@
       <!--          &lt;!&ndash;            <el-menu-item index="1">软件安全性设计</el-menu-item>&ndash;&gt;-->
       <!--        </div>-->
       <!--      </div>-->
+      <!--      <div id="tab" style="height: 100%">-->
+      <!--        <div class="leftCube" id="qwqwq"></div>-->
+      <!--        <div class="cube"></div>-->
+      <!--        <div class="rightCube"></div>-->
+      <!--        <el-button @click="test">add</el-button>-->
+      <!--        <el-button @click="del">del</el-button>-->
+      <!--      </div>-->
     </div>
   </div>
 </template>
@@ -284,6 +291,19 @@ export default {
       this.divSubMenuVisible = false
       this.bus.$emit('transferMenuData', this.menuList[2])
     },
+    // test() {
+    //   var rightCube = document.getElementsByClassName('rightCube')
+    //   var tab = document.getElementById('tab')
+    //   var newDiv = document.createElement('div')
+    //   rightCube[0].className = 'cube'
+    //   newDiv.className = 'rightCube'
+    //   tab.append(newDiv)
+    // },
+    // del() {
+    //   var rightCube = document.getElementsByClassName('rightCube')
+    //   var tab = document.getElementById('tab')
+    //   tab.removeChild(rightCube[0])
+    // },
     gotoHome() {
       this.$router.replace('/main')
     },
@@ -308,7 +328,7 @@ export default {
 #common-header {
   background: #f5f9f9;
   width: 100%;
-  height: 96px;
+  height: 100px;
   display: flex;
   flex-direction: column;
   #top {
@@ -339,6 +359,11 @@ export default {
     }
   }
   #bottom {
+    background: #b4d2ea;
+    #tab {
+      display: flex;
+    }
+
     height: 100%;
     //width: 100%;
     background: #545c64;
@@ -408,5 +433,43 @@ export default {
     padding: 0;
     margin: 0 0 0 60%;
   }
+}
+.leftCube {
+  width: 130px;
+  height: 40px;
+  border: whitesmoke 1px solid;
+  background: #d7e7f2;
+  color: #333;
+  margin-left: 30px;
+  border-top-left-radius: 5px;
+  filter: progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=4);
+  -moz-box-shadow: 2px 2px 10px #909090; /*firefox*/
+  -webkit-box-shadow: 2px 2px 10px #909090; /*safari或chrome*/
+  box-shadow: 2px 2px 10px #909090; /*opera或ie9*/
+}
+.cube {
+  width: 130px;
+  height: 40px;
+  border: whitesmoke 1px solid;
+  background: #d7e7f2;
+  margin-left: -1px;
+  color: #333;
+  filter: progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=4);
+  -moz-box-shadow: 2px 2px 10px #909090; /*firefox*/
+  -webkit-box-shadow: 2px 2px 10px #909090; /*safari或chrome*/
+  box-shadow: 2px 2px 10px #909090; /*opera或ie9*/
+}
+.rightCube {
+  width: 130px;
+  height: 40px;
+  border: whitesmoke 1px solid;
+  background: #d7e7f2;
+  margin-left: -1px;
+  color: #333;
+  border-top-right-radius: 5px;
+  filter: progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=4);
+  -moz-box-shadow: 2px 2px 10px #909090; /*firefox*/
+  -webkit-box-shadow: 2px 2px 10px #909090; /*safari或chrome*/
+  box-shadow: 2px 2px 10px #909090; /*opera或ie9*/
 }
 </style>

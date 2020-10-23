@@ -5,7 +5,7 @@ import subprocess
 import random
 
 from django.http import HttpResponse, JsonResponse
-from newfirst.models import Item, Personnel, DesignCriteria, AnalysisRules
+from newfirst.models import Item, Personnel, DesignCriteria, AnalysisRules, Scenes
 from server import error_code
 from django.shortcuts import render
 
@@ -142,6 +142,116 @@ def delete_design_criteria(request):
             if not DesignCriteria.objects.filter(id=aim_id).exists():
                 return JsonResponse({**error_code.CLACK_NOT_EXISTS})
             DesignCriteria.objects.get(id=aim_id).delete()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 新建项目
+def add_item(request):
+    request_json = json.loads(request.body)
+    try:
+        new_name = request_json['name']
+        new_introduction = request_json['introduction']
+        new_content = 'new_content'
+        # new_date = "2020-10-23"
+        if Item.objects.filter(item_name=new_name):
+            return JsonResponse({**error_code.CLACK_NAME_EXISTS})
+        new_item = Item(item_name=new_name, item_introduction=new_introduction, item_date=new_date,
+                        item_content=new_content, item_leader_id=1)
+        new_item.save()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 编辑项目
+def edit_item(request):
+    request_json = json.loads(request.body)
+    try:
+        aim_id = request_json['id']
+        new_name = request_json['name']
+        new_introduction = request_json['introduction']
+        if not Item.objects.filter(id=aim_id).exists():
+            return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+        Item.objects.filter(id=aim_id).update(item_name=new_name)
+        Item.objects.filter(id=aim_id).update(item_introduction=new_introduction)
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 删除项目
+def delete_item(request):
+    request_json = json.loads(request.body)
+    try:
+        aim_id = request_json['item_id']
+        Item.objects.get(id=aim_id).delete()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 场景列表
+def scenes_list(request):
+    try:
+        scenes = Scenes.objects.all()
+        result = [scene.to_dict() for scene in scenes]
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "scenes_list": result})
+
+
+def add_scenes(request):
+    request_json = json.loads(request.body)
+    try:
+        new_name = request_json['name']
+        new_describe = request_json['describe']
+        new_content = request_json['content']
+        new_type = request_json['type']
+        new_element = request_json['element']
+        if Scenes.objects.filter(name=new_name):
+            return JsonResponse({**error_code.CLACK_NAME_EXISTS})
+        new_scene = Scenes(name=new_name, describe=new_describe, content=new_content,
+                           type=new_type, element=new_element)
+        new_scene.save()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 编辑场景
+def edit_scenes(request):
+    request_json = json.loads(request.body)
+    try:
+        new_describe = request_json['describe']
+        new_element = request_json['element']
+        new_content = request_json['content']
+        aim_id = request_json['id']
+        new_name = request_json['name']
+        new_type = request_json['type']
+        if not Scenes.objects.filter(id=aim_id).exists():
+            return Scenes({**error_code.CLACK_NOT_EXISTS})
+        Scenes.objects.filter(id=aim_id).update(name=new_name)
+        Scenes.objects.filter(id=aim_id).update(type=new_type)
+        Scenes.objects.filter(id=aim_id).update(describe=new_describe)
+        Scenes.objects.filter(id=aim_id).update(element=new_element)
+        Scenes.objects.filter(id=aim_id).update(content=new_content)
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 删除场景
+def delete_scenes(request):
+    request_json = json.loads(request.body)
+    try:
+        # print(request_json)
+        for i in range(len(request_json)):
+            aim_id = request_json[i]['id']
+            if not Scenes.objects.filter(id=aim_id).exists():
+                return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+            Scenes.objects.get(id=aim_id).delete()
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})

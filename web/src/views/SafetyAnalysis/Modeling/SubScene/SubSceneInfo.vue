@@ -1,128 +1,109 @@
 <template>
   <div id="subSceneInfo">
-    <div class="divHelp">
-      <el-popover placement="bottom" title="help" trigger="click">
-        <!--        <el-button slot="reference">click 激活</el-button>-->
-        <p>此页面可以对使用场景进行增删改查操作</p>
-        <el-button icon="el-icon-message-solid" circle slot="reference"></el-button>
-      </el-popover>
-      <el-popover placement="bottom" trigger="click">
-        <!--        <el-button slot="reference">click 激活</el-button>-->
-        <div>
-          <p>此页面可以对使用场景进行增删改查操作</p>
-        </div>
-        <el-button type="text" slot="reference">操作提示</el-button>
-      </el-popover>
-    </div>
-    <!--    标题-->
-    <!--    <span>项目名称</span>-->
-    <el-card class="tableTitle">
-      <span style="font-size: large;margin-left: 10px;margin-right: 10px">选择模型类型</span>
-      <el-select v-model="value" placeholder="请选择" @change="onChange">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
-      </el-select>
-      <el-button size="20px" type="success" style="margin-left: 580px" @click="handleAdd" icon="el-icon-plus">添加新场景</el-button>
-      <!--    </el-card>-->
-      <!--    &lt;!&ndash;    表格内容&ndash;&gt;-->
-      <!--    <el-card class="traceTable" style="margin-top: 20px">-->
-      <el-table :data="tableData" style="width: 100%;margin-top: 40px" stripe border :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
-        <el-table-column label="序号" width="180px" align="center">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.trace_id }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="名称" width="180px" align="center">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.trace_name }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="类型" width="180px" align="center">
-          <template>
-            <span style="margin-left: 10px">状态机</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="场景介绍" align="center">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.trace_describe }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" align="center">
-          <template slot-scope="scope">
-            <el-button size="mini" type="info" @click="handleShow(scope.$index, scope.row)">查看</el-button>
-            <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <!--    </el-card>-->
-      <!--    &lt;!&ndash;    分页显示&ndash;&gt;-->
-      <!--    <el-card class="tablePage" style="margin-top: 20px">-->
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="page"
-        :page-sizes="[1, 2, 5, 7, 10]"
-        :page-size="limit"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-        style="margin-left: 30%;margin-top: 30px"
-      >
-      </el-pagination>
+    <el-card>
+      <div id="search">
+        <el-input v-model="search" placeholder="按名称搜索" style="width: 300px" @input="pageList" />
+      </div>
+      <div id="actionButton" style="margin-left:73%;margin-bottom: 20px;margin-top: -40px">
+        <el-button type="primary">导入</el-button>
+        <el-button type="primary" @click="handleAdd('addForm')">增加</el-button>
+        <el-button type="success" :disabled="disabled.edit" @click="visible.editDialog = true">编辑</el-button>
+        <el-button type="danger" :disabled="disabled.delete" @click="visible.deleteDialog = true">删除</el-button>
+      </div>
+      <div id="table">
+        <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection">
+          <el-table-column type="selection" width="40px"> </el-table-column>
+          <el-table-column prop="id" label="序号" width="80"> </el-table-column>
+          <el-table-column prop="element" label="要素" width="180" :filters="filterData" :filter-method="filterType">
+            <!--todo: 筛选功能存在bug-->
+          </el-table-column>
+          <el-table-column prop="name" label="名称" width="180"> </el-table-column>
+          <el-table-column prop="describe" label="描述" width="180" :show-overflow-tooltip="true">
+            <!--todo: 过长不好看-->
+          </el-table-column>
+          <el-table-column prop="content" label="内容"> </el-table-column>
+        </el-table>
+      </div>
+      <div id="page">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="pagination.page"
+          :page-sizes="[1, 2, 5, 7, 10]"
+          :page-size="pagination.limit"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="pagination.total"
+          style="margin-left: 30%;margin-top: 20px"
+        >
+        </el-pagination>
+      </div>
     </el-card>
-    <!--    查看trace弹窗-->
-    <!--    todo: 展示效果不好-->
-    <el-dialog title="查看场景" :visible.sync="dialogShowTrace">
-      <span style="display: block">场景名称：{{ showTrace.trace_name }}</span>
-      <span style="margin-top: 10px;display: block">场景内容：</span>
-      <span style="display: block;white-space: pre-line">{{ showTrace.trace_content }}</span>
-      <span style="margin-top: 10px;display: block;white-space: pre-line">场景详情：{{ showTrace.trace_details }}</span>
-      <span slot="footer" class="dialog-footer">
-        <!--        <el-button @click="dialogShowTrace = false">取 消</el-button>-->
-        <el-button type="primary" @click="dialogShowTrace = false">OK</el-button>
-      </span>
-    </el-dialog>
-    <!--    添加场景弹窗-->
-    <el-dialog title="添加场景" :visible.sync="dialogAddTrace">
-      <el-form :model="addForm" :rules="rules" ref="addForm">
-        <el-form-item label="场景名称" label-width="120px" prop="name">
-          <el-input v-model="addForm.name" clearable placeholder="请输入场景名称"></el-input>
-        </el-form-item>
-        <el-form-item label="场景内容" label-width="120px" prop="content">
-          <el-input v-model="addForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景具体内容"> </el-input>
-        </el-form-item>
-        <el-form-item label="场景描述" label-width="120px" prop="details">
-          <el-input v-model="addForm.details" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景文字描述"> </el-input>
-        </el-form-item>
-        <el-form-item label="场景介绍" label-width="120px" prop="describe">
-          <el-input v-model="addForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景简单介绍"> </el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogAddTrace = false">取 消</el-button>
-        <el-button type="primary" @click="handleAddCommit('addForm')">确 定</el-button>
-      </div>
-    </el-dialog>
-    <!--    编辑场景弹窗-->
-    <el-dialog title="编辑此场景" :visible.sync="dialogEditTrace">
-      <el-form :model="editForm" :rules="rules" ref="editForm">
-        <el-form-item label="场景名称" label-width="120px" prop="name">
-          <el-input v-model="editForm.name" clearable placeholder="请输入场景名称"></el-input>
-        </el-form-item>
-        <el-form-item label="场景内容" label-width="120px" prop="content">
-          <el-input v-model="editForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景具体内容"> </el-input>
-        </el-form-item>
-        <el-form-item label="场景描述" label-width="120px" prop="details">
-          <el-input v-model="editForm.details" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景文字描述"> </el-input>
-        </el-form-item>
-        <el-form-item label="场景介绍" label-width="120px" prop="describe">
-          <el-input v-model="editForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景简单介绍"> </el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogEditTrace = false">取 消</el-button>
-        <el-button type="primary" @click="handleEditCommit('editForm')">确 定</el-button>
-      </div>
-    </el-dialog>
+    <!--    <div id="show"></div>-->
+    <div id="add">
+      <el-dialog title="添加新的场景" :visible.sync="visible.addDialog" center @close="resetForm('addForm')">
+        <el-form :model="addForm" :rules="rules" ref="addForm">
+          <el-form-item label="要素" label-width="120px" prop="element">
+            <el-select v-model="addForm.element" placeholder="请选择">
+              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="名称" label-width="120px" prop="name">
+            <el-input v-model="addForm.name" clearable placeholder="请输入名称"></el-input>
+          </el-form-item>
+          <el-form-item label="描述" label-width="120px" prop="describe">
+            <el-input v-model="addForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入文字描述"> </el-input>
+          </el-form-item>
+          <el-form-item label="内容" label-width="120px" prop="content">
+            <el-input v-model="addForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入备注"> </el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <!--          <el-button @click="visible.addDialog = false">取 消</el-button>-->
+          <el-button type="primary" @click="handleAddCommit('addForm')">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
+    <div id="edit">
+      <el-dialog title="编辑场景" :visible.sync="visible.editDialog" center>
+        <el-form :model="editForm" :rules="rules" ref="editForm">
+          <el-form-item label="要素" label-width="120px" prop="element">
+            <el-select v-model="editForm.element" placeholder="请选择">
+              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="名称" label-width="120px" prop="name">
+            <el-input v-model="editForm.name" clearable placeholder="请输入名称"></el-input>
+          </el-form-item>
+          <el-form-item label="描述" label-width="120px" prop="describe">
+            <el-input v-model="editForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入文字描述"> </el-input>
+          </el-form-item>
+          <el-form-item label="内容" label-width="120px" prop="content">
+            <el-input v-model="editForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入备注"> </el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <!--          <el-button @click="visible.addDialog = false">取 消</el-button>-->
+          <el-button type="primary" @click="handleEditCommit('editForm')">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
+    <div id="delete">
+      <el-dialog title="删除场景" :visible.sync="visible.deleteDialog" center>
+        <span>是否删除以下 {{ deleteData.length }} 条场景</span>
+        <el-card style="margin-top: 10px">
+          <el-table :data="deleteData" border>
+            <el-table-column property="id" label="序号" width="50"></el-table-column>
+            <el-table-column property="element" label="要素" width="150"></el-table-column>
+            <el-table-column property="name" label="名称"></el-table-column>
+          </el-table>
+        </el-card>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="visible.deleteDialog = false">取 消</el-button>
+          <el-button type="primary" @click="handleDeleteCommit">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
+    <div id="upload"></div>
   </div>
 </template>
 
@@ -131,55 +112,80 @@ export default {
   name: 'SubSceneInfo.vue',
   data() {
     return {
-      limit: 7, //每页显示条数
-      total: null, //trace总数
-      page: 1, //第几页
+      tableData: [],
+      filterData: [
+        { text: '外部接口', value: '外部接口' },
+        { text: '功能处理', value: '功能处理' },
+        { text: '功能层次', value: '功能层次' },
+        { text: '状态迁移', value: '状态迁移' },
+        { text: '其他', value: '其他' }
+      ],
+      pagination: {
+        limit: 7, //每页显示条数
+        total: 0, //项目总数
+        page: 1 //第几页
+      },
       search: '', //搜索框
-      dialogShowTrace: false, //查看trace弹窗
-      dialogAddTrace: false, //添加trace弹窗
-      dialogEditTrace: false, //编辑trace
-      tableData: [], //trace表
-      showTrace: {}, //查看trace
-      addForm: {
-        //添加时使用
-        name: '',
-        content: '',
-        details: '',
-        describe: ''
+      visible: {
+        addDialog: false,
+        deleteDialog: false,
+        editDialog: false
+      },
+      disabled: {
+        edit: true,
+        delete: true
       },
       editForm: {
-        //编辑trace
+        //修改时使用
         id: '',
         name: '',
+        type: '',
+        describe: '',
         content: '',
-        details: '',
-        describe: ''
+        element: ''
       },
+      addForm: {
+        //添加使用
+        name: '',
+        describe: '',
+        content: '',
+        element: '',
+        type: 'sub'
+      },
+      deleteData: [],
       rules: {
         name: [{ required: true, message: '不能为空', trigger: 'blur' }],
         content: [{ required: true, message: '不能为空', trigger: 'blur' }],
-        details: [{ required: true, message: '不能为空', trigger: 'blur' }],
-        describe: [{ required: true, message: '不能为空', trigger: 'blur' }]
+        describe: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        type: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        element: [{ required: true, message: '不能为空', trigger: 'blur' }]
       },
       options: [
         {
-          value: '状态机',
-          label: '状态机'
+          value: '任务剖面',
+          label: '任务剖面'
         },
         {
-          value: '时序图',
-          label: '时序图'
+          value: '功能要求',
+          label: '功能要求'
         },
         {
-          value: '用例图',
-          label: '用例图'
+          value: '性能要求',
+          label: '性能要求'
         },
         {
-          value: '活动图',
-          label: '活动图'
+          value: '时序要求',
+          label: '时序要求'
+        },
+        {
+          value: '接口要求',
+          label: '接口要求'
+        },
+        {
+          value: '环境条件',
+          label: '环境条件'
         }
-      ],
-      value: '状态机'
+      ]
     }
   },
   created() {
@@ -189,11 +195,12 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .get('http://127.0.0.1:8000/api/trace_list')
+        .get('http://127.0.0.1:8000/api/scenes_list')
         .then(response => {
-          // console.log(response.data.trace_list)
-          this.data = response.data.trace_list
-          this.data2 = response.data.trace_list
+          // console.log(response.data.analysis_list)
+          this.data = response.data.scenes_list
+          // 筛选出子场景
+          this.data = this.data.filter((item, index) => item.type.includes('sub'))
           this.getList()
         })
         .catch(function(error) {
@@ -202,94 +209,75 @@ export default {
       // this.data = this.tableData
       // this.getList()
     },
-    // 处理数据
     getList() {
-      // es6过滤得到满足搜索条件的展示数据list
-      // eslint-disable-next-line no-unused-vars
-      // console.log({ test: this.search })
-      let list = this.data.filter((item, index) => item.trace_describe.includes(this.search))
+      // 处理数据，根据表格中name字段来筛选
+      let list = this.data.filter((item, index) => item.name.includes(this.search))
       // let list = this.data
-      this.tableData = list.filter((item, index) => index < this.page * this.limit && index >= this.limit * (this.page - 1))
-      this.total = list.length
+      this.tableData = list.filter(
+        (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
+      )
+      this.pagination.total = list.length
+      // console.log(this.tableData)
     },
-    // 当每页数量改变
+    filterType(value, row) {
+      console.log(value, row)
+      return row.type === value
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
+    },
     handleSizeChange(val) {
+      // 当每页数量改变
       console.log(`每页 ${val} 条`)
-      this.limit = val
+      this.pagination.limit = val
       this.getList()
     },
-    // 当当前页改变
     handleCurrentChange(val) {
+      // 当当前页改变
       console.log(`当前页: ${val}`)
-      this.page = val
+      this.pagination.page = val
       this.getList()
     },
-    handleShow(index, row) {
-      this.dialogShowTrace = true
-      // console.log(index, row)
-      this.showTrace = row
+    handleSelection(val) {
+      console.log(val)
+      // 编辑按钮
+      if (val.length === 1) {
+        this.disabled.edit = false
+        this.editForm = val[0]
+      } else {
+        this.disabled.edit = true
+      }
+      // 删除按钮
+      if (val.length === 0) {
+        this.disabled.delete = true
+      } else {
+        this.disabled.delete = false
+        this.deleteData = val
+      }
     },
-    handleEdit(index, row) {
-      // console.log(index, row)
-      this.editForm.id = row.trace_id
-      this.editForm.name = row.trace_name
-      this.editForm.content = row.trace_content
-      this.editForm.describe = row.trace_describe
-      this.editForm.details = row.trace_details
-      this.dialogEditTrace = true
-    },
-    handleDelete(index, row) {
-      // console.log(index, row)
-      this.$confirm('此操作将删除该trace, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then(() => {
-          console.log(row.trace_id)
-          this.$http
-            .post('http://127.0.0.1:8000/api/delete_trace', { trace_id: row.trace_id })
-            .then(response => {
-              console.log(response.data)
-              if (response.data.error_code === 0) {
-                this.$message({
-                  type: 'success',
-                  message: '删除成功!'
-                })
-                this.pageList()
-              }
-            })
-            .catch(function(error) {
-              console.log(error)
-            })
-        })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
-        })
-    },
-    handleAdd() {
-      this.dialogAddTrace = true
+    handleAdd(formName) {
+      this.visible.addDialog = true
+      this.resetForm(formName)
     },
     handleAddCommit(formName) {
+      this.addForm.type = 'sub'
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // alert('submit!')
-          this.dialogAddTrace = false
-          console.log(this.addForm)
           this.$http
-            .post('http://127.0.0.1:8000/api/add_trace', this.addForm)
+            .post('http://127.0.0.1:8000/api/add_scenes', this.addForm)
             .then(response => {
-              console.log(response.data)
               if (response.data.error_code === 0) {
+                alert('添加成功')
+                this.resetForm(formName)
                 this.pageList()
+              } else {
+                console.log(response.data)
               }
             })
             .catch(function(error) {
               console.log(error)
             })
+          this.visible.addDialog = false
         } else {
           console.log('error submit!!')
           return false
@@ -299,54 +287,51 @@ export default {
     handleEditCommit(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // alert('submit!');
-          this.dialogEditTrace = false
-          console.log(this.addForm)
           this.$http
-            .post('http://127.0.0.1:8000/api/edit_trace', this.editForm)
+            .post('http://127.0.0.1:8000/api/edit_scenes', this.editForm)
             .then(response => {
-              console.log(response.data)
               if (response.data.error_code === 0) {
+                alert('修改成功')
                 this.pageList()
+              } else {
+                console.log(response.data)
               }
             })
             .catch(function(error) {
               console.log(error)
             })
+          this.visible.editDialog = false
         } else {
           console.log('error submit!!')
           return false
         }
       })
     },
-    filterTag(value, row) {
-      return row.type === value
-    },
-    onChange(value) {
-      console.log(value)
-      if (value != '状态机') {
-        this.data = []
-      } else {
-        this.data = this.data2
-      }
-      this.getList()
+    handleDeleteCommit() {
+      this.$http
+        .post('http://127.0.0.1:8000/api/delete_scenes', this.deleteData)
+        .then(response => {
+          console.log(response.data)
+          if (response.data.error_code === 0) {
+            alert('删除成功')
+            this.pageList()
+            this.visible.deleteDialog = false
+          }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     }
-  },
-  mounted() {
-    //   this.$notify({
-    //     title: '提示',
-    //     message: '此页面可以实现对使用场景的增删改查操作',
-    //     duration: 0,
-    //     offset: 200
-    //   })
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.divHelp {
-  margin-left: 1100px;
-  height: 40px;
-  margin-top: -40px;
+<style lang="scss">
+.el-tooltip__popper {
+  max-width: 30%;
+  line-height: 130%;
+  //overflow: hidden;
+  display: block;
+  white-space: pre-line;
 }
 </style>
