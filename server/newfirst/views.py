@@ -157,8 +157,8 @@ def add_item(request):
         # new_date = "2020-10-23"
         if Item.objects.filter(item_name=new_name):
             return JsonResponse({**error_code.CLACK_NAME_EXISTS})
-        new_item = Item(item_name=new_name, item_introduction=new_introduction, item_date=new_date,
-                        item_content=new_content, item_leader_id=1)
+        new_item = Item(item_name=new_name, item_introduction=new_introduction,
+                        item_content=new_content)
         new_item.save()
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})

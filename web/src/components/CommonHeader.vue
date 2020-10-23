@@ -158,6 +158,11 @@ export default {
                 path: '/generalRules',
                 name: 'generalRules',
                 label: '通用分析规则选择'
+              },
+              {
+                path: '/instantiate',
+                name: 'instantiate',
+                label: '分析规则实例化'
               }
             ]
           },

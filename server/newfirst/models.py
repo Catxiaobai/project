@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 
@@ -29,6 +30,7 @@ class Item(models.Model):
     item_name = models.TextField(default='', unique=True)
     item_content = models.TextField(default='')
     item_introduction = models.TextField(default='')
+
     # item_date = models.DateTimeField(default='')
     # item_leader = models.ForeignKey(Personnel, on_delete=models.CASCADE)
 
@@ -77,7 +79,7 @@ class AnalysisRules(models.Model):
         }
 
 
-# 分析规则
+# 场景
 class Scenes(models.Model):
     element = models.TextField(default='')
     content = models.TextField(default='')
@@ -93,4 +95,23 @@ class Scenes(models.Model):
             'type': self.type,
             'describe': self.describe,
             'content': self.content,
+        }
+
+
+# 规则集
+class Rules(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    remark = models.TextField(default='')
+    type = models.TextField(default='')
+    name = models.TextField(default='', unique=True)
+    describe = models.TextField(default='')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'describe': self.describe,
+            'remark': self.remark,
+            'type': self.type,
+            'item': self.item.id
         }

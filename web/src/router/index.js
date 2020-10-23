@@ -39,6 +39,11 @@ const routes = [
         component: () => import('@/views/SafetyAnalysis/AnalysisRules/SpecialRules')
       },
       {
+        path: '/instantiate',
+        name: 'instantiate',
+        component: () => import('@/views/SafetyAnalysis/AnalysisRules/Instantiate')
+      },
+      {
         path: '/check',
         name: 'check',
         component: () => import('@/views/SafetyAnalysis/Implement/Check')

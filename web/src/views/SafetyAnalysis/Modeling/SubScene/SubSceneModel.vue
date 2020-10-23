@@ -35,7 +35,7 @@
     <el-card>
       <!--      <el-button type="primary" @click="save">save</el-button>-->
       <!--      <el-button type="primary" @click="load">load</el-button>-->
-      <span style="font-size: large;margin-left: 10px;margin-right: 10px">选择模型类型</span>
+      <span style="font-size: large;margin-left: 10px;margin-right: 10px">选择场景类型</span>
       <el-select v-model="value" placeholder="请选择" @change="onChange">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
       </el-select>
@@ -74,23 +74,31 @@ export default {
       test: 'tets',
       options: [
         {
-          value: '状态机',
-          label: '状态机'
+          value: '任务剖面',
+          label: '任务剖面'
         },
         {
-          value: '时序图',
-          label: '时序图'
+          value: '功能要求',
+          label: '功能要求'
         },
         {
-          value: '用例图',
-          label: '用例图'
+          value: '性能要求',
+          label: '性能要求'
         },
         {
-          value: '活动图',
-          label: '活动图'
+          value: '时序要求',
+          label: '时序要求'
+        },
+        {
+          value: '接口要求',
+          label: '接口要求'
+        },
+        {
+          value: '环境条件',
+          label: '环境条件'
         }
       ],
-      value: '状态机',
+      value: '性能要求',
       test1: true,
       test2: false
     }
