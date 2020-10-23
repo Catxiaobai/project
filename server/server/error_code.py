@@ -18,8 +18,8 @@ CLACK_NULL_ERROR = {"error_code": 3, "error_message": "前端传来的空的"}
 # 目标不存在
 CLACK_NOT_EXISTS={"error_code": 4, "error_message": "此目标不存在"}
 
-# # 注册账号的用户名已经存在
-# CLACK_USER_NAME_EXISTS = {"error_code": 3, "error_message": "用户名已存在"}
+# 名称已经存在
+CLACK_NAME_EXISTS = {"error_code": 5, "error_message": "此名称已存在"}
 #
 # # 登录错误
 # CLACK_USER_LOGIN_FAILED = {"error_code": 4, "error_message": "登录失败,用户名或密码错误"}

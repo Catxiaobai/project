@@ -46,32 +46,32 @@ class Item(models.Model):
 # 设计准则
 class DesignCriteria(models.Model):
     name = models.TextField(default='', unique=True)
-    content = models.TextField(default='')
-    group = models.TextField(default='')
+    describe = models.TextField(default='')
+    remark = models.TextField(default='')
     type = models.TextField(default='')
 
     def to_dict(self):
         return {
             'id': self.id,
             'name': self.name,
-            'content': self.content,
-            'group': self.group,
+            'describe': self.describe,
+            'remark': self.remark,
             'type': self.type,
         }
 
 
 # 分析规则
 class AnalysisRules(models.Model):
-    group = models.TextField(default='')
+    remark = models.TextField(default='')
     type = models.TextField(default='')
     name = models.TextField(default='', unique=True)
-    content = models.TextField(default='')
+    describe = models.TextField(default='')
 
     def to_dict(self):
         return {
             'id': self.id,
             'name': self.name,
-            'content': self.content,
-            'group': self.group,
+            'describe': self.describe,
+            'remark': self.remark,
             'type': self.type,
         }

@@ -41,3 +41,107 @@ def analysis_rule_list(request):
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS, "analysis_list": result})
+
+
+# 添加分析规则
+def add_analysis_rule(request):
+    request_json = json.loads(request.body)
+    try:
+        new_name = request_json['name']
+        new_type = request_json['type']
+        new_describe = request_json['describe']
+        new_remark = request_json['remark']
+        if AnalysisRules.objects.filter(name=new_name):
+            return JsonResponse({**error_code.CLACK_NAME_EXISTS})
+        new_rule = AnalysisRules(name=new_name, type=new_type, remark=new_remark, describe=new_describe)
+        new_rule.save()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 编辑分析规则
+def edit_analysis_rule(request):
+    request_json = json.loads(request.body)
+    try:
+        aim_id = request_json['id']
+        new_name = request_json['name']
+        new_type = request_json['type']
+        new_describe = request_json['describe']
+        new_remark = request_json['remark']
+        if not AnalysisRules.objects.filter(id=aim_id).exists():
+            return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+        AnalysisRules.objects.filter(id=aim_id).update(name=new_name)
+        AnalysisRules.objects.filter(id=aim_id).update(type=new_type)
+        AnalysisRules.objects.filter(id=aim_id).update(describe=new_describe)
+        AnalysisRules.objects.filter(id=aim_id).update(remark=new_remark)
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 删除分析规则
+def delete_analysis_rule(request):
+    request_json = json.loads(request.body)
+    try:
+        # print(request_json)
+        for i in range(len(request_json)):
+            aim_id = request_json[i]['id']
+            if not AnalysisRules.objects.filter(id=aim_id).exists():
+                return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+            AnalysisRules.objects.get(id=aim_id).delete()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 添加设计准则
+def add_design_criteria(request):
+    request_json = json.loads(request.body)
+    try:
+        new_name = request_json['name']
+        new_type = request_json['type']
+        new_describe = request_json['describe']
+        new_remark = request_json['remark']
+        if DesignCriteria.objects.filter(name=new_name):
+            return JsonResponse({**error_code.CLACK_NAME_EXISTS})
+        new_rule = DesignCriteria(name=new_name, type=new_type, remark=new_remark, describe=new_describe)
+        new_rule.save()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 编辑设计准则
+def edit_design_criteria(request):
+    request_json = json.loads(request.body)
+    try:
+        new_describe = request_json['describe']
+        new_remark = request_json['remark']
+        aim_id = request_json['id']
+        new_name = request_json['name']
+        new_type = request_json['type']
+        if not DesignCriteria.objects.filter(id=aim_id).exists():
+            return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+        DesignCriteria.objects.filter(id=aim_id).update(name=new_name)
+        DesignCriteria.objects.filter(id=aim_id).update(type=new_type)
+        DesignCriteria.objects.filter(id=aim_id).update(describe=new_describe)
+        DesignCriteria.objects.filter(id=aim_id).update(remark=new_remark)
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 删除设计准则
+def delete_design_criteria(request):
+    request_json = json.loads(request.body)
+    try:
+        # print(request_json)
+        for i in range(len(request_json)):
+            aim_id = request_json[i]['id']
+            if not DesignCriteria.objects.filter(id=aim_id).exists():
+                return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+            DesignCriteria.objects.get(id=aim_id).delete()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
