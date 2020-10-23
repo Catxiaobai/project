@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--    <el-button style="width: 100%;font-size: x-large;background-color: whitesmoke" icon="el-icon-back" @click="gotolink">项目一</el-button>-->
-    <el-menu router style="height:650px">
+    <el-menu router style="height:650px" :default-active="$route.path">
       <el-menu-item :index="item.path" v-for="item in noChildren" :key="item.path" @click="clickMenu(item)">
         <i :class="'el-icon-' + item.icon"></i>
         <span slot="title">{{ item.label }}</span>

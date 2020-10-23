@@ -24,97 +24,97 @@ const routes = [
         component: () => import('@/views/Home/Home')
       },
       {
-        path: '/infoManage/item',
+        path: '/item',
         name: 'item',
         component: () => import('@/views/InfoManage/Item/Item')
       },
       {
-        path: '/safetyAnalysis/analysisRules/generalRules',
+        path: '/generalRules',
         name: 'generalRules',
         component: () => import('@/views/SafetyAnalysis/AnalysisRules/GeneralRules')
       },
       {
-        path: '/safetyAnalysis/analysisRules/specialRules',
+        path: '/specialRules',
         name: 'specialRules',
         component: () => import('@/views/SafetyAnalysis/AnalysisRules/SpecialRules')
       },
       {
-        path: '/safetyAnalysis/implement/check',
+        path: '/check',
         name: 'check',
         component: () => import('@/views/SafetyAnalysis/Implement/Check')
       },
       {
-        path: '/safetyAnalysis/implement/demandExtraction',
+        path: '/demandExtraction',
         name: 'demandExtraction',
         component: () => import('@/views/SafetyAnalysis/Implement/DemandExtraction')
       },
       {
-        path: '/safetyAnalysis/implement/failureAnalysis',
+        path: '/failureAnalysis',
         name: 'failureAnalysis',
         component: () => import('@/views/SafetyAnalysis/Implement/FailureAnalysis')
       },
       {
-        path: '/safetyAnalysis/modeling/subScene',
+        path: '/subScene',
         name: 'subScene',
         component: () => import('@/views/SafetyAnalysis/Modeling/SubScene')
       },
       {
-        path: '/safetyAnalysis/modeling/complexScene',
+        path: '/complexScene',
         name: 'complexScene',
         component: () => import('@/views/SafetyAnalysis/Modeling/ComplexScene')
       },
       {
-        path: '/safetyAnalysis/modeling/listGeneration',
+        path: '/listGeneration',
         name: 'listGeneration',
         component: () => import('@/views/SafetyAnalysis/Modeling/ListGeneration')
       },
       {
-        path: '/safetyAnalysis/requirements/requirements',
+        path: '/requirements',
         name: 'requirements',
         component: () => import('@/views/SafetyAnalysis/Requirements/Requirements')
       },
       {
-        path: '/safetyDesign/complete/complete',
+        path: '/complete',
         name: 'complete',
         component: () => import('@/views/SafetyDesign/Complete/Complete')
       },
       {
-        path: '/safetyDesign/criteria/generalCriteria',
+        path: '/generalCriteria',
         name: 'generalCriteria',
         component: () => import('@/views/SafetyDesign/Criteria/GeneralCriteria')
       },
       {
-        path: '/safetyDesign/criteria/specialCriteria',
+        path: '/specialCriteria',
         name: 'specialCriteria',
         component: () => import('@/views/SafetyDesign/Criteria/SpecialCriteria')
       },
       {
-        path: '/safetyDesign/verification/verification',
+        path: '/verification',
         name: 'verification',
         component: () => import('@/views/SafetyDesign/Verification/Verification')
       },
       {
-        path: '/infoManage/system/authority',
+        path: '/authority',
         name: 'authority',
         component: () => import('@/views/InfoManage/System/Authority')
       },
       {
-        path: '/infoManage/system/personnel',
+        path: '/personnel',
         name: 'personnel',
         component: () => import('@/views/InfoManage/System/Personnel')
       },
       {
-        path: '/infoManage/system/tools',
+        path: '/tools',
         name: 'tools',
         component: () => import('@/views/InfoManage/System/Tools')
       },
       {
-        path: '/database/analysisBase/analysisBase',
+        path: '/analysisBase',
         name: 'analysisBase',
         component: () => import('@/views/Database/AnalysisBase/AnalysisBase')
       },
       {
-        path: '/database/designBase/designBase',
+        path: '/designBase',
         name: 'designBase',
         component: () => import('@/views/Database/DesignBase/DesignBase')
       },

@@ -1,25 +1,11 @@
 <template>
   <div id="common-aside">
     <div id="aside-content">
-      <el-menu id="menu">
+      <el-menu id="menu" router :default-active="$route.path">
         <el-menu-item id="noChildren" :index="item.path" v-for="item in noChildren" :key="item.path" @click="clickMenu(item)">
           <i :class="'el-icon-' + item.icon"></i>
           <span class="name" slot="title">{{ item.label }}</span>
         </el-menu-item>
-        <!--        <el-submenu id="noGrandChildren" :index="item.path" v-for="item in noGrandchildren" :key="item.path" @click="clickMenu(item)">-->
-        <!--          <template slot="title" id="title">-->
-        <!--            <i :class="'el-icon-' + item.icon"></i>-->
-        <!--            <span class="name">{{ item.label }}</span>-->
-        <!--          </template>-->
-        <!--          <el-menu-item-group id="child">-->
-        <!--            <el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.path" @click="clickMenu(subItem)">-->
-        <!--              <template slot="title">-->
-        <!--                <i :class="'el-icon-caret-right'"></i>-->
-        <!--                <span class="name">{{ subItem.label }}</span>-->
-        <!--              </template>-->
-        <!--            </el-menu-item>-->
-        <!--          </el-menu-item-group>-->
-        <!--        </el-submenu>-->
         <el-submenu id="hasChildren" :index="item.path" v-for="item in hasChildren" :key="item.path" @click="clickMenu(item)">
           <template slot="title" id="title">
             <i :class="'el-icon-' + item.icon"></i>
@@ -70,7 +56,7 @@ export default {
           ]
         },
         {
-          path: '/infoManage/item',
+          path: '/item',
           name: 'item',
           label: '项目管理',
           icon: 's-claim'
@@ -99,10 +85,10 @@ export default {
       return this.asideMenu.filter(item => !item.children)
     },
     hasChildren() {
-      console.log(
-        'hasChildren',
-        this.asideMenu.filter(item => item.children)
-      )
+      // console.log(
+      //   'hasChildren',
+      //   this.asideMenu.filter(item => item.children)
+      // )
       return this.asideMenu.filter(item => item.children)
     },
     noGrandchildren() {

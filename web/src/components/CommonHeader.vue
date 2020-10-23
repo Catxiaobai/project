@@ -70,7 +70,7 @@ export default {
       menuList: [
         [
           {
-            path: '/safetyAnalysis/modeling',
+            path: '/modeling',
             name: 'modeling',
             label: '使用场景建模',
             icon: 's-claim',
@@ -137,7 +137,7 @@ export default {
             ]
           },
           {
-            path: '/safetyAnalysis/analysisRules',
+            path: '/analysisRules',
             name: 'analysisRules',
             label: '分析规则设置',
             icon: 's-claim',
@@ -155,7 +155,7 @@ export default {
             ]
           },
           {
-            path: '/safetyAnalysis/implement',
+            path: '/implement',
             name: 'implement',
             label: '分析实施',
             icon: 's-claim',
@@ -178,7 +178,7 @@ export default {
             ]
           },
           {
-            path: '/safetyAnalysis/requirements',
+            path: '/requirements',
             name: 'requirements',
             label: '软件安全性需求管理',
             icon: 's-claim'
@@ -186,7 +186,7 @@ export default {
         ],
         [
           {
-            path: '/safetyDesign/criteria',
+            path: '/criteria',
             name: 'criteria',
             label: '设计准则设置',
             icon: 's-claim',
@@ -204,13 +204,13 @@ export default {
             ]
           },
           {
-            path: '/safetyDesign/verification',
+            path: '/verification',
             name: 'verification',
             label: '核查实施',
             icon: 's-claim'
           },
           {
-            path: '/safetyDesign/complete',
+            path: '/complete',
             name: 'complete',
             label: '设计完善',
             icon: 's-claim'
@@ -218,7 +218,7 @@ export default {
         ],
         [
           {
-            path: '/infoManage/system',
+            path: '/system',
             name: 'system',
             label: '系统管理',
             icon: 's-claim',
@@ -241,7 +241,7 @@ export default {
             ]
           },
           {
-            path: '/infoManage/item',
+            path: '/item',
             name: 'item',
             label: '项目管理',
             icon: 's-claim'
@@ -249,13 +249,13 @@ export default {
         ],
         [
           {
-            path: '/database/analysisBase',
+            path: '/analysisBase',
             name: 'analysisBase',
             label: '分析规则库',
             icon: 's-claim'
           },
           {
-            path: '/database/designBase',
+            path: '/designBase',
             name: 'designBase',
             label: '设计准则库',
             icon: 's-claim'

@@ -35,7 +35,7 @@
         </el-table-column>
         <el-table-column label="类别" width="180">
           <template slot-scope="scope">
-            <el-tag :type="scope.row.type === '硬件相关' ? 'primary' : 'success'" disable-transitions>{{ scope.row.type }}</el-tag>
+            <el-tag :type="scope.row.group === '接口相关' ? 'primary' : 'success'" disable-transitions>{{ scope.row.type }}</el-tag>
           </template>
         </el-table-column>
         <!--        <el-table-column label="名称" width="180px" align="center">-->

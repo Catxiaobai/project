@@ -66,9 +66,10 @@
     <!--    todo: 展示效果不好-->
     <el-dialog title="查看场景" :visible.sync="dialogShowTrace">
       <span style="display: block">场景名称：{{ showTrace.trace_name }}</span>
+      <span style="margin-top: 10px;display: block;white-space: pre-line">场景描述：{{ showTrace.trace_details }}</span>
       <span style="margin-top: 10px;display: block">场景内容：</span>
       <span style="display: block;white-space: pre-line">{{ showTrace.trace_content }}</span>
-      <span style="margin-top: 10px;display: block;white-space: pre-line">场景详情：{{ showTrace.trace_details }}</span>
+
       <span slot="footer" class="dialog-footer">
         <!--        <el-button @click="dialogShowTrace = false">取 消</el-button>-->
         <el-button type="primary" @click="dialogShowTrace = false">OK</el-button>
@@ -80,15 +81,16 @@
         <el-form-item label="场景名称" label-width="120px" prop="name">
           <el-input v-model="addForm.name" clearable placeholder="请输入场景名称"></el-input>
         </el-form-item>
-        <el-form-item label="场景内容" label-width="120px" prop="content">
-          <el-input v-model="addForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景具体内容"> </el-input>
-        </el-form-item>
         <el-form-item label="场景描述" label-width="120px" prop="details">
           <el-input v-model="addForm.details" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景文字描述"> </el-input>
         </el-form-item>
-        <el-form-item label="场景介绍" label-width="120px" prop="describe">
-          <el-input v-model="addForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景简单介绍"> </el-input>
+        <el-form-item label="场景内容" label-width="120px" prop="content">
+          <el-input v-model="addForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景具体内容"> </el-input>
         </el-form-item>
+
+        <!--        <el-form-item label="场景介绍" label-width="120px" prop="describe">-->
+        <!--          <el-input v-model="addForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入场景简单介绍"> </el-input>-->
+        <!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddTrace = false">取 消</el-button>
