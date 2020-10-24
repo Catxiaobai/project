@@ -136,3 +136,39 @@ class Case(models.Model):
             'verify': self.verify_result,
             'rule_id': self.rule.id
         }
+
+
+# 实例
+class Fmea(models.Model):
+    case = models.ForeignKey(Case, on_delete=models.CASCADE)
+    improve = models.TextField(default='')
+    reason = models.TextField(default='')
+    local_influence = models.TextField(default='')
+    upper_influence = models.TextField(default='')
+    system_influence = models.TextField(default='')
+    influence_level = models.TextField(default='')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'improve': self.improve,
+            'case': self.case.id,
+            'reason': self.reason,
+            'local_influence': self.local_influence,
+            'upper_influence': self.upper_influence,
+            'system_influence': self.system_influence,
+            'influence_level': self.influence_level
+        }
+
+
+# 软件失效分析需求
+class Demand(models.Model):
+    fmea = models.ForeignKey(Fmea, on_delete=models.CASCADE)
+    demand = models.TextField(default='')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'demand': self.demand,
+            'fmea': self.fmea.id,
+        }

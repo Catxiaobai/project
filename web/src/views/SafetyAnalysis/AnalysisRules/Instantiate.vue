@@ -64,8 +64,8 @@
           <el-form-item label="描述" label-width="120px" prop="describe">
             <el-input v-model="addForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入文字描述"> </el-input>
           </el-form-item>
-          <el-form-item label="备注" label-width="120px" prop="content">
-            <el-input v-model="addForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入备注"> </el-input>
+          <el-form-item label="内容" label-width="120px" prop="content">
+            <el-input v-model="addForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入内容"> </el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">

@@ -279,7 +279,7 @@ export default {
   mounted() {
     this.getItemInfo()
     this.activeIndex = this.$route.path
-    console.log(this.itemInfo)
+    // console.log(this.itemInfo)
   },
   methods: {
     handleSelect(key, keyPath) {

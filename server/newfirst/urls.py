@@ -42,4 +42,6 @@ urlpatterns = [
     path('add_case', views.add_case, name='add_case'),  # 添加实例
     path('case_list', views.case_list, name='case_list'),  # 添加实例列表
     path('delete_case', views.delete_case, name='delete_case'),  # 删除实例
+    path('verify_case', views.verify_case, name='verify_case'),  # 验证实例
+    path('reset_case', views.reset_case, name='reset_case') # 重置实例
 ]

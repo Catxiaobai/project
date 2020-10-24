@@ -20,7 +20,8 @@
           </el-table-column>
           <el-table-column prop="name" label="名称" width="180"> </el-table-column>
           <el-table-column prop="describe" label="描述" width="180"> </el-table-column>
-          <el-table-column prop="content" label="备注"> </el-table-column>
+          <el-table-column prop="content" label="内容" width="180"> </el-table-column>
+          <el-table-column prop="verify" label="验证结果"> </el-table-column>
         </el-table>
       </div>
       <div id="page">
@@ -166,14 +167,41 @@ export default {
         this.disabled.reset = true
         this.disabled.verify = true
       } else {
-        this.disabled.reset = true
-        this.disabled.verify = true
+        this.disabled.reset = false
+        this.disabled.verify = false
         this.resetData = val
         this.verifyData = val
+        console.log(val)
       }
     },
-    verifyCase() {},
-    resetCase() {}
+    verifyCase() {
+      this.$http
+        .post('http://127.0.0.1:8000/api/verify_case', this.verifyData)
+        .then(response => {
+          if (response.data.error_code === 0) {
+            this.pageList()
+          } else {
+            console.log(response.data)
+          }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+    },
+    resetCase() {
+      this.$http
+        .post('http://127.0.0.1:8000/api/reset_case', this.resetData)
+        .then(response => {
+          if (response.data.error_code === 0) {
+            this.pageList()
+          } else {
+            console.log(response.data)
+          }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+    }
   }
 }
 </script>

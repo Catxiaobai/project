@@ -331,7 +331,8 @@ def add_case(request):
         new_describe = case['describe']
         new_element = case['element']
         new_content = case['content']
-        new_case = Case(case_name=new_name, case_describe=new_describe, case_content=new_content, case_element=new_element,
+        new_case = Case(case_name=new_name, case_describe=new_describe, case_content=new_content,
+                        case_element=new_element,
                         rule_id=new_rule_id)
         new_case.save()
     except Exception as e:
@@ -359,6 +360,40 @@ def delete_case(request):
             if not Case.objects.filter(id=aim_id).exists():
                 return JsonResponse({**error_code.CLACK_NOT_EXISTS})
             Case.objects.get(id=aim_id).delete()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 重置实例验证结果
+def reset_case(request):
+    request_json = json.loads(request.body)
+    try:
+        for i in range(0, len(request_json)):
+            aim_id = request_json[i]['id']
+            if not Case.objects.filter(id=aim_id).exists():
+                return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+            Case.objects.filter(id=aim_id).update(verify_result="unverified")
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 验证实例
+def verify_case(request):
+    request_json = json.loads(request.body)
+    # print(request_json)
+    try:
+        for i in range(0, len(request_json)):
+            aim_id = request_json[i]['id']
+            if not Case.objects.filter(id=aim_id).exists():
+                return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+            a = random.randint(0, 1)
+            if a == 0:
+                res = "safe"
+            elif a == 1:
+                res = "danger"
+            Case.objects.filter(id=aim_id).update(verify_result=res)
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
