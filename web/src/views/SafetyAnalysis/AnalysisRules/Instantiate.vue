@@ -31,9 +31,12 @@
       </div>
     </el-card>
     <div id="edit">
-      <el-dialog title="选择" :visible.sync="visible.editDialog">
+      <el-dialog title="此分析规则的实例" :visible.sync="visible.editDialog" center>
         <span>对分析规则 [id:{{ editForm.id }}, type: {{ editForm.type }}, name: {{ editForm.name }}] 进行实例化</span>
-        <el-table :data="caseData" border>
+        <el-button type="primary" style="margin-left: 30px;margin-bottom: 10px" @click="visible.addDialog = true">添加实例</el-button>
+        <el-button type="danger" :disabled="disabled.delete" @click="visible.deleteDialog = true">删除</el-button>
+        <el-table :data="caseData" border @selection-change="handleSelectCase">
+          <el-table-column type="selection" width="40px"> </el-table-column>
           <el-table-column property="id" label="序号" width="50"></el-table-column>
           <el-table-column property="element" label="要素" width="150"></el-table-column>
           <el-table-column property="name" label="名称" width="150"></el-table-column>
@@ -42,7 +45,48 @@
         </el-table>
         <div slot="footer" class="dialog-footer">
           <el-button @click="visible.editDialog = false">取 消</el-button>
-          <el-button type="primary" @click="handleSelectCommit">确 定</el-button>
+          <el-button type="primary" @click="handleEditCommit">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
+    <div id="add">
+      <!--todo:修改成可在表格内编辑的样式-->
+      <el-dialog width="40%" title="添加实例" :visible.sync="visible.addDialog" append-to-body>
+        <el-form :model="addForm" :rules="rules" ref="addForm" style="margin-right: 50px">
+          <el-form-item label="名称" label-width="120px" prop="name">
+            <el-input v-model="addForm.name" clearable placeholder="请输入名称"></el-input>
+          </el-form-item>
+          <!--          <el-form-item label="类型" label-width="120px" prop="element">-->
+          <!--            <el-select v-model="addForm.element" placeholder="请选择">-->
+          <!--              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>-->
+          <!--            </el-select>-->
+          <!--          </el-form-item>-->
+          <el-form-item label="描述" label-width="120px" prop="describe">
+            <el-input v-model="addForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入文字描述"> </el-input>
+          </el-form-item>
+          <el-form-item label="备注" label-width="120px" prop="content">
+            <el-input v-model="addForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入备注"> </el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="visible.addDialog = false">取 消</el-button>
+          <el-button type="primary" @click="handleAddCommit('addForm')">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
+    <div id="delete">
+      <el-dialog title="删除分析规则" :visible.sync="visible.deleteDialog" center>
+        <span>是否删除以下 {{ selectCase.length }} 条实例</span>
+        <el-card style="margin-top: 10px">
+          <el-table :data="selectCase" border>
+            <el-table-column property="id" label="序号" width="50"></el-table-column>
+            <el-table-column property="element" label="类别" width="150"></el-table-column>
+            <el-table-column property="name" label="名称"></el-table-column>
+          </el-table>
+        </el-card>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="visible.deleteDialog = false">取 消</el-button>
+          <el-button type="primary" @click="handleDeleteCommit">确 定</el-button>
         </div>
       </el-dialog>
     </div>
@@ -63,7 +107,9 @@ export default {
         page: 1 //第几页
       },
       visible: {
-        editDialog: false
+        editDialog: false,
+        addDialog: false,
+        deleteDialog: false
       },
       disabled: {
         edit: true,
@@ -77,11 +123,19 @@ export default {
         describe: '',
         remark: ''
       },
+      addForm: {
+        element: '',
+        name: '',
+        describe: '',
+        content: ''
+      },
       rules: {
         name: [{ required: true, message: '不能为空', trigger: 'blur' }],
         remark: [{ required: true, message: '不能为空', trigger: 'blur' }],
         describe: [{ required: true, message: '不能为空', trigger: 'blur' }],
-        type: [{ required: true, message: '不能为空', trigger: 'blur' }]
+        type: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        element: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        content: [{ required: true, message: '不能为空', trigger: 'blur' }]
       },
       options: [
         {
@@ -105,7 +159,8 @@ export default {
           label: '其他'
         }
       ],
-      addData: []
+      addData: [],
+      selectCase: []
     }
   },
   created() {
@@ -157,7 +212,7 @@ export default {
       this.getList()
     },
     handleSelection(val) {
-      console.log(val)
+      console.log('val', val[0])
       // 编辑按钮
       if (val.length === 1) {
         this.disabled.edit = false
@@ -175,17 +230,16 @@ export default {
       this.resetForm(formName)
     },
     handleAddCommit(formName) {
-      this.addData = []
-      this.addData.push(this.addForm)
+      this.addForm.element = this.editForm.type
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$http
-            .post('http://127.0.0.1:8000/api/add_rule', { selectData: this.addData, item: this.itemInfo })
+            .post('http://127.0.0.1:8000/api/add_case', { addData: this.addForm, rule: this.editForm })
             .then(response => {
               if (response.data.error_code === 0) {
                 alert('添加成功')
                 this.resetForm(formName)
-                this.pageList()
+                this.caseList()
               } else {
                 console.log(response.data)
               }
@@ -200,14 +254,24 @@ export default {
         }
       })
     },
+    caseList() {
+      this.$http
+        .post('http://127.0.0.1:8000/api/add_case_list', this.itemInfo.item_id)
+        .then(response => {
+          this.caseData = response.data.case_list
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+    },
     handleDeleteCommit() {
       this.$http
-        .post('http://127.0.0.1:8000/api/delete_rule', this.deleteData)
+        .post('http://127.0.0.1:8000/api/delete_case', this.selectCase)
         .then(response => {
           console.log(response.data)
           if (response.data.error_code === 0) {
             alert('删除成功')
-            this.pageList()
+            this.caseList()
             this.visible.deleteDialog = false
           }
         })
@@ -216,15 +280,21 @@ export default {
         })
     },
     handleSelect() {
-      this.$http
-        .post('http://127.0.0.1:8000/api/case_list', this.itemInfo.item_id)
-        .then(response => {
-          this.caseData = response.data.case_list
-        })
-        .catch(function(error) {
-          console.log(error)
-        })
+      this.caseList()
       this.visible.editDialog = true
+    },
+    handleEditCommit() {
+      this.visible.editDialog = false
+    },
+    handleSelectCase(val) {
+      console.log('case', val)
+      // 删除按钮
+      if (val.length === 0) {
+        this.disabled.delete = true
+      } else {
+        this.disabled.delete = false
+        this.selectCase = val
+      }
     }
   }
 }

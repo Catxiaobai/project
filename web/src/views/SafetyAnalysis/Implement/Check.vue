@@ -1,81 +1,37 @@
 <template>
-  <div id="generalCriteria">
-    <el-card style="margin-left: 10px;margin-right: 10px">
-      <div class="divForm">
-        <span>选择</span>
-        <el-button style="margin-left: 50px" type="primary" v-show="buttonShow" @click="handleReset">检验</el-button>
-        <span style="font-size: large;margin-left: 300px;margin-right: 10px">选择模型类型</span>
-        <el-select v-model="value" placeholder="请选择">
-          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
-        </el-select>
-        <!--        <el-radio-group v-model="radio" v-show="buttonShow" style="margin-left: 20px">-->
-        <!--          <el-radio :label="1">状态机</el-radio>-->
-        <!--          <el-radio :label="2">时序图</el-radio>-->
-        <!--          <el-radio :label="3">用例图</el-radio>-->
-        <!--          <el-radio :label="4">活动图</el-radio>-->
-        <!--        </el-radio-group>-->
-        <el-table
-          ref="multipleTable"
-          :data="tableData"
-          tooltip-effect="dark"
-          style="width: 100%;margin-top: 20px"
-          @selection-change="handleSelectionChange"
-          border
-          :header-cell-style="{ background: '#eef1f6', color: '#606266' }"
-        >
+  <div id="check">
+    <el-card>
+      <div id="search">
+        <el-input v-model="search" placeholder="按类别搜索" style="width: 300px" @input="pageList" />
+      </div>
+      <div id="actionButton" style="margin-left:73%;margin-bottom: 20px;margin-top: -40px">
+        <el-button type="primary" :disabled="disabled.verify" @click="verifyCase">检验</el-button>
+        <el-button type="primary" :disabled="disabled.reset" @click="resetCase">重置</el-button>
+        <!--        <el-button type="primary" @click="handleAdd('addForm')">增加</el-button>-->
+        <!--        <el-button type="success" :disabled="disabled.edit" @click="visible.editDialog = true">编辑</el-button>-->
+        <!--        <el-button type="danger" :disabled="disabled.delete" @click="visible.deleteDialog = true">删除</el-button>-->
+      </div>
+      <div id="table">
+        <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection">
           <el-table-column type="selection" width="40px"> </el-table-column>
-          <el-table-column label="序号" width="180px" align="center">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.id }}</span>
-            </template>
+          <el-table-column prop="id" label="序号" width="180"> </el-table-column>
+          <el-table-column prop="element" label="类别" width="180" :filters="filterData" :filter-method="filterType">
+            <!--todo: 筛选功能存在bug-->
           </el-table-column>
-          <el-table-column
-            label="类型"
-            width="180"
-            :filters="[
-              { text: '外部接口', value: '外部接口' },
-              { text: '功能处理', value: '功能处理' },
-              { text: '功能层次', value: '功能层次' },
-              { text: '状态迁移', value: '状态迁移' },
-              { text: '其他', value: '其他' }
-            ]"
-            :filter-method="filterGroup"
-          >
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.type }}</span>
-            </template>
-            <!--          <template slot-scope="scope">-->
-            <!--            <el-tag :type="scope.row.type === '属性一' ? 'primary' : 'success'" disable-transitions>{{ scope.row.type }}</el-tag>-->
-            <!--          </template>-->
-          </el-table-column>
-
-          <!--        <el-table-column label="名称" width="180px" align="center">-->
-          <!--          <template slot-scope="scope">-->
-          <!--            <span style="margin-left: 10px">{{ scope.row.name }}</span>-->
-          <!--          </template>-->
-          <!--        </el-table-column>-->
-          <el-table-column label="准则描述" align="center">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.content }}</span>
-            </template>
-          </el-table-column>
-          <!--        <el-table-column label="操作" align="center">-->
-          <!--          <template slot-scope="scope">-->
-          <!--            &lt;!&ndash;            <el-button size="mini" type="info" @click="handleShow(scope.$index, scope.row)">查看</el-button>&ndash;&gt;-->
-          <!--            <el-button size="mini" type="primary" @click="handleVerify(scope.$index, scope.row)">验证</el-button>-->
-          <!--            <el-button size="mini" type="info" @click="handleShow(scope.$index, scope.row)">查看完整验证信息</el-button>-->
-          <!--          </template>-->
-          <!--        </el-table-column>-->
+          <el-table-column prop="name" label="名称" width="180"> </el-table-column>
+          <el-table-column prop="describe" label="描述" width="180"> </el-table-column>
+          <el-table-column prop="content" label="备注"> </el-table-column>
         </el-table>
+      </div>
+      <div id="page">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="page"
-          :page-sizes="[1, 2, 4, 7, 10]"
-          :page-size="limit"
+          :current-page="pagination.page"
+          :page-sizes="[1, 2, 5, 7, 10]"
+          :page-size="pagination.limit"
           layout="total, sizes, prev, pager, next, jumper"
-          background
-          :total="total"
+          :total="pagination.total"
           style="margin-left: 30%;margin-top: 20px"
         >
         </el-pagination>
@@ -86,35 +42,76 @@
 
 <script>
 export default {
-  name: 'GeneralCriteria.vue',
+  name: 'Check.vue',
   data() {
     return {
-      limit: 7, //每页显示条数
-      total: 0, //项目总数
-      page: 1, //第几页
-      search: '', //搜索框
       tableData: [],
-      buttonShow: false,
-      radio: '3',
+      filterData: [
+        { text: '外部接口', value: '外部接口' },
+        { text: '功能处理', value: '功能处理' },
+        { text: '功能层次', value: '功能层次' },
+        { text: '状态迁移', value: '状态迁移' },
+        { text: '其他', value: '其他' }
+      ],
+      pagination: {
+        limit: 7, //每页显示条数
+        total: 0, //项目总数
+        page: 1 //第几页
+      },
+      search: '', //搜索框
+      visible: {
+        addDialog: false,
+        deleteDialog: false,
+        editDialog: false
+      },
+      disabled: {
+        reset: true,
+        verify: true
+      },
+      editForm: {
+        //修改时使用
+        name: '',
+        type: '',
+        describe: '',
+        remark: ''
+      },
+      addForm: {
+        //添加使用
+        name: '',
+        type: '',
+        describe: '',
+        remark: ''
+      },
+      resetData: [],
+      verifyData: [],
+      rules: {
+        name: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        remark: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        describe: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        type: [{ required: true, message: '不能为空', trigger: 'blur' }]
+      },
       options: [
         {
-          value: '状态机',
-          label: '状态机'
+          value: '外部接口',
+          label: '外部接口'
         },
         {
-          value: '时序图',
-          label: '时序图'
+          value: '功能处理',
+          label: '功能处理'
         },
         {
-          value: '用例图',
-          label: '用例图'
+          value: '功能层次',
+          label: '功能层次'
         },
         {
-          value: '活动图',
-          label: '活动图'
+          value: '状态迁移',
+          label: '状态迁移'
+        },
+        {
+          value: '其他',
+          label: '其他'
         }
-      ],
-      value: '状态机'
+      ]
     }
   },
   created() {
@@ -124,10 +121,10 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .get('http://127.0.0.1:8000/api/analysis_rule_list')
+        .get('http://127.0.0.1:8000/api/case_list')
         .then(response => {
-          // console.log(response.data.design_list)
-          this.data = response.data.analysis_list
+          // console.log(response.data.analysis_list)
+          this.data = response.data.case_list
           this.getList()
         })
         .catch(function(error) {
@@ -136,41 +133,47 @@ export default {
       // this.data = this.tableData
       // this.getList()
     },
-    // 处理数据
     getList() {
-      // es6过滤得到满足搜索条件的展示数据list
-      // eslint-disable-next-line no-unused-vars
-      // console.log({ test: this.search })
-      let list = this.data.filter((item, index) => item.type.includes(this.search))
+      // 处理数据，根据表格中name字段来筛选
+      let list = this.data.filter((item, index) => item.element.includes(this.search))
       // let list = this.data
-      this.tableData = list.filter((item, index) => index < this.page * this.limit && index >= this.limit * (this.page - 1))
-      this.total = list.length
+      this.tableData = list.filter(
+        (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
+      )
+      this.pagination.total = list.length
+      // console.log(this.tableData)
     },
-    // 当每页数量改变
+    filterType(value, row) {
+      console.log(value, row)
+      return row.type === value
+    },
     handleSizeChange(val) {
+      // 当每页数量改变
       console.log(`每页 ${val} 条`)
-      this.limit = val
+      this.pagination.limit = val
       this.getList()
     },
-    // 当当前页改变
     handleCurrentChange(val) {
+      // 当当前页改变
       console.log(`当前页: ${val}`)
-      this.page = val
+      this.pagination.page = val
       this.getList()
     },
-    handleSelectionChange(val) {
-      // this.multipleSelection = val
+    handleSelection(val) {
       console.log(val)
-      if (val.length > 0) {
-        this.buttonShow = true
+      // 删除按钮
+      if (val.length === 0) {
+        this.disabled.reset = true
+        this.disabled.verify = true
       } else {
-        this.buttonShow = false
+        this.disabled.reset = true
+        this.disabled.verify = true
+        this.resetData = val
+        this.verifyData = val
       }
     },
-    filterGroup(value, row) {
-      // console.log(value, row)
-      return row.type === value
-    }
+    verifyCase() {},
+    resetCase() {}
   }
 }
 </script>

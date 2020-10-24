@@ -38,6 +38,8 @@ urlpatterns = [
     path('add_rule', views.add_rule, name='add_rule'),  # 添加规则
     path('rules_list', views.rules_list, name='rules_list'),  # 规则集列表
     path('delete_rule', views.delete_rule, name='delete_rule'),  # 删除规则
-    path('case_list', views.case_list, name='case_list'),  # 实例列表
-
+    path('add_case_list', views.add_case_list, name='add_case_list'),  # 添加实例列表
+    path('add_case', views.add_case, name='add_case'),  # 添加实例
+    path('case_list', views.case_list, name='case_list'),  # 添加实例列表
+    path('delete_case', views.delete_case, name='delete_case'),  # 删除实例
 ]

@@ -307,7 +307,7 @@ def delete_rule(request):
 
 
 # 所选规则的实例列表
-def case_list(request):
+def add_case_list(request):
     request_json = json.loads(request.body)
     try:
         # print(request_json)
@@ -318,3 +318,47 @@ def case_list(request):
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS, "case_list": result})
+
+
+# 添加实例
+def add_case(request):
+    request_json = json.loads(request.body)
+    try:
+        print(request_json)
+        case = request_json['addData']
+        new_rule_id = request_json['rule']['id']
+        new_name = case['name']
+        new_describe = case['describe']
+        new_element = case['element']
+        new_content = case['content']
+        new_case = Case(case_name=new_name, case_describe=new_describe, case_content=new_content, case_element=new_element,
+                        rule_id=new_rule_id)
+        new_case.save()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 所有规则的实例列表
+def case_list(request):
+    try:
+        case = Case.objects.all()
+        result = [c.to_dict() for c in case]
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "case_list": result})
+
+
+# 删除实例
+def delete_case(request):
+    request_json = json.loads(request.body)
+    try:
+        # print(request_json)
+        for i in range(len(request_json)):
+            aim_id = request_json[i]['id']
+            if not Case.objects.filter(id=aim_id).exists():
+                return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+            Case.objects.get(id=aim_id).delete()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
