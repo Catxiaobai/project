@@ -115,3 +115,22 @@ class Rules(models.Model):
             'type': self.type,
             'item': self.item.id
         }
+
+
+# 实例
+class Case(models.Model):
+    rule = models.ForeignKey(Rules, on_delete=models.CASCADE)
+    case_element = models.TextField(default='')
+    case_name = models.TextField(default='', unique=True)
+    case_content = models.TextField(default='')
+    case_describe = models.TextField(default='')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.case_name,
+            'content': self.case_content,
+            'describe': self.case_describe,
+            'element': self.case_element,
+            'rule_id': self.rule.id
+        }

@@ -58,6 +58,7 @@ export default {
   data() {
     return {
       tableData: [],
+      itemInfo: '',
       filterData: [
         { text: '外部接口', value: '外部接口' },
         { text: '功能处理', value: '功能处理' },
@@ -113,9 +114,6 @@ export default {
       console.log(value, row)
       return row.type === value
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields()
-    },
     handleSizeChange(val) {
       // 当每页数量改变
       console.log(`每页 ${val} 条`)
@@ -136,20 +134,29 @@ export default {
         this.selectData = val
       }
     },
+    getItemInfo() {
+      this.itemInfo = this.$store.state.item
+      console.log(this.itemInfo)
+    },
     handleSelectCommit() {
-      // this.$http
-      //   .post('http://127.0.0.1:8000/api/delete_analysis_rule', this.deleteData)
-      //   .then(response => {
-      //     console.log(response.data)
-      //     if (response.data.error_code === 0) {
-      //       alert('删除成功')
-      //       this.pageList()
-      //       this.visible.deleteDialog = false
-      //     }
-      //   })
-      //   .catch(function(error) {
-      //     console.log(error)
-      //   })
+      this.getItemInfo()
+      this.visible.selectDialog = false
+      this.$http
+        .post('http://127.0.0.1:8000/api/add_rule', { selectData: this.selectData, item: this.itemInfo })
+        .then(response => {
+          console.log(response.data)
+          if (response.data.error_code === 0) {
+            alert('添加成功')
+            this.pageList()
+            this.visible.deleteDialog = false
+          }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
     }
   }
 }

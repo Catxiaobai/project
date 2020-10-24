@@ -35,4 +35,9 @@ urlpatterns = [
     path('add_scenes', views.add_scenes, name='add_scenes'),  # 添加场景
     path('edit_scenes', views.edit_scenes, name='edit_scenes'),  # 编辑场景
     path('delete_scenes', views.delete_scenes, name='delete_scenes'),  # 删除场景
+    path('add_rule', views.add_rule, name='add_rule'),  # 添加规则
+    path('rules_list', views.rules_list, name='rules_list'),  # 规则集列表
+    path('delete_rule', views.delete_rule, name='delete_rule'),  # 删除规则
+    path('case_list', views.case_list, name='case_list'),  # 实例列表
+
 ]

@@ -5,7 +5,7 @@ import subprocess
 import random
 
 from django.http import HttpResponse, JsonResponse
-from newfirst.models import Item, Personnel, DesignCriteria, AnalysisRules, Scenes
+from newfirst.models import Item, Personnel, DesignCriteria, AnalysisRules, Scenes, Rules, Case
 from server import error_code
 from django.shortcuts import render
 
@@ -255,3 +255,66 @@ def delete_scenes(request):
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 添加规则集
+def add_rule(request):
+    request_json = json.loads(request.body)
+    try:
+        print(request_json)
+        rule_list = request_json['selectData']
+        new_item_id = request_json['item']['item_id']
+        for i in range(len(rule_list)):
+            new_name = rule_list[i]['name']
+            new_describe = rule_list[i]['describe']
+            new_remark = rule_list[i]['remark']
+            new_type = rule_list[i]['type']
+            new_rule = Rules(name=new_name, describe=new_describe, remark=new_remark, type=new_type,
+                             item_id=new_item_id)
+            new_rule.save()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 规则集列表
+def rules_list(request):
+    request_json = json.loads(request.body)
+    try:
+        # print(request_json)
+        aim_item_id = request_json
+        rules = Rules.objects.filter(item_id=aim_item_id)
+        # rules = Rules.objects.all()
+        result = [r.to_dict() for r in rules]
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "rules_list": result})
+
+
+# 删除规则集的中规则
+def delete_rule(request):
+    request_json = json.loads(request.body)
+    try:
+        # print(request_json)
+        for i in range(len(request_json)):
+            aim_id = request_json[i]['id']
+            if not Rules.objects.filter(id=aim_id).exists():
+                return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+            Rules.objects.get(id=aim_id).delete()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 所选规则的实例列表
+def case_list(request):
+    request_json = json.loads(request.body)
+    try:
+        # print(request_json)
+        aim_rule_id = request_json
+        case = Case.objects.filter(rule_id=aim_rule_id)
+        # rules = Rules.objects.all()
+        result = [c.to_dict() for c in case]
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "case_list": result})

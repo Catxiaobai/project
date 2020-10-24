@@ -182,6 +182,7 @@ export default {
     handleOpen(index, row) {
       // console.log(row)
       this.bus.$emit('itemInfo', row)
+      this.$store.commit('changeItem', row)
     },
     handleAdd(formName) {
       this.visible.addDialog = true
