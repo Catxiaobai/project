@@ -7,7 +7,7 @@
       </el-select>
       <div id="fmea" v-show="divShow" style="margin-top: 20px">
         <div id="table">
-          <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection">
+          <el-table :data="tableData" border style="width: 100%">
             <el-table-column prop="id" label="序号" width="80" align="center"> </el-table-column>
             <el-table-column prop="type" label="失效描述" width="180" align="center"> </el-table-column>
             <el-table-column prop="reason" label="软件失效原因" width="120" align="center"> </el-table-column>
@@ -94,7 +94,7 @@ export default {
       this.$http
         .get('http://127.0.0.1:8000/api/fmea_list')
         .then(response => {
-          // console.log(response.data.analysis_list)
+          console.log(response.data.fmea_list)
           this.data = response.data.fmea_list
           this.getList()
         })

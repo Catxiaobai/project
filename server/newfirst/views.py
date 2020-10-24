@@ -405,8 +405,9 @@ def fmea_list(request):
     try:
         cases = Case.objects.filter(verify_result='danger')
         for c in cases:
-            new_fmea = Fmea(case=c)
-            new_fmea.save()
+            if not Fmea.objects.filter(case=c).exists():
+                new_fmea = Fmea(case=c)
+                new_fmea.save()
         fmeas = Fmea.objects.all()
         result = [f.to_dict() for f in fmeas]
     except Exception as e:
