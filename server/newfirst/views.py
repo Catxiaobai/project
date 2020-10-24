@@ -5,7 +5,7 @@ import subprocess
 import random
 
 from django.http import HttpResponse, JsonResponse
-from newfirst.models import Item, Personnel, DesignCriteria, AnalysisRules, Scenes, Rules, Case
+from newfirst.models import Item, Personnel, DesignCriteria, AnalysisRules, Scenes, Rules, Case, Fmea
 from server import error_code
 from django.shortcuts import render
 
@@ -389,6 +389,7 @@ def verify_case(request):
             if not Case.objects.filter(id=aim_id).exists():
                 return JsonResponse({**error_code.CLACK_NOT_EXISTS})
             a = random.randint(0, 1)
+            res = "unverified"
             if a == 0:
                 res = "safe"
             elif a == 1:
@@ -397,3 +398,17 @@ def verify_case(request):
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# fmea失效分析表
+def fmea_list(request):
+    try:
+        cases = Case.objects.filter(verify_result='danger')
+        for c in cases:
+            new_fmea = Fmea(case=c)
+            new_fmea.save()
+        fmeas = Fmea.objects.all()
+        result = [f.to_dict() for f in fmeas]
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "fmea_list": result})

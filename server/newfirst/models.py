@@ -140,13 +140,13 @@ class Case(models.Model):
 
 # 实例
 class Fmea(models.Model):
-    case = models.ForeignKey(Case, on_delete=models.CASCADE)
-    improve = models.TextField(default='')
-    reason = models.TextField(default='')
-    local_influence = models.TextField(default='')
-    upper_influence = models.TextField(default='')
-    system_influence = models.TextField(default='')
-    influence_level = models.TextField(default='')
+    case = models.ForeignKey(Case, on_delete=models.CASCADE, unique=True)
+    improve = models.TextField(default='', blank=True)
+    reason = models.TextField(default='', blank=True)
+    local_influence = models.TextField(default='', blank=True)
+    upper_influence = models.TextField(default='', blank=True)
+    system_influence = models.TextField(default='', blank=True)
+    influence_level = models.TextField(default='', blank=True)
 
     def to_dict(self):
         return {
@@ -164,7 +164,7 @@ class Fmea(models.Model):
 # 软件失效分析需求
 class Demand(models.Model):
     fmea = models.ForeignKey(Fmea, on_delete=models.CASCADE)
-    demand = models.TextField(default='')
+    demand = models.TextField(default='', blank=True)
 
     def to_dict(self):
         return {
