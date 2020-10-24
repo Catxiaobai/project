@@ -45,4 +45,7 @@ urlpatterns = [
     path('verify_case', views.verify_case, name='verify_case'),  # 验证实例
     path('reset_case', views.reset_case, name='reset_case'),  # 重置实例
     path('fmea_list', views.fmea_list, name='fmea_list'),  # fmea列表
+    path('edit_fmea', views.edit_fmea, name='edit_fmea'),  # 编辑fmea
+    path('demand_list', views.demand_list, name='demand_list'),  # 需求表
+    path('edit_demand', views.edit_demand, name='edit_demand'),  # 编辑需求表
 ]

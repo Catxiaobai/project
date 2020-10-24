@@ -5,7 +5,7 @@ import subprocess
 import random
 
 from django.http import HttpResponse, JsonResponse
-from newfirst.models import Item, Personnel, DesignCriteria, AnalysisRules, Scenes, Rules, Case, Fmea
+from newfirst.models import Item, Personnel, DesignCriteria, AnalysisRules, Scenes, Rules, Case, Fmea, Demand
 from server import error_code
 from django.shortcuts import render
 
@@ -413,3 +413,60 @@ def fmea_list(request):
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS, "fmea_list": result})
+
+
+# 编辑fmea
+def edit_fmea(request):
+    request_json = json.loads(request.body)
+    try:
+        aim_id = request_json['id']
+        new_case_id = request_json['case']
+        new_improve = request_json['improve']
+        new_influence_level = request_json['influence_level']
+        new_local_influence = request_json['local_influence']
+        new_reason = request_json['reason']
+        new_system_influence = request_json['system_influence']
+        new_upper_influence = request_json['upper_influence']
+        if not Fmea.objects.filter(id=aim_id).exists():
+            return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+        Fmea.objects.filter(id=aim_id).update(case_id=new_case_id)
+        Fmea.objects.filter(id=aim_id).update(improve=new_improve)
+        Fmea.objects.filter(id=aim_id).update(reason=new_reason)
+        Fmea.objects.filter(id=aim_id).update(local_influence=new_local_influence)
+        Fmea.objects.filter(id=aim_id).update(upper_influence=new_upper_influence)
+        Fmea.objects.filter(id=aim_id).update(system_influence=new_system_influence)
+        Fmea.objects.filter(id=aim_id).update(influence_level=new_influence_level)
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 需求表
+def demand_list(request):
+    try:
+        Fmeas = Fmea.objects.all()
+        for f in Fmeas:
+            if not Demand.objects.filter(fmea=f).exists():
+                new_demand = Demand(fmea=f)
+                new_demand.save()
+        demands = Demand.objects.all()
+        result = [d.to_dict() for d in demands]
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "demand_list": result})
+
+
+# 编辑需求表
+def edit_demand(request):
+    request_json = json.loads(request.body)
+    try:
+        aim_id = request_json['id']
+        new_fmea_id = request_json['fmea']
+        new_demand = request_json['demand']
+        if not Demand.objects.filter(id=aim_id).exists():
+            return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+        Demand.objects.filter(id=aim_id).update(fmea_id=new_fmea_id)
+        Demand.objects.filter(id=aim_id).update(demand=new_demand)
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})

@@ -9,15 +9,41 @@
         <div id="table">
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column prop="id" label="序号" width="80" align="center"> </el-table-column>
-            <el-table-column prop="type" label="失效描述" width="180" align="center"> </el-table-column>
-            <el-table-column prop="reason" label="软件失效原因" width="120" align="center"> </el-table-column>
-            <el-table-column label="软件失效影响" align="center">
-              <el-table-column prop="local_influence" label="本层影响" width="120" align="center"> </el-table-column>
-              <el-table-column prop="upper_influence" label="上一层影响" width="120" align="center"> </el-table-column>
-              <el-table-column prop="system_influence" label="系统影响" width="120" align="center"> </el-table-column>
+            <el-table-column prop="describe" label="失效描述" width="180" align="center"> </el-table-column>
+            <el-table-column prop="reason" label="软件失效原因" width="120" align="center">
+              <template slot-scope="scope">
+                <el-input class="tableCell" type="textarea" autosize v-model="scope.row.reason" @change="saveData(scope.row)"> </el-input>
+              </template>
             </el-table-column>
-            <el-table-column prop="influence_level" label="影响等级" width="180" align="center"> </el-table-column>
-            <el-table-column prop="improve" label="改进措施" align="center"> </el-table-column>
+            <el-table-column label="软件失效影响" align="center">
+              <el-table-column prop="local_influence" label="本层影响" width="120" align="center">
+                <template slot-scope="scope">
+                  <el-input class="tableCell" type="textarea" autosize v-model="scope.row.local_influence" @change="saveData(scope.row)"> </el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="upper_influence" label="上一层影响" width="120" align="center">
+                <template slot-scope="scope">
+                  <el-input class="tableCell" type="textarea" autosize v-model="scope.row.upper_influence" @change="saveData(scope.row)"> </el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="system_influence" label="系统影响" width="120" align="center">
+                <template slot-scope="scope">
+                  <el-input class="tableCell" type="textarea" autosize v-model="scope.row.system_influence" @change="saveData(scope.row)"> </el-input>
+                </template>
+              </el-table-column>
+            </el-table-column>
+            <el-table-column prop="influence_level" label="影响等级" width="180" align="center">
+              <template slot-scope="scope">
+                <el-select v-model="scope.row.influence_level" placeholder="请选择" style="border: 0;margin: 0;padding: 0" @change="saveData(scope.row)">
+                  <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+                </el-select>
+              </template>
+            </el-table-column>
+            <el-table-column prop="improve" label="改进措施" align="center">
+              <template slot-scope="scope">
+                <el-input class="tableCell" type="textarea" autosize v-model="scope.row.improve" @change="saveData(scope.row)"> </el-input>
+              </template>
+            </el-table-column>
           </el-table>
         </div>
         <div id="page">
@@ -53,6 +79,24 @@ export default {
         {
           value: '故障树',
           label: '故障树'
+        }
+      ],
+      options2: [
+        {
+          value: '灾难性的',
+          label: '灾难性的'
+        },
+        {
+          value: '严重的',
+          label: '严重的'
+        },
+        {
+          value: '一般的',
+          label: '一般的'
+        },
+        {
+          value: '轻微的',
+          label: '轻微的'
         }
       ],
       divShow: true,
@@ -106,16 +150,39 @@ export default {
     },
     getList() {
       // 处理数据，根据表格中name字段来筛选
-      // let list = this.data.filter((item, index) => item.name.includes(this.search))
-      let list = this.data
+      let list = this.data.filter((item, index) => item.describe.includes(this.search))
+      // let list = this.data
       this.tableData = list.filter(
         (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
       )
       this.pagination.total = list.length
       // console.log(this.tableData)
+    },
+    saveData(val) {
+      console.log(val)
+      this.$http
+        .post('http://127.0.0.1:8000/api/edit_fmea', val)
+        .then(response => {
+          if (response.data.error_code === 0) {
+            this.pageList()
+          } else {
+            console.log(response.data)
+          }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     }
   }
 }
 </script>
 
 <style scoped></style>
+<style lang="scss">
+.tableCell {
+  .el-textarea__inner {
+    border: none;
+    resize: none;
+  }
+}
+</style>

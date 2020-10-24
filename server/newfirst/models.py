@@ -164,12 +164,14 @@ class Fmea(models.Model):
 
 # 软件失效分析需求
 class Demand(models.Model):
-    fmea = models.ForeignKey(Fmea, on_delete=models.CASCADE)
+    fmea = models.OneToOneField(Fmea, on_delete=models.CASCADE)
     demand = models.TextField(default='', blank=True)
 
     def to_dict(self):
         return {
             'id': self.id,
             'demand': self.demand,
+            'improve': self.fmea.improve,
+            'describe': self.fmea.case.case_describe,
             'fmea': self.fmea.id,
         }
