@@ -47,18 +47,20 @@ class Item(models.Model):
 
 # 设计准则
 class DesignCriteria(models.Model):
-    name = models.TextField(default='', unique=True)
+    name = models.TextField(default='')
     describe = models.TextField(default='')
-    remark = models.TextField(default='')
+    # remark = models.TextField(default='', blank=True)
     type = models.TextField(default='')
+    element = models.TextField(default='')
 
     def to_dict(self):
         return {
             'id': self.id,
             'name': self.name,
             'describe': self.describe,
-            'remark': self.remark,
+            # 'remark': self.remark,
             'type': self.type,
+            'element': self.element
         }
 
 
@@ -138,7 +140,7 @@ class Case(models.Model):
         }
 
 
-# 实例
+# fmea失效分析
 class Fmea(models.Model):
     case = models.OneToOneField(Case, on_delete=models.CASCADE)
     improve = models.TextField(default='', blank=True)
@@ -174,4 +176,61 @@ class Demand(models.Model):
             'improve': self.fmea.improve,
             'describe': self.fmea.case.case_describe,
             'fmea': self.fmea.id,
+        }
+
+
+# 项目设计准则集
+class Design(models.Model):
+    name = models.TextField(default='', blank=True)
+    describe = models.TextField(default='')
+    type = models.TextField(default='')
+    element = models.TextField(default='')
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'describe': self.describe,
+            'type': self.type,
+            'element': self.element,
+            'item': self.item.id
+        }
+
+
+# 设计核查
+class DesignCheck(models.Model):
+    design = models.OneToOneField(Design, on_delete=models.CASCADE)
+    apply = models.TextField(default='', blank=True)
+    suitable = models.TextField(default='', blank=True)
+    problem = models.TextField(default='', blank=True)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'problem': self.problem,
+            'apply': self.apply,
+            'suitable': self.suitable,
+            'design': self.design.id,
+            'describe': self.design.describe,
+            'type': self.design.type,
+            'element': self.design.element,
+            'item': self.design.item_id
+        }
+
+
+# 设计完善
+class DesignComplete(models.Model):
+    designCheck = models.OneToOneField(DesignCheck, on_delete=models.CASCADE)
+    complete = models.TextField(default='', blank=True)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'complete': self.complete,
+            'check': self.designCheck.id,
+            'describe': self.designCheck.design.describe,
+            'type': self.designCheck.design.type,
+            'element': self.designCheck.design.element,
+            'item': self.designCheck.design.item_id
         }

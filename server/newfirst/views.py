@@ -5,7 +5,8 @@ import subprocess
 import random
 
 from django.http import HttpResponse, JsonResponse
-from newfirst.models import Item, Personnel, DesignCriteria, AnalysisRules, Scenes, Rules, Case, Fmea, Demand
+from newfirst.models import Item, Personnel, DesignCriteria, AnalysisRules, Scenes, Rules, Case, Fmea, Demand, \
+    DesignCheck, Design, DesignComplete
 from server import error_code
 from django.shortcuts import render
 
@@ -100,12 +101,10 @@ def add_design_criteria(request):
     request_json = json.loads(request.body)
     try:
         new_name = request_json['name']
-        new_type = request_json['type']
+        new_type = request_json['type'][-1]
         new_describe = request_json['describe']
-        new_remark = request_json['remark']
-        if DesignCriteria.objects.filter(name=new_name):
-            return JsonResponse({**error_code.CLACK_NAME_EXISTS})
-        new_rule = DesignCriteria(name=new_name, type=new_type, remark=new_remark, describe=new_describe)
+        new_element = request_json['element']
+        new_rule = DesignCriteria(type=new_type, describe=new_describe, element=new_element)
         new_rule.save()
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
@@ -117,16 +116,15 @@ def edit_design_criteria(request):
     request_json = json.loads(request.body)
     try:
         new_describe = request_json['describe']
-        new_remark = request_json['remark']
         aim_id = request_json['id']
         new_name = request_json['name']
-        new_type = request_json['type']
+        new_type = request_json['type'][-1]
+        new_element = request_json['element']
         if not DesignCriteria.objects.filter(id=aim_id).exists():
             return JsonResponse({**error_code.CLACK_NOT_EXISTS})
-        DesignCriteria.objects.filter(id=aim_id).update(name=new_name)
         DesignCriteria.objects.filter(id=aim_id).update(type=new_type)
         DesignCriteria.objects.filter(id=aim_id).update(describe=new_describe)
-        DesignCriteria.objects.filter(id=aim_id).update(remark=new_remark)
+        DesignCriteria.objects.filter(id=aim_id).update(element=new_element)
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
@@ -467,6 +465,54 @@ def edit_demand(request):
             return JsonResponse({**error_code.CLACK_NOT_EXISTS})
         Demand.objects.filter(id=aim_id).update(fmea_id=new_fmea_id)
         Demand.objects.filter(id=aim_id).update(demand=new_demand)
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 添加规则集
+def add_design(request):
+    request_json = json.loads(request.body)
+    try:
+        print(request_json)
+        design_list = request_json['selectData']
+        new_item_id = request_json['item']['item_id']
+        for i in range(len(design_list)):
+            new_name = design_list[i]['name']
+            new_describe = design_list[i]['describe']
+            new_element = design_list[i]['element']
+            new_type = design_list[i]['type'][-1]
+            new_design = Design(name=new_name, describe=new_describe, element=new_element, type=new_type,
+                                item_id=new_item_id)
+            new_design.save()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 规则集列表
+def designs_list(request):
+    request_json = json.loads(request.body)
+    try:
+        # print(request_json)
+        aim_item_id = request_json
+        designs = Design.objects.filter(item_id=aim_item_id)
+        # rules = Rules.objects.all()
+        result = [d.to_dict() for d in designs]
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "designs_list": result})
+
+# 删除规则集的中规则
+def delete_design(request):
+    request_json = json.loads(request.body)
+    try:
+        # print(request_json)
+        for i in range(len(request_json)):
+            aim_id = request_json[i]['id']
+            if not Design.objects.filter(id=aim_id).exists():
+                return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+            Design.objects.get(id=aim_id).delete()
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})

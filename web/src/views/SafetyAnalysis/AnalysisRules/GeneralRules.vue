@@ -1,5 +1,5 @@
 <template>
-  <div id="generalCriteria">
+  <div id="generalRules">
     <el-card>
       <div id="actionButton" style="margin-left: 50px">
         <el-button type="primary" :disabled="disabled.select" @click="visible.selectDialog = true">选择</el-button>
@@ -54,7 +54,7 @@
 
 <script>
 export default {
-  name: 'GeneralCriteria.vue',
+  name: 'GeneralRules.vue',
   data() {
     return {
       tableData: [],

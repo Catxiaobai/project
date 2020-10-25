@@ -1,300 +1,374 @@
 <template>
-  <div id="specialCriteria">
+  <div id="specialRules">
     <el-card style="margin-left: 10px;margin-right: 10px">
-      <div class="divForm">
-        <span>选择规则</span>
-        <el-button style="margin-left: 50px" type="primary" v-show="buttonShow" @click="handleReset">加入软件安全性设计准则库</el-button>
-        <!--        <el-button type="primary" icon="el-icon-plus" style="float: right;margin-bottom: 10px">添加新准则</el-button>-->
-        <el-table
-          ref="multipleTable"
-          :data="tableData"
-          tooltip-effect="dark"
-          style="width: 100%;margin-top: 20px"
-          @selection-change="handleSelectionChange"
-          border
-          :header-cell-style="{ background: '#eef1f6', color: '#606266' }"
-        >
+      <div id="actionButton" style="margin-left: 50px;margin-bottom: 20px">
+        <el-button type="primary" :disabled="disabled.select" @click="visible.selectDialog = true">选择加入设计准则库</el-button>
+        <el-button type="danger" :disabled="disabled.delete" @click="visible.deleteDialog = true">删除</el-button>
+        <el-button type="primary" style="margin-left: 60%" @click="handleAdd('addForm')">增加项目设计规则</el-button>
+      </div>
+      <div id="table">
+        <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection">
           <el-table-column type="selection" width="40px"> </el-table-column>
-          <el-table-column label="序号" width="180px" align="center">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.id }}</span>
-            </template>
+          <el-table-column prop="id" label="序号" width="180"> </el-table-column>
+          <el-table-column prop="element" label="要素" width="180" :filters="filterData" :filter-method="filterElement">
+            <!--todo: 筛选功能存在bug-->
           </el-table-column>
-          <el-table-column
-            label="要素"
-            width="180"
-            :filters="[
-              { text: '接口相关', value: '接口相关' },
-              { text: '功能处理', value: '功能处理' },
-              { text: '功能划分', value: '功能划分' },
-              { text: '状态迁移', value: '状态迁移' },
-              { text: '其他', value: '其他' }
-            ]"
-            :filter-method="filterGroup"
-          >
-            <template slot-scope="scope">
-              <span style="margin-left: 10px" v-show="!test1">{{ scope.row.group }}</span>
-              <el-select v-model="scope.row.group" placeholder="请选择" v-show="test1">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column label="类别" width="180">
-            <template slot-scope="scope">
-              <el-tag :type="scope.row.type === '硬件相关' ? 'primary' : 'success'" disable-transitions v-show="!test2">
-                {{ scope.row.type }}
-              </el-tag>
-              <el-cascader v-model="scope.row.type" :options="options2" @change="handleChange" :show-all-levels="false" v-show="test2"> </el-cascader>
-            </template>
-          </el-table-column>
-          <el-table-column label="准则描述" align="center">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px" v-show="!test3">{{ scope.row.content }}</span>
-              <textarea placeholder="输入准则描述" v-model="scope.row.content" v-show="test3"></textarea>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" align="center">
-            <template slot-scope="scope">
-              <!--              <el-button size="mini" type="info" @click="handleShow(scope.$index, scope.row)">查看</el-button>-->
-              <el-button size="mini" type="success" @click="handleSave(scope.$index, scope.row)">保存</el-button>
-              <el-button size="mini" type="danger" @click="handleShow(scope.$index, scope.row)">删除</el-button>
-            </template>
-          </el-table-column>
+          <el-table-column prop="type" label="类别" width="180"> </el-table-column>
+          <el-table-column prop="describe" label="描述"> </el-table-column>
         </el-table>
-        <el-button style="width: 100%" icon="el-icon-plus" @click="addCriteria"></el-button>
+      </div>
+      <div id="page">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="page"
-          :page-sizes="[1, 2, 4, 7, 10]"
-          :page-size="limit"
+          :current-page="pagination.page"
+          :page-sizes="[1, 2, 5, 7, 10]"
+          :page-size="pagination.limit"
           layout="total, sizes, prev, pager, next, jumper"
-          background
-          :total="total"
+          :total="pagination.total"
           style="margin-left: 30%;margin-top: 20px"
         >
         </el-pagination>
       </div>
     </el-card>
+    <div id="select">
+      <el-dialog title="选择" :visible.sync="visible.selectDialog">
+        <span>是否选择以下 {{ selectData.length }} 条分析规则</span>
+        <el-card style="margin-top: 10px">
+          <el-table :data="selectData" border>
+            <el-table-column property="id" label="序号" width="50"></el-table-column>
+            <el-table-column property="type" label="类别" width="150"></el-table-column>
+            <el-table-column property="name" label="名称"></el-table-column>
+          </el-table>
+        </el-card>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="visible.deleteDialog = false">取 消</el-button>
+          <el-button type="primary" @click="handleSelectCommit">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
+    <div id="add">
+      <el-dialog title="添加新的设计准则" :visible.sync="visible.addDialog" center>
+        <el-form :model="addForm" :rules="rules" ref="addForm">
+          <el-form-item label="要素" label-width="120px" prop="type">
+            <el-select v-model="addForm.element" placeholder="请选择">
+              <el-option v-for="item in options.element" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="类型" label-width="120px" prop="type">
+            <el-cascader v-model="addForm.type" :options="options.type" :show-all-levels="false"> </el-cascader>
+          </el-form-item>
+          <el-form-item label="描述" label-width="120px" prop="describe">
+            <el-input v-model="addForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入文字描述"> </el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <!--          <el-button @click="visible.addDialog = false">取 消</el-button>-->
+          <el-button type="primary" @click="handleAddCommit('addForm')">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
+    <div id="delete">
+      <el-dialog title="删除" :visible.sync="visible.deleteDialog" center>
+        <span>是否删除以下 {{ deleteData.length }} 条设计准则</span>
+        <el-card style="margin-top: 10px">
+          <el-table :data="deleteData" border>
+            <el-table-column property="id" label="序号" width="50"></el-table-column>
+            <el-table-column property="type" label="类别" width="150"></el-table-column>
+            <el-table-column property="describe" label="名称"></el-table-column>
+          </el-table>
+        </el-card>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="visible.deleteDialog = false">取 消</el-button>
+          <el-button type="primary" @click="handleDeleteCommit">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'SpecialCriteria.vue',
+  name: 'SpecialRules.vue',
   data() {
     return {
-      limit: 7, //每页显示条数
-      total: 0, //项目总数
-      page: 1, //第几页
-      search: '', //搜索框
       tableData: [],
-      buttonShow: false,
-      options: [
-        {
-          value: '接口相关',
-          label: '接口相关'
-        },
-        {
-          value: '功能处理',
-          label: '功能处理'
-        },
-        {
-          value: '功能划分',
-          label: '功能划分'
-        },
-        {
-          value: '状态迁移',
-          label: '状态迁移'
-        },
-        {
-          value: '其他',
-          label: '其他'
-        }
+      itemInfo: '',
+      search: '', //搜索框
+      pagination: {
+        limit: 7, //每页显示条数
+        total: 0, //项目总数
+        page: 1 //第几页
+      },
+      filterData: [
+        { text: '接口相关', value: '接口相关' },
+        { text: '功能处理相关', value: '功能处理相关' },
+        { text: '功能划分相关', value: '功能划分相关' },
+        { text: '状态迁移相关', value: '状态迁移相关' },
+        { text: '其他', value: '其他' }
       ],
-      options2: [
-        {
-          value: '接口相关',
-          label: '接口相关',
-          children: [
-            {
-              value: '与硬件相关',
-              label: '与硬件相关'
-            },
-            {
-              value: '软件模块间接口',
-              label: '软件模块间接口'
-            },
-            {
-              value: '人机接口',
-              label: '人机接口'
-            },
-            {
-              value: '数据设计',
-              label: '数据设计'
-            },
-            {
-              value: '人因安全设计',
-              label: '人因安全设计'
-            }
-          ]
-        },
-        {
-          value: '功能处理',
-          label: '功能处理',
-          children: [
-            {
-              value: '设计可追踪性',
-              label: '设计可追踪性'
-            },
-            {
-              value: '设计可追踪性',
-              label: '设计可追踪性'
-            },
-            {
-              value: '性能约束设计',
-              label: '性能约束设计'
-            }
-          ]
-        },
-        {
-          value: '功能划分',
-          label: '功能划分',
-          children: [
-            {
-              value: '独立性设计',
-              label: '独立性设计'
-            },
-            {
-              value: '体系结构设计',
-              label: '体系结构设计'
-            },
-            {
-              value: '中断设计',
-              label: '中断设计'
-            },
-            {
-              value: '同步设计',
-              label: '同步设计'
-            },
-            {
-              value: '人因安全设计',
-              label: '人因安全设计'
-            }
-          ]
-        },
-        {
-          value: '状态迁移',
-          label: '状态迁移',
-          children: [
-            {
-              value: '交叉传输机制设计',
-              label: '交叉传输机制设计'
-            },
-            {
-              value: '表决监控机制设计',
-              label: '表决监控机制设计'
-            }
-          ]
-        },
-        {
-          value: '其他',
-          label: '其他',
-          children: [
-            {
-              value: '编码规范',
-              label: '编码规范'
-            }
-          ]
-        }
-      ],
-      value: '',
-      test1: true,
-      test2: true,
-      test3: true,
-      test_id: 1
+      visible: {
+        addDialog: false,
+        selectDialog: false,
+        deleteDialog: false
+      },
+      disabled: {
+        select: true,
+        delete: true
+      },
+      selectData: [],
+      deleteData: [],
+      addForm: {
+        //添加使用
+        name: '',
+        type: '',
+        describe: '',
+        element: ''
+      },
+      rules: {
+        name: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        element: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        describe: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        type: [{ required: true, message: '不能为空', trigger: 'blur' }]
+      },
+      options: {
+        element: [
+          {
+            value: '接口相关设计',
+            label: '接口相关设计'
+          },
+          {
+            value: '功能处理相关设计',
+            label: '功能处理相关设计'
+          },
+          {
+            value: '功能划分相关设计',
+            label: '功能划分相关设计'
+          },
+          {
+            value: '状态迁移相关设计',
+            label: '状态迁移相关设计'
+          },
+          {
+            value: '其他设计',
+            label: '其他设计'
+          }
+        ],
+        type: [
+          {
+            value: '接口相关设计',
+            label: '接口相关设计',
+            children: [
+              {
+                value: '与硬件相关接口设计',
+                label: '与硬件相关接口设计'
+              },
+              {
+                value: '软件模块间接口设计',
+                label: '软件模块间接口设计'
+              },
+              {
+                value: '人机接口设计',
+                label: '人机接口设计'
+              },
+              {
+                value: '数据设计',
+                label: '数据设计'
+              },
+              {
+                value: '人因安全性设计',
+                label: '人因安全性设计'
+              }
+            ]
+          },
+          {
+            value: '功能处理相关设计',
+            label: '功能处理相关设计',
+            children: [
+              {
+                value: '设计可追踪性',
+                label: '设计可追踪性'
+              },
+              {
+                value: '过程设计',
+                label: '过程设计'
+              },
+              {
+                value: '性能约束设计',
+                label: '性能约束设计'
+              }
+            ]
+          },
+          {
+            value: '功能划分相关设计',
+            label: '功能划分相关设计',
+            children: [
+              {
+                value: '独立性设计',
+                label: '独立性设计'
+              },
+              {
+                value: '体系结构设计',
+                label: '体系结构设计'
+              },
+              {
+                value: '中断设计',
+                label: '中断设计'
+              },
+              {
+                value: '同步设计',
+                label: '同步设计'
+              }
+            ]
+          },
+          {
+            value: '状态迁移相关设计',
+            label: '状态迁移相关设计',
+            children: [
+              {
+                value: '交叉传输机制设计',
+                label: '交叉传输机制设计'
+              },
+              {
+                value: '表决监控机制设计',
+                label: '表决监控机制设计'
+              }
+            ]
+          },
+          {
+            value: '其他设计',
+            label: '其他设计',
+            children: [
+              {
+                value: '编码规范',
+                label: '编码规范'
+              }
+            ]
+          }
+        ]
+      },
+      addData: []
     }
   },
   created() {
+    this.getItemInfo()
     this.pageList()
   },
   methods: {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
-      // this.$http
-      //   .get('http://127.0.0.1:8000/api/design_criteria_list')
-      //   .then(response => {
-      //     // console.log(response.data.design_list)
-      //     this.data = response.data.design_list
-      //     this.getList()
-      //   })
-      //   .catch(function(error) {
-      //     console.log(error)
-      //   })
-      this.data = this.tableData
-      this.getList()
+      this.$http
+        .post('http://127.0.0.1:8000/api/designs_list', this.itemInfo.item_id)
+        .then(response => {
+          this.data = response.data.designs_list
+          this.getList()
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+      // this.data = this.tableData
+      // this.getList()
     },
-    // 处理数据
     getList() {
-      // es6过滤得到满足搜索条件的展示数据list
-      // eslint-disable-next-line no-unused-vars
-      // console.log({ test: this.search })
-      let list = this.data.filter((item, index) => item.type.includes(this.search))
+      // 处理数据，根据表格中name字段来筛选
+      let list = this.data.filter((item, index) => item.name.includes(this.search))
       // let list = this.data
-      this.tableData = list.filter((item, index) => index < this.page * this.limit && index >= this.limit * (this.page - 1))
-      this.total = list.length
+      this.tableData = list.filter(
+        (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
+      )
+      this.pagination.total = list.length
+      // console.log(this.tableData)
     },
-    // 当每页数量改变
+    filterElement(value, row) {
+      console.log(value, row)
+      return row.element === value
+    },
     handleSizeChange(val) {
+      // 当每页数量改变
       console.log(`每页 ${val} 条`)
-      this.limit = val
+      this.pagination.limit = val
       this.getList()
     },
-    // 当当前页改变
     handleCurrentChange(val) {
+      // 当当前页改变
       console.log(`当前页: ${val}`)
-      this.page = val
+      this.pagination.page = val
       this.getList()
     },
-    handleSelectionChange(val) {
-      // this.multipleSelection = val
-      console.log(val)
-      if (val.length > 0) {
-        this.buttonShow = true
+    handleSelection(val) {
+      if (val.length === 0) {
+        this.disabled.select = true
+        this.disabled.delete = true
       } else {
-        this.buttonShow = false
+        this.disabled.select = false
+        this.selectData = val
+        this.disabled.delete = false
+        this.deleteData = val
       }
     },
-    filterGroup(value, row) {
-      // console.log(value, row)
-      return row.group === value
+    getItemInfo() {
+      this.itemInfo = this.$store.state.item
+      console.log('ss', this.itemInfo)
     },
-    addCriteria() {
-      this.test1 = true
-      this.test2 = true
-      this.test3 = true
-      this.data.push({
-        id: this.test_id,
-        name: '',
-        content: '',
-        group: '',
-        type: ''
+    handleSelectCommit() {
+      // this.getItemInfo()
+      // this.visible.selectDialog = false
+      // this.$http
+      //     .post('http://127.0.0.1:8000/api/add_rule', { selectData: this.selectData, item: this.itemInfo })
+      //     .then(response => {
+      //       console.log(response.data)
+      //       if (response.data.error_code === 0) {
+      //         alert('添加成功')
+      //         this.pageList()
+      //         this.visible.deleteDialog = false
+      //       }
+      //     })
+      //     .catch(function(error) {
+      //       console.log(error)
+      //     })
+    },
+    handleAdd(formName) {
+      this.visible.addDialog = true
+    },
+    handleAddCommit(formName) {
+      this.addData = []
+      this.addData.push(this.addForm)
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.$http
+            .post('http://127.0.0.1:8000/api/add_design', { selectData: this.addData, item: this.itemInfo })
+            .then(response => {
+              if (response.data.error_code === 0) {
+                alert('添加成功')
+                this.pageList()
+              } else {
+                console.log(response.data)
+              }
+            })
+            .catch(function(error) {
+              console.log(error)
+            })
+          this.visible.addDialog = false
+        } else {
+          console.log('error submit!!')
+          return false
+        }
       })
-      this.getList()
     },
-    handleSave(index, row) {
-      console.log(index, row)
-      console.log(this.data)
-      this.data[this.test_id - 1].content = row.content
-      this.data[this.test_id - 1].group = row.group
-      this.data[this.test_id - 1].type = row.type[1]
-      this.test_id++
-      this.test1 = false
-      this.test2 = false
-      this.test3 = false
-    },
-    handleChange(value) {
-      console.log(value)
+    handleDeleteCommit() {
+      this.$http
+        .post('http://127.0.0.1:8000/api/delete_design', this.deleteData)
+        .then(response => {
+          console.log(response.data)
+          if (response.data.error_code === 0) {
+            alert('删除成功')
+            this.pageList()
+            this.visible.deleteDialog = false
+          }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     }
   }
 }

@@ -48,4 +48,7 @@ urlpatterns = [
     path('edit_fmea', views.edit_fmea, name='edit_fmea'),  # 编辑fmea
     path('demand_list', views.demand_list, name='demand_list'),  # 需求表
     path('edit_demand', views.edit_demand, name='edit_demand'),  # 编辑需求表
+    path('add_design', views.add_design, name='add_design'),  # 添加准则库
+    path('designs_list', views.designs_list, name='designs_list'),  # 规则集列表
+    path('delete_design', views.delete_design, name='delete_design'),  # 删除规则
 ]
