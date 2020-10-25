@@ -51,4 +51,8 @@ urlpatterns = [
     path('add_design', views.add_design, name='add_design'),  # 添加准则库
     path('designs_list', views.designs_list, name='designs_list'),  # 规则集列表
     path('delete_design', views.delete_design, name='delete_design'),  # 删除规则
+    path('check_list', views.check_list, name='check_list'),  # 设计核查
+    path('edit_check', views.edit_check, name='edit_check'),  # 编辑设计核查
+    path('complete_list', views.complete_list, name='complete_list'),  # 设计完善
+    path('edit_complete', views.edit_complete, name='edit_complete'),  # 编辑设计完善
 ]

@@ -232,5 +232,6 @@ class DesignComplete(models.Model):
             'describe': self.designCheck.design.describe,
             'type': self.designCheck.design.type,
             'element': self.designCheck.design.element,
+            'problem': self.designCheck.problem,
             'item': self.designCheck.design.item_id
         }

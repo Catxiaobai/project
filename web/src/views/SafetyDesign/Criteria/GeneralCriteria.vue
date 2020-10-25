@@ -143,11 +143,13 @@ export default {
       this.$http
         .post('http://127.0.0.1:8000/api/add_design', { selectData: this.selectData, item: this.itemInfo })
         .then(response => {
-          console.log(response.data)
           if (response.data.error_code === 0) {
             alert('添加成功')
             this.pageList()
             this.visible.deleteDialog = false
+          } else {
+            console.log(response.data)
+            alert(response.data.error_message)
           }
         })
         .catch(function(error) {

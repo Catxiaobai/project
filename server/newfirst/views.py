@@ -481,7 +481,9 @@ def add_design(request):
             new_name = design_list[i]['name']
             new_describe = design_list[i]['describe']
             new_element = design_list[i]['element']
-            new_type = design_list[i]['type'][-1]
+            new_type = design_list[i]['type']
+            if Design.objects.filter(describe=new_describe, type=new_type, element=new_element).exists():
+                return JsonResponse({**error_code.CLACK_NAME_EXISTS})
             new_design = Design(name=new_name, describe=new_describe, element=new_element, type=new_type,
                                 item_id=new_item_id)
             new_design.save()
@@ -503,6 +505,7 @@ def designs_list(request):
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS, "designs_list": result})
 
+
 # 删除规则集的中规则
 def delete_design(request):
     request_json = json.loads(request.body)
@@ -513,6 +516,74 @@ def delete_design(request):
             if not Design.objects.filter(id=aim_id).exists():
                 return JsonResponse({**error_code.CLACK_NOT_EXISTS})
             Design.objects.get(id=aim_id).delete()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 设计核查
+def check_list(request):
+    try:
+        designs = Design.objects.all()
+        for d in designs:
+            if not DesignCheck.objects.filter(design=d).exists():
+                new_design = DesignCheck(design=d)
+                new_design.save()
+        designCheck = DesignCheck.objects.all()
+        result = [d.to_dict() for d in designCheck]
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "check_list": result})
+
+
+# 编辑设计核查
+def edit_check(request):
+    request_json = json.loads(request.body)
+    try:
+        aim_id = request_json['id']
+        new_design_id = request_json['design']
+        new_problem = request_json['problem']
+        new_suitable = request_json['suitable']
+        new_apply = request_json['apply']
+        if not DesignCheck.objects.filter(id=aim_id).exists():
+            return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+        DesignCheck.objects.filter(id=aim_id).update(design_id=new_design_id)
+        DesignCheck.objects.filter(id=aim_id).update(apply=new_apply)
+        DesignCheck.objects.filter(id=aim_id).update(suitable=new_suitable)
+        DesignCheck.objects.filter(id=aim_id).update(problem=new_problem)
+        if DesignComplete.objects.filter(designCheck_id=aim_id).exists():
+            DesignComplete.objects.get(designCheck_id=aim_id).delete()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 设计完善
+def complete_list(request):
+    try:
+        checks = DesignCheck.objects.filter(apply='适用', suitable='不符合')
+        for c in checks:
+            if not DesignComplete.objects.filter(designCheck=c).exists():
+                new_complete = DesignComplete(designCheck=c)
+                new_complete.save()
+        designCompletes = DesignComplete.objects.all()
+        result = [d.to_dict() for d in designCompletes]
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "complete_list": result})
+
+
+# 编辑设计完善
+def edit_complete(request):
+    request_json = json.loads(request.body)
+    try:
+        aim_id = request_json['id']
+        new_check_id = request_json['check']
+        new_complete = request_json['complete']
+        if not DesignComplete.objects.filter(id=aim_id).exists():
+            return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+        DesignComplete.objects.filter(id=aim_id).update(designCheck_id=new_check_id)
+        DesignComplete.objects.filter(id=aim_id).update(complete=new_complete)
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})

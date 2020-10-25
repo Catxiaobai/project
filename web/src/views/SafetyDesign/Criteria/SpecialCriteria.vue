@@ -332,6 +332,7 @@ export default {
     },
     handleAddCommit(formName) {
       this.addData = []
+      this.addForm.type = this.addForm.type[this.addForm.type.length - 1]
       this.addData.push(this.addForm)
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -343,6 +344,7 @@ export default {
                 this.pageList()
               } else {
                 console.log(response.data)
+                alert(response.data.error_messsage)
               }
             })
             .catch(function(error) {
