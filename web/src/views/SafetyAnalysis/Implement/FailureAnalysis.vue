@@ -60,7 +60,47 @@
           </el-pagination>
         </div>
       </div>
-      <div id="faultTree" v-show="!divShow">tree</div>
+      <div id="faultTree" v-show="!divShow">
+        <div style="margin-top: 20px">
+          <div id="table2">
+            <el-table :data="tableData2" border style="width: 100%">
+              <el-table-column prop="id" label="事件编号" width="80" align="center"> </el-table-column>
+              <el-table-column prop="name" label="事件名称" width="180" align="center"> </el-table-column>
+              <el-table-column prop="logic" label="逻辑门" width="180" align="center">
+                <template slot-scope="scope">
+                  <el-select v-model="scope.row.logic" placeholder="请选择" style="border: 0;margin: 0;padding: 0">
+                    <el-option v-for="item in options3" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+                  </el-select>
+                </template>
+              </el-table-column>
+              <el-table-column prop="node" label="节点数" align="center">
+                <template slot-scope="scope">
+                  <el-input class="tableCell" type="textarea" autosize v-model="scope.row.node"> </el-input>
+                </template>
+              </el-table-column>
+              <el-table-column prop="event" label="节点事件" align="center">
+                <template slot-scope="scope">
+                  <el-input class="tableCell" type="textarea" autosize v-model="scope.row.event"> </el-input>
+                </template>
+              </el-table-column>
+            </el-table>
+            <el-button style="width: 100%;background: beige">add</el-button>
+          </div>
+          <div id="page2">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="pagination.page"
+              :page-sizes="[1, 2, 5, 7, 10]"
+              :page-size="pagination.limit"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="pagination.total"
+              style="margin-left: 30%;margin-top: 20px"
+            >
+            </el-pagination>
+          </div>
+        </div>
+      </div>
     </el-card>
   </div>
 </template>
@@ -71,6 +111,60 @@ export default {
   data() {
     return {
       value: 'FMEA',
+      tableData2: [
+        {
+          id: 0,
+          name: 'T1',
+          logic: '与门',
+          node: '3',
+          event: 'G1、G2、G3'
+        },
+        {
+          id: 1,
+          name: 'G1',
+          logic: '与门',
+          node: '3',
+          event: 'G1、G2、G3'
+        },
+        {
+          id: 2,
+          name: 'G2',
+          logic: '或门',
+          node: '2',
+          event: 'G1、G2、G3'
+        },
+        {
+          id: 3,
+          name: 'G3',
+          logic: '与门',
+          node: '2',
+          event: 'G1、G2、G3'
+        },
+        {
+          id: 4,
+          name: 'G4',
+          logic: '或门',
+          node: '2',
+          event: 'G1、G2、G3'
+        },
+        {
+          id: 5,
+          name: 'G5',
+          logic: '或门',
+          node: '2',
+          event: 'G1、G2、G3'
+        }
+      ],
+      options3: [
+        {
+          value: '与门',
+          label: '与门'
+        },
+        {
+          value: '或门',
+          label: '或门'
+        }
+      ],
       options: [
         {
           value: 'FMEA',

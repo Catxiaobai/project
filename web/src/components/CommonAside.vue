@@ -2,10 +2,6 @@
   <div id="common-aside">
     <div id="aside-content">
       <el-menu id="menu" router :default-active="$route.path">
-        <el-menu-item id="noChildren" :index="item.path" v-for="item in noChildren" :key="item.path" @click="clickMenu(item)">
-          <i :class="'el-icon-' + item.icon"></i>
-          <span class="name" slot="title">{{ item.label }}</span>
-        </el-menu-item>
         <el-submenu id="hasChildren" :index="item.path" v-for="item in hasChildren" :key="item.path" @click="clickMenu(item)">
           <template slot="title" id="title">
             <i :class="'el-icon-' + item.icon"></i>
@@ -20,6 +16,10 @@
             </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
+        <el-menu-item id="noChildren" :index="item.path" v-for="item in noChildren" :key="item.path" @click="clickMenu(item)">
+          <i :class="'el-icon-' + item.icon"></i>
+          <span class="name" slot="title">{{ item.label }}</span>
+        </el-menu-item>
       </el-menu>
     </div>
     <div id="aside-right"></div>

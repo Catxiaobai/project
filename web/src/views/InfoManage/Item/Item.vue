@@ -59,7 +59,7 @@
       </el-dialog>
     </div>
     <div id="add2">
-      <el-dialog title="基于已有项目添加" :visible.sync="visible.addDialog2" center @close="resetForm('addForm2')">
+      <el-dialog title="基于已有项目添加" :visible.sync="visible.addDialog2" center>
         <el-form :model="addForm2" :rules="rules" ref="addForm">
           <el-form-item label="名称" label-width="120px" prop="name">
             <el-input v-model="addForm2.name" clearable placeholder="请输入名称"></el-input>
@@ -186,7 +186,6 @@ export default {
     },
     handleAdd(formName) {
       this.visible.addDialog = true
-      this.resetForm(formName)
     },
     handleAddCommit(formName) {
       this.$refs[formName].validate(valid => {
@@ -196,7 +195,6 @@ export default {
             .then(response => {
               if (response.data.error_code === 0) {
                 alert('添加成功')
-                this.resetForm(formName)
                 this.pageList()
               } else {
                 console.log(response.data)
@@ -301,7 +299,6 @@ export default {
     },
     handleAddBasedExist(formName) {
       this.visible.addDialog2 = true
-      this.resetForm(formName)
     }
   }
 }

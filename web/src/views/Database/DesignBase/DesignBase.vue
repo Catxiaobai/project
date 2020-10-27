@@ -15,7 +15,7 @@
           <el-table-column type="selection" width="40px"> </el-table-column>
           <el-table-column prop="id" label="序号" width="180"> </el-table-column>
           <el-table-column prop="element" label="要素" width="180" :filters="filterData1" :filter-method="filterElement">
-            <!--todo: 筛选功能存在bug-->
+            <!--todo: 筛选功能存在bug，依旧分页显示-->
           </el-table-column>
           <el-table-column prop="type" label="类别" width="180"> </el-table-column>
           <el-table-column prop="describe" label="描述"> </el-table-column>
@@ -36,18 +36,16 @@
       </div>
     </el-card>
     <div id="add">
-      <el-dialog title="添加新的设计准则" :visible.sync="visible.addDialog" center>
+      <el-dialog title="添加新的设计准则" :visible.sync="visible.addDialog" center @close="resetForm('addForm')">
         <el-form :model="addForm" :rules="rules" ref="addForm">
-          <!--          <el-form-item label="名称" label-width="120px" prop="name">-->
-          <!--            <el-input v-model="addForm.name" clearable placeholder="请输入名称"></el-input>-->
-          <!--          </el-form-item>-->
           <el-form-item label="要素" label-width="120px" prop="type">
-            <el-select v-model="addForm.element" placeholder="请选择">
-              <el-option v-for="item in options.element" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+            <el-select v-model="addForm.element" placeholder="请选择" @change="test">
+              <el-option v-for="item in options.element" :key="item.value" :value="item.value"> </el-option>
             </el-select>
           </el-form-item>
+          <!--todo: 类型和要素没有关联-->
           <el-form-item label="类型" label-width="120px" prop="type">
-            <el-cascader v-model="addForm.type" :options="options.type" :show-all-levels="false"> </el-cascader>
+            <el-cascader v-model="addForm.type" :options="options.type" :show-all-levels="false" @change="test"> </el-cascader>
           </el-form-item>
           <el-form-item label="描述" label-width="120px" prop="describe">
             <el-input v-model="addForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入文字描述"> </el-input>
@@ -145,7 +143,7 @@ export default {
       addForm: {
         //添加使用
         name: '',
-        type: '',
+        type: [],
         describe: '',
         element: ''
       },
@@ -311,9 +309,10 @@ export default {
       console.log(value, row)
       return row.type === value
     },
-    // resetForm(formName) {
-    //   this.$refs[formName].resetFields()
-    // },
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
+      this.addForm.element = ''
+    },
     handleSizeChange(val) {
       // 当每页数量改变
       console.log(`每页 ${val} 条`)
@@ -406,6 +405,9 @@ export default {
         .catch(function(error) {
           console.log(error)
         })
+    },
+    test() {
+      console.log(this.addForm)
     }
   }
 }

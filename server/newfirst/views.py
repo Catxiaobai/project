@@ -340,8 +340,10 @@ def add_case(request):
 
 # 所有规则的实例列表
 def case_list(request):
+    request_json = json.loads(request.body)
     try:
-        case = Case.objects.all()
+        aim_item_id = request_json
+        case = Case.objects.filter(rule__item=aim_item_id)
         result = [c.to_dict() for c in case]
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})

@@ -11,10 +11,16 @@
         <el-button type="danger" :disabled="disabled.delete" @click="visible.deleteDialog = true">删除</el-button>
       </div>
       <div id="table">
-        <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection">
+        <el-table
+          :data="tableData"
+          border
+          style="width: 100%"
+          @selection-change="handleSelection"
+          :default-sort="({ prop: 'type', order: '' }, { prop: 'id', order: '' })"
+        >
           <el-table-column type="selection" width="40px"> </el-table-column>
-          <el-table-column prop="id" label="序号" width="180"> </el-table-column>
-          <el-table-column prop="type" label="类别" width="180" :filters="filterData" :filter-method="filterType">
+          <el-table-column prop="id" label="序号" width="180" sortable> </el-table-column>
+          <el-table-column prop="type" label="类别" width="180" :filters="filterData" :filter-method="filterType" sortable>
             <!--todo: 筛选功能存在bug-->
           </el-table-column>
           <el-table-column prop="name" label="名称" width="180"> </el-table-column>
@@ -244,7 +250,6 @@ export default {
     },
     handleAdd(formName) {
       this.visible.addDialog = true
-      this.resetForm(formName)
     },
     handleAddCommit(formName) {
       this.$refs[formName].validate(valid => {
@@ -254,7 +259,6 @@ export default {
             .then(response => {
               if (response.data.error_code === 0) {
                 alert('添加成功')
-                this.resetForm(formName)
                 this.pageList()
               } else {
                 console.log(response.data)

@@ -14,7 +14,7 @@
         <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection">
           <el-table-column type="selection" width="40px"> </el-table-column>
           <el-table-column prop="id" label="序号" width="80"> </el-table-column>
-          <el-table-column prop="element" label="要素" width="180" :filters="filterData" :filter-method="filterType">
+          <el-table-column prop="type" label="类别" width="180" :filters="filterData" :filter-method="filterType">
             <!--todo: 筛选功能存在bug-->
           </el-table-column>
           <el-table-column prop="name" label="名称" width="180"> </el-table-column>
@@ -114,11 +114,12 @@ export default {
     return {
       tableData: [],
       filterData: [
-        { text: '外部接口', value: '外部接口' },
-        { text: '功能处理', value: '功能处理' },
-        { text: '功能层次', value: '功能层次' },
-        { text: '状态迁移', value: '状态迁移' },
-        { text: '其他', value: '其他' }
+        { text: '任务剖面', value: '任务剖面' },
+        { text: '功能要求', value: '功能要求' },
+        { text: '性能要求', value: '性能要求' },
+        { text: '时序要求', value: '时序要求' },
+        { text: '接口要求', value: '接口要求' },
+        { text: '环境条件', value: '环境条件' }
       ],
       pagination: {
         limit: 7, //每页显示条数

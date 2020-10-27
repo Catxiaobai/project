@@ -14,7 +14,7 @@
         <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection">
           <el-table-column type="selection" width="40px"> </el-table-column>
           <el-table-column prop="id" label="序号" width="80"> </el-table-column>
-          <el-table-column prop="element" label="要素" width="180" :filters="filterData" :filter-method="filterType">
+          <el-table-column prop="element" label="类别" width="180" :filters="filterData" :filter-method="filterType">
             <!--todo: 筛选功能存在bug-->
           </el-table-column>
           <el-table-column prop="name" label="名称" width="180"> </el-table-column>
@@ -42,7 +42,7 @@
     <div id="add">
       <el-dialog title="添加新的场景" :visible.sync="visible.addDialog" center @close="resetForm('addForm')">
         <el-form :model="addForm" :rules="rules" ref="addForm">
-          <el-form-item label="要素" label-width="120px" prop="element">
+          <el-form-item label="类别" label-width="120px" prop="element">
             <el-select v-model="addForm.element" placeholder="请选择">
               <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
             </el-select>
@@ -114,11 +114,10 @@ export default {
     return {
       tableData: [],
       filterData: [
-        { text: '外部接口', value: '外部接口' },
+        { text: '外部交联环境', value: '外部交联环境' },
         { text: '功能处理', value: '功能处理' },
         { text: '功能层次', value: '功能层次' },
-        { text: '状态迁移', value: '状态迁移' },
-        { text: '其他', value: '其他' }
+        { text: '状态迁移', value: '状态迁移' }
       ],
       pagination: {
         limit: 7, //每页显示条数

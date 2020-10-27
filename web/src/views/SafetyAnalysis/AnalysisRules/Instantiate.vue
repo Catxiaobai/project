@@ -116,6 +116,13 @@ export default {
         delete: true
       },
       caseData: [],
+      filterData: [
+        { text: '外部接口', value: '外部接口' },
+        { text: '功能处理', value: '功能处理' },
+        { text: '功能层次', value: '功能层次' },
+        { text: '状态迁移', value: '状态迁移' },
+        { text: '其他', value: '其他' }
+      ],
       editForm: {
         id: '',
         name: '',
@@ -184,8 +191,8 @@ export default {
     },
     getList() {
       // 处理数据，根据表格中name字段来筛选
-      let list = this.data.filter((item, index) => item.name.includes(this.search))
-      // let list = this.data
+      // let list = this.data.filter((item, index) => item.name.includes(this.search))
+      let list = this.data
       this.tableData = list.filter(
         (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
       )
@@ -255,8 +262,9 @@ export default {
       })
     },
     caseList() {
+      console.log(this.editForm)
       this.$http
-        .post('http://127.0.0.1:8000/api/add_case_list', this.itemInfo.item_id)
+        .post('http://127.0.0.1:8000/api/add_case_list', this.editForm.id)
         .then(response => {
           this.caseData = response.data.case_list
         })

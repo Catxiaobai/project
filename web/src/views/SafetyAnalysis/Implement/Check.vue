@@ -112,17 +112,19 @@ export default {
           value: '其他',
           label: '其他'
         }
-      ]
+      ],
+      itemInfo: ''
     }
   },
   created() {
+    this.getItemInfo()
     this.pageList()
   },
   methods: {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .get('http://127.0.0.1:8000/api/case_list')
+        .post('http://127.0.0.1:8000/api/case_list', this.itemInfo.item_id)
         .then(response => {
           // console.log(response.data.analysis_list)
           this.data = response.data.case_list
@@ -201,6 +203,10 @@ export default {
         .catch(function(error) {
           console.log(error)
         })
+    },
+    getItemInfo() {
+      this.itemInfo = this.$store.state.item
+      console.log('ss', this.itemInfo)
     }
   }
 }
