@@ -11,13 +11,19 @@
         <el-button type="danger" :disabled="disabled.delete" @click="visible.deleteDialog = true">删除</el-button>
       </div>
       <div id="table">
-        <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection">
+        <el-table
+          :data="tableData"
+          border
+          style="width: 100%"
+          @selection-change="handleSelection"
+          :default-sort="({ prop: 'type', order: '' }, { prop: 'id', order: '' }, { prop: 'element', order: '' })"
+        >
           <el-table-column type="selection" width="40px"> </el-table-column>
-          <el-table-column prop="id" label="序号" width="180"> </el-table-column>
-          <el-table-column prop="element" label="要素" width="180" :filters="filterData1" :filter-method="filterElement">
+          <el-table-column prop="id" label="序号" width="180" sortable> </el-table-column>
+          <el-table-column prop="element" label="要素" width="180" :filters="filterData.element" :filter-method="filterElement" sortable>
             <!--todo: 筛选功能存在bug，依旧分页显示-->
           </el-table-column>
-          <el-table-column prop="type" label="类别" width="180"> </el-table-column>
+          <el-table-column prop="type" label="类别" width="180" sortable :filters="filterData.type" :filter-method="filterElement"> </el-table-column>
           <el-table-column prop="describe" label="描述"> </el-table-column>
         </el-table>
       </div>
@@ -104,20 +110,22 @@ export default {
   data() {
     return {
       tableData: [],
-      filterData1: [
-        { text: '接口相关设计', value: '接口相关设计' },
-        { text: '功能处理相关设计', value: '功能处理相关设计' },
-        { text: '功能划分相关设计', value: '功能划分相关设计' },
-        { text: '状态迁移相关设计', value: '状态迁移相关设计' },
-        { text: '其他设计', value: '其他设计' }
-      ],
-      filterData2: [
-        { text: '接口相关设计', value: '接口相关设计' },
-        { text: '功能处理相关设计', value: '功能处理相关设计' },
-        { text: '功能划分相关设计', value: '功能划分相关设计' },
-        { text: '状态迁移相关设计', value: '状态迁移相关设计' },
-        { text: '其他设计', value: '其他设计' }
-      ],
+      filterData: {
+        element: [
+          { text: '接口相关设计', value: '接口相关设计' },
+          { text: '功能处理相关设计', value: '功能处理相关设计' },
+          { text: '功能划分相关设计', value: '功能划分相关设计' },
+          { text: '状态迁移相关设计', value: '状态迁移相关设计' },
+          { text: '其他设计', value: '其他设计' }
+        ],
+        type: [
+          { text: '接口相关设计', value: '接口相关设计' },
+          { text: '功能处理相关设计', value: '功能处理相关设计' },
+          { text: '功能划分相关设计', value: '功能划分相关设计' },
+          { text: '状态迁移相关设计', value: '状态迁移相关设计' },
+          { text: '其他设计', value: '其他设计' }
+        ]
+      },
       pagination: {
         limit: 7, //每页显示条数
         total: 0, //项目总数

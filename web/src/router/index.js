@@ -35,6 +35,48 @@ const routes = [
         component: () => import('@/views/InfoManage/Item/Item')
       },
       {
+        path: '/analysisBase',
+        name: 'analysisBase',
+        component: () => import('@/views/Database/AnalysisBase/AnalysisBase')
+      },
+      {
+        path: '/designBase',
+        name: 'designBase',
+        component: () => import('@/views/Database/DesignBase/DesignBase')
+      },
+      {
+        path: '/authority',
+        name: 'authority',
+        component: () => import('@/views/InfoManage/System/Authority')
+      },
+      {
+        path: '/personnel',
+        name: 'personnel',
+        component: () => import('@/views/InfoManage/System/Personnel')
+      },
+      {
+        path: '/tools',
+        name: 'tools',
+        component: () => import('@/views/InfoManage/System/Tools')
+      }
+    ]
+  },
+  {
+    path: '/itemMain',
+    name: 'itemMain',
+    component: () => import('@/views/ItemMain'),
+    children: [
+      {
+        path: '/itemMain',
+        name: 'home',
+        component: () => import('@/views/Home/Home')
+      },
+      // {
+      //   path: '/item',
+      //   name: 'item',
+      //   component: () => import('@/views/InfoManage/Item/Item')
+      // },
+      {
         path: '/generalRules',
         name: 'generalRules',
         component: () => import('@/views/SafetyAnalysis/AnalysisRules/GeneralRules')
@@ -103,31 +145,6 @@ const routes = [
         path: '/verification',
         name: 'verification',
         component: () => import('@/views/SafetyDesign/Verification/Verification')
-      },
-      {
-        path: '/authority',
-        name: 'authority',
-        component: () => import('@/views/InfoManage/System/Authority')
-      },
-      {
-        path: '/personnel',
-        name: 'personnel',
-        component: () => import('@/views/InfoManage/System/Personnel')
-      },
-      {
-        path: '/tools',
-        name: 'tools',
-        component: () => import('@/views/InfoManage/System/Tools')
-      },
-      {
-        path: '/analysisBase',
-        name: 'analysisBase',
-        component: () => import('@/views/Database/AnalysisBase/AnalysisBase')
-      },
-      {
-        path: '/designBase',
-        name: 'designBase',
-        component: () => import('@/views/Database/DesignBase/DesignBase')
       },
       {
         path: '/subSceneInfo',

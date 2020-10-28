@@ -16,64 +16,34 @@
         </div>
       </div>
     </div>
-    <div id="bottom"></div>
-    <!--    <div id="bottom">-->
-    <!--      <div id="mainMenu">-->
-    <!--        <el-menu id="el-menu" default-active="2" mode="horizontal" @select="handleSelect" text-color="#fff" active-text-color="#ffd04b">-->
-    <!--          <div id="headMenu">-->
-    <!--            <el-menu-item index="2">平台信息管理</el-menu-item>-->
-    <!--            <el-menu-item index="3">安全性数据库管理</el-menu-item>-->
-    <!--          </div>-->
-    <!--          <div id="itemMenu" class="itemMenu" v-show="divSubMenuVisible">-->
-    <!--            <span style="text-align: center;margin-top: 15px;font-family: 华文行楷;font-size: 24px;width: 100px">-->
-    <!--              {{ itemInfo.item_name }}-->
-    <!--            </span>-->
-    <!--            <el-menu-item index="0">软件安全性分析</el-menu-item>-->
-    <!--            <el-menu-item index="1">软件安全性设计</el-menu-item>-->
-    <!--            <el-button icon="el-icon-close" circle @click="closeSubMenu"></el-button>-->
-    <!--          </div>-->
-    <!--          &lt;!&ndash;        <el-menu-item index="4">项目管理</el-menu-item>&ndash;&gt;-->
-    <!--        </el-menu>-->
-    <!--      </div>-->
-    <!--      &lt;!&ndash;      <div id="subMenu" v-show="divSubMenuVisible">&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <div id="itemTitle" class="itemTitle">&ndash;&gt;-->
-    <!--      &lt;!&ndash;          <span>{{ itemInfo.item_name }}</span>&ndash;&gt;-->
-    <!--      &lt;!&ndash;          <el-button icon="el-icon-close" circle @click="closeSubMenu"></el-button>&ndash;&gt;-->
-    <!--      &lt;!&ndash;        </div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <div id="itemMenu" class="itemMenu">&ndash;&gt;-->
-    <!--      &lt;!&ndash;          <el-button @click="selectAnalysis">软件安全性分析</el-button>&ndash;&gt;-->
-    <!--      &lt;!&ndash;          <el-button @click="selectDesign">软件安全性设计</el-button>&ndash;&gt;-->
-    <!--      &lt;!&ndash;          &lt;!&ndash;            <el-menu-item index="0">软件安全性分析</el-menu-item>&ndash;&gt;&ndash;&gt;-->
-    <!--      &lt;!&ndash;          &lt;!&ndash;            <el-menu-item index="1">软件安全性设计</el-menu-item>&ndash;&gt;&ndash;&gt;-->
-    <!--      &lt;!&ndash;        </div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;      </div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;      <div id="tab" style="height: 100%">&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <div class="leftCube" id="qwqwq"></div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <div class="cube"></div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <div class="rightCube"></div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <el-button @click="test">add</el-button>&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <el-button @click="del">del</el-button>&ndash;&gt;-->
-    <!--      &lt;!&ndash;      </div>&ndash;&gt;-->
-    <!--    </div>-->
-    <!--    <div id="bottom2">-->
-    <!--      <el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">-->
-    <!--        <el-submenu index="1">-->
-    <!--          <template slot="title">平台信息管理</template>-->
-    <!--          <el-submenu index="1-1">-->
-    <!--            <template slot="title">系统管理</template>-->
-    <!--            <el-menu-item index="2-4-1">人员管理</el-menu-item>-->
-    <!--            <el-menu-item index="2-4-2">权限管理</el-menu-item>-->
-    <!--            <el-menu-item index="2-4-3">工具说明</el-menu-item>-->
-    <!--          </el-submenu>-->
-    <!--          <el-menu-item index="1-2">项目管理</el-menu-item>-->
-    <!--        </el-submenu>-->
-    <!--        <el-submenu index="2">-->
-    <!--          <template slot="title">安全性数据库管理</template>-->
-    <!--          <el-menu-item index="2-1">分析规则库</el-menu-item>-->
-    <!--          <el-menu-item index="2-2">设计准则库</el-menu-item>-->
-    <!--        </el-submenu>-->
-    <!--      </el-menu>-->
-    <!--    </div>-->
+    <div id="bottom2">
+      <el-menu
+        router
+        class="el-menu-demo"
+        mode="horizontal"
+        @select="handleSelect"
+        background-color="#545c64"
+        text-color="#fff"
+        active-text-color="#ffd04b"
+        :default-active="$route.path"
+      >
+        <el-submenu index="1">
+          <template slot="title">平台信息管理</template>
+          <el-submenu index="1-1">
+            <template slot="title">系统管理</template>
+            <el-menu-item index="/personnel">人员管理</el-menu-item>
+            <el-menu-item index="/authority">权限管理</el-menu-item>
+            <el-menu-item index="/tools">工具说明</el-menu-item>
+          </el-submenu>
+          <el-menu-item index="/item">项目管理</el-menu-item>
+        </el-submenu>
+        <el-submenu index="2">
+          <template slot="title">安全性数据库管理</template>
+          <el-menu-item index="/analysisBase">分析规则库</el-menu-item>
+          <el-menu-item index="/designBase">设计准则库</el-menu-item>
+        </el-submenu>
+      </el-menu>
+    </div>
   </div>
 </template>
 
@@ -304,7 +274,6 @@ export default {
   methods: {
     handleSelect(key, keyPath) {
       // console.log(key, keyPath)
-      // console.log(this.menuList[key])
       this.bus.$emit('transferMenuData', this.menuList[key])
     },
     selectAnalysis() {
@@ -359,7 +328,7 @@ export default {
   flex-direction: column;
   #top {
     display: flex;
-    //height: 60px;
+    height: 60px;
     #left-content {
       width: 100%;
       display: flex;
@@ -368,7 +337,7 @@ export default {
         width: 65px;
       }
       #leftTitle {
-        //height: 60px;
+        height: 60px;
         font-size: xx-large;
         font-weight: bold;
         font-family: 楷体;
@@ -385,122 +354,117 @@ export default {
     }
   }
   #bottom {
-    height: 10px;
     background: #b4d2ea;
-    margin-top: -2px;
+    #tab {
+      display: flex;
+    }
+
+    height: 100%;
+    //width: 100%;
+    background: #545c64;
+    display: flex;
+    #mainMenu {
+      height: 100%;
+      //width: 60%;
+      #el-menu {
+        display: flex;
+        height: 100%;
+        width: 100%;
+      }
+    }
+    //#subMenu {
+    //  width: 400px;
+    //  height: 100%;
+    //  //background: greenyellow;
+    //  #itemTitle {
+    //    height: 40%;
+    //    margin-top: 5.5px;
+    //    margin-left: 45%;
+    //    //text-align: center;
+    //    background: greenyellow;
+    //  }
+    //  #itemMenu {
+    //    height: 50%;
+    //    margin-top: 0;
+    //    background: yellow;
+    //  }
+    //}
   }
-  //#bottom {
-  //  background: #b4d2ea;
-  //  #tab {
-  //    display: flex;
-  //  }
-  //
-  //  height: 100%;
-  //  //width: 100%;
-  //  background: #545c64;
-  //  display: flex;
-  //  #mainMenu {
-  //    height: 100%;
-  //    //width: 60%;
-  //    #el-menu {
-  //      display: flex;
-  //      height: 100%;
-  //      width: 100%;
-  //    }
-  //  }
-  //  //#subMenu {
-  //  //  width: 400px;
-  //  //  height: 100%;
-  //  //  //background: greenyellow;
-  //  //  #itemTitle {
-  //  //    height: 40%;
-  //  //    margin-top: 5.5px;
-  //  //    margin-left: 45%;
-  //  //    //text-align: center;
-  //  //    background: greenyellow;
-  //  //  }
-  //  //  #itemMenu {
-  //  //    height: 50%;
-  //  //    margin-top: 0;
-  //  //    background: yellow;
-  //  //  }
-  //  //}
-  //}
 }
 
-//#itemMenu {
-//  //background: white;
-//  //background: #545c64;
-//  display: flex;
-//  //height: 80%;
-//}
-//#headMenu {
-//  //background: gold;
-//  background: #545c64;
-//  display: flex;
-//}
+#itemMenu {
+  //background: white;
+  //background: #545c64;
+  display: flex;
+  //height: 80%;
+}
+#headMenu {
+  //background: gold;
+  background: #545c64;
+  display: flex;
+}
 </style>
-<!--<style lang="scss">-->
-<!--.itemMenu {-->
-<!--  .el-menu-item {-->
-<!--    height: 95%;-->
-<!--    //margin-top: 10px;-->
-<!--    background: #545c64;-->
-<!--    //display: flex;-->
-<!--  }-->
-<!--  .el-button {-->
-<!--    width: 20px;-->
-<!--    height: 20px;-->
-<!--    padding: 0;-->
-<!--    margin-top: 15px;-->
-<!--    margin-left: 15px;-->
-<!--    margin-right: 15px;-->
-<!--  }-->
-<!--}-->
-<!--.itemTitle {-->
-<!--  .el-button {-->
-<!--    //height: 10px;-->
-<!--    //border: 0;-->
-<!--    padding: 0;-->
-<!--    margin: 0 0 0 60%;-->
-<!--  }-->
-<!--}-->
-<!--.leftCube {-->
-<!--  width: 130px;-->
-<!--  height: 40px;-->
-<!--  border: whitesmoke 1px solid;-->
-<!--  background: #d7e7f2;-->
-<!--  color: #333;-->
-<!--  margin-left: 30px;-->
-<!--  border-top-left-radius: 5px;-->
-<!--  filter: progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=4);-->
-<!--  -moz-box-shadow: 2px 2px 10px #909090; /*firefox*/-->
-<!--  -webkit-box-shadow: 2px 2px 10px #909090; /*safari或chrome*/-->
-<!--  box-shadow: 2px 2px 10px #909090; /*opera或ie9*/-->
-<!--}-->
-<!--.cube {-->
-<!--  width: 130px;-->
-<!--  height: 40px;-->
-<!--  border: whitesmoke 1px solid;-->
-<!--  background: #d7e7f2;-->
-<!--  margin-left: -1px;-->
-<!--  color: #333;-->
-<!--  filter: progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=4);-->
-<!--  -moz-box-shadow: 2px 2px 10px #909090; /*firefox*/-->
-<!--  -webkit-box-shadow: 2px 2px 10px #909090; /*safari或chrome*/-->
-<!--  box-shadow: 2px 2px 10px #909090; /*opera或ie9*/-->
-<!--}-->
-<!--.rightCube {-->
-<!--  width: 130px;-->
-<!--  height: 40px;-->
-<!--  border: whitesmoke 1px solid;-->
-<!--  background: #d7e7f2;-->
-<!--  margin-left: -1px;-->
-<!--  color: #333;-->
-<!--  border-top-right-radius: 5px;-->
-<!--  filter: progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=4);-->
-<!--  -moz-box-shadow: 2px 2px 10px #909090; /*firefox*/-->
-<!--  -webkit-box-shadow: 2px 2px 10px #909090; /*safari或chrome*/-->
-<!--  box-shadow: 2px 2px 10px #909090; /*opera或ie9*/-->
-<!--}-->
-<!--</style>-->
+<style lang="scss">
+.itemMenu {
+  .el-menu-item {
+    height: 95%;
+    //margin-top: 10px;
+    background: #545c64;
+    //display: flex;
+  }
+  .el-button {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin-top: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
+.itemTitle {
+  .el-button {
+    //height: 10px;
+    //border: 0;
+    padding: 0;
+    margin: 0 0 0 60%;
+  }
+}
+.leftCube {
+  width: 130px;
+  height: 40px;
+  border: whitesmoke 1px solid;
+  background: #d7e7f2;
+  color: #333;
+  margin-left: 30px;
+  border-top-left-radius: 5px;
+  filter: progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=4);
+  -moz-box-shadow: 2px 2px 10px #909090; /*firefox*/
+  -webkit-box-shadow: 2px 2px 10px #909090; /*safari或chrome*/
+  box-shadow: 2px 2px 10px #909090; /*opera或ie9*/
+}
+.cube {
+  width: 130px;
+  height: 40px;
+  border: whitesmoke 1px solid;
+  background: #d7e7f2;
+  margin-left: -1px;
+  color: #333;
+  filter: progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=4);
+  -moz-box-shadow: 2px 2px 10px #909090; /*firefox*/
+  -webkit-box-shadow: 2px 2px 10px #909090; /*safari或chrome*/
+  box-shadow: 2px 2px 10px #909090; /*opera或ie9*/
+}
+.rightCube {
+  width: 130px;
+  height: 40px;
+  border: whitesmoke 1px solid;
+  background: #d7e7f2;
+  margin-left: -1px;
+  color: #333;
+  border-top-right-radius: 5px;
+  filter: progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=4);
+  -moz-box-shadow: 2px 2px 10px #909090; /*firefox*/
+  -webkit-box-shadow: 2px 2px 10px #909090; /*safari或chrome*/
+  box-shadow: 2px 2px 10px #909090; /*opera或ie9*/
+}
+</style>

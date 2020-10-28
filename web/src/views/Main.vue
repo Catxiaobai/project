@@ -1,31 +1,36 @@
 <template>
   <div id="main">
+    <!--    <el-container>-->
+    <!--      <el-header id="el-header">-->
+    <!--        <common-header />-->
+    <!--      </el-header>-->
+    <!--      <el-container>-->
+    <!--        <el-aside id="el-aside">-->
+    <!--          <common-aside />-->
+    <!--        </el-aside>-->
+    <!--        <el-main id="el-main">-->
+    <!--          <common-main />-->
+    <!--        </el-main>-->
+    <!--      </el-container>-->
+    <!--    </el-container>-->
     <el-container>
       <el-header id="el-header">
-        <common-header />
+        <main-header />
       </el-header>
-      <el-container>
-        <el-aside id="el-aside">
-          <common-aside />
-        </el-aside>
-        <el-main id="el-main">
-          <common-main />
-        </el-main>
-      </el-container>
+      <el-main id="el-main">
+        <router-view />
+      </el-main>
     </el-container>
   </div>
 </template>
 
 <script>
-import CommonAside from '@/components/CommonAside'
-import CommonHeader from '@/components/CommonHeader'
-import CommonMain from '@/components/CommonMain'
+import MainHeader from '@/components/MainHeader'
+
 export default {
   name: 'Main.vue',
   components: {
-    CommonHeader,
-    CommonAside,
-    CommonMain
+    MainHeader
   }
 }
 </script>
@@ -33,10 +38,7 @@ export default {
 <style scoped>
 #el-header {
   padding: 0;
-  height: 117px !important;
-}
-#el-aside {
-  width: 260px !important;
+  height: 120px !important;
 }
 #el-main {
   padding: 0;

@@ -23,9 +23,9 @@
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button size="mini" type="success" @click="handleOpen(scope.$index, scope.row)">进入</el-button>
+            <el-button size="mini" type="success" @click="handleOpen(scope.$index, scope.row)">打开</el-button>
             <!--            <el-button size="mini" type="info" @click="handleShow(scope.$index, scope.row)">查看</el-button>-->
-            <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <!--            <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
             <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -181,8 +181,9 @@ export default {
     },
     handleOpen(index, row) {
       // console.log(row)
-      this.bus.$emit('itemInfo', row)
+      // this.bus.$emit('itemInfo', row)
       this.$store.commit('changeItem', row)
+      this.$router.replace('/itemMain')
     },
     handleAdd(formName) {
       this.visible.addDialog = true
