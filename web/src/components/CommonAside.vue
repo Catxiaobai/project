@@ -1,7 +1,7 @@
 <template>
   <div id="common-aside">
     <div id="aside-content" style="height: 100%">
-      <el-menu router :default-active="$route.path" class="el-menu-vertical-demo" style="height: 100%">
+      <el-menu router :default-active="$route.path" style="height: 100%">
         <el-submenu index="1">
           <template slot="title">
             <i class="el-icon-folder"></i>
@@ -52,7 +52,6 @@
         </el-submenu>
       </el-menu>
     </div>
-    <div id="aside-right"></div>
   </div>
 </template>
 
@@ -61,77 +60,15 @@ export default {
   name: 'CommonAside.vue',
   data() {
     return {
-      asideMenu: [
+      asideMenu: [],
+      value: '',
+      options: [
         {
-          path: '/item',
-          name: 'item',
-          label: '项目管理',
-          icon: 's-claim'
-        },
-        {
-          path: '/infoManage/system1',
-          name: 'system',
-          label: '软件安全性分析',
-          icon: 's-claim',
-          children: [
-            {
-              path: '/personnel',
-              name: 'personnel',
-              label: '使用场景建模'
-            },
-            {
-              path: '/authority',
-              name: 'authority',
-              label: '分析规则设置'
-            },
-            {
-              path: '/tools',
-              name: 'tools',
-              label: '分析实施'
-            },
-            {
-              path: '/tools',
-              name: 'tools',
-              label: '软件安全性需求管理'
-            }
-          ]
-        },
-        {
-          path: '/infoManage/system',
-          name: 'system',
-          label: '软件安全性设计',
-          icon: 's-claim',
-          children: [
-            {
-              path: '/personnel',
-              name: 'personnel',
-              label: '设计准则设置',
-              children: [
-                {
-                  path: '/personnel',
-                  name: 'personnel',
-                  label: '通用设计准则选择'
-                },
-                {
-                  path: '/authority',
-                  name: 'authority',
-                  label: '项目设计准则库'
-                }
-              ]
-            },
-            {
-              path: '/authority',
-              name: 'authority',
-              label: '核查实施'
-            },
-            {
-              path: '/tools',
-              name: 'tools',
-              label: '设计完善'
-            }
-          ]
+          value: 'ss',
+          label: 'ss'
         }
-      ]
+      ],
+      itemInfo: 'test'
     }
   },
   methods: {
@@ -140,24 +77,22 @@ export default {
         this.$router.push({ name: item.name })
       }
       // this.$store.commit('selectMenu', item)
+    },
+    getItemInfo() {
+      this.itemInfo = this.$store.state.item
+      console.log('item', this.itemInfo)
     }
   },
-  computed: {
-    noChildren() {
-      return this.asideMenu.filter(item => !item.children)
-    },
-    hasChildren() {
-      // console.log(
-      //   'hasChildren',
-      //   this.asideMenu.filter(item => item.children)
-      // )
-      return this.asideMenu.filter(item => item.children)
-    },
-    hasChildren2(data) {
-      data = this.asideMenu
-      return data.filter(item => item.children)
-    }
-  }
+  mounted() {
+    this.getItemInfo()
+  },
+  updated() {
+    this.getItemInfo()
+  },
+  created() {
+    this.getItemInfo()
+  },
+  computed: {}
 }
 </script>
 
@@ -167,31 +102,9 @@ export default {
   width: 100%;
   height: 100%;
   font-weight: bold;
-  display: flex;
+  //display: flex;
   #aside-content {
     width: 100%;
-    height: 100%;
-    #menu {
-      height: 100%;
-      //background: skyblue;
-      #noChildren {
-        //background: yellow;
-        font-size: 18px;
-      }
-      #hasChildren {
-        //background: moccasin;
-        #child {
-          background: whitesmoke;
-        }
-      }
-      .name {
-        font-size: 14px;
-      }
-    }
-  }
-  #aside-right {
-    background: skyblue;
-    width: 5px;
     height: 100%;
   }
 }

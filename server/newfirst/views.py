@@ -150,13 +150,18 @@ def add_item(request):
     request_json = json.loads(request.body)
     try:
         new_name = request_json['name']
-        new_introduction = request_json['introduction']
-        new_content = 'new_content'
-        # new_date = "2020-10-23"
-        if Item.objects.filter(item_name=new_name):
+        new_software = request_json['software']
+        new_team = request_json['team']
+        new_level = request_json['level']
+        new_path = request_json['path']
+
+        if Item.objects.filter(name=new_name):
             return JsonResponse({**error_code.CLACK_NAME_EXISTS})
-        new_item = Item(item_name=new_name, item_introduction=new_introduction,
-                        item_content=new_content)
+        new_item = Item(name=new_name,
+                        software=new_software,
+                        team=new_team,
+                        level=new_level,
+                        path=new_path)
         new_item.save()
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
@@ -183,7 +188,7 @@ def edit_item(request):
 def delete_item(request):
     request_json = json.loads(request.body)
     try:
-        aim_id = request_json['item_id']
+        aim_id = request_json['id']
         Item.objects.get(id=aim_id).delete()
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})

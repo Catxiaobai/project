@@ -16,64 +16,10 @@
         </div>
       </div>
     </div>
-    <div id="bottom"></div>
-    <!--    <div id="bottom">-->
-    <!--      <div id="mainMenu">-->
-    <!--        <el-menu id="el-menu" default-active="2" mode="horizontal" @select="handleSelect" text-color="#fff" active-text-color="#ffd04b">-->
-    <!--          <div id="headMenu">-->
-    <!--            <el-menu-item index="2">平台信息管理</el-menu-item>-->
-    <!--            <el-menu-item index="3">安全性数据库管理</el-menu-item>-->
-    <!--          </div>-->
-    <!--          <div id="itemMenu" class="itemMenu" v-show="divSubMenuVisible">-->
-    <!--            <span style="text-align: center;margin-top: 15px;font-family: 华文行楷;font-size: 24px;width: 100px">-->
-    <!--              {{ itemInfo.item_name }}-->
-    <!--            </span>-->
-    <!--            <el-menu-item index="0">软件安全性分析</el-menu-item>-->
-    <!--            <el-menu-item index="1">软件安全性设计</el-menu-item>-->
-    <!--            <el-button icon="el-icon-close" circle @click="closeSubMenu"></el-button>-->
-    <!--          </div>-->
-    <!--          &lt;!&ndash;        <el-menu-item index="4">项目管理</el-menu-item>&ndash;&gt;-->
-    <!--        </el-menu>-->
-    <!--      </div>-->
-    <!--      &lt;!&ndash;      <div id="subMenu" v-show="divSubMenuVisible">&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <div id="itemTitle" class="itemTitle">&ndash;&gt;-->
-    <!--      &lt;!&ndash;          <span>{{ itemInfo.item_name }}</span>&ndash;&gt;-->
-    <!--      &lt;!&ndash;          <el-button icon="el-icon-close" circle @click="closeSubMenu"></el-button>&ndash;&gt;-->
-    <!--      &lt;!&ndash;        </div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <div id="itemMenu" class="itemMenu">&ndash;&gt;-->
-    <!--      &lt;!&ndash;          <el-button @click="selectAnalysis">软件安全性分析</el-button>&ndash;&gt;-->
-    <!--      &lt;!&ndash;          <el-button @click="selectDesign">软件安全性设计</el-button>&ndash;&gt;-->
-    <!--      &lt;!&ndash;          &lt;!&ndash;            <el-menu-item index="0">软件安全性分析</el-menu-item>&ndash;&gt;&ndash;&gt;-->
-    <!--      &lt;!&ndash;          &lt;!&ndash;            <el-menu-item index="1">软件安全性设计</el-menu-item>&ndash;&gt;&ndash;&gt;-->
-    <!--      &lt;!&ndash;        </div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;      </div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;      <div id="tab" style="height: 100%">&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <div class="leftCube" id="qwqwq"></div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <div class="cube"></div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <div class="rightCube"></div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <el-button @click="test">add</el-button>&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <el-button @click="del">del</el-button>&ndash;&gt;-->
-    <!--      &lt;!&ndash;      </div>&ndash;&gt;-->
-    <!--    </div>-->
-    <!--    <div id="bottom2">-->
-    <!--      <el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">-->
-    <!--        <el-submenu index="1">-->
-    <!--          <template slot="title">平台信息管理</template>-->
-    <!--          <el-submenu index="1-1">-->
-    <!--            <template slot="title">系统管理</template>-->
-    <!--            <el-menu-item index="2-4-1">人员管理</el-menu-item>-->
-    <!--            <el-menu-item index="2-4-2">权限管理</el-menu-item>-->
-    <!--            <el-menu-item index="2-4-3">工具说明</el-menu-item>-->
-    <!--          </el-submenu>-->
-    <!--          <el-menu-item index="1-2">项目管理</el-menu-item>-->
-    <!--        </el-submenu>-->
-    <!--        <el-submenu index="2">-->
-    <!--          <template slot="title">安全性数据库管理</template>-->
-    <!--          <el-menu-item index="2-1">分析规则库</el-menu-item>-->
-    <!--          <el-menu-item index="2-2">设计准则库</el-menu-item>-->
-    <!--        </el-submenu>-->
-    <!--      </el-menu>-->
-    <!--    </div>-->
+    <div id="bottom">
+      <span style="font-weight: bold;margin-left: 50px">{{ itemInfo.name }}</span>
+      <el-button type="text" style="margin-left: 20px" @click="gotoItem">关闭</el-button>
+    </div>
   </div>
 </template>
 
@@ -337,14 +283,12 @@ export default {
       // window.location.href = '/'
       this.$router.replace('/login')
     },
+    gotoItem() {
+      this.$router.replace('/item')
+    },
     getItemInfo() {
-      this.bus.$on('itemInfo', msg => {
-        this.itemInfo = msg
-        console.log(this.itemInfo)
-        this.divSubMenuVisible = true
-      })
-
-      // this.divSubMenuVisible = true
+      this.itemInfo = this.$store.state.item
+      console.log('header', this.itemInfo)
     }
   }
 }
@@ -385,7 +329,7 @@ export default {
     }
   }
   #bottom {
-    height: 10px;
+    height: 40px;
     background: #b4d2ea;
     margin-top: -2px;
   }

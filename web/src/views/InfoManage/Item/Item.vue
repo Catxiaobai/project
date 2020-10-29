@@ -2,23 +2,33 @@
   <div id="item">
     <el-card class="tableTitle">
       <span style="font-size: 20px">当前系统共有{{ total }}个项目</span>
-      <el-input v-model="search" placeholder="输入关键字搜索" style="margin-left: 30px; width: 300px" @input="pageList" />
+      <el-input v-model="search" placeholder="输入项目名称搜索" style="margin-left: 30px; width: 300px" @input="pageList" />
       <el-button size="20px" type="primary" style="margin-left: 350px" @click="handleAdd('addForm')" icon="el-icon-plus">创建新项目</el-button>
       <el-button size="20px" type="primary" @click="handleAddBasedExist('addForm2')" icon="el-icon-plus">基于已有项目新建</el-button>
       <el-table :data="tableData" style="width: 100%;margin-top: 40px" stripe border :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
-        <el-table-column label="序号" width="180px" align="center">
+        <el-table-column label="序号" width="80px" align="center">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.item_id }}</span>
+            <span style="margin-left: 10px">{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="名称" width="180px" align="center">
+        <el-table-column label="项目名称" width="180px" align="center">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.item_name }}</span>
+            <span style="margin-left: 10px">{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="项目介绍" align="center">
+        <el-table-column label="软件名称" align="center">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.item_introduction }}</span>
+            <span style="margin-left: 10px">{{ scope.row.software }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="研制单位" align="center">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.team }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="软件等级" align="center">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.level }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center">
@@ -26,7 +36,10 @@
             <el-button size="mini" type="success" @click="handleOpen(scope.$index, scope.row)">打开</el-button>
             <!--            <el-button size="mini" type="info" @click="handleShow(scope.$index, scope.row)">查看</el-button>-->
             <!--            <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
-            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <!--            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>-->
+            <el-popconfirm icon="el-icon-info" iconColor="red" title="确定删除此项目吗？" @onConfirm="handleDelete(scope.$index, scope.row)">
+              <el-button slot="reference" size="mini" type="danger" style="margin-left: 15px">删除</el-button>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -45,11 +58,20 @@
     <div id="add">
       <el-dialog title="添加新的项目" :visible.sync="visible.addDialog" center @close="resetForm('addForm')">
         <el-form :model="addForm" :rules="rules" ref="addForm">
-          <el-form-item label="名称" label-width="120px" prop="name">
-            <el-input v-model="addForm.name" clearable placeholder="请输入名称"></el-input>
+          <el-form-item label="项目名称" label-width="120px" prop="name">
+            <el-input v-model="addForm.name" clearable placeholder="请输入项目名称：XXX软件项目"></el-input>
           </el-form-item>
-          <el-form-item label="项目介绍" label-width="120px" prop="introduction">
-            <el-input v-model="addForm.introduction" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入项目介绍"> </el-input>
+          <el-form-item label="软件名称" label-width="120px" prop="software">
+            <el-input v-model="addForm.software" clearable placeholder="请输入软件名称：XXX软件"></el-input>
+          </el-form-item>
+          <el-form-item label="研制单位" label-width="120px" prop="team">
+            <el-input v-model="addForm.team" clearable placeholder="请输入研制单位："></el-input>
+          </el-form-item>
+          <el-form-item label="软件等级" label-width="120px" prop="level">
+            <el-input v-model="addForm.level" clearable placeholder="请输入软件等级："></el-input>
+          </el-form-item>
+          <el-form-item label="项目保存路径" label-width="120px" prop="path">
+            <el-input v-model="addForm.path" clearable placeholder="请输入项目保存路径"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -61,11 +83,20 @@
     <div id="add2">
       <el-dialog title="基于已有项目添加" :visible.sync="visible.addDialog2" center>
         <el-form :model="addForm2" :rules="rules" ref="addForm">
-          <el-form-item label="名称" label-width="120px" prop="name">
-            <el-input v-model="addForm2.name" clearable placeholder="请输入名称"></el-input>
+          <el-form-item label="项目名称" label-width="120px" prop="name">
+            <el-input v-model="addForm2.name" clearable placeholder="请输入项目名称：XXX软件项目"></el-input>
           </el-form-item>
-          <el-form-item label="项目介绍" label-width="120px" prop="introduction">
-            <el-input v-model="addForm2.introduction" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入项目介绍"> </el-input>
+          <el-form-item label="软件名称" label-width="120px" prop="software">
+            <el-input v-model="addForm2.software" clearable placeholder="请输入软件名称：XXX软件"></el-input>
+          </el-form-item>
+          <el-form-item label="研制单位" label-width="120px" prop="team">
+            <el-input v-model="addForm2.team" clearable placeholder="请输入研制单位："></el-input>
+          </el-form-item>
+          <el-form-item label="软件等级" label-width="120px" prop="level">
+            <el-input v-model="addForm2.level" clearable placeholder="请输入软件等级："></el-input>
+          </el-form-item>
+          <el-form-item label="项目保存路径" label-width="120px" prop="path">
+            <el-input v-model="addForm2.path" clearable placeholder="请输入项目保存路径"></el-input>
           </el-form-item>
           <el-form-item label="基于的项目" label-width="120px" prop="basedItem">
             <el-select v-model="addForm2.basedItem" placeholder="请选择">
@@ -134,7 +165,11 @@ export default {
       deleteData: [],
       rules: {
         name: [{ required: true, message: '不能为空', trigger: 'blur' }],
-        introduction: [{ required: true, message: '不能为空', trigger: 'blur' }]
+        software: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        team: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        level: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        path: [{ required: true, message: '不能为空', trigger: 'blur' }],
+        basedItem: [{ required: true, message: '不能为空', trigger: 'blur' }]
       },
       options: []
     }
@@ -149,7 +184,7 @@ export default {
         .then(response => {
           this.data = response.data.item_list
           for (let i = 0; i < this.data.length; i++) {
-            this.options.push({ value: this.data[i].item_name, label: this.data[i].item_name })
+            this.options.push({ value: this.data[i].name, label: this.data[i].name })
           }
           this.getList()
         })
@@ -159,7 +194,7 @@ export default {
     },
     // 处理数据
     getList() {
-      let list = this.data.filter((item, index) => item.item_introduction.includes(this.search))
+      let list = this.data.filter((item, index) => item.name.includes(this.search))
       // let list = this.data
       this.tableData = list.filter((item, index) => index < this.page * this.limit && index >= this.limit * (this.page - 1))
       this.total = list.length
@@ -180,8 +215,6 @@ export default {
       this.$refs[formName].resetFields()
     },
     handleOpen(index, row) {
-      // console.log(row)
-      // this.bus.$emit('itemInfo', row)
       this.$store.commit('changeItem', row)
       this.$router.replace('/itemMain')
     },
@@ -214,28 +247,6 @@ export default {
     handleAddCommit2(formName) {
       console.log(formName)
       // todo: 基于已有项目创建
-      // this.$refs[formName].validate(valid => {
-      //   if (valid) {
-      //     this.$http
-      //       .post('http://127.0.0.1:8000/api/add_item', this.addForm)
-      //       .then(response => {
-      //         if (response.data.error_code === 0) {
-      //           alert('添加成功')
-      //           this.resetForm(formName)
-      //           this.pageList()
-      //         } else {
-      //           console.log(response.data)
-      //         }
-      //       })
-      //       .catch(function(error) {
-      //         console.log(error)
-      //       })
-      //     this.visible.addDialog = false
-      //   } else {
-      //     console.log('error submit!!')
-      //     return false
-      //   }
-      // })
     },
     handleEditCommit(formName) {
       this.$refs[formName].validate(valid => {
@@ -262,34 +273,34 @@ export default {
     },
     handleDelete(index, row) {
       // console.log(index, row)
-      this.$confirm('此操作将删除此项目, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then(() => {
-          this.$http
-            .post('http://127.0.0.1:8000/api/delete_item', { item_id: row.item_id })
-            .then(response => {
-              console.log(response.data)
-              if (response.data.error_code === 0) {
-                this.$message({
-                  type: 'success',
-                  message: '删除成功!'
-                })
-                this.pageList()
-              }
+      // this.$confirm('此操作将删除此项目, 是否继续?', '提示', {
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消',
+      //   type: 'warning'
+      // })
+      //   .then(() => {
+      this.$http
+        .post('http://127.0.0.1:8000/api/delete_item', { id: row.id })
+        .then(response => {
+          console.log(response.data)
+          if (response.data.error_code === 0) {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
             })
-            .catch(function(error) {
-              console.log(error)
-            })
+            this.pageList()
+          }
         })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
+        .catch(function(error) {
+          console.log(error)
         })
+      // })
+      // .catch(() => {
+      //   this.$message({
+      //     type: 'info',
+      //     message: '已取消删除'
+      //   })
+      // })
     },
     handleEdit(index, row) {
       console.log(index, row)
