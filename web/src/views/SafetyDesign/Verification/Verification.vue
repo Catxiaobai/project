@@ -2,6 +2,7 @@
   <div id="verification">
     <el-card>
       <div style="margin-top: 20px">
+        <el-button type="primary" style="margin-left: 90%;margin-bottom: 20px" @click="saveData">保存</el-button>
         <div id="table">
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column prop="id" label="序号" width="50" align="center"> </el-table-column>
@@ -10,7 +11,7 @@
             <el-table-column prop="describe" label="准则描述" width="180" align="center"> </el-table-column>
             <el-table-column prop="apply" label="适用性" width="300" align="center">
               <template slot-scope="scope">
-                <el-radio-group v-model="scope.row.apply" @change="saveData(scope.row)">
+                <el-radio-group v-model="scope.row.apply">
                   <el-radio label="适用">适用</el-radio>
                   <el-radio label="不适用">不适用</el-radio>
                   <el-radio label="部分适用">部分适用</el-radio>
@@ -19,7 +20,7 @@
             </el-table-column>
             <el-table-column prop="suitable" label="符合性" width="180" align="center">
               <template slot-scope="scope">
-                <el-radio-group v-model="scope.row.suitable" @change="saveData(scope.row)">
+                <el-radio-group v-model="scope.row.suitable">
                   <el-radio label="符号">符号</el-radio>
                   <el-radio label="不符合">不符合</el-radio>
                 </el-radio-group>
@@ -27,7 +28,7 @@
             </el-table-column>
             <el-table-column prop="problem" label="问题描述" align="center">
               <template slot-scope="scope">
-                <el-input class="tableCell" type="textarea" autosize v-model="scope.row.problem" @change="saveData(scope.row)"> </el-input>
+                <el-input class="tableCell" type="textarea" autosize v-model="scope.row.problem"> </el-input>
               </template>
             </el-table-column>
           </el-table>
@@ -107,15 +108,25 @@ export default {
       this.pagination.total = list.length
       // console.log(this.tableData)
     },
-    saveData(val) {
-      console.log(val)
+    saveData() {
+      console.log(this.tableData)
+      for (let i = 0; i < this.tableData.length; i++) {
+        for (let key in this.tableData[i]) {
+          if (this.tableData[i][key] === '') {
+            alert('未填写完整')
+            return 0
+          }
+        }
+      }
       this.$http
-        .post('http://127.0.0.1:8000/api/edit_check', val)
+        .post('http://127.0.0.1:8000/api/edit_check', this.tableData)
         .then(response => {
           if (response.data.error_code === 0) {
             this.pageList()
+            alert('保存成功')
           } else {
             console.log(response.data)
+            alert(response.data.error_message)
           }
         })
         .catch(function(error) {

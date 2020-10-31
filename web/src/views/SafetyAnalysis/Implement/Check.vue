@@ -5,6 +5,7 @@
         <el-input v-model="search" placeholder="按类别搜索" style="width: 300px" @input="pageList" />
       </div>
       <div id="actionButton" style="margin-left:73%;margin-bottom: 20px;margin-top: -40px">
+        <el-button type="primary" :disabled="disabled.verify" @click="verifyCase">预检验</el-button>
         <el-button type="primary" :disabled="disabled.verify" @click="verifyCase">检验</el-button>
         <el-button type="primary" :disabled="disabled.reset" @click="resetCase">重置</el-button>
         <!--        <el-button type="primary" @click="handleAdd('addForm')">增加</el-button>-->
@@ -21,7 +22,8 @@
           <el-table-column prop="name" label="名称" width="180"> </el-table-column>
           <el-table-column prop="describe" label="描述" width="180"> </el-table-column>
           <el-table-column prop="content" label="内容" width="180"> </el-table-column>
-          <el-table-column prop="verify" label="验证结果"> </el-table-column>
+          <el-table-column prop="result" label="验证结果" width="180"> </el-table-column>
+          <el-table-column prop="count" label="验证次数"> </el-table-column>
         </el-table>
       </div>
       <div id="page">
@@ -85,6 +87,7 @@ export default {
       },
       resetData: [],
       verifyData: [],
+      left_rules: [],
       rules: {
         name: [{ required: true, message: '不能为空', trigger: 'blur' }],
         remark: [{ required: true, message: '不能为空', trigger: 'blur' }],
@@ -113,7 +116,8 @@ export default {
           label: '其他'
         }
       ],
-      itemInfo: ''
+      itemInfo: '',
+      caseInfo: ''
     }
   },
   created() {
@@ -128,6 +132,8 @@ export default {
         .then(response => {
           // console.log(response.data.analysis_list)
           this.data = response.data.case_list
+          this.left_rules = response.data.left_rules_id
+          this.caseInfo = response.data.info
           this.getList()
         })
         .catch(function(error) {
@@ -145,6 +151,11 @@ export default {
       )
       this.pagination.total = list.length
       // console.log(this.tableData)
+      if (this.caseInfo !== '') {
+        alert(this.caseInfo)
+      } else if (this.left_rules.length !== 0) {
+        alert('此项目中以下规则未实例化：\nid: ' + this.left_rules)
+      }
     },
     filterType(value, row) {
       console.log(value, row)

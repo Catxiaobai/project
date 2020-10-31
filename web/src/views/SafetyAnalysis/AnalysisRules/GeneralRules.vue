@@ -117,14 +117,14 @@ export default {
     },
     handleFilterChange(value) {
       console.log(value)
-      // if (value['element']) {
-      //   this.filterSearch = value['element']
-      //   let list = this.data.filter((item, index) => item.element.includes(this.filterSearch))
-      //   this.tableData = list.filter(
-      //     (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
-      //   )
-      //   this.pagination.total = list.length
-      // }
+      if (value['element']) {
+        this.filterSearch = value['element']
+        let list = this.data.filter((item, index) => item.element.includes(this.filterSearch))
+        this.tableData = list.filter(
+          (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
+        )
+        this.pagination.total = list.length
+      }
       if (value['type']) {
         this.filterSearch = value['type']
         let list = this.data.filter((item, index) => item.type.includes(this.filterSearch))

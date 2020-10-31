@@ -1,7 +1,7 @@
 <template>
   <div id="common-aside">
     <div id="aside-content" style="height: 100%">
-      <el-menu router :default-active="$route.path" style="height: 100%">
+      <el-menu router :default-active="$route.path" style="height: 100%" :unique-opened="true">
         <el-submenu index="1">
           <template slot="title">
             <i class="el-icon-folder"></i>
@@ -49,6 +49,7 @@
           </el-submenu>
           <el-menu-item index="/verification"><i class="el-icon-folder"></i>核查实施</el-menu-item>
           <el-menu-item index="/complete"><i class="el-icon-folder"></i>设计完善</el-menu-item>
+          <el-menu-item index="/designTable"><i class="el-icon-folder"></i>软件安全性设计管理</el-menu-item>
         </el-submenu>
       </el-menu>
     </div>

@@ -1,20 +1,16 @@
 <template>
-  <div id="verification">
+  <div id="designTable">
     <el-card>
       <div style="margin-top: 20px">
-        <el-button type="primary" style="margin-left: 90%;margin-bottom: 20px" @click="saveData">保存</el-button>
         <div id="table">
+          <el-button type="primary" style="margin-bottom: 20px;margin-left: 90%">导出</el-button>
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column prop="id" label="序号" width="50" align="center"> </el-table-column>
             <el-table-column prop="element" label="要素" width="150" align="center"> </el-table-column>
             <el-table-column prop="type" label="类别" width="150" align="center"> </el-table-column>
             <el-table-column prop="describe" label="准则描述" width="180" align="center"> </el-table-column>
             <el-table-column prop="problem" label="问题描述" width="180" align="center"> </el-table-column>
-            <el-table-column prop="complete" label="完善措施" align="center">
-              <template slot-scope="scope">
-                <el-input class="tableCell" type="textarea" autosize v-model="scope.row.complete"> </el-input>
-              </template>
-            </el-table-column>
+            <el-table-column prop="complete" label="完善措施" align="center"> </el-table-column>
           </el-table>
         </div>
         <div id="page">
@@ -37,7 +33,7 @@
 
 <script>
 export default {
-  name: 'Verification.vue',
+  name: 'DesignTable.vue',
   data() {
     return {
       tableData: [],
@@ -92,43 +88,11 @@ export default {
       this.pagination.total = list.length
       // console.log(this.tableData)
     },
-    saveData() {
-      console.log(this.tableData)
-      for (let i = 0; i < this.tableData.length; i++) {
-        if (this.tableData[i].complete === '') {
-          alert('未填写完整')
-          return 0
-        }
-      }
-      this.$http
-        .post('http://127.0.0.1:8000/api/edit_complete', this.tableData)
-        .then(response => {
-          if (response.data.error_code === 0) {
-            alert('保存成功')
-            this.pageList()
-          } else {
-            console.log(response.data)
-            alert(response.data.error_meassage)
-          }
-        })
-        .catch(function(error) {
-          console.log(error)
-        })
-    },
     getItemInfo() {
       this.itemInfo = this.$store.state.item
-      console.log('设计完善', this.itemInfo)
     }
   }
 }
 </script>
 
 <style scoped></style>
-<style lang="scss">
-.tableCell {
-  .el-textarea__inner {
-    border: none;
-    resize: none;
-  }
-}
-</style>

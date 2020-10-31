@@ -7,13 +7,13 @@
         </el-popconfirm>
       </div>
       <div id="search" style="margin-left:75%;margin-bottom: 20px;margin-top: -40px">
-        <el-input v-model="search" placeholder="按描述搜索" style="width: 300px" @input="pageList" />
+        <el-input v-model="search" placeholder="按类别搜索" style="width: 300px" @input="pageList" />
       </div>
       <div id="table">
-        <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection">
+        <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection" @filter-change="handleFilterChange">
           <el-table-column type="selection" width="40px"> </el-table-column>
           <el-table-column prop="id" label="序号" width="180"> </el-table-column>
-          <el-table-column prop="element" label="要素" width="180" :filters="filterData" :filter-method="filterElement">
+          <el-table-column prop="element" label="要素" width="180" :filters="filterData" column-key="element">
             <!--todo: 筛选功能存在bug-->
           </el-table-column>
           <el-table-column prop="type" label="类别" width="180"> </el-table-column>
@@ -61,11 +61,11 @@ export default {
       tableData: [],
       itemInfo: '',
       filterData: [
-        { text: '接口相关', value: '接口相关' },
-        { text: '功能处理相关', value: '功能处理相关' },
-        { text: '功能划分相关', value: '功能划分相关' },
-        { text: '状态迁移相关', value: '状态迁移相关' },
-        { text: '其他', value: '其他' }
+        { text: '接口相关设计', value: '接口相关设计' },
+        { text: '功能处理相关设计', value: '功能处理相关设计' },
+        { text: '功能划分相关设计', value: '功能划分相关设计' },
+        { text: '状态迁移相关设计', value: '状态迁移相关设计' },
+        { text: '其他设计', value: '其他设计' }
       ],
       pagination: {
         limit: 7, //每页显示条数
@@ -102,8 +102,8 @@ export default {
       // this.getList()
     },
     getList() {
-      // 处理数据，根据表格中name字段来筛选
-      let list = this.data.filter((item, index) => item.describe.includes(this.search))
+      // 处理数据，根据表格中type字段来筛选
+      let list = this.data.filter((item, index) => item.type.includes(this.search))
       // let list = this.data
       this.tableData = list.filter(
         (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
@@ -114,6 +114,25 @@ export default {
     filterElement(value, row) {
       console.log(value, row)
       return row.element === value
+    },
+    handleFilterChange(value) {
+      console.log(value)
+      if (value['element']) {
+        this.filterSearch = value['element']
+        let list = this.data.filter((item, index) => item.element.includes(this.filterSearch))
+        this.tableData = list.filter(
+          (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
+        )
+        this.pagination.total = list.length
+      }
+      if (value['type']) {
+        this.filterSearch = value['type']
+        let list = this.data.filter((item, index) => item.type.includes(this.filterSearch))
+        this.tableData = list.filter(
+          (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
+        )
+        this.pagination.total = list.length
+      }
     },
     handleSizeChange(val) {
       // 当每页数量改变
@@ -143,7 +162,7 @@ export default {
       this.getItemInfo()
       this.visible.selectDialog = false
       this.$http
-        .post('http://127.0.0.1:8000/api/add_design', { selectData: this.selectData, item: this.itemInfo })
+        .post('http://127.0.0.1:8000/api/add_design', { selectData: this.selectData, item: this.itemInfo, belong: '通用' })
         .then(response => {
           if (response.data.error_code === 0) {
             alert('添加成功')

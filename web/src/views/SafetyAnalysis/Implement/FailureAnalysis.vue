@@ -9,14 +9,14 @@
       <div id="fmea" v-show="divShow" style="margin-top: 20px">
         <div id="table">
           <el-table :data="tableData" border style="width: 100%" :row-class-name="tableRowClassName">
-            <el-table-column prop="id" label="序号" width="80" align="center"> </el-table-column>
-            <el-table-column prop="ignore" label="忽略" align="center">
+            <el-table-column prop="id" label="序号" width="50" align="center"> </el-table-column>
+            <el-table-column prop="ignore" label="忽略" align="center" width="70">
               <template slot-scope="scope">
                 <el-switch v-model="scope.row.ignore"> </el-switch>
               </template>
             </el-table-column>
-            <el-table-column prop="case_describe" label="违背规则描述" width="180" align="center"> </el-table-column>
-            <el-table-column prop="describe" label="失效描述" width="180" align="center">
+            <el-table-column prop="case_describe" label="违背规则描述" width="120" align="center"> </el-table-column>
+            <el-table-column prop="describe" label="失效描述" width="120" align="center">
               <template slot-scope="scope">
                 <el-input class="tableCell" type="textarea" autosize v-model="scope.row.describe"> </el-input>
               </template>
@@ -43,7 +43,7 @@
                 </template>
               </el-table-column>
             </el-table-column>
-            <el-table-column prop="influence_level" label="影响等级" width="180" align="center">
+            <el-table-column prop="influence_level" label="影响等级" width="120" align="center">
               <template slot-scope="scope">
                 <el-select v-model="scope.row.influence_level" placeholder="请选择" style="border: 0;margin: 0;padding: 0">
                   <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value"> </el-option>
@@ -268,26 +268,37 @@ export default {
     },
     saveData() {
       console.log(this.tableData)
-      // this.$http
-      //   .post('http://127.0.0.1:8000/api/edit_fmea', val)
-      //   .then(response => {
-      //     if (response.data.error_code === 0) {
-      //       this.pageList()
-      //     } else {
-      //       console.log(response.data)
-      //     }
-      //   })
-      //   .catch(function(error) {
-      //     console.log(error)
-      //   })
+      for (let i = 0; i < this.tableData.length; i++) {
+        if (!this.tableData[i].ignore) {
+          for (let key in this.tableData[i]) {
+            if (this.tableData[i][key] === '') {
+              alert('未填写完整')
+              return 0
+            }
+          }
+        }
+      }
+      this.$http
+        .post('http://127.0.0.1:8000/api/edit_fmea', this.tableData)
+        .then(response => {
+          if (response.data.error_code === 0) {
+            alert('保存成功')
+            this.pageList()
+          } else {
+            console.log(response.data)
+            alert(response.data.error_message)
+          }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     },
     getItemInfo() {
       this.itemInfo = this.$store.state.item
       console.log('失效分析', this.itemInfo)
     },
     tableRowClassName({ row }) {
-      console.log(row.test)
-      if (row.test) {
+      if (row.ignore) {
         return 'ignore-row'
       }
 

@@ -2,6 +2,7 @@
   <div id="demandExtraction">
     <el-card>
       <div style="margin-top: 20px">
+        <el-button type="primary" style="margin-left: 90%;margin-bottom: 20px" @click="saveData">保存</el-button>
         <div id="table">
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column prop="id" label="序号" width="80" align="center"> </el-table-column>
@@ -9,7 +10,7 @@
             <el-table-column prop="improve" label="改进措施" width="180" align="center"> </el-table-column>
             <el-table-column prop="demand" label="软件安全性需求" align="center">
               <template slot-scope="scope">
-                <el-input class="tableCell" type="textarea" autosize v-model="scope.row.demand" @change="saveData(scope.row)"> </el-input>
+                <el-input class="tableCell" type="textarea" autosize v-model="scope.row.demand"> </el-input>
               </template>
             </el-table-column>
           </el-table>
@@ -89,15 +90,23 @@ export default {
       this.pagination.total = list.length
       // console.log(this.tableData)
     },
-    saveData(val) {
-      console.log(val)
+    saveData() {
+      console.log(this.tableData)
+      for (let i = 0; i < this.tableData.length; i++) {
+        if (this.tableData[i].demand === '') {
+          alert('未填写完整')
+          return 0
+        }
+      }
       this.$http
-        .post('http://127.0.0.1:8000/api/edit_demand', val)
+        .post('http://127.0.0.1:8000/api/edit_demand', this.tableData)
         .then(response => {
           if (response.data.error_code === 0) {
+            alert('保存成功')
             this.pageList()
           } else {
             console.log(response.data)
+            alert(response.data.error_meassage)
           }
         })
         .catch(function(error) {

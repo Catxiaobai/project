@@ -23,9 +23,7 @@
         >
           <el-table-column type="selection" width="40px"> </el-table-column>
           <el-table-column prop="id" label="序号" width="180" sortable> </el-table-column>
-          <el-table-column prop="element" label="要素" width="180" :filters="filterData.element" sortable column-key="element">
-            <!--todo: 筛选功能存在bug，依旧分页显示-->
-          </el-table-column>
+          <el-table-column prop="element" label="要素" width="180" :filters="filterData.element" sortable column-key="element"> </el-table-column>
           <el-table-column prop="type" label="类别" width="180" sortable> </el-table-column>
           <el-table-column prop="describe" label="描述"> </el-table-column>
         </el-table>

@@ -133,6 +133,7 @@ class Case(models.Model):
     case_content = models.TextField(default='')
     case_describe = models.TextField(default='')
     verify_result = models.TextField(default='unverified')
+    verify_count = models.IntegerField(default=0)
 
     def to_dict(self):
         return {
@@ -141,8 +142,9 @@ class Case(models.Model):
             'content': self.case_content,
             'describe': self.case_describe,
             'element': self.case_element,
-            'verify': self.verify_result,
-            'rule_id': self.rule.id
+            'result': self.verify_result,
+            'rule_id': self.rule.id,
+            'count': self.verify_count,
         }
 
 
@@ -196,6 +198,7 @@ class Design(models.Model):
     type = models.TextField(default='')
     element = models.TextField(default='')
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    belong = models.TextField(default='')
 
     def to_dict(self):
         return {
@@ -204,7 +207,8 @@ class Design(models.Model):
             'describe': self.describe,
             'type': self.type,
             'element': self.element,
-            'item': self.item.id
+            'item': self.item.id,
+            'belong': self.belong
         }
 
 

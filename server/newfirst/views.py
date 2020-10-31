@@ -66,17 +66,9 @@ def add_analysis_rule_from_item(request):
     request_json = json.loads(request.body)
     try:
         print(request_json)
-        # new_name = request_json['name']
-        # new_type = request_json['type']
-        # new_describe = request_json['describe']
-        # new_remark = request_json['remark']
-        # if AnalysisRules.objects.filter(name=new_name):
-        #     return JsonResponse({**error_code.CLACK_NAME_EXISTS})
-        # new_rule = AnalysisRules(name=new_name, type=new_type, remark=new_remark, describe=new_describe)
-        # new_rule.save()
         for i in range(len(request_json)):
-            blong = request_json[i]['belong']
-            if blong == '通用':
+            belong = request_json[i]['belong']
+            if belong == '通用':
                 continue
             new_name = request_json[i]['name']
             new_type = request_json[i]['type']
@@ -139,6 +131,26 @@ def add_design_criteria(request):
         new_element = request_json['element']
         new_rule = DesignCriteria(type=new_type, describe=new_describe, element=new_element)
         new_rule.save()
+
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 将专用设计准则加入通用设计准则中
+def add_design_criteria_from_item(request):
+    request_jsons = json.loads(request.body)
+    try:
+        print(request_jsons)
+        for request_json in request_jsons:
+            if request_json['belong'] == '通用':
+                continue
+            new_type = request_json['type']
+            new_describe = request_json['describe']
+            new_element = request_json['element']
+            new_rule = DesignCriteria(type=new_type, describe=new_describe, element=new_element)
+            new_rule.save()
+            Design.objects.filter(id=request_json['id']).update(belong='通用')
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
@@ -413,11 +425,20 @@ def case_list(request):
     request_json = json.loads(request.body)
     try:
         aim_item_id = request_json
-        case = Case.objects.filter(rule__item=aim_item_id)
+        info = ""
+        left_rules_id = []
+        rules = Rules.objects.filter(item_id=aim_item_id)
+        if len(rules) == 0:
+            info = "当前项目规则集为空"
+        else:
+            for r in rules:
+                if len(Case.objects.filter(rule=r)) == 0:
+                    left_rules_id.append(r.id)
+        case = Case.objects.filter(rule__item_id=aim_item_id)
         result = [c.to_dict() for c in case]
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
-    return JsonResponse({**error_code.CLACK_SUCCESS, "case_list": result})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "case_list": result, "info": info, "left_rules_id": left_rules_id})
 
 
 # 删除实例
@@ -489,25 +510,32 @@ def fmea_list(request):
 
 # 编辑fmea
 def edit_fmea(request):
-    request_json = json.loads(request.body)
+    request_jsons = json.loads(request.body)
     try:
-        aim_id = request_json['id']
-        new_case_id = request_json['case']
-        new_improve = request_json['improve']
-        new_influence_level = request_json['influence_level']
-        new_local_influence = request_json['local_influence']
-        new_reason = request_json['reason']
-        new_system_influence = request_json['system_influence']
-        new_upper_influence = request_json['upper_influence']
-        if not Fmea.objects.filter(id=aim_id).exists():
-            return JsonResponse({**error_code.CLACK_NOT_EXISTS})
-        Fmea.objects.filter(id=aim_id).update(case_id=new_case_id)
-        Fmea.objects.filter(id=aim_id).update(improve=new_improve)
-        Fmea.objects.filter(id=aim_id).update(reason=new_reason)
-        Fmea.objects.filter(id=aim_id).update(local_influence=new_local_influence)
-        Fmea.objects.filter(id=aim_id).update(upper_influence=new_upper_influence)
-        Fmea.objects.filter(id=aim_id).update(system_influence=new_system_influence)
-        Fmea.objects.filter(id=aim_id).update(influence_level=new_influence_level)
+        print(request_jsons)
+        for request_json in request_jsons:
+            aim_id = request_json['id']
+            if request_json['ignore']:
+                Fmea.objects.filter(id=aim_id).update(ignore=True)
+            else:
+                new_case_id = request_json['case']
+                new_improve = request_json['improve']
+                new_influence_level = request_json['influence_level']
+                new_local_influence = request_json['local_influence']
+                new_reason = request_json['reason']
+                new_system_influence = request_json['system_influence']
+                new_upper_influence = request_json['upper_influence']
+                new_describe = request_json['describe']
+                if not Fmea.objects.filter(id=aim_id).exists():
+                    return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+                Fmea.objects.filter(id=aim_id).update(case_id=new_case_id)
+                Fmea.objects.filter(id=aim_id).update(improve=new_improve)
+                Fmea.objects.filter(id=aim_id).update(reason=new_reason)
+                Fmea.objects.filter(id=aim_id).update(local_influence=new_local_influence)
+                Fmea.objects.filter(id=aim_id).update(upper_influence=new_upper_influence)
+                Fmea.objects.filter(id=aim_id).update(system_influence=new_system_influence)
+                Fmea.objects.filter(id=aim_id).update(influence_level=new_influence_level)
+                Fmea.objects.filter(id=aim_id).update(describe=new_describe)
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
@@ -517,7 +545,7 @@ def edit_fmea(request):
 def demand_list(request):
     request_json = json.loads(request.body)
     try:
-        Fmeas = Fmea.objects.filter(case__rule__item_id=request_json['id'])
+        Fmeas = Fmea.objects.filter(case__rule__item_id=request_json['id'], ignore=False)
         for f in Fmeas:
             if not Demand.objects.filter(fmea=f).exists():
                 new_demand = Demand(fmea=f)
@@ -531,15 +559,17 @@ def demand_list(request):
 
 # 编辑需求表
 def edit_demand(request):
-    request_json = json.loads(request.body)
+    request_jsons = json.loads(request.body)
     try:
-        aim_id = request_json['id']
-        new_fmea_id = request_json['fmea']
-        new_demand = request_json['demand']
-        if not Demand.objects.filter(id=aim_id).exists():
-            return JsonResponse({**error_code.CLACK_NOT_EXISTS})
-        Demand.objects.filter(id=aim_id).update(fmea_id=new_fmea_id)
-        Demand.objects.filter(id=aim_id).update(demand=new_demand)
+        print(request_jsons)
+        for request_json in request_jsons:
+            aim_id = request_json['id']
+            new_fmea_id = request_json['fmea']
+            new_demand = request_json['demand']
+            if not Demand.objects.filter(id=aim_id).exists():
+                return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+            Demand.objects.filter(id=aim_id).update(fmea_id=new_fmea_id)
+            Demand.objects.filter(id=aim_id).update(demand=new_demand)
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
@@ -552,6 +582,7 @@ def add_design(request):
         print(request_json)
         design_list = request_json['selectData']
         new_item_id = request_json['item']['id']
+        new_belong = request_json['belong']
         for i in range(len(design_list)):
             new_name = design_list[i]['name']
             new_describe = design_list[i]['describe']
@@ -560,7 +591,7 @@ def add_design(request):
             if Design.objects.filter(describe=new_describe, type=new_type, element=new_element).exists():
                 return JsonResponse({**error_code.CLACK_NAME_EXISTS})
             new_design = Design(name=new_name, describe=new_describe, element=new_element, type=new_type,
-                                item_id=new_item_id)
+                                item_id=new_item_id, belong=new_belong)
             new_design.save()
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
@@ -614,21 +645,22 @@ def check_list(request):
 
 # 编辑设计核查
 def edit_check(request):
-    request_json = json.loads(request.body)
+    request_jsons = json.loads(request.body)
     try:
-        aim_id = request_json['id']
-        new_design_id = request_json['design']
-        new_problem = request_json['problem']
-        new_suitable = request_json['suitable']
-        new_apply = request_json['apply']
-        if not DesignCheck.objects.filter(id=aim_id).exists():
-            return JsonResponse({**error_code.CLACK_NOT_EXISTS})
-        DesignCheck.objects.filter(id=aim_id).update(design_id=new_design_id)
-        DesignCheck.objects.filter(id=aim_id).update(apply=new_apply)
-        DesignCheck.objects.filter(id=aim_id).update(suitable=new_suitable)
-        DesignCheck.objects.filter(id=aim_id).update(problem=new_problem)
-        if DesignComplete.objects.filter(designCheck_id=aim_id).exists():
-            DesignComplete.objects.get(designCheck_id=aim_id).delete()
+        for request_json in request_jsons:
+            aim_id = request_json['id']
+            new_design_id = request_json['design']
+            new_problem = request_json['problem']
+            new_suitable = request_json['suitable']
+            new_apply = request_json['apply']
+            if not DesignCheck.objects.filter(id=aim_id).exists():
+                return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+            DesignCheck.objects.filter(id=aim_id).update(design_id=new_design_id)
+            DesignCheck.objects.filter(id=aim_id).update(apply=new_apply)
+            DesignCheck.objects.filter(id=aim_id).update(suitable=new_suitable)
+            DesignCheck.objects.filter(id=aim_id).update(problem=new_problem)
+            if DesignComplete.objects.filter(designCheck_id=aim_id).exists():
+                DesignComplete.objects.get(designCheck_id=aim_id).delete()
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
@@ -652,15 +684,16 @@ def complete_list(request):
 
 # 编辑设计完善
 def edit_complete(request):
-    request_json = json.loads(request.body)
+    request_jsons = json.loads(request.body)
     try:
-        aim_id = request_json['id']
-        new_check_id = request_json['check']
-        new_complete = request_json['complete']
-        if not DesignComplete.objects.filter(id=aim_id).exists():
-            return JsonResponse({**error_code.CLACK_NOT_EXISTS})
-        DesignComplete.objects.filter(id=aim_id).update(designCheck_id=new_check_id)
-        DesignComplete.objects.filter(id=aim_id).update(complete=new_complete)
+        for request_json in request_jsons:
+            aim_id = request_json['id']
+            new_check_id = request_json['check']
+            new_complete = request_json['complete']
+            if not DesignComplete.objects.filter(id=aim_id).exists():
+                return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+            DesignComplete.objects.filter(id=aim_id).update(designCheck_id=new_check_id)
+            DesignComplete.objects.filter(id=aim_id).update(complete=new_complete)
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})

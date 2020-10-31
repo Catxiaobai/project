@@ -106,16 +106,6 @@ const routes = [
         name: 'failureAnalysis',
         component: () => import('@/views/SafetyAnalysis/Implement/FailureAnalysis')
       },
-      // {
-      //   path: '/subScene',
-      //   name: 'subScene',
-      //   component: () => import('@/views/SafetyAnalysis/Modeling/SubScene')
-      // },
-      // {
-      //   path: '/complexScene',
-      //   name: 'complexScene',
-      //   component: () => import('@/views/SafetyAnalysis/Modeling/ComplexScene')
-      // },
       {
         path: '/listGeneration',
         name: 'listGeneration',
@@ -130,6 +120,11 @@ const routes = [
         path: '/complete',
         name: 'complete',
         component: () => import('@/views/SafetyDesign/Complete/Complete')
+      },
+      {
+        path: '/designTable',
+        name: 'designTable',
+        component: () => import('@/views/SafetyDesign/DesignTable/DesignTable')
       },
       {
         path: '/generalCriteria',
