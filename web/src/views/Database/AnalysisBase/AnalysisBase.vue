@@ -8,7 +8,9 @@
         <el-button type="primary">导入</el-button>
         <el-button type="primary" @click="handleAdd('addForm')">增加</el-button>
         <el-button type="success" :disabled="disabled.edit" @click="visible.editDialog = true">编辑</el-button>
-        <el-button type="danger" :disabled="disabled.delete" @click="visible.deleteDialog = true">删除</el-button>
+        <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选规则" style="margin-left: 20px" @onConfirm="handleDeleteCommit">
+          <el-button type="danger" :disabled="disabled.delete" slot="reference">删除</el-button>
+        </el-popconfirm>
       </div>
       <div id="table">
         <el-table

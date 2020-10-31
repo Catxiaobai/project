@@ -149,18 +149,26 @@ export default {
         //修改时使用
         id: '',
         name: '',
-        introduction: ''
+        software: '',
+        level: '',
+        path: '',
+        team: ''
       },
       addForm: {
         //添加使用
         name: '',
-        introduction: ''
+        software: '',
+        level: '',
+        path: '',
+        team: ''
       },
       addForm2: {
         //添加使用
         name: '',
-        introduction: '',
-        basedItem: ''
+        basedItem: '',
+        level: '',
+        path: '',
+        team: ''
       },
       deleteData: [],
       rules: {
@@ -215,6 +223,7 @@ export default {
       this.$refs[formName].resetFields()
     },
     handleOpen(index, row) {
+      console.log(row)
       this.$store.commit('changeItem', row)
       this.$router.replace('/itemMain')
     },
@@ -222,6 +231,7 @@ export default {
       this.visible.addDialog = true
     },
     handleAddCommit(formName) {
+      // todo: 打开时进入项目出bug
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$http
@@ -230,6 +240,9 @@ export default {
               if (response.data.error_code === 0) {
                 alert('添加成功')
                 this.pageList()
+                console.log('this.addform', this.addForm)
+                this.$store.commit('changeItem', this.addForm)
+                this.$router.replace('/itemMain')
               } else {
                 console.log(response.data)
               }

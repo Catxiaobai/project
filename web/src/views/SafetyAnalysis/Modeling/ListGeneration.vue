@@ -6,12 +6,12 @@
         <el-table :data="tableData" border style="width: 100%">
           <el-table-column prop="id" label="序号" width="180"> </el-table-column>
           <el-table-column prop="model_name" label="模型名称" width="180"> </el-table-column>
-          <el-table-column prop="model_type" label="模型类型" width="180" :filters="filterData" :filter-method="filterType">
-            <!--todo: 筛选功能存在bug-->
-          </el-table-column>
           <el-table-column prop="element" label="场景要素" width="180"> </el-table-column>
           <el-table-column prop="name" label="场景名称" width="180"> </el-table-column>
           <el-table-column prop="type" label="场景类型"> </el-table-column>
+          <el-table-column prop="model_type" label="模型类型" width="180" :filters="filterData" :filter-method="filterType">
+            <!--todo: 筛选功能存在bug-->
+          </el-table-column>
           <!--          <el-table-column prop="describe" label="场景描述" width="180"> </el-table-column>-->
           <!--          <el-table-column prop="content" label="场景内容"> </el-table-column>-->
         </el-table>
@@ -68,7 +68,13 @@ export default {
         limit: 7, //每页显示条数
         total: 0, //项目总数
         page: 1 //第几页
-      }
+      },
+      filterData: [
+        { text: '状态机', value: '状态机' },
+        { text: '时序图', value: '时序图' },
+        { text: '活动图', value: '活动图' },
+        { text: '顺序图', value: '顺序图' }
+      ]
     }
   },
   created() {

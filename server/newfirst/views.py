@@ -148,6 +148,7 @@ def delete_design_criteria(request):
 # 新建项目
 def add_item(request):
     request_json = json.loads(request.body)
+    print(request_json)
     try:
         new_name = request_json['name']
         new_software = request_json['software']
@@ -266,7 +267,7 @@ def add_rule(request):
     try:
         print(request_json)
         rule_list = request_json['selectData']
-        new_item_id = request_json['item']['item_id']
+        new_item_id = request_json['item']['id']
         for i in range(len(rule_list)):
             new_name = rule_list[i]['name']
             new_describe = rule_list[i]['describe']

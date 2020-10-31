@@ -21,7 +21,7 @@
           <el-table-column prop="describe" label="描述" width="180" :show-overflow-tooltip="true">
             <!--todo: 过长不好看-->
           </el-table-column>
-          <el-table-column prop="content" label="内容"> </el-table-column>
+          <el-table-column prop="content" label="规格化描述"> </el-table-column>
         </el-table>
       </div>
       <div id="page">
@@ -53,7 +53,7 @@
           <el-form-item label="描述" label-width="120px" prop="describe">
             <el-input v-model="addForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入文字描述"> </el-input>
           </el-form-item>
-          <el-form-item label="内容" label-width="120px" prop="content">
+          <el-form-item label="规格化描述" label-width="120px" prop="content">
             <el-input v-model="addForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入备注"> </el-input>
           </el-form-item>
         </el-form>
@@ -77,7 +77,7 @@
           <el-form-item label="描述" label-width="120px" prop="describe">
             <el-input v-model="editForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入文字描述"> </el-input>
           </el-form-item>
-          <el-form-item label="内容" label-width="120px" prop="content">
+          <el-form-item label="规格化描述" label-width="120px" prop="content">
             <el-input v-model="editForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入备注"> </el-input>
           </el-form-item>
         </el-form>
