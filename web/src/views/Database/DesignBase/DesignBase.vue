@@ -2,13 +2,13 @@
   <div id="designBase">
     <el-card>
       <div id="search">
-        <el-input v-model="search" placeholder="按描述搜索" style="width: 300px" @input="pageList" />
+        <el-input v-model="search" placeholder="按类别搜索" style="width: 300px" @input="pageList" />
       </div>
       <div id="actionButton" style="margin-left:73%;margin-bottom: 20px;margin-top: -40px">
         <el-button type="primary">导入</el-button>
         <el-button type="primary" @click="handleAdd('addForm')">增加</el-button>
         <el-button type="success" :disabled="disabled.edit" @click="visible.editDialog = true">编辑</el-button>
-        <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选设计准则" style="margin-left: 20px" @onConfirm="handleDeleteCommit">
+        <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选设计准则" style="margin-left: 10px" @onConfirm="handleDeleteCommit">
           <el-button type="danger" :disabled="disabled.delete" slot="reference">删除</el-button>
         </el-popconfirm>
       </div>
@@ -18,14 +18,15 @@
           border
           style="width: 100%"
           @selection-change="handleSelection"
+          @filter-change="handleFilterChange"
           :default-sort="({ prop: 'type', order: '' }, { prop: 'id', order: '' }, { prop: 'element', order: '' })"
         >
           <el-table-column type="selection" width="40px"> </el-table-column>
           <el-table-column prop="id" label="序号" width="180" sortable> </el-table-column>
-          <el-table-column prop="element" label="要素" width="180" :filters="filterData.element" :filter-method="filterElement" sortable>
+          <el-table-column prop="element" label="要素" width="180" :filters="filterData.element" sortable column-key="element">
             <!--todo: 筛选功能存在bug，依旧分页显示-->
           </el-table-column>
-          <el-table-column prop="type" label="类别" width="180" sortable :filters="filterData.type" :filter-method="filterElement"> </el-table-column>
+          <el-table-column prop="type" label="类别" width="180" sortable> </el-table-column>
           <el-table-column prop="describe" label="描述"> </el-table-column>
         </el-table>
       </div>
@@ -51,9 +52,10 @@
               <el-option v-for="item in options.element" :key="item.value" :value="item.value"> </el-option>
             </el-select>
           </el-form-item>
-          <!--todo: 类型和要素没有关联-->
           <el-form-item label="类型" label-width="120px" prop="type">
-            <el-cascader v-model="addForm.type" :options="options.type" :show-all-levels="false" @change="test"> </el-cascader>
+            <el-select v-model="addForm.type" placeholder="请选择">
+              <el-option v-for="item in options.type[addForm.element]" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="描述" label-width="120px" prop="describe">
             <el-input v-model="addForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入文字描述"> </el-input>
@@ -74,7 +76,9 @@
             </el-select>
           </el-form-item>
           <el-form-item label="类型" label-width="120px" prop="type">
-            <el-cascader v-model="editForm.type" :options="options.type" :show-all-levels="false"> </el-cascader>
+            <el-select v-model="editForm.type" placeholder="请选择">
+              <el-option v-for="item in options.type[editForm.element]" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="描述" label-width="120px" prop="describe">
             <el-input v-model="editForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入文字描述"> </el-input>
@@ -112,6 +116,7 @@ export default {
   data() {
     return {
       tableData: [],
+      filterSearch: '',
       filterData: {
         element: [
           { text: '接口相关设计', value: '接口相关设计' },
@@ -120,20 +125,92 @@ export default {
           { text: '状态迁移相关设计', value: '状态迁移相关设计' },
           { text: '其他设计', value: '其他设计' }
         ],
-        type: [
-          { text: '接口相关设计', value: '接口相关设计' },
-          { text: '功能处理相关设计', value: '功能处理相关设计' },
-          { text: '功能划分相关设计', value: '功能划分相关设计' },
-          { text: '状态迁移相关设计', value: '状态迁移相关设计' },
-          { text: '其他设计', value: '其他设计' }
-        ]
+        type: {
+          接口相关设计: [
+            {
+              value: '与硬件相关接口设计',
+              text: '与硬件相关接口设计'
+            },
+            {
+              value: '软件模块间接口设计',
+              text: '软件模块间接口设计'
+            },
+            {
+              value: '人机接口设计',
+              text: '人机接口设计'
+            },
+            {
+              value: '数据设计',
+              text: '数据设计'
+            },
+            {
+              value: '人因安全性设计',
+              text: '人因安全性设计'
+            }
+          ],
+          功能处理相关设计: [
+            {
+              value: '设计可追踪性',
+              text: '设计可追踪性'
+            },
+            {
+              value: '过程设计',
+              text: '过程设计'
+            },
+            {
+              value: '性能约束设计',
+              text: '性能约束设计'
+            }
+          ],
+          功能划分相关设计: [
+            {
+              value: '独立性设计',
+              text: '独立性设计'
+            },
+            {
+              value: '体系结构设计',
+              text: '体系结构设计'
+            },
+            {
+              value: '中断设计',
+              text: '中断设计'
+            },
+            {
+              value: '同步设计',
+              text: '同步设计'
+            }
+          ],
+          状态迁移相关设计: [
+            {
+              value: '交叉传输机制设计',
+              text: '交叉传输机制设计'
+            },
+            {
+              value: '表决监控机制设计',
+              text: '表决监控机制设计'
+            }
+          ],
+          其他设计: [
+            {
+              value: '编码规范',
+              text: '编码规范'
+            }
+          ]
+        }
+        // type: [
+        //   { text: '接口相关设计', value: '接口相关设计' },
+        //   { text: '功能处理相关设计', value: '功能处理相关设计' },
+        //   { text: '功能划分相关设计', value: '功能划分相关设计' },
+        //   { text: '状态迁移相关设计', value: '状态迁移相关设计' },
+        //   { text: '其他设计', value: '其他设计' }
+        // ]
       },
       pagination: {
         limit: 7, //每页显示条数
         total: 0, //项目总数
         page: 1 //第几页
       },
-      search: '', //搜索框
+      search: '',
       visible: {
         addDialog: false,
         deleteDialog: false,
@@ -187,98 +264,170 @@ export default {
             label: '其他设计'
           }
         ],
-        type: [
-          {
-            value: '接口相关设计',
-            label: '接口相关设计',
-            children: [
-              {
-                value: '与硬件相关接口设计',
-                label: '与硬件相关接口设计'
-              },
-              {
-                value: '软件模块间接口设计',
-                label: '软件模块间接口设计'
-              },
-              {
-                value: '人机接口设计',
-                label: '人机接口设计'
-              },
-              {
-                value: '数据设计',
-                label: '数据设计'
-              },
-              {
-                value: '人因安全性设计',
-                label: '人因安全性设计'
-              }
-            ]
-          },
-          {
-            value: '功能处理相关设计',
-            label: '功能处理相关设计',
-            children: [
-              {
-                value: '设计可追踪性',
-                label: '设计可追踪性'
-              },
-              {
-                value: '过程设计',
-                label: '过程设计'
-              },
-              {
-                value: '性能约束设计',
-                label: '性能约束设计'
-              }
-            ]
-          },
-          {
-            value: '功能划分相关设计',
-            label: '功能划分相关设计',
-            children: [
-              {
-                value: '独立性设计',
-                label: '独立性设计'
-              },
-              {
-                value: '体系结构设计',
-                label: '体系结构设计'
-              },
-              {
-                value: '中断设计',
-                label: '中断设计'
-              },
-              {
-                value: '同步设计',
-                label: '同步设计'
-              }
-            ]
-          },
-          {
-            value: '状态迁移相关设计',
-            label: '状态迁移相关设计',
-            children: [
-              {
-                value: '交叉传输机制设计',
-                label: '交叉传输机制设计'
-              },
-              {
-                value: '表决监控机制设计',
-                label: '表决监控机制设计'
-              }
-            ]
-          },
-          {
-            value: '其他设计',
-            label: '其他设计',
-            children: [
-              {
-                value: '编码规范',
-                label: '编码规范'
-              }
-            ]
-          }
-        ]
+        type: {
+          接口相关设计: [
+            {
+              value: '与硬件相关接口设计',
+              label: '与硬件相关接口设计'
+            },
+            {
+              value: '软件模块间接口设计',
+              label: '软件模块间接口设计'
+            },
+            {
+              value: '人机接口设计',
+              label: '人机接口设计'
+            },
+            {
+              value: '数据设计',
+              label: '数据设计'
+            },
+            {
+              value: '人因安全性设计',
+              label: '人因安全性设计'
+            }
+          ],
+          功能处理相关设计: [
+            {
+              value: '设计可追踪性',
+              label: '设计可追踪性'
+            },
+            {
+              value: '过程设计',
+              label: '过程设计'
+            },
+            {
+              value: '性能约束设计',
+              label: '性能约束设计'
+            }
+          ],
+          功能划分相关设计: [
+            {
+              value: '独立性设计',
+              label: '独立性设计'
+            },
+            {
+              value: '体系结构设计',
+              label: '体系结构设计'
+            },
+            {
+              value: '中断设计',
+              label: '中断设计'
+            },
+            {
+              value: '同步设计',
+              label: '同步设计'
+            }
+          ],
+          状态迁移相关设计: [
+            {
+              value: '交叉传输机制设计',
+              label: '交叉传输机制设计'
+            },
+            {
+              value: '表决监控机制设计',
+              label: '表决监控机制设计'
+            }
+          ],
+          其他设计: [
+            {
+              value: '编码规范',
+              label: '编码规范'
+            }
+          ]
+        }
+        // type: [
+        //   {
+        //     value: '接口相关设计',
+        //     label: '接口相关设计',
+        //     children: [
+        //       {
+        //         value: '与硬件相关接口设计',
+        //         label: '与硬件相关接口设计'
+        //       },
+        //       {
+        //         value: '软件模块间接口设计',
+        //         label: '软件模块间接口设计'
+        //       },
+        //       {
+        //         value: '人机接口设计',
+        //         label: '人机接口设计'
+        //       },
+        //       {
+        //         value: '数据设计',
+        //         label: '数据设计'
+        //       },
+        //       {
+        //         value: '人因安全性设计',
+        //         label: '人因安全性设计'
+        //       }
+        //     ]
+        //   },
+        //   {
+        //     value: '功能处理相关设计',
+        //     label: '功能处理相关设计',
+        //     children: [
+        //       {
+        //         value: '设计可追踪性',
+        //         label: '设计可追踪性'
+        //       },
+        //       {
+        //         value: '过程设计',
+        //         label: '过程设计'
+        //       },
+        //       {
+        //         value: '性能约束设计',
+        //         label: '性能约束设计'
+        //       }
+        //     ]
+        //   },
+        //   {
+        //     value: '功能划分相关设计',
+        //     label: '功能划分相关设计',
+        //     children: [
+        //       {
+        //         value: '独立性设计',
+        //         label: '独立性设计'
+        //       },
+        //       {
+        //         value: '体系结构设计',
+        //         label: '体系结构设计'
+        //       },
+        //       {
+        //         value: '中断设计',
+        //         label: '中断设计'
+        //       },
+        //       {
+        //         value: '同步设计',
+        //         label: '同步设计'
+        //       }
+        //     ]
+        //   },
+        //   {
+        //     value: '状态迁移相关设计',
+        //     label: '状态迁移相关设计',
+        //     children: [
+        //       {
+        //         value: '交叉传输机制设计',
+        //         label: '交叉传输机制设计'
+        //       },
+        //       {
+        //         value: '表决监控机制设计',
+        //         label: '表决监控机制设计'
+        //       }
+        //     ]
+        //   },
+        //   {
+        //     value: '其他设计',
+        //     label: '其他设计',
+        //     children: [
+        //       {
+        //         value: '编码规范',
+        //         label: '编码规范'
+        //       }
+        //     ]
+        //   }
+        // ]
       }
     }
   },
@@ -303,21 +452,40 @@ export default {
     },
     getList() {
       // 处理数据，根据表格中name字段来筛选
-      let list = this.data.filter((item, index) => item.describe.includes(this.search))
-      // let list = this.data
+      let list = this.data.filter((item, index) => item.type.includes(this.search))
       this.tableData = list.filter(
         (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
       )
       this.pagination.total = list.length
-      // console.log(this.tableData)
     },
-    filterElement(value, row) {
-      console.log(value, row)
+    filterElement(value, row, column) {
+      console.log(value, row, column)
+      // const property = column['property']
+      // return row[property] === value
       return row.element === value
     },
     filterType(value, row) {
       console.log(value, row)
       return row.type === value
+    },
+    handleFilterChange(value) {
+      console.log(value)
+      if (value['element']) {
+        this.filterSearch = value['element']
+        let list = this.data.filter((item, index) => item.element.includes(this.filterSearch))
+        this.tableData = list.filter(
+          (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
+        )
+        this.pagination.total = list.length
+      }
+      // if (value['type']) {
+      //   this.filterSearch = value['type']
+      //   let list = this.data.filter((item, index) => item.type.includes(this.filterSearch))
+      //   this.tableData = list.filter(
+      //     (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
+      //   )
+      //   this.pagination.total = list.length
+      // }
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()

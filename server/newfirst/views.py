@@ -72,6 +72,8 @@ def edit_analysis_rule(request):
         new_remark = request_json['remark']
         if not AnalysisRules.objects.filter(id=aim_id).exists():
             return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+        if AnalysisRules.objects.filter(name=new_name).exists():
+            return JsonResponse({**error_code.CLACK_NAME_EXISTS})
         AnalysisRules.objects.filter(id=aim_id).update(name=new_name)
         AnalysisRules.objects.filter(id=aim_id).update(type=new_type)
         AnalysisRules.objects.filter(id=aim_id).update(describe=new_describe)
@@ -101,7 +103,7 @@ def add_design_criteria(request):
     request_json = json.loads(request.body)
     try:
         new_name = request_json['name']
-        new_type = request_json['type'][-1]
+        new_type = request_json['type']
         new_describe = request_json['describe']
         new_element = request_json['element']
         new_rule = DesignCriteria(type=new_type, describe=new_describe, element=new_element)
@@ -118,7 +120,7 @@ def edit_design_criteria(request):
         new_describe = request_json['describe']
         aim_id = request_json['id']
         new_name = request_json['name']
-        new_type = request_json['type'][-1]
+        new_type = request_json['type']
         new_element = request_json['element']
         if not DesignCriteria.objects.filter(id=aim_id).exists():
             return JsonResponse({**error_code.CLACK_NOT_EXISTS})
@@ -148,7 +150,6 @@ def delete_design_criteria(request):
 # 新建项目
 def add_item(request):
     request_json = json.loads(request.body)
-    print(request_json)
     try:
         new_name = request_json['name']
         new_software = request_json['software']
@@ -164,9 +165,10 @@ def add_item(request):
                         level=new_level,
                         path=new_path)
         new_item.save()
+        print(new_item.to_dict())
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
-    return JsonResponse({**error_code.CLACK_SUCCESS})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "item": new_item.to_dict()})
 
 
 # 编辑项目
@@ -200,7 +202,7 @@ def delete_item(request):
 def scenes_list(request):
     request_json = json.loads(request.body)
     try:
-        scenes = Scenes.objects.all()
+        scenes = Scenes.objects.filter(item_id=request_json['id'])
         result = [scene.to_dict() for scene in scenes]
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
@@ -215,10 +217,11 @@ def add_scenes(request):
         new_content = request_json['content']
         new_type = request_json['type']
         new_element = request_json['element']
+        aim_item_id = request_json['item_id']
         if Scenes.objects.filter(name=new_name):
             return JsonResponse({**error_code.CLACK_NAME_EXISTS})
         new_scene = Scenes(name=new_name, describe=new_describe, content=new_content,
-                           type=new_type, element=new_element)
+                           type=new_type, element=new_element, item_id=aim_item_id)
         new_scene.save()
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
@@ -274,8 +277,9 @@ def add_rule(request):
             new_describe = rule_list[i]['describe']
             new_remark = rule_list[i]['remark']
             new_type = rule_list[i]['type']
+            new_belong = rule_list[i]['belong']
             new_rule = Rules(name=new_name, describe=new_describe, remark=new_remark, type=new_type,
-                             item_id=new_item_id)
+                             item_id=new_item_id, belong=new_belong)
             new_rule.save()
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})

@@ -8,7 +8,7 @@
         <el-button type="primary">导入</el-button>
         <el-button type="primary" @click="handleAdd('addForm')">增加</el-button>
         <el-button type="success" :disabled="disabled.edit" @click="visible.editDialog = true">编辑</el-button>
-        <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选规则" style="margin-left: 20px" @onConfirm="handleDeleteCommit">
+        <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选规则" style="margin-left: 10px" @onConfirm="handleDeleteCommit">
           <el-button type="danger" :disabled="disabled.delete" slot="reference">删除</el-button>
         </el-popconfirm>
       </div>
@@ -18,13 +18,13 @@
           border
           style="width: 100%"
           @selection-change="handleSelection"
+          @filter-change="handleFilterChange"
           :default-sort="({ prop: 'type', order: '' }, { prop: 'id', order: '' })"
         >
           <el-table-column type="selection" width="40px"> </el-table-column>
           <el-table-column prop="id" label="序号" width="180" sortable> </el-table-column>
-          <el-table-column prop="type" label="类别" width="180" :filters="filterData" :filter-method="filterType" sortable>
-            <!--todo: 筛选功能存在bug-->
-          </el-table-column>
+          <!--todo: 只能筛选一个-->
+          <el-table-column prop="type" label="类别" width="180" :filters="filterData" column-key="type" sortable> </el-table-column>
           <el-table-column prop="name" label="名称" width="180"> </el-table-column>
           <el-table-column prop="describe" label="描述" width="180"> </el-table-column>
           <el-table-column prop="remark" label="备注"> </el-table-column>
@@ -118,6 +118,7 @@ export default {
   data() {
     return {
       tableData: [],
+      filterSearch: '',
       filterData: [
         { text: '外部接口', value: '外部接口' },
         { text: '功能处理', value: '功能处理' },
@@ -218,6 +219,25 @@ export default {
       console.log(value, row)
       return row.type === value
     },
+    handleFilterChange(value) {
+      console.log(value)
+      // if (value['element']) {
+      //   this.filterSearch = value['element']
+      //   let list = this.data.filter((item, index) => item.element.includes(this.filterSearch))
+      //   this.tableData = list.filter(
+      //     (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
+      //   )
+      //   this.pagination.total = list.length
+      // }
+      if (value['type']) {
+        this.filterSearch = value['type']
+        let list = this.data.filter((item, index) => item.type.includes(this.filterSearch))
+        this.tableData = list.filter(
+          (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
+        )
+        this.pagination.total = list.length
+      }
+    },
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
@@ -287,6 +307,8 @@ export default {
                 this.pageList()
               } else {
                 console.log(response.data)
+                alert('名称重复')
+                this.pageList()
               }
             })
             .catch(function(error) {

@@ -106,16 +106,16 @@ const routes = [
         name: 'failureAnalysis',
         component: () => import('@/views/SafetyAnalysis/Implement/FailureAnalysis')
       },
-      {
-        path: '/subScene',
-        name: 'subScene',
-        component: () => import('@/views/SafetyAnalysis/Modeling/SubScene')
-      },
-      {
-        path: '/complexScene',
-        name: 'complexScene',
-        component: () => import('@/views/SafetyAnalysis/Modeling/ComplexScene')
-      },
+      // {
+      //   path: '/subScene',
+      //   name: 'subScene',
+      //   component: () => import('@/views/SafetyAnalysis/Modeling/SubScene')
+      // },
+      // {
+      //   path: '/complexScene',
+      //   name: 'complexScene',
+      //   component: () => import('@/views/SafetyAnalysis/Modeling/ComplexScene')
+      // },
       {
         path: '/listGeneration',
         name: 'listGeneration',

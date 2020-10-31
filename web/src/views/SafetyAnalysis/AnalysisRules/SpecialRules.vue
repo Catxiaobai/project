@@ -11,15 +11,14 @@
         <el-button type="primary" style="margin-left: 60%" @click="handleAdd('addForm')">增加项目分析规则</el-button>
       </div>
       <div id="table">
-        <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection">
+        <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection" @filter-change="handleFilterChange">
           <el-table-column type="selection" width="40px"> </el-table-column>
-          <el-table-column prop="id" label="序号" width="180"> </el-table-column>
-          <el-table-column prop="type" label="类别" width="180" :filters="filterData" :filter-method="filterType">
-            <!--todo: 筛选功能存在bug-->
-          </el-table-column>
+          <el-table-column prop="id" label="序号" width="80"> </el-table-column>
+          <el-table-column prop="type" label="类别" width="180" :filters="filterData" column-key="type"> </el-table-column>
           <el-table-column prop="name" label="名称" width="180"> </el-table-column>
           <el-table-column prop="describe" label="描述" width="180"> </el-table-column>
           <el-table-column prop="remark" label="备注"> </el-table-column>
+          <el-table-column prop="belong" label="所属"></el-table-column>
         </el-table>
       </div>
       <div id="page">
@@ -198,6 +197,25 @@ export default {
     filterType(value, row) {
       console.log(value, row)
       return row.type === value
+    },
+    handleFilterChange(value) {
+      console.log(value)
+      // if (value['element']) {
+      //   this.filterSearch = value['element']
+      //   let list = this.data.filter((item, index) => item.element.includes(this.filterSearch))
+      //   this.tableData = list.filter(
+      //     (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
+      //   )
+      //   this.pagination.total = list.length
+      // }
+      if (value['type']) {
+        this.filterSearch = value['type']
+        let list = this.data.filter((item, index) => item.type.includes(this.filterSearch))
+        this.tableData = list.filter(
+          (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
+        )
+        this.pagination.total = list.length
+      }
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()

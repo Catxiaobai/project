@@ -240,8 +240,8 @@ export default {
               if (response.data.error_code === 0) {
                 alert('添加成功')
                 this.pageList()
-                console.log('this.addform', this.addForm)
-                this.$store.commit('changeItem', this.addForm)
+                console.log('response.data.item', response.data.item)
+                this.$store.commit('changeItem', response.data.item)
                 this.$router.replace('/itemMain')
               } else {
                 console.log(response.data)

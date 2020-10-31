@@ -8,7 +8,9 @@
         <el-button type="primary">导入</el-button>
         <el-button type="primary" @click="handleAdd('addForm')">增加</el-button>
         <el-button type="success" :disabled="disabled.edit" @click="visible.editDialog = true">编辑</el-button>
-        <el-button type="danger" :disabled="disabled.delete" @click="visible.deleteDialog = true">删除</el-button>
+        <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选场景" style="margin-left: 20px" @onConfirm="handleDeleteCommit">
+          <el-button type="danger" :disabled="disabled.delete" slot="reference">删除</el-button>
+        </el-popconfirm>
       </div>
       <div id="table">
         <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection">
@@ -149,7 +151,8 @@ export default {
         describe: '',
         content: '',
         element: '',
-        type: 'complex'
+        type: 'complex',
+        item_id: ''
       },
       deleteData: [],
       rules: {
@@ -188,7 +191,7 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .post('http://127.0.0.1:8000/api/scenes_list', this.itemInfo.id)
+        .post('http://127.0.0.1:8000/api/scenes_list', this.itemInfo)
         .then(response => {
           // console.log(response.data.analysis_list)
           this.data = response.data.scenes_list
@@ -250,10 +253,10 @@ export default {
     },
     handleAdd(formName) {
       this.visible.addDialog = true
-      this.resetForm(formName)
     },
     handleAddCommit(formName) {
       this.addForm.type = 'complex'
+      this.addForm.item_id = this.itemInfo.id
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$http
@@ -261,7 +264,6 @@ export default {
             .then(response => {
               if (response.data.error_code === 0) {
                 alert('添加成功')
-                this.resetForm(formName)
                 this.pageList()
               } else {
                 console.log(response.data)

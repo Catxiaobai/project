@@ -18,7 +18,7 @@ const store = new Vuex.Store({
   mutations: {
     changeItem(state, newItem) {
       state.item = newItem
-      console.log('etst', state.item)
+      console.log('changeItem', state.item)
     }
   }
 })

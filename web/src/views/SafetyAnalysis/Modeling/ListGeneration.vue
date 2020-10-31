@@ -6,10 +6,10 @@
         <el-table :data="tableData" border style="width: 100%">
           <el-table-column prop="id" label="序号" width="180"> </el-table-column>
           <el-table-column prop="model_name" label="模型名称" width="180"> </el-table-column>
-          <el-table-column prop="element" label="场景要素" width="180"> </el-table-column>
+          <el-table-column prop="element" label="场景类型" width="180"> </el-table-column>
           <el-table-column prop="name" label="场景名称" width="180"> </el-table-column>
           <el-table-column prop="type" label="场景类型"> </el-table-column>
-          <el-table-column prop="model_type" label="模型类型" width="180" :filters="filterData" :filter-method="filterType">
+          <el-table-column prop="model_type" label="模型类型" width="180">
             <!--todo: 筛选功能存在bug-->
           </el-table-column>
           <!--          <el-table-column prop="describe" label="场景描述" width="180"> </el-table-column>-->
