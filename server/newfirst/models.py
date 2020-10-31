@@ -151,6 +151,7 @@ class Fmea(models.Model):
     case = models.OneToOneField(Case, on_delete=models.CASCADE)
     improve = models.TextField(default='', blank=True)
     reason = models.TextField(default='', blank=True)
+    describe = models.TextField(default='', blank=True)
     local_influence = models.TextField(default='', blank=True)
     upper_influence = models.TextField(default='', blank=True)
     system_influence = models.TextField(default='', blank=True)
@@ -161,7 +162,8 @@ class Fmea(models.Model):
             'id': self.id,
             'improve': self.improve,
             'case': self.case.id,
-            'describe': self.case.case_describe,
+            'case_describe': self.case.case_describe,
+            'describe': self.describe,
             'reason': self.reason,
             'local_influence': self.local_influence,
             'upper_influence': self.upper_influence,

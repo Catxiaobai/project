@@ -23,6 +23,8 @@ urlpatterns = [
     path('design_criteria_list', views.design_criteria_list, name='design_criteria_list'),  # 设计准则列表
     path('analysis_rule_list', views.analysis_rule_list, name='analysis_rule_list'),  # 分析规则列表
     path('add_analysis_rule', views.add_analysis_rule, name='add_analysis_rule'),  # 添加分析规则
+    # 从规则集中添加通用规则
+    path('add_analysis_rule_from_item', views.add_analysis_rule_from_item, name='add_analysis_rule_from_item'),
     path('edit_analysis_rule', views.edit_analysis_rule, name='edit_analysis_rule'),  # 编辑分析规则
     path('delete_analysis_rule', views.delete_analysis_rule, name='delete_analysis_rule'),  # 删除分析规则
     path('add_design_criteria', views.add_design_criteria, name='add_design_criteria'),  # 添加设计准则

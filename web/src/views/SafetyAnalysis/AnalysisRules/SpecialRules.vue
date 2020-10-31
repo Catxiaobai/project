@@ -248,21 +248,23 @@ export default {
       console.log('ss', this.itemInfo)
     },
     handleSelectCommit() {
+      console.log('ss', this.selectData)
       // this.getItemInfo()
       // this.visible.selectDialog = false
-      // this.$http
-      //     .post('http://127.0.0.1:8000/api/add_rule', { selectData: this.selectData, item: this.itemInfo })
-      //     .then(response => {
-      //       console.log(response.data)
-      //       if (response.data.error_code === 0) {
-      //         alert('添加成功')
-      //         this.pageList()
-      //         this.visible.deleteDialog = false
-      //       }
-      //     })
-      //     .catch(function(error) {
-      //       console.log(error)
-      //     })
+      this.$http
+        .post('http://127.0.0.1:8000/api/add_analysis_rule_from_item', this.selectData)
+        .then(response => {
+          console.log(response.data)
+          if (response.data.error_code === 0) {
+            alert('添加成功（已自动过滤已存在规则）')
+            this.pageList()
+          } else {
+            alert(response.data)
+          }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     },
     handleAdd(formName) {
       this.visible.addDialog = true
@@ -273,7 +275,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$http
-            .post('http://127.0.0.1:8000/api/add_rule', { selectData: this.addData, item: this.itemInfo })
+            .post('http://127.0.0.1:8000/api/add_rule', { selectData: this.addData, item: this.itemInfo, belong: '专用' })
             .then(response => {
               if (response.data.error_code === 0) {
                 alert('添加成功')

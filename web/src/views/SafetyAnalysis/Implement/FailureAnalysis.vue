@@ -5,43 +5,49 @@
       <el-select v-model="value" placeholder="请选择" @change="onChange">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
       </el-select>
+      <el-button type="primary" style="margin-left: 60%" @click="saveData">保存</el-button>
       <div id="fmea" v-show="divShow" style="margin-top: 20px">
         <div id="table">
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column prop="id" label="序号" width="80" align="center"> </el-table-column>
-            <el-table-column prop="describe" label="失效描述" width="180" align="center"> </el-table-column>
+            <el-table-column prop="case_describe" label="违背规则描述" width="180" align="center"> </el-table-column>
+            <el-table-column prop="describe" label="失效描述" width="180" align="center">
+              <template slot-scope="scope">
+                <el-input class="tableCell" type="textarea" autosize v-model="scope.row.describe"> </el-input>
+              </template>
+            </el-table-column>
             <el-table-column prop="reason" label="软件失效原因" width="120" align="center">
               <template slot-scope="scope">
-                <el-input class="tableCell" type="textarea" autosize v-model="scope.row.reason" @change="saveData(scope.row)"> </el-input>
+                <el-input class="tableCell" type="textarea" autosize v-model="scope.row.reason"> </el-input>
               </template>
             </el-table-column>
             <el-table-column label="软件失效影响" align="center">
               <el-table-column prop="local_influence" label="本层影响" width="120" align="center">
                 <template slot-scope="scope">
-                  <el-input class="tableCell" type="textarea" autosize v-model="scope.row.local_influence" @change="saveData(scope.row)"> </el-input>
+                  <el-input class="tableCell" type="textarea" autosize v-model="scope.row.local_influence"> </el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="upper_influence" label="上一层影响" width="120" align="center">
                 <template slot-scope="scope">
-                  <el-input class="tableCell" type="textarea" autosize v-model="scope.row.upper_influence" @change="saveData(scope.row)"> </el-input>
+                  <el-input class="tableCell" type="textarea" autosize v-model="scope.row.upper_influence"> </el-input>
                 </template>
               </el-table-column>
               <el-table-column prop="system_influence" label="系统影响" width="120" align="center">
                 <template slot-scope="scope">
-                  <el-input class="tableCell" type="textarea" autosize v-model="scope.row.system_influence" @change="saveData(scope.row)"> </el-input>
+                  <el-input class="tableCell" type="textarea" autosize v-model="scope.row.system_influence"> </el-input>
                 </template>
               </el-table-column>
             </el-table-column>
             <el-table-column prop="influence_level" label="影响等级" width="180" align="center">
               <template slot-scope="scope">
-                <el-select v-model="scope.row.influence_level" placeholder="请选择" style="border: 0;margin: 0;padding: 0" @change="saveData(scope.row)">
+                <el-select v-model="scope.row.influence_level" placeholder="请选择" style="border: 0;margin: 0;padding: 0">
                   <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value"> </el-option>
                 </el-select>
               </template>
             </el-table-column>
             <el-table-column prop="improve" label="改进措施" align="center">
               <template slot-scope="scope">
-                <el-input class="tableCell" type="textarea" autosize v-model="scope.row.improve" @change="saveData(scope.row)"> </el-input>
+                <el-input class="tableCell" type="textarea" autosize v-model="scope.row.improve"> </el-input>
               </template>
             </el-table-column>
           </el-table>
@@ -254,20 +260,20 @@ export default {
       this.pagination.total = list.length
       // console.log(this.tableData)
     },
-    saveData(val) {
-      console.log(val)
-      this.$http
-        .post('http://127.0.0.1:8000/api/edit_fmea', val)
-        .then(response => {
-          if (response.data.error_code === 0) {
-            this.pageList()
-          } else {
-            console.log(response.data)
-          }
-        })
-        .catch(function(error) {
-          console.log(error)
-        })
+    saveData() {
+      console.log(this.tableData)
+      // this.$http
+      //   .post('http://127.0.0.1:8000/api/edit_fmea', val)
+      //   .then(response => {
+      //     if (response.data.error_code === 0) {
+      //       this.pageList()
+      //     } else {
+      //       console.log(response.data)
+      //     }
+      //   })
+      //   .catch(function(error) {
+      //     console.log(error)
+      //   })
     },
     getItemInfo() {
       this.itemInfo = this.$store.state.item

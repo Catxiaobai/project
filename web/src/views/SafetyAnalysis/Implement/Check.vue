@@ -12,10 +12,10 @@
         <!--        <el-button type="danger" :disabled="disabled.delete" @click="visible.deleteDialog = true">删除</el-button>-->
       </div>
       <div id="table">
-        <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection">
+        <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection" @filter-change="handleFilterChange">
           <el-table-column type="selection" width="40px"> </el-table-column>
           <el-table-column prop="id" label="序号" width="180"> </el-table-column>
-          <el-table-column prop="element" label="类别" width="180" :filters="filterData" :filter-method="filterType">
+          <el-table-column prop="element" label="类别" width="180" :filters="filterData" column-key="element">
             <!--todo: 筛选功能存在bug-->
           </el-table-column>
           <el-table-column prop="name" label="名称" width="180"> </el-table-column>
@@ -149,6 +149,25 @@ export default {
     filterType(value, row) {
       console.log(value, row)
       return row.type === value
+    },
+    handleFilterChange(value) {
+      console.log(value)
+      if (value['element']) {
+        this.filterSearch = value['element']
+        let list = this.data.filter((item, index) => item.element.includes(this.filterSearch))
+        this.tableData = list.filter(
+          (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
+        )
+        this.pagination.total = list.length
+      }
+      if (value['type']) {
+        this.filterSearch = value['type']
+        let list = this.data.filter((item, index) => item.type.includes(this.filterSearch))
+        this.tableData = list.filter(
+          (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
+        )
+        this.pagination.total = list.length
+      }
     },
     handleSizeChange(val) {
       // 当每页数量改变

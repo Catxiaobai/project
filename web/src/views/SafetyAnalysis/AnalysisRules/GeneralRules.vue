@@ -152,8 +152,7 @@ export default {
       } else {
         this.disabled.select = false
         this.selectData = val
-        this.selectData.belong = '通用'
-        console.log(this.selectData)
+        console.log('通用', this.selectData)
       }
     },
     getItemInfo() {
@@ -163,7 +162,7 @@ export default {
       this.getItemInfo()
       this.visible.selectDialog = false
       this.$http
-        .post('http://127.0.0.1:8000/api/add_rule', { selectData: this.selectData, item: this.itemInfo })
+        .post('http://127.0.0.1:8000/api/add_rule', { selectData: this.selectData, item: this.itemInfo, belong: '通用' })
         .then(response => {
           console.log(response.data)
           if (response.data.error_code === 0) {

@@ -13,13 +13,16 @@ CLACK_POST_REQUIRED = {"error_code": 1, "error_message": "请求方法不是POST
 CLACK_REQUEST_JSON_ERROR = {"error_code": 2, "error_message": "请求JSON中部分必须的对象不存在,触发该错误应该是前端写挂了"}
 
 # 传递的值为空
-CLACK_NULL_ERROR = {"error_code": 3, "error_message": "前端传来的空的"}
+CLACK_NULL_ERROR = {"error_code": 3, "error_message": "存在空值"}
 
 # 目标不存在
 CLACK_NOT_EXISTS={"error_code": 4, "error_message": "此目标不存在"}
 
 # 名称已经存在
 CLACK_NAME_EXISTS = {"error_code": 5, "error_message": "已存在"}
+
+# 有重复的内容
+CLACK_REPEAT_CONTENT = {"error_code": 6, "error_message": "有重复"}
 #
 # # 登录错误
 # CLACK_USER_LOGIN_FAILED = {"error_code": 4, "error_message": "登录失败,用户名或密码错误"}

@@ -33,15 +33,13 @@
     <div id="edit">
       <el-dialog title="此分析规则的实例" :visible.sync="visible.editDialog" center>
         <span>对分析规则 [id:{{ editForm.id }}, element: {{ editForm.type }}, name: {{ editForm.name }}] 进行实例化</span>
-        <el-button type="primary" @click="test" style="margin-left: 30px;margin-bottom: 10px">添加实例</el-button>
+        <el-button type="primary" @click="handleAdd" style="margin-left: 30px;margin-bottom: 10px">添加实例</el-button>
         <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选实例" style="margin-left: 20px" @onConfirm="handleDeleteCommit">
           <el-button type="danger" :disabled="disabled.delete" slot="reference">删除</el-button>
         </el-popconfirm>
         <el-table :data="caseData" border @selection-change="handleSelectCase">
           <el-table-column type="selection" width="40px"> </el-table-column>
-          <el-table-column property="id" label="序号" width="50"></el-table-column>
           <el-table-column property="element" label="要素" width="150"></el-table-column>、
-
           <el-table-column property="name" label="名称" width="150">
             <template slot-scope="scope">
               <el-input class="tableCell" type="textarea" autosize v-model="scope.row.name"> </el-input>
@@ -60,7 +58,7 @@
         </el-table>
         <div slot="footer" class="dialog-footer">
           <el-button @click="visible.editDialog = false">取 消</el-button>
-          <el-button type="primary">保 存</el-button>
+          <el-button type="primary" @click="handleSave">保 存</el-button>
         </div>
       </el-dialog>
     </div>
@@ -126,6 +124,7 @@ export default {
         delete: true
       },
       caseData: [],
+      deleteData: [],
       filterData: [
         { text: '外部接口', value: '外部接口' },
         { text: '功能处理', value: '功能处理' },
@@ -242,10 +241,9 @@ export default {
       this.itemInfo = this.$store.state.item
       console.log('ss', this.itemInfo)
     },
-    handleAdd(formName) {
-      this.visible.addDialog = true
-      this.resetForm(formName)
-    },
+    // handleAdd(formName) {
+    //   this.visible.addDialog = true
+    // },
     handleAddCommit(formName) {
       this.addForm.element = this.editForm.type
       this.$refs[formName].validate(valid => {
@@ -300,8 +298,13 @@ export default {
       //   })
       console.log('this.selectCase', this.selectCase)
       console.log('this.caseData', this.caseData)
-      for (let i = 0; i < this.selectCase.length; i++) {
-        this.caseData.splice(this.selectCase[i].id - 1, 1)
+      for (let i = 0; i < this.caseData.length; i++) {
+        for (let j = 0; j < this.selectCase.length; j++) {
+          if (this.caseData[i] === this.selectCase[j]) {
+            this.deleteData.push(this.caseData[i].id)
+            this.caseData.splice(this.caseData[i], 1)
+          }
+        }
       }
     },
     handleSelect() {
@@ -321,14 +324,32 @@ export default {
         this.selectCase = val
       }
     },
-    test() {
+    handleAdd() {
       let rule_id = this.editForm.id
       let element = this.editForm.type
       this.caseData.push({
+        id: -100,
         rule_id: rule_id,
-        id: this.caseData.length + 1,
         element: element
       })
+    },
+    handleSave() {
+      console.log(this.caseData)
+      this.$http
+        .post('http://127.0.0.1:8000/api/add_case', { caseData: this.caseData, rule: this.editForm, deleteData: this.deleteData })
+        .then(response => {
+          if (response.data.error_code === 0) {
+            alert('保存成功')
+            this.caseList()
+            this.deleteData = []
+          } else {
+            console.log(response.data)
+            alert(response.data.error_message)
+          }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     }
   }
 }

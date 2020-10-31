@@ -44,7 +44,7 @@ def analysis_rule_list(request):
     return JsonResponse({**error_code.CLACK_SUCCESS, "analysis_list": result})
 
 
-# 添加分析规则
+# 添加单个分析规则
 def add_analysis_rule(request):
     request_json = json.loads(request.body)
     try:
@@ -56,6 +56,37 @@ def add_analysis_rule(request):
             return JsonResponse({**error_code.CLACK_NAME_EXISTS})
         new_rule = AnalysisRules(name=new_name, type=new_type, remark=new_remark, describe=new_describe)
         new_rule.save()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 从项目添加分析规则
+def add_analysis_rule_from_item(request):
+    request_json = json.loads(request.body)
+    try:
+        print(request_json)
+        # new_name = request_json['name']
+        # new_type = request_json['type']
+        # new_describe = request_json['describe']
+        # new_remark = request_json['remark']
+        # if AnalysisRules.objects.filter(name=new_name):
+        #     return JsonResponse({**error_code.CLACK_NAME_EXISTS})
+        # new_rule = AnalysisRules(name=new_name, type=new_type, remark=new_remark, describe=new_describe)
+        # new_rule.save()
+        for i in range(len(request_json)):
+            blong = request_json[i]['belong']
+            if blong == '通用':
+                continue
+            new_name = request_json[i]['name']
+            new_type = request_json[i]['type']
+            new_describe = request_json[i]['describe']
+            new_remark = request_json[i]['remark']
+            if AnalysisRules.objects.filter(name=new_name):
+                return JsonResponse({**error_code.CLACK_NAME_EXISTS})
+            new_rule = AnalysisRules(name=new_name, type=new_type, remark=new_remark, describe=new_describe)
+            new_rule.save()
+            Rules.objects.filter(id=request_json[i]['id']).update(belong='通用')
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
@@ -218,7 +249,7 @@ def add_scenes(request):
         new_type = request_json['type']
         new_element = request_json['element']
         aim_item_id = request_json['item_id']
-        if Scenes.objects.filter(name=new_name):
+        if Scenes.objects.filter(name=new_name).exists():
             return JsonResponse({**error_code.CLACK_NAME_EXISTS})
         new_scene = Scenes(name=new_name, describe=new_describe, content=new_content,
                            type=new_type, element=new_element, item_id=aim_item_id)
@@ -277,7 +308,7 @@ def add_rule(request):
             new_describe = rule_list[i]['describe']
             new_remark = rule_list[i]['remark']
             new_type = rule_list[i]['type']
-            new_belong = rule_list[i]['belong']
+            new_belong = request_json['belong']
             new_rule = Rules(name=new_name, describe=new_describe, remark=new_remark, type=new_type,
                              item_id=new_item_id, belong=new_belong)
             new_rule.save()
@@ -334,16 +365,44 @@ def add_case(request):
     request_json = json.loads(request.body)
     try:
         print(request_json)
-        case = request_json['addData']
         new_rule_id = request_json['rule']['id']
-        new_name = case['name']
-        new_describe = case['describe']
-        new_element = case['element']
-        new_content = case['content']
-        new_case = Case(case_name=new_name, case_describe=new_describe, case_content=new_content,
-                        case_element=new_element,
-                        rule_id=new_rule_id)
-        new_case.save()
+        delete_id_list = request_json['deleteData']
+        count = {}
+        for i in range(len(request_json['caseData'])):
+            case = request_json['caseData'][i]
+            if 'name' not in case:
+                return JsonResponse({**error_code.CLACK_NULL_ERROR})
+            if 'describe' not in case:
+                return JsonResponse({**error_code.CLACK_NULL_ERROR})
+            if 'content' not in case:
+                return JsonResponse({**error_code.CLACK_NULL_ERROR})
+            new_content = case['content']
+            aim_id = case['id']
+            if new_content in count:
+                return JsonResponse({**error_code.CLACK_REPEAT_CONTENT})
+            else:
+                count[new_content] = 0
+            if not Case.objects.filter(id=aim_id).exists():
+                if Case.objects.filter(rule_id=new_rule_id, case_content=new_content):
+                    return JsonResponse({**error_code.CLACK_NAME_EXISTS})
+        for i in delete_id_list:
+            Case.objects.get(id=i).delete()
+        for i in range(len(request_json['caseData'])):
+            case = request_json['caseData'][i]
+            aim_id = case['id']
+            new_name = case['name']
+            new_describe = case['describe']
+            new_element = case['element']
+            new_content = case['content']
+            if Case.objects.filter(id=aim_id).exists():
+                Case.objects.filter(id=aim_id).update(case_name=new_name)
+                Case.objects.filter(id=aim_id).update(case_element=new_element)
+                Case.objects.filter(id=aim_id).update(case_content=new_content)
+                Case.objects.filter(id=aim_id).update(case_describe=new_describe)
+            else:
+                new_case = Case(case_name=new_name, case_describe=new_describe, case_content=new_content,
+                                case_element=new_element, rule_id=new_rule_id)
+                new_case.save()
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
