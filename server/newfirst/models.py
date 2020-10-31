@@ -85,7 +85,6 @@ class AnalysisRules(models.Model):
 
 # 场景
 class Scenes(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
     element = models.TextField(default='')
     content = models.TextField(default='')
     type = models.TextField(default='')
