@@ -90,6 +90,7 @@ class Scenes(models.Model):
     type = models.TextField(default='')
     name = models.TextField(default='', unique=True)
     describe = models.TextField(default='')
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
 
     def to_dict(self):
         return {
@@ -99,6 +100,7 @@ class Scenes(models.Model):
             'type': self.type,
             'describe': self.describe,
             'content': self.content,
+            'item': self.item.id
         }
 
 
@@ -107,7 +109,7 @@ class Rules(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     remark = models.TextField(default='')
     type = models.TextField(default='')
-    name = models.TextField(default='', unique=True)
+    name = models.TextField(default='')
     describe = models.TextField(default='')
 
     def to_dict(self):
@@ -125,7 +127,7 @@ class Rules(models.Model):
 class Case(models.Model):
     rule = models.ForeignKey(Rules, on_delete=models.CASCADE)
     case_element = models.TextField(default='')
-    case_name = models.TextField(default='', unique=True)
+    case_name = models.TextField(default='')
     case_content = models.TextField(default='')
     case_describe = models.TextField(default='')
     verify_result = models.TextField(default='unverified')

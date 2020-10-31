@@ -2,7 +2,9 @@
   <div id="generalCriteria">
     <el-card>
       <div id="actionButton" style="margin-left: 50px">
-        <el-button type="primary" :disabled="disabled.select" @click="visible.selectDialog = true">选择</el-button>
+        <el-popconfirm icon="el-icon-loading" iconColor="blue" title="是否将所选规则加入此项目设计准则库？" @onConfirm="handleSelectCommit">
+          <el-button type="primary" :disabled="disabled.select" slot="reference">选择加入此项目</el-button>
+        </el-popconfirm>
       </div>
       <div id="search" style="margin-left:75%;margin-bottom: 20px;margin-top: -40px">
         <el-input v-model="search" placeholder="按描述搜索" style="width: 300px" @input="pageList" />

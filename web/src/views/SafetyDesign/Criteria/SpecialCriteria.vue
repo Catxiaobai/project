@@ -258,7 +258,7 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .post('http://127.0.0.1:8000/api/designs_list', this.itemInfo.item_id)
+        .post('http://127.0.0.1:8000/api/designs_list', this.itemInfo.id)
         .then(response => {
           this.data = response.data.designs_list
           this.getList()

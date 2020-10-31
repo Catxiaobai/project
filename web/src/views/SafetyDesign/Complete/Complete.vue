@@ -45,10 +45,12 @@ export default {
         total: 0, //项目总数
         page: 1 //第几页
       },
-      search: '' //搜索框
+      search: '',
+      itemInfo: ''
     }
   },
   created() {
+    this.getItemInfo()
     this.pageList()
   },
   methods: {
@@ -67,7 +69,7 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .get('http://127.0.0.1:8000/api/complete_list')
+        .post('http://127.0.0.1:8000/api/complete_list', this.itemInfo)
         .then(response => {
           console.log(response.data.complete_list)
           this.data = response.data.complete_list
@@ -103,6 +105,10 @@ export default {
         .catch(function(error) {
           console.log(error)
         })
+    },
+    getItemInfo() {
+      this.itemInfo = this.$store.state.item
+      console.log('设计完善', this.itemInfo)
     }
   }
 }

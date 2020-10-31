@@ -198,6 +198,7 @@ def delete_item(request):
 
 # 场景列表
 def scenes_list(request):
+    request_json = json.loads(request.body)
     try:
         scenes = Scenes.objects.all()
         result = [scene.to_dict() for scene in scenes]
@@ -408,13 +409,15 @@ def verify_case(request):
 
 # fmea失效分析表
 def fmea_list(request):
+    request_json = json.loads(request.body)
     try:
-        cases = Case.objects.filter(verify_result='danger')
+        aim_item_id = request_json['id']
+        cases = Case.objects.filter(verify_result='danger', rule__item=aim_item_id)
         for c in cases:
             if not Fmea.objects.filter(case=c).exists():
                 new_fmea = Fmea(case=c)
                 new_fmea.save()
-        fmeas = Fmea.objects.all()
+        fmeas = Fmea.objects.filter(case__in=cases)
         result = [f.to_dict() for f in fmeas]
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
@@ -449,13 +452,14 @@ def edit_fmea(request):
 
 # 需求表
 def demand_list(request):
+    request_json = json.loads(request.body)
     try:
-        Fmeas = Fmea.objects.all()
+        Fmeas = Fmea.objects.filter(case__rule__item_id=request_json['id'])
         for f in Fmeas:
             if not Demand.objects.filter(fmea=f).exists():
                 new_demand = Demand(fmea=f)
                 new_demand.save()
-        demands = Demand.objects.all()
+        demands = Demand.objects.filter(fmea__in=Fmeas)
         result = [d.to_dict() for d in demands]
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
@@ -484,7 +488,7 @@ def add_design(request):
     try:
         print(request_json)
         design_list = request_json['selectData']
-        new_item_id = request_json['item']['item_id']
+        new_item_id = request_json['item']['id']
         for i in range(len(design_list)):
             new_name = design_list[i]['name']
             new_describe = design_list[i]['describe']
@@ -531,13 +535,14 @@ def delete_design(request):
 
 # 设计核查
 def check_list(request):
+    request_json = json.loads(request.body)
     try:
-        designs = Design.objects.all()
+        designs = Design.objects.filter(item_id=request_json['id'])
         for d in designs:
             if not DesignCheck.objects.filter(design=d).exists():
                 new_design = DesignCheck(design=d)
                 new_design.save()
-        designCheck = DesignCheck.objects.all()
+        designCheck = DesignCheck.objects.filter(design__in=designs)
         result = [d.to_dict() for d in designCheck]
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
@@ -568,13 +573,14 @@ def edit_check(request):
 
 # 设计完善
 def complete_list(request):
+    request_json = json.loads(request.body)
     try:
-        checks = DesignCheck.objects.filter(apply='适用', suitable='不符合')
+        checks = DesignCheck.objects.filter(apply='适用', suitable='不符合', design__item_id=request_json['id'])
         for c in checks:
             if not DesignComplete.objects.filter(designCheck=c).exists():
                 new_complete = DesignComplete(designCheck=c)
                 new_complete.save()
-        designCompletes = DesignComplete.objects.all()
+        designCompletes = DesignComplete.objects.filter(designCheck__in=checks)
         result = [d.to_dict() for d in designCompletes]
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})

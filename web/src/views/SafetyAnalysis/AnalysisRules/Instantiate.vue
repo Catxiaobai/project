@@ -32,20 +32,35 @@
     </el-card>
     <div id="edit">
       <el-dialog title="此分析规则的实例" :visible.sync="visible.editDialog" center>
-        <span>对分析规则 [id:{{ editForm.id }}, type: {{ editForm.type }}, name: {{ editForm.name }}] 进行实例化</span>
-        <el-button type="primary" style="margin-left: 30px;margin-bottom: 10px" @click="visible.addDialog = true">添加实例</el-button>
-        <el-button type="danger" :disabled="disabled.delete" @click="visible.deleteDialog = true">删除</el-button>
+        <span>对分析规则 [id:{{ editForm.id }}, element: {{ editForm.type }}, name: {{ editForm.name }}] 进行实例化</span>
+        <el-button type="primary" @click="test" style="margin-left: 30px;margin-bottom: 10px">添加实例</el-button>
+        <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选实例" style="margin-left: 20px" @onConfirm="handleDeleteCommit">
+          <el-button type="danger" :disabled="disabled.delete" slot="reference">删除</el-button>
+        </el-popconfirm>
         <el-table :data="caseData" border @selection-change="handleSelectCase">
           <el-table-column type="selection" width="40px"> </el-table-column>
           <el-table-column property="id" label="序号" width="50"></el-table-column>
-          <el-table-column property="element" label="要素" width="150"></el-table-column>
-          <el-table-column property="name" label="名称" width="150"></el-table-column>
-          <el-table-column property="describe" label="描述" width="150"></el-table-column>
-          <el-table-column property="content" label="内容"></el-table-column>
+          <el-table-column property="element" label="要素" width="150"></el-table-column>、
+
+          <el-table-column property="name" label="名称" width="150">
+            <template slot-scope="scope">
+              <el-input class="tableCell" type="textarea" autosize v-model="scope.row.name"> </el-input>
+            </template>
+          </el-table-column>
+          <el-table-column property="describe" label="描述" width="150">
+            <template slot-scope="scope">
+              <el-input class="tableCell" type="textarea" autosize v-model="scope.row.describe"> </el-input>
+            </template>
+          </el-table-column>
+          <el-table-column property="content" label="规格化描述">
+            <template slot-scope="scope">
+              <el-input class="tableCell" type="textarea" autosize v-model="scope.row.content"> </el-input>
+            </template>
+          </el-table-column>
         </el-table>
         <div slot="footer" class="dialog-footer">
           <el-button @click="visible.editDialog = false">取 消</el-button>
-          <el-button type="primary" @click="handleEditCommit">确 定</el-button>
+          <el-button type="primary">保 存</el-button>
         </div>
       </el-dialog>
     </div>
@@ -56,16 +71,11 @@
           <el-form-item label="名称" label-width="120px" prop="name">
             <el-input v-model="addForm.name" clearable placeholder="请输入名称"></el-input>
           </el-form-item>
-          <!--          <el-form-item label="类型" label-width="120px" prop="element">-->
-          <!--            <el-select v-model="addForm.element" placeholder="请选择">-->
-          <!--              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>-->
-          <!--            </el-select>-->
-          <!--          </el-form-item>-->
           <el-form-item label="描述" label-width="120px" prop="describe">
             <el-input v-model="addForm.describe" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入文字描述"> </el-input>
           </el-form-item>
-          <el-form-item label="内容" label-width="120px" prop="content">
-            <el-input v-model="addForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入内容"> </el-input>
+          <el-form-item label="规格化描述" label-width="120px" prop="content">
+            <el-input v-model="addForm.content" type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入规格化描述"> </el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -267,25 +277,32 @@ export default {
         .post('http://127.0.0.1:8000/api/add_case_list', this.editForm.id)
         .then(response => {
           this.caseData = response.data.case_list
+          console.log('caseData', this.caseData)
+          console.log('editForm', this.editForm)
         })
         .catch(function(error) {
           console.log(error)
         })
     },
     handleDeleteCommit() {
-      this.$http
-        .post('http://127.0.0.1:8000/api/delete_case', this.selectCase)
-        .then(response => {
-          console.log(response.data)
-          if (response.data.error_code === 0) {
-            alert('删除成功')
-            this.caseList()
-            this.visible.deleteDialog = false
-          }
-        })
-        .catch(function(error) {
-          console.log(error)
-        })
+      // this.$http
+      //   .post('http://127.0.0.1:8000/api/delete_case', this.selectCase)
+      //   .then(response => {
+      //     console.log(response.data)
+      //     if (response.data.error_code === 0) {
+      //       alert('删除成功')
+      //       this.caseList()
+      //       this.visible.deleteDialog = false
+      //     }
+      //   })
+      //   .catch(function(error) {
+      //     console.log(error)
+      //   })
+      console.log('this.selectCase', this.selectCase)
+      console.log('this.caseData', this.caseData)
+      for (let i = 0; i < this.selectCase.length; i++) {
+        this.caseData.splice(this.selectCase[i].id - 1, 1)
+      }
     },
     handleSelect() {
       this.caseList()
@@ -303,9 +320,26 @@ export default {
         this.disabled.delete = false
         this.selectCase = val
       }
+    },
+    test() {
+      let rule_id = this.editForm.id
+      let element = this.editForm.type
+      this.caseData.push({
+        rule_id: rule_id,
+        id: this.caseData.length + 1,
+        element: element
+      })
     }
   }
 }
 </script>
 
 <style scoped></style>
+<style lang="scss">
+.tableCell {
+  .el-textarea__inner {
+    border: none;
+    resize: none;
+  }
+}
+</style>

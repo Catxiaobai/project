@@ -176,17 +176,19 @@ export default {
           value: '状态迁移',
           label: '状态迁移'
         }
-      ]
+      ],
+      itemInfo: ''
     }
   },
   created() {
+    this.getItemInfo()
     this.pageList()
   },
   methods: {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .get('http://127.0.0.1:8000/api/scenes_list')
+        .post('http://127.0.0.1:8000/api/scenes_list', this.itemInfo.id)
         .then(response => {
           // console.log(response.data.analysis_list)
           this.data = response.data.scenes_list
@@ -312,6 +314,10 @@ export default {
         .catch(function(error) {
           console.log(error)
         })
+    },
+    getItemInfo() {
+      this.itemInfo = this.$store.state.item
+      console.log('综合场景项目信息', this.itemInfo)
     }
   }
 }
