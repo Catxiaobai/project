@@ -156,6 +156,7 @@ class Fmea(models.Model):
     upper_influence = models.TextField(default='', blank=True)
     system_influence = models.TextField(default='', blank=True)
     influence_level = models.TextField(default='', blank=True)
+    ignore = models.BooleanField(default=False, blank=True)
 
     def to_dict(self):
         return {
@@ -168,7 +169,8 @@ class Fmea(models.Model):
             'local_influence': self.local_influence,
             'upper_influence': self.upper_influence,
             'system_influence': self.system_influence,
-            'influence_level': self.influence_level
+            'influence_level': self.influence_level,
+            'ignore': self.ignore
         }
 
 

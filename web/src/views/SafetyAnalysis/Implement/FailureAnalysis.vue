@@ -8,8 +8,13 @@
       <el-button type="primary" style="margin-left: 60%" @click="saveData">保存</el-button>
       <div id="fmea" v-show="divShow" style="margin-top: 20px">
         <div id="table">
-          <el-table :data="tableData" border style="width: 100%">
+          <el-table :data="tableData" border style="width: 100%" :row-class-name="tableRowClassName">
             <el-table-column prop="id" label="序号" width="80" align="center"> </el-table-column>
+            <el-table-column prop="ignore" label="忽略" align="center">
+              <template slot-scope="scope">
+                <el-switch v-model="scope.row.ignore"> </el-switch>
+              </template>
+            </el-table-column>
             <el-table-column prop="case_describe" label="违背规则描述" width="180" align="center"> </el-table-column>
             <el-table-column prop="describe" label="失效描述" width="180" align="center">
               <template slot-scope="scope">
@@ -117,6 +122,7 @@ export default {
   data() {
     return {
       value: 'FMEA',
+      value1: '',
       tableData2: [
         {
           id: 0,
@@ -278,6 +284,18 @@ export default {
     getItemInfo() {
       this.itemInfo = this.$store.state.item
       console.log('失效分析', this.itemInfo)
+    },
+    tableRowClassName({ row }) {
+      console.log(row.test)
+      if (row.test) {
+        return 'ignore-row'
+      }
+
+      // if (row.invalid_verify === 'safe') {
+      //   return 'success-row'
+      // } else if (row.invalid_verify === 'danger') {
+      //   return 'danger-row'
+      // }
     }
   }
 }
@@ -290,5 +308,9 @@ export default {
     border: none;
     resize: none;
   }
+}
+
+.el-table .ignore-row {
+  background: #dcdfe6;
 }
 </style>
