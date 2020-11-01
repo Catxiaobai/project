@@ -31,7 +31,7 @@
       </div>
     </el-card>
     <div id="edit">
-      <el-dialog title="此分析规则的实例" :visible.sync="visible.editDialog" center>
+      <el-dialog title="此分析规则的实例" :visible.sync="visible.editDialog" center @close="pageList">
         <span>对分析规则 [id:{{ editForm.id }}, element: {{ editForm.type }}, name: {{ editForm.name }}] 进行实例化</span>
         <el-button type="primary" @click="handleAdd" style="margin-left: 30px;margin-bottom: 10px">添加实例</el-button>
         <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选实例" style="margin-left: 20px" @onConfirm="handleDeleteCommit">

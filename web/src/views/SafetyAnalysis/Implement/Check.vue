@@ -5,25 +5,21 @@
         <el-input v-model="search" placeholder="按类别搜索" style="width: 300px" @input="pageList" />
       </div>
       <div id="actionButton" style="margin-left:73%;margin-bottom: 20px;margin-top: -40px">
-        <el-button type="primary" :disabled="disabled.verify" @click="verifyCase">预检验</el-button>
+        <el-button type="primary" :disabled="disabled.verify" @click="verifyTest">预检验</el-button>
         <el-button type="primary" :disabled="disabled.verify" @click="verifyCase">检验</el-button>
         <el-button type="primary" :disabled="disabled.reset" @click="resetCase">重置</el-button>
-        <!--        <el-button type="primary" @click="handleAdd('addForm')">增加</el-button>-->
-        <!--        <el-button type="success" :disabled="disabled.edit" @click="visible.editDialog = true">编辑</el-button>-->
-        <!--        <el-button type="danger" :disabled="disabled.delete" @click="visible.deleteDialog = true">删除</el-button>-->
       </div>
       <div id="table">
         <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection" @filter-change="handleFilterChange">
-          <el-table-column type="selection" width="40px"> </el-table-column>
-          <el-table-column prop="id" label="序号" width="180"> </el-table-column>
-          <el-table-column prop="element" label="类别" width="180" :filters="filterData" column-key="element">
-            <!--todo: 筛选功能存在bug-->
-          </el-table-column>
-          <el-table-column prop="name" label="名称" width="180"> </el-table-column>
-          <el-table-column prop="describe" label="描述" width="180"> </el-table-column>
-          <el-table-column prop="content" label="内容" width="180"> </el-table-column>
-          <el-table-column prop="result" label="验证结果" width="180"> </el-table-column>
-          <el-table-column prop="count" label="验证次数"> </el-table-column>
+          <el-table-column type="selection" width="40px" align="center"> </el-table-column>
+          <el-table-column prop="id" label="序号" width="80"> </el-table-column>
+          <el-table-column prop="element" label="类别" width="100" :filters="filterData" column-key="element" align="center"> </el-table-column>
+          <el-table-column prop="name" label="名称" align="center"> </el-table-column>
+          <el-table-column prop="describe" label="描述" align="center"> </el-table-column>
+          <el-table-column prop="content" label="规格化描述" align="center"> </el-table-column>
+          <el-table-column prop="result" label="验证结果" width="100" align="center"> </el-table-column>
+          <el-table-column prop="last_result" label="上一次验证结果" width="150" align="center"> </el-table-column>
+          <el-table-column prop="count" label="验证次数" width="100" align="center"> </el-table-column>
         </el-table>
       </div>
       <div id="page">
@@ -130,7 +126,6 @@ export default {
       this.$http
         .post('http://127.0.0.1:8000/api/case_list', this.itemInfo.id)
         .then(response => {
-          // console.log(response.data.analysis_list)
           this.data = response.data.case_list
           this.left_rules = response.data.left_rules_id
           this.caseInfo = response.data.info
@@ -139,8 +134,6 @@ export default {
         .catch(function(error) {
           console.log(error)
         })
-      // this.data = this.tableData
-      // this.getList()
     },
     getList() {
       // 处理数据，根据表格中name字段来筛选
@@ -156,10 +149,6 @@ export default {
       } else if (this.left_rules.length !== 0) {
         alert('此项目中以下规则未实例化：\nid: ' + this.left_rules)
       }
-    },
-    filterType(value, row) {
-      console.log(value, row)
-      return row.type === value
     },
     handleFilterChange(value) {
       console.log(value)
@@ -209,6 +198,20 @@ export default {
     verifyCase() {
       this.$http
         .post('http://127.0.0.1:8000/api/verify_case', this.verifyData)
+        .then(response => {
+          if (response.data.error_code === 0) {
+            this.pageList()
+          } else {
+            console.log(response.data)
+          }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+    },
+    verifyTest() {
+      this.$http
+        .post('http://127.0.0.1:8000/api/verify_case_test', this.verifyData)
         .then(response => {
           if (response.data.error_code === 0) {
             this.pageList()

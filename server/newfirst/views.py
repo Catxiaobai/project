@@ -424,16 +424,21 @@ def add_case(request):
 def case_list(request):
     request_json = json.loads(request.body)
     try:
+        # 找当前项目相关的实例
         aim_item_id = request_json
+        # 判断规则集是否为空以及是否存在规则未实例化
         info = ""
         left_rules_id = []
+        # 判断规则集是否为空
         rules = Rules.objects.filter(item_id=aim_item_id)
         if len(rules) == 0:
             info = "当前项目规则集为空"
+        # 判断规则是否实例化
         else:
             for r in rules:
                 if len(Case.objects.filter(rule=r)) == 0:
                     left_rules_id.append(r.id)
+        # 展示当前项目下的全部实例
         case = Case.objects.filter(rule__item_id=aim_item_id)
         result = [c.to_dict() for c in case]
     except Exception as e:
@@ -477,15 +482,56 @@ def verify_case(request):
     try:
         for i in range(0, len(request_json)):
             aim_id = request_json[i]['id']
+
             if not Case.objects.filter(id=aim_id).exists():
                 return JsonResponse({**error_code.CLACK_NOT_EXISTS})
             a = random.randint(0, 1)
-            res = "unverified"
+
+            res = "未检验"
             if a == 0:
-                res = "safe"
+                res = "符合"
             elif a == 1:
-                res = "danger"
+                res = "违背"
+            new_count = Case.objects.get(id=aim_id).verify_count + 1
+            last_result = Case.objects.get(id=aim_id).verify_result
+
             Case.objects.filter(id=aim_id).update(verify_result=res)
+            Case.objects.filter(id=aim_id).update(verify_count=new_count)
+            Case.objects.filter(id=aim_id).update(last_verify_result=last_result)
+            if Case.objects.get(id=aim_id).verify_result == "违背":
+                # 加入失效分析
+                new_case_name = Case.objects.get(id=aim_id).case_name
+                new_case_describe = Case.objects.get(id=aim_id).case_describe
+                new_case_element = Case.objects.get(id=aim_id).case_element
+                new_case_content = Case.objects.get(id=aim_id).case_content
+                new_item_id = Case.objects.get(id=aim_id).rule.item_id
+                new_fmea = Fmea(case_content=new_case_content, case_describe=new_case_describe,
+                                case_element=new_case_element, case_name=new_case_name, item_id=new_item_id)
+                new_fmea.save()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 预检验
+def verify_case_test(request):
+    request_json = json.loads(request.body)
+    # print(request_json)
+    try:
+        for i in range(0, len(request_json)):
+            aim_id = request_json[i]['id']
+            if not Case.objects.filter(id=aim_id).exists():
+                return JsonResponse({**error_code.CLACK_NOT_EXISTS})
+            a = random.randint(0, 1)
+
+            res = "未检验"
+            if a == 0:
+                res = "符合"
+            elif a == 1:
+                res = "违背"
+            last_result = Case.objects.get(id=aim_id).verify_result
+            Case.objects.filter(id=aim_id).update(verify_result=res)
+            Case.objects.filter(id=aim_id).update(last_verify_result=last_result)
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
@@ -496,12 +542,7 @@ def fmea_list(request):
     request_json = json.loads(request.body)
     try:
         aim_item_id = request_json['id']
-        cases = Case.objects.filter(verify_result='danger', rule__item=aim_item_id)
-        for c in cases:
-            if not Fmea.objects.filter(case=c).exists():
-                new_fmea = Fmea(case=c)
-                new_fmea.save()
-        fmeas = Fmea.objects.filter(case__in=cases)
+        fmeas = Fmea.objects.filter(item_id=aim_item_id)
         result = [f.to_dict() for f in fmeas]
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
@@ -518,7 +559,6 @@ def edit_fmea(request):
             if request_json['ignore']:
                 Fmea.objects.filter(id=aim_id).update(ignore=True)
             else:
-                new_case_id = request_json['case']
                 new_improve = request_json['improve']
                 new_influence_level = request_json['influence_level']
                 new_local_influence = request_json['local_influence']
@@ -528,7 +568,6 @@ def edit_fmea(request):
                 new_describe = request_json['describe']
                 if not Fmea.objects.filter(id=aim_id).exists():
                     return JsonResponse({**error_code.CLACK_NOT_EXISTS})
-                Fmea.objects.filter(id=aim_id).update(case_id=new_case_id)
                 Fmea.objects.filter(id=aim_id).update(improve=new_improve)
                 Fmea.objects.filter(id=aim_id).update(reason=new_reason)
                 Fmea.objects.filter(id=aim_id).update(local_influence=new_local_influence)
@@ -545,7 +584,7 @@ def edit_fmea(request):
 def demand_list(request):
     request_json = json.loads(request.body)
     try:
-        Fmeas = Fmea.objects.filter(case__rule__item_id=request_json['id'], ignore=False)
+        Fmeas = Fmea.objects.filter(item_id=request_json['id'], ignore=False)
         for f in Fmeas:
             if not Demand.objects.filter(fmea=f).exists():
                 new_demand = Demand(fmea=f)

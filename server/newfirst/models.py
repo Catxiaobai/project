@@ -132,7 +132,8 @@ class Case(models.Model):
     case_name = models.TextField(default='')
     case_content = models.TextField(default='')
     case_describe = models.TextField(default='')
-    verify_result = models.TextField(default='unverified')
+    verify_result = models.TextField(default='未检验')
+    last_verify_result = models.TextField(default='未检验')
     verify_count = models.IntegerField(default=0)
 
     def to_dict(self):
@@ -143,6 +144,7 @@ class Case(models.Model):
             'describe': self.case_describe,
             'element': self.case_element,
             'result': self.verify_result,
+            'last_result': self.last_verify_result,
             'rule_id': self.rule.id,
             'count': self.verify_count,
         }
@@ -150,7 +152,11 @@ class Case(models.Model):
 
 # fmea失效分析
 class Fmea(models.Model):
-    case = models.OneToOneField(Case, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    case_element = models.TextField(default='', blank=True)
+    case_name = models.TextField(default='', blank=True)
+    case_content = models.TextField(default='', blank=True)
+    case_describe = models.TextField(default='', blank=True)
     improve = models.TextField(default='', blank=True)
     reason = models.TextField(default='', blank=True)
     describe = models.TextField(default='', blank=True)
@@ -164,15 +170,18 @@ class Fmea(models.Model):
         return {
             'id': self.id,
             'improve': self.improve,
-            'case': self.case.id,
-            'case_describe': self.case.case_describe,
+            'case_name': self.case_name,
+            'case_content': self.case_content,
+            'case_element': self.case_element,
+            'case_describe': self.case_describe,
             'describe': self.describe,
             'reason': self.reason,
             'local_influence': self.local_influence,
             'upper_influence': self.upper_influence,
             'system_influence': self.system_influence,
             'influence_level': self.influence_level,
-            'ignore': self.ignore
+            'ignore': self.ignore,
+            'item': self.item.id
         }
 
 
@@ -186,7 +195,7 @@ class Demand(models.Model):
             'id': self.id,
             'demand': self.demand,
             'improve': self.fmea.improve,
-            'describe': self.fmea.case.case_describe,
+            'describe': self.fmea.case_describe,
             'fmea': self.fmea.id,
         }
 

@@ -45,6 +45,7 @@ urlpatterns = [
     path('case_list', views.case_list, name='case_list'),  # 添加实例列表
     path('delete_case', views.delete_case, name='delete_case'),  # 删除实例
     path('verify_case', views.verify_case, name='verify_case'),  # 验证实例
+    path('verify_case_test', views.verify_case_test, name='verify_case_test'),  # 预检验
     path('reset_case', views.reset_case, name='reset_case'),  # 重置实例
     path('fmea_list', views.fmea_list, name='fmea_list'),  # fmea列表
     path('edit_fmea', views.edit_fmea, name='edit_fmea'),  # 编辑fmea
