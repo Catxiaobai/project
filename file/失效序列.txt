@@ -5,7 +5,6 @@ tgt=S1
 event=Enter_pin(p)
 cond=!(p!=pin,attempts=0)
 action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
-
 Transition:
 name=T34
 src=S3
@@ -13,7 +12,6 @@ tgt=S4
 event=Enter_amount(w)
 cond=!(w<=B)
 action=Give_money,B=B-w,Write("your balance",B)
-
 Transition:
 name=T27
 src=S3
@@ -21,7 +19,6 @@ tgt=Exit
 event=Enter_amount(w)
 cond=!(w>B)
 action=Write("Out balance")
-
 Transition:
 name=T40
 src=S1
@@ -29,7 +26,6 @@ tgt=S2
 event=Enter_pin(p)
 cond=!(p=pin,attempts=2)
 action=Write("Select Withdrawal/GetBalance/Cancel"),attempts=attempts+1
-
 Transition:
 name=T67
 src=S1
@@ -37,7 +33,6 @@ tgt=S1
 event=Enter_pin(p)
 cond=!(p!=pin,attempts=1)
 action=Write("Wrong Pin,ReEnter"),attempts=attempts+1
-
 Transition:
 name=T62
 src=S2

@@ -1324,6 +1324,7 @@ class EFSM:
                         with open(filepath+filename, 'w') as file_object:
                             file_object.truncate()
                         return 0
+                return 1
             return 1
         else:
             noInputVar=1

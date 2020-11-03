@@ -66,17 +66,17 @@ def getUseList(currList):
     return list(set(vDUDict['condVuse'] + vDUDict['actionVuse']))
 #返回有相同event事件的迁移
 def findTranWithSameEvent(targetedTran):
-    print "执行返回有相同event事件的迁移函数"
+    # print "执行返回有相同event事件的迁移函数"
     return [item for item in SM.transitionList if item.event == targetedTran.event]
 
 # 根据数据依赖关系排序
 # 只考虑前序迁移操作定义变量与目标迁移的谓词条件变量的交集！！！！ rinsmq改为与操作变量和谓词条件变量的交集
 def gjsjylgxpx(targetedTran, CandidateOppositeBranchList):
-    print "执行根据数据依赖关系排序函数"
+    # print "执行根据数据依赖关系排序函数"
     vDUDict = getSimplevDefUseList(targetedTran)
     # print 'vDUDict=',vDUDict
     targetuselist = list(set(vDUDict['condVuse']) | set(vDUDict['actionVuse']))
-    print targetuselist
+    # print targetuselist
     CandidateOppositeBranchDict = dict()
     for CandidateOppositeBranch in CandidateOppositeBranchList:
         Candidatelist = obtain_succ(CandidateOppositeBranch)
@@ -98,7 +98,7 @@ def gjsjylgxpx(targetedTran, CandidateOppositeBranchList):
     for key,values in res:
         if key.src not in ans:
             ans.append(key.src)
-    print "执行根据数据依赖关系排序结束"
+    # print "执行根据数据依赖关系排序结束"
     return ans
 
 # 第一种情况，event相同，con相反
@@ -116,8 +116,7 @@ def getOppositeBranch(targetedTran):
         return None
     if len(CandidateOppositeBranchList) == 1:
         return [CandidateOppositeBranchList[0].src]
-    # print 'Candidate=',CandidateOppositeBranchList
-    # print ''
+
     return gjsjylgxpx(targetedTran, CandidateOppositeBranchList)  # 根据数据依赖关系排序并返回
 
 
@@ -126,6 +125,7 @@ def getSecondOppositeBranch(targetedTran):
     TranWithSameEvent = findTranWithSameEvent(targetedTran)
     # print 'TranWithSameEvent=',TranWithSameEvent
     return gjsjylgxpx(targetedTran, TranWithSameEvent)
+
 
 from kvparser import Parser, ListParser
 filepath = 'E:/Code/project301/file/'
@@ -140,13 +140,20 @@ k=0
 targetbranchlist=[]
 # print ('zhixingzheli')
 # print (SMBlockList)
-(trans, name, srcName, tgtName, event, cond, action) = [item[1] for item in SMBlockList]
-if srcName != '':  # old code is !=''
-    src = SM.state(srcName)
-if tgtName != '':
-    tgt = SM.state(tgtName)
-print (name, srcName, tgtName, event, cond, action)
-targetbranchlist.append(EFSM.Transition(name, src, tgt, event, cond, action))
+for block in SMBlockList:
+    
+    if block[0] == 'Transition':
+        print([item[1] for item in SMBlockList])
+        print('----------------')
+        (name, srcName, tgtName, event, cond, action) = [item[1] for item in block[1]]
+        
+        if srcName != '':  # old code is !=''
+            src = SM.state(srcName)
+        if tgtName != '':
+            tgt = SM.state(tgtName)
+        
+        print (name, srcName, tgtName, event, cond, action)
+        targetbranchlist.append(EFSM.Transition(name, src, tgt, event, cond, action))
 
 # for item in targetList:
 #     s.append(item.split(', '))
@@ -158,17 +165,20 @@ targetbranchlist.append(EFSM.Transition(name, src, tgt, event, cond, action))
 #     k+=1
 f.close()
 def targetBranch():
-    return targetbranchlist[0]
+    return targetbranchlist[-1]
+
+# 得到上一条迁移的结束节点
+def getLastState():
+    if len(targetbranchlist) == 1:
+        return ['START',0]
+    else:
+        return [targetbranchlist[-2].src,targetbranchlist[-2].tgt,1]
 
 def change():
-    targetbranchlist.pop(0)
+    targetbranchlist.pop()
 def sort():
     targetbranchlist.append(targetbranchlist[0])
     targetbranchlist.remove(targetbranchlist[0])
-
-def tragetState():
-    s.append(item.split(', '))
-    return SM.state(s[k][1])
 
 def returnSM():
     return SM

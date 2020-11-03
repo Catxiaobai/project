@@ -7,6 +7,8 @@ State:
 State:
 	name=S3
 State:
+	name=S4
+State:
 	name=Exit
 Transition:
 	name=t1
@@ -45,7 +47,7 @@ Transition:
 	action=Write("Password error number exceeded");return_card();attempts=attempts+1
 Transition:
 	name=t6
-	src=Exit
+	src=S4
 	tgt=START
 	event=Cancel()
 	cond=
@@ -60,20 +62,20 @@ Transition:
 Transition:
 	name=t8
 	src=S3
-	tgt=Exit
+	tgt=S4
 	event=Enter_amount(w)
 	cond=(w<=B)
 	action=give_money();B=B-w;Write("your balance";B)
 Transition:
 	name=t9
 	src=S2
-	tgt=Exit
+	tgt=S4
 	event=GetBalance()
 	cond=
 	action=Write("your balance";B)
 Transition:
 	name=t10
-	src=Exit
+	src=S4
 	tgt=S2
 	event=Return()
 	cond=
@@ -92,3 +94,10 @@ Transition:
 	event=Enter_pin(p)
 	cond=(p==pin) & (attempts>=0) & (attempts<=2)
 	action=Write("Select Withdrawal/GetBalance/Cancel");attempts=attempts+1
+Transition:
+	name=t13
+	src=S3
+	tgt=Exit
+	event=Enter_amount(w)
+	cond=(w>B)
+	action=

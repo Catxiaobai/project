@@ -8,8 +8,6 @@ State:
 	name=S3
 State:
 	name=S4
-State:
-	name=S6
 Transition:
 	name=t1
 	src=START
@@ -38,6 +36,13 @@ Transition:
 	event=Cancel()
 	condition=
 	action=Write("Canceling");return_card()
+Transition:
+	name=t5
+	src=S1
+	tgt=START
+	event=Enter_pin(p)
+	condition=(p!=pin) & (attempts==2)
+	action=Write("Password error number exceeded");return_card();attempts=attempts+1
 Transition:
 	name=t6
 	src=S4
@@ -74,16 +79,16 @@ Transition:
 	condition=
 	action=Write("Select Withdrawal/GetBalance/Cancel")
 Transition:
+	name=t11
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	condition=(p!=pin) & (attempts>=0) & (attempts<=1)
+	action=Write("Wrong Pin ReEnter");attempts=attempts+1
+Transition:
 	name=t12
 	src=S1
 	tgt=S2
 	event=Enter_pin(p)
 	condition=(p==pin) & (attempts>=0) & (attempts<=2)
 	action=Write("Select Withdrawal/GetBalance/Cancel");attempts=attempts+1
-Transition:
-	name=t14
-	src=S1
-	tgt=S6
-	event=Enter_pin(p)
-	condition=(p!=pin) & (attempts>=0) & (attempts<=2)
-	action=null

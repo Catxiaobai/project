@@ -6,22 +6,24 @@ from django.db import models
 
 # 人员
 class Personnel(models.Model):
-    person_name = models.TextField(default='', unique=True)
-    person_age = models.IntegerField(default='')
-    person_gender = models.TextField(default='')
-    person_account = models.TextField(default='')
-    person_password = models.TextField(default='')
-    person_authority = models.IntegerField(default='')
+    name = models.TextField(default='', unique=True)
+    age = models.IntegerField(default=0, blank=True)
+    gender = models.TextField(default='', blank=True)
+    account = models.TextField(default='', unique=True)
+    password = models.TextField(default='')
+    authority = models.IntegerField(default='')
+    team = models.TextField(default='', blank=True)
 
     def to_dict(self):
         return {
-            'person_id': self.id,
-            'person_name': self.person_name,
-            'person_age': self.person_age,
-            'person_gender': self.person_gender,
-            'person_account': self.person_account,
-            'person_password': self.person_password,
-            'person_authority': self.person_authority,
+            'id': self.id,
+            'name': self.name,
+            'age': self.age,
+            'gender': self.gender,
+            'account': self.account,
+            'password': self.password,
+            'authority': self.authority,
+            'team': self.team
         }
 
 
@@ -121,7 +123,8 @@ class Rules(models.Model):
             'remark': self.remark,
             'type': self.type,
             'item': self.item.id,
-            'belong': self.belong
+            'belong': self.belong,
+
         }
 
 
@@ -147,6 +150,7 @@ class Case(models.Model):
             'last_result': self.last_verify_result,
             'rule_id': self.rule.id,
             'count': self.verify_count,
+            'rule_describe': self.rule.describe
         }
 
 

@@ -183,8 +183,8 @@ export default {
           label: 'FMEA'
         },
         {
-          value: '故障树',
-          label: '故障树'
+          value: 'FTA',
+          label: 'FTA'
         }
       ],
       options2: [

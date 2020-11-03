@@ -12,14 +12,23 @@
       <div id="table">
         <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection" @filter-change="handleFilterChange">
           <el-table-column type="selection" width="40px" align="center"> </el-table-column>
-          <el-table-column prop="id" label="序号" width="80"> </el-table-column>
+          <el-table-column prop="id" label="序号" width="80" align="center"> </el-table-column>
           <el-table-column prop="element" label="类别" width="100" :filters="filterData" column-key="element" align="center"> </el-table-column>
-          <el-table-column prop="name" label="名称" align="center"> </el-table-column>
-          <el-table-column prop="describe" label="描述" align="center"> </el-table-column>
+          <el-table-column prop="rule_describe" label="规则描述" align="center" width="100"> </el-table-column>
+          <el-table-column prop="name" label="名称" align="center" width="100"> </el-table-column>
+          <el-table-column prop="describe" label="描述" align="center" width="100"> </el-table-column>
           <el-table-column prop="content" label="规格化描述" align="center"> </el-table-column>
-          <el-table-column prop="result" label="验证结果" width="100" align="center"> </el-table-column>
-          <el-table-column prop="last_result" label="上一次验证结果" width="150" align="center"> </el-table-column>
-          <el-table-column prop="count" label="验证次数" width="100" align="center"> </el-table-column>
+          <el-table-column prop="result" label="验证结果" width="100" align="center">
+            <template slot-scope="scope">
+              <el-tag :type="scope.row.result === '符合' ? 'primary' : 'success'" disable-transitions>{{ scope.row.result }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="last_result" label="上一次验证结果" width="100" align="center">
+            <template slot-scope="scope">
+              <el-tag :type="scope.row.last_result === '符合' ? 'primary' : 'success'" disable-transitions>{{ scope.row.last_result }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="count" label="验证次数" width="80" align="center"> </el-table-column>
         </el-table>
       </div>
       <div id="page">

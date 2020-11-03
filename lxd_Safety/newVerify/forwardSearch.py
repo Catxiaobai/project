@@ -74,7 +74,7 @@ class PartialList:
 
     usePercent = None  # type: List[int]
 
-    def __init__(self, targetBranch, starttime):
+    def __init__(self, targetBranch, starttime,uselist):
         # traninforlist = obtain_efsm_info.obtain_tran_info()
         self.targetBranch = targetBranch
         #处理目标分支
@@ -105,19 +105,18 @@ class PartialList:
             self.targetBranchSrcList.pop(0)
             originTran = TranWithInfo(self.targetBranch)
             originTran.quality = 'relate'
-            print 'originTran=',originTran
+            # print 'originTran=',originTran
             self.useList = list(set(originTran.getvUseList()) - set(originTran.getveventVdef())) #当前迁移使用变量减去当前迁移定义变量，为当前迁移使用变量
             self.tranlist.append(originTran)
             self.eventDefList = set(originTran.getveventVdef())
-
         else:
             print "目标分支无对立分支"
-
+        self.useList = list(set(uselist) | set(self.useList))
         # 一些后面需要用到的东西
 
     def __repr__(self):
         # return "<PartialList %s %s %s %s>" % (self.currentPartialList, self.nameList,self.vUseList,self.Candidatelist)
-        return "<PartialList %s>" % ([item.getName() for item in reversed(self.tranlist)])
+        return "<PartialList %s>"  % ([item.getName() for item in reversed(self.tranlist)])
     #获取目标分支信息，目标分支起始节点修改为targetBranchSrcList[0]
     def newTargetSrc(self):
         if len(self.targetBranchSrcList) > 0:
@@ -179,8 +178,8 @@ class PartialList:
     def getCandidatelist(self):
         # firsttime = time.time()
         tmplist = self.tranlist[-1].getCandidatelist()  # 获取栈顶迁移的前序迁移
-        print self.tranlist
-        print self.tranlist[-1].sortedflag
+        # print self.tranlist
+        # print self.tranlist[-1].sortedflag
         # random.shuffle(tmplist)
         firsttime = time.time()
         if self.tranlist[-1].sortedflag == 0:
@@ -195,7 +194,7 @@ class PartialList:
                 # print '栈顶迁移的前序迁移tmplist= ',tmplist
                 atmplist = [item for item in tmplist if len(set(item.getvDefList()) & set(self.useList)) >= 1]  # 筛选相关迁移
                 # rinsmq------------------start
-                print '具有数据相关前序迁移atmplist= ', atmplist
+                # print '具有数据相关前序迁移atmplist= ', atmplist
                 self.flushdefUseList()
                 self.flushUseList()
                 # print 'self.defUseList= ', self.defUseList
@@ -275,7 +274,7 @@ class PartialList:
         for transition in tmplist:
             # 获取迁移定义变量
             defSet = set(transition.getvDefList())
-            print 'cond=',transition.tran.cond
+            # print 'cond=',transition.tran.cond
             useNotdefinition = list(defSet & set(self.useList))
             transition.priority = len(useNotdefinition)
         atmplist = sorted(tmplist,key=lambda transition: transition.priority,reverse=True)
@@ -332,14 +331,19 @@ class PartialList:
                 return 0
         return 1
     #返回是否搜索到模型开始节点
-    def isComplete(self):
-        print ('iscomplete',self.useList)
+    def isComplete(self,targetTgt,noInput):
+        # print ('iscomplete',self.useList)
         if len(self.tranlist) == 0:  # 部分序列为空
             return 0
-        if self.tranlist[-1].tran.src.name == "START" and len(self.useList) == 0:  # 成功的情况
-            return 1
-        else:
-            return 2  # 其余情况
+        if noInput == 1:
+            if self.tranlist[-1].tran.src == targetTgt[0] and self.tranlist[-1].tran.tgt == targetTgt[1]:  # 成功的情况
+                self.tranlist.pop()
+                return 1
+        else :
+            if self.tranlist[-1].tran.src.name == 'START' and len(self.useList) == 0:  # 成功的情况
+                return 1
+
+        return 2  # 其余情况
 
 
 def insert_value_dict(value_dict, action_def, selected_tran):
@@ -505,7 +509,7 @@ def get_infeasible_order_number(selected_tran, tran_list, partialListEventDefLis
     return -1
 
 #搜索
-def search():
+def search(uselist):
     # 初始化：name, src=None, tgt=None, event=None, cond=None, action=None
     operator = ['+', '-', '*', '/']  # 4种情况
     loopLimit = config.loopLimit
@@ -519,7 +523,11 @@ def search():
         numOfPSG = numOfPSG - 1
         starttime = time.time()
 
-        partialList = PartialList(obtain_efsm_info.targetBranch(), starttime)
+        #获取目标迁移前一条的tgt节点
+        LastState = obtain_efsm_info.getLastState()
+        noInput = LastState[-1]
+        print ('LastState=',LastState)
+        partialList = PartialList(obtain_efsm_info.targetBranch(), starttime,uselist)
 
         partialList.sortKaiGuan = config.sort  # 排序开关 1是排序； 0是全随机，除了候选对立分支； 2是连接迁移随机
         # partialList = PartialList(obtain_efsm_info.getTran(70))
@@ -527,24 +535,23 @@ def search():
         # print partialList
         if partialList.targetBranchSrcList is not None:
 
-            while partialList.isComplete() == 2 or ( partialList.isComplete() == 0 and len(partialList.targetBranchSrcList) > 0):
-                print '执行这里'
-                print partialList.isComplete()
-                if partialList.isComplete() == 0 and len(partialList.targetBranchSrcList) > 0:
-                    print '执行newTargetSrc'
+            while partialList.isComplete(LastState,noInput) == 2 or ( partialList.isComplete(LastState,noInput) == 0 and len(partialList.targetBranchSrcList) > 0):
+
+                if partialList.isComplete(LastState,noInput) == 0 and len(partialList.targetBranchSrcList) > 0:
+                    # print '执行newTargetSrc'
                     partialList.newTargetSrc()
                 # print "一次执行前的部分序列%s %s" % (partialList, time.time() - starttime)
                 # print '获取前序迁移候选集合：'
                 candidateList = partialList.getCandidatelist
                 # print "前序候选迁移集合:%s" % (candidateList)
-                print len(candidateList)
+
                 if len(candidateList) == 0:
                     if config.back == 1:
-                        print 'pop之前：'
-                        print partialList
+                        # print 'pop之前：'
+                        # print partialList
                         partialList.pop()
-                        print 'pop之后：'
-                        print partialList
+                        # print 'pop之后：'
+                        # print partialList
                         # continue
                     # print time.time()-starttime
                     # 下面是回溯至上一数据相关迁移的代码
@@ -648,15 +655,15 @@ def search():
                                         break
                                 if flag == 'c':  # v = c
                                     exec (judge, tmpDic)
-                print ('isFeasibility=',isFeasibility)
+                # print ('isFeasibility=',isFeasibility)
 
                 # print (len(tmpDic))
                 # for k, v in tmpDic.items():
                 #     print k, v
                 if len(tmpDic) > 0:
-                    print "开始二阶段可行性判断"
+                    # print "开始二阶段可行性判断"
                     num = get_infeasible_order_number(selectedTran, partialList.tranlist, partialList.eventDefList)
-                    print num
+                    # print num
                     flag = 0
                     if num >= 0:
                         tranList = partialList.tranlist
@@ -744,9 +751,9 @@ def search():
                         else:
                             # print "已纠正"
                             pass
-                print '执行到判定完可行性'
+                # print '执行到判定完可行性'
                 if not isFeasibility:
-                    print "可行性判断无法通过%s" % (time.time() - starttime)
+                    # print "可行性判断无法通过%s" % (time.time() - starttime)
                     if time.time() - starttime > 1:
                        break
                     continue
@@ -756,7 +763,7 @@ def search():
                 for i in range(len(partialList.tranlist)):
                     if partialList.tranlist[i].tran == selectedTran.tran:
                         firstFind.append(i)
-                print 'firstFind=',firstFind
+                # print 'firstFind=',firstFind
                 if len(firstFind) == 0:
                     flag = 1
                 for item in firstFind:
@@ -789,7 +796,7 @@ def search():
 
 
 
-        if partialList.isComplete() == 0:
+        if partialList.isComplete(LastState,noInput) == 0:
             print "无任何可行序列"
         else:
             if time.time() - starttime < 1:
@@ -826,7 +833,7 @@ def search():
     global selecenumber
     global successnumber
     sequencenumber=len(psDict)
-    # print "生成序列条数为%s" % sequencenumber
+    print ("生成序列条数为",sequencenumber)
     if sequencenumber==0:
         generationtime=0
         generationsorttime=0
@@ -856,7 +863,7 @@ def search():
          #   break
 
 
-    return [item.getName() for item in reversed(partialList.tranlist)]
+    return [[item.getName() for item in reversed(partialList.tranlist)],partialList.useList]
     #return psDict3.values()
 
 

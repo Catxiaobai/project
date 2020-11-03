@@ -482,16 +482,32 @@ def verify_case(request):
     try:
         for i in range(0, len(request_json)):
             aim_id = request_json[i]['id']
-
             if not Case.objects.filter(id=aim_id).exists():
                 return JsonResponse({**error_code.CLACK_NOT_EXISTS})
-            a = random.randint(0, 1)
-
             res = "未检验"
-            if a == 0:
-                res = "符合"
-            elif a == 1:
-                res = "违背"
+            # 判断应该使用哪一个方法验证
+            aim_element = request_json[i]['element']
+            aim_rule_describe = request_json[i]['rule_describe']
+            if aim_element == '状态迁移':
+                if aim_rule_describe == 'ATM系统的安全性验证':
+                    aim_content = request_json[i]['content']
+                    print(aim_content)
+                    with open('E:/Code/project301/file/targetInvalid.txt', 'w') as f:  # 设置文件对象
+                        f.write('Transition:\n')
+                        f.write(aim_content)
+                    os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
+                    with open('E:/Code/project301/file/path.txt') as f:
+                        lines = f.read()
+                    if len(lines) > 2:
+                        res = "违背"
+                    else:
+                        res = "符合"
+            else:
+                a = random.randint(0, 1)
+                if a == 0:
+                    res = "符合"
+                elif a == 1:
+                    res = "违背"
             new_count = Case.objects.get(id=aim_id).verify_count + 1
             last_result = Case.objects.get(id=aim_id).verify_result
 
@@ -516,19 +532,37 @@ def verify_case(request):
 # 预检验
 def verify_case_test(request):
     request_json = json.loads(request.body)
-    # print(request_json)
+    print(request_json)
     try:
         for i in range(0, len(request_json)):
             aim_id = request_json[i]['id']
             if not Case.objects.filter(id=aim_id).exists():
                 return JsonResponse({**error_code.CLACK_NOT_EXISTS})
-            a = random.randint(0, 1)
-
             res = "未检验"
-            if a == 0:
-                res = "符合"
-            elif a == 1:
-                res = "违背"
+
+            # 判断应该使用哪一个方法验证
+            aim_element = request_json[i]['element']
+            aim_rule_describe = request_json[i]['rule_describe']
+            if aim_element == '状态迁移':
+                if aim_rule_describe == 'ATM系统的安全性验证':
+                    aim_content = request_json[i]['content']
+                    print(aim_content)
+                    with open('E:/Code/project301/file/targetInvalid.txt', 'w') as f:  # 设置文件对象
+                        f.write('Transition:\n')
+                        f.write(aim_content)
+                    os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
+                    with open('E:/Code/project301/file/path.txt') as f:
+                        lines = f.read()
+                    if len(lines) > 2:
+                        res = "违背"
+                    else:
+                        res = "符合"
+            else:
+                a = random.randint(0, 1)
+                if a == 0:
+                    res = "符合"
+                elif a == 1:
+                    res = "违背"
             last_result = Case.objects.get(id=aim_id).verify_result
             Case.objects.filter(id=aim_id).update(verify_result=res)
             Case.objects.filter(id=aim_id).update(last_verify_result=last_result)

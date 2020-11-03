@@ -16,8 +16,8 @@ from django.shortcuts import render
 
 # 建模
 def modeling(request):
-    # os.system('python E:/Code/project301/lwn_Graphic/ConstructModel.py')
-    # os.system('python E:/Code/project301/lwn_Graphic/2020-08.py')
+    os.system('python E:/Code/project301/lwn_Graphic/ConstructModel.py')
+    os.system('python E:/Code/project301/lwn_Graphic/2020-08.py')
     filepath = 'E:/Code/project301/file/'
     with open(filepath + 'resultSaveCreate.txt', 'wt+', encoding='utf-8') as f:
         f.write(open(filepath + 'result.txt', 'r', encoding='utf-8').read())
@@ -280,13 +280,11 @@ def verify_invalid(request):
         f.write('Transition:\n')
         f.write(aim_invalid)
     try:
-        os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
-        # os.system('py -2 E:/Code/project301/lxd_Safety/newVerify/Main.py')
-
-        with open('E:/Code/project301/file/path.txt') as f:
+        # os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
+        os.system('py -2 E:/Code/project301/lxd_Safety/newVerify/Main.py')
+        with open('E:/Code/project301/file/test_data.txt') as f:
             lines = f.read()
         if len(lines) > 2:
-            # print("len长度"+len(lines))
             a = 0
         else:
             a = 1
