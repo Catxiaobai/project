@@ -5,10 +5,17 @@
         <el-input v-model="search" placeholder="按名称搜索" style="width: 300px" @input="pageList" />
       </div>
       <div id="actionButton" style="margin-left:73%;margin-bottom: 20px;margin-top: -40px">
-        <el-button type="primary">导入</el-button>
+        <el-upload
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :on-success="handleImport"
+          style="margin-left: -80px;margin-bottom: -40px"
+          :show-file-list="false"
+        >
+          <el-button type="primary">导入</el-button>
+        </el-upload>
         <el-button type="primary" @click="handleAdd('addForm')">增加</el-button>
         <el-button type="success" :disabled="disabled.edit" @click="visible.editDialog = true">编辑</el-button>
-        <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选场景" style="margin-left: 20px" @onConfirm="handleDeleteCommit">
+        <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选场景" style="margin-left: 10px" @onConfirm="handleDeleteCommit">
           <el-button type="danger" :disabled="disabled.delete" slot="reference">删除</el-button>
         </el-popconfirm>
       </div>
@@ -328,6 +335,9 @@ export default {
     getItemInfo() {
       this.itemInfo = this.$store.state.item
       console.log('子场景项目信息', this.itemInfo)
+    },
+    handleImport(code, file) {
+      console.log(code, file)
     }
   }
 }

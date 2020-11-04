@@ -71,7 +71,11 @@
             <el-input v-model="addForm.level" clearable placeholder="请输入软件等级："></el-input>
           </el-form-item>
           <el-form-item label="项目保存路径" label-width="120px" prop="path">
-            <el-input v-model="addForm.path" clearable placeholder="请输入项目保存路径"></el-input>
+            <el-radio-group v-model="radio" @change="handleSetPath">
+              <el-radio label="false">使用默认路径（E:/Project/Item）</el-radio>
+              <el-radio label="true">自定义路径</el-radio>
+            </el-radio-group>
+            <el-input v-model="addForm.path" clearable placeholder="请输入项目保存路径" v-show="visible.pathInput"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -95,13 +99,17 @@
           <el-form-item label="软件等级" label-width="120px" prop="level">
             <el-input v-model="addForm2.level" clearable placeholder="请输入软件等级："></el-input>
           </el-form-item>
-          <el-form-item label="项目保存路径" label-width="120px" prop="path">
-            <el-input v-model="addForm2.path" clearable placeholder="请输入项目保存路径"></el-input>
-          </el-form-item>
           <el-form-item label="基于的项目" label-width="120px" prop="basedItem">
             <el-select v-model="addForm2.basedItem" placeholder="请选择">
               <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="项目保存路径" label-width="120px" prop="path">
+            <el-radio-group v-model="radio" @change="handleSetPath">
+              <el-radio label="false">使用默认路径（E:/Project/Item）</el-radio>
+              <el-radio label="true">自定义路径</el-radio>
+            </el-radio-group>
+            <el-input v-model="addForm2.path" clearable placeholder="请输入项目保存路径" v-show="visible.pathInput"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -143,7 +151,8 @@ export default {
         addDialog: false,
         addDialog2: false,
         deleteDialog: false,
-        editDialog: false
+        editDialog: false,
+        pathInput: false
       },
       editForm: {
         //修改时使用
@@ -159,7 +168,7 @@ export default {
         name: '',
         software: '',
         level: '',
-        path: '',
+        path: 'E:/Project/Item',
         team: ''
       },
       addForm2: {
@@ -179,7 +188,8 @@ export default {
         path: [{ required: true, message: '不能为空', trigger: 'blur' }],
         basedItem: [{ required: true, message: '不能为空', trigger: 'blur' }]
       },
-      options: []
+      options: [],
+      radio: 'false'
     }
   },
   created() {
@@ -324,6 +334,14 @@ export default {
     },
     handleAddBasedExist(formName) {
       this.visible.addDialog2 = true
+    },
+    handleSetPath() {
+      if (this.radio === 'false') {
+        this.visible.pathInput = false
+        this.addForm.path = 'E:/Project/Item'
+      } else {
+        this.visible.pathInput = true
+      }
     }
   }
 }

@@ -199,7 +199,6 @@ def add_item(request):
         new_team = request_json['team']
         new_level = request_json['level']
         new_path = request_json['path']
-
         if Item.objects.filter(name=new_name):
             return JsonResponse({**error_code.CLACK_NAME_EXISTS})
         new_item = Item(name=new_name,
@@ -208,6 +207,7 @@ def add_item(request):
                         level=new_level,
                         path=new_path)
         new_item.save()
+        os.mkdir(new_path+'./'+new_name)
         print(new_item.to_dict())
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
