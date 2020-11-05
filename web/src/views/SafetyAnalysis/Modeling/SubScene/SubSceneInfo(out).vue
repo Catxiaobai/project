@@ -189,7 +189,7 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .get('http://127.0.0.1:8000/api/trace_list')
+        .get(this.Global_Api + '/api/trace_list')
         .then(response => {
           // console.log(response.data.trace_list)
           this.data = response.data.trace_list
@@ -248,7 +248,7 @@ export default {
         .then(() => {
           console.log(row.trace_id)
           this.$http
-            .post('http://127.0.0.1:8000/api/delete_trace', { trace_id: row.trace_id })
+            .post(this.Global_Api + '/api/delete_trace', { trace_id: row.trace_id })
             .then(response => {
               console.log(response.data)
               if (response.data.error_code === 0) {
@@ -280,7 +280,7 @@ export default {
           this.dialogAddTrace = false
           console.log(this.addForm)
           this.$http
-            .post('http://127.0.0.1:8000/api/add_trace', this.addForm)
+            .post(this.Global_Api + '/api/add_trace', this.addForm)
             .then(response => {
               console.log(response.data)
               if (response.data.error_code === 0) {
@@ -303,7 +303,7 @@ export default {
           this.dialogEditTrace = false
           console.log(this.addForm)
           this.$http
-            .post('http://127.0.0.1:8000/api/edit_trace', this.editForm)
+            .post(this.Global_Api + '/api/edit_trace', this.editForm)
             .then(response => {
               console.log(response.data)
               if (response.data.error_code === 0) {

@@ -198,7 +198,7 @@ export default {
   methods: {
     pageList() {
       this.$http
-        .get('http://127.0.0.1:8000/api/item_list')
+        .get(this.Global_Api + '/api/item_list')
         .then(response => {
           this.data = response.data.item_list
           for (let i = 0; i < this.data.length; i++) {
@@ -245,7 +245,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$http
-            .post('http://127.0.0.1:8000/api/add_item', this.addForm)
+            .post(this.Global_Api + '/api/add_item', this.addForm)
             .then(response => {
               if (response.data.error_code === 0) {
                 alert('添加成功')
@@ -275,7 +275,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$http
-            .post('http://127.0.0.1:8000/api/edit_item', this.editForm)
+            .post(this.Global_Api + '/api/edit_item', this.editForm)
             .then(response => {
               if (response.data.error_code === 0) {
                 alert('修改成功')
@@ -303,7 +303,7 @@ export default {
       // })
       //   .then(() => {
       this.$http
-        .post('http://127.0.0.1:8000/api/delete_item', { id: row.id })
+        .post(this.Global_Api + '/api/delete_item', { id: row.id })
         .then(response => {
           console.log(response.data)
           if (response.data.error_code === 0) {

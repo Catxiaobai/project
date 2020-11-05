@@ -1,0 +1,2 @@
+N
+t13, S3, S5, event=Enter_amount(w), condition=(w>B), action=null

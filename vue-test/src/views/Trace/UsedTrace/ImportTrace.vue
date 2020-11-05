@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card>
-      <el-upload action="https://jsonplaceholder.typicode.com/posts/" :on-success="handleSuccess" :on-preview="handlePreview">
+      <el-upload action="http://127.0.0.1:8000/api/upload_file" :on-success="handleSuccess" :on-preview="handlePreview">
         <el-button type="primary">导入场景</el-button>
         <div slot="tip" class="el-upload__tip" style="font-size: medium">只能上传txt文件，并要求按标准格式撰写</div>
       </el-upload>
@@ -34,7 +34,7 @@ export default {
     handleSuccess(code, file) {
       console.log(file.name)
       this.$http
-        .post('http://127.0.0.1:8000/api/import_trace', { name: file.name })
+        .post('http://127.0.0.1:8000/api/import_trace', { name: file.name, code: code, file: file })
         .then(response => {
           if (response.data.error_code === 0) {
             console.log(response)

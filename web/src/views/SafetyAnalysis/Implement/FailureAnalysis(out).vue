@@ -178,7 +178,7 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       // this.$http
-      //   .get('http://127.0.0.1:8000/api/design_criteria_list')
+      //   .get(this.Global_Api + '/api/design_criteria_list')
       //   .then(response => {
       //     // console.log(response.data.design_list)
       //     this.data = response.data.design_list

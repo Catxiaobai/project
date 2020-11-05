@@ -335,7 +335,7 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .post('http://127.0.0.1:8000/api/designs_list', this.itemInfo.id)
+        .post(this.Global_Api + '/api/designs_list', this.itemInfo.id)
         .then(response => {
           this.data = response.data.designs_list
           this.getList()
@@ -409,7 +409,7 @@ export default {
     handleSelectCommit() {
       console.log(this.selectData)
       this.$http
-        .post('http://127.0.0.1:8000/api/add_design_criteria_from_item', this.selectData)
+        .post(this.Global_Api + '/api/add_design_criteria_from_item', this.selectData)
         .then(response => {
           console.log(response.data)
           if (response.data.error_code === 0) {
@@ -425,7 +425,7 @@ export default {
       // this.getItemInfo()
       // this.visible.selectDialog = false
       // this.$http
-      //     .post('http://127.0.0.1:8000/api/add_rule', { selectData: this.selectData, item: this.itemInfo })
+      //     .post(this.Global_Api + '/api/add_rule', { selectData: this.selectData, item: this.itemInfo })
       //     .then(response => {
       //       console.log(response.data)
       //       if (response.data.error_code === 0) {
@@ -447,7 +447,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$http
-            .post('http://127.0.0.1:8000/api/add_design', { selectData: this.addData, item: this.itemInfo, belong: '专用' })
+            .post(this.Global_Api + '/api/add_design', { selectData: this.addData, item: this.itemInfo, belong: '专用' })
             .then(response => {
               if (response.data.error_code === 0) {
                 alert('添加成功')
@@ -469,7 +469,7 @@ export default {
     },
     handleDeleteCommit() {
       this.$http
-        .post('http://127.0.0.1:8000/api/delete_design', this.deleteData)
+        .post(this.Global_Api + '/api/delete_design', this.deleteData)
         .then(response => {
           console.log(response.data)
           if (response.data.error_code === 0) {

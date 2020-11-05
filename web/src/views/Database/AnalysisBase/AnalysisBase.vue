@@ -193,7 +193,7 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .get('http://127.0.0.1:8000/api/analysis_rule_list')
+        .get(this.Global_Api + '/api/analysis_rule_list')
         .then(response => {
           // console.log(response.data.analysis_list)
           this.data = response.data.analysis_list
@@ -277,7 +277,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$http
-            .post('http://127.0.0.1:8000/api/add_analysis_rule', this.addForm)
+            .post(this.Global_Api + '/api/add_analysis_rule', this.addForm)
             .then(response => {
               if (response.data.error_code === 0) {
                 alert('添加成功')
@@ -300,7 +300,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$http
-            .post('http://127.0.0.1:8000/api/edit_analysis_rule', this.editForm)
+            .post(this.Global_Api + '/api/edit_analysis_rule', this.editForm)
             .then(response => {
               if (response.data.error_code === 0) {
                 alert('修改成功')
@@ -323,7 +323,7 @@ export default {
     },
     handleDeleteCommit() {
       this.$http
-        .post('http://127.0.0.1:8000/api/delete_analysis_rule', this.deleteData)
+        .post(this.Global_Api + '/api/delete_analysis_rule', this.deleteData)
         .then(response => {
           console.log(response.data)
           if (response.data.error_code === 0) {

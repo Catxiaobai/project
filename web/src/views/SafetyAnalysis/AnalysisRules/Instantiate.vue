@@ -187,7 +187,7 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .post('http://127.0.0.1:8000/api/rules_list', this.itemInfo.id)
+        .post(this.Global_Api + '/api/rules_list', this.itemInfo.id)
         .then(response => {
           this.data = response.data.rules_list
           this.getList()
@@ -267,7 +267,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$http
-            .post('http://127.0.0.1:8000/api/add_case', { addData: this.addForm, rule: this.editForm })
+            .post(this.Global_Api + '/api/add_case', { addData: this.addForm, rule: this.editForm })
             .then(response => {
               if (response.data.error_code === 0) {
                 alert('添加成功')
@@ -290,7 +290,7 @@ export default {
     caseList() {
       console.log(this.editForm)
       this.$http
-        .post('http://127.0.0.1:8000/api/add_case_list', this.editForm.id)
+        .post(this.Global_Api + '/api/add_case_list', this.editForm.id)
         .then(response => {
           this.caseData = response.data.case_list
           console.log('caseData', this.caseData)
@@ -302,7 +302,7 @@ export default {
     },
     handleDeleteCommit() {
       // this.$http
-      //   .post('http://127.0.0.1:8000/api/delete_case', this.selectCase)
+      //   .post(this.Global_Api + '/api/delete_case', this.selectCase)
       //   .then(response => {
       //     console.log(response.data)
       //     if (response.data.error_code === 0) {
@@ -354,7 +354,7 @@ export default {
     handleSave() {
       console.log(this.caseData)
       this.$http
-        .post('http://127.0.0.1:8000/api/add_case', { caseData: this.caseData, rule: this.editForm, deleteData: this.deleteData })
+        .post(this.Global_Api + '/api/add_case', { caseData: this.caseData, rule: this.editForm, deleteData: this.deleteData })
         .then(response => {
           if (response.data.error_code === 0) {
             alert('保存成功')

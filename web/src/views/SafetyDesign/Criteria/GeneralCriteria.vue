@@ -89,7 +89,7 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .get('http://127.0.0.1:8000/api/design_criteria_list')
+        .get(this.Global_Api + '/api/design_criteria_list')
         .then(response => {
           // console.log(response.data.analysis_list)
           this.data = response.data.design_list
@@ -162,7 +162,7 @@ export default {
       this.getItemInfo()
       this.visible.selectDialog = false
       this.$http
-        .post('http://127.0.0.1:8000/api/add_design', { selectData: this.selectData, item: this.itemInfo, belong: '通用' })
+        .post(this.Global_Api + '/api/add_design', { selectData: this.selectData, item: this.itemInfo, belong: '通用' })
         .then(response => {
           if (response.data.error_code === 0) {
             alert('添加成功')

@@ -170,7 +170,7 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .get('http://127.0.0.1:8000/api/analysis_rule_list')
+        .get(this.Global_Api + '/api/analysis_rule_list')
         .then(response => {
           // console.log(response.data.item_list)
           this.data = response.data.analysis_list

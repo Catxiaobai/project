@@ -21,7 +21,6 @@ from entity import views
 urlpatterns = [
     # path('test', views.test, name='test'),
     path('modeling', views.modeling, name='modeling'),  # 生成模型
-    path('show_model', views.show_model, name='show_model'),  # 展示模型
     path('judge_model', views.judge_model, name='judge_model'),  # 完整性检验
     path('add_model', views.add_model, name='add_model'),  # 模型补全
     path('safe_verify', views.safe_verify, name='safe_verify'),  # 安全性验证
@@ -48,5 +47,4 @@ urlpatterns = [
     path('save_integrity_verification', views.save_integrity_verification, name='save_integrity_verification'),  # 补全
     path('save_node_and_link', views.save_node_and_link, name='save_node_and_link'),  # 补全完整性验证的结果
     path('recovery_origin_model', views.recovery_origin_model, name='recovery_origin_model'),  # 还原成建模的样子
-
 ]

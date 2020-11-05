@@ -39,7 +39,8 @@
       <el-select v-model="value" placeholder="请选择" @change="onChange">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
       </el-select>
-      <el-button type="primary" style="margin-left: 60%" @click="reduction">模型还原</el-button>
+      <el-button type="primary" style="margin-left: 50%" @click="modeling"> 模型构建</el-button>
+      <el-button type="primary" @click="reduction">模型还原</el-button>
       <div v-show="test2" style="background-color: whitesmoke; border: solid 1px black; width: 100%; height: 520px;margin-top: 20px"></div>
       <div id="myDiagramDiv" v-show="test1" style="background-color: whitesmoke; border: solid 1px black; width: 100%; height: 520px;margin-top: 20px"></div>
       <textarea id="myTransaction" style="width:100%;height:200px" v-show="false"></textarea>
@@ -98,9 +99,10 @@ export default {
           label: '环境条件'
         }
       ],
-      value: '性能要求',
+      value: '时序要求',
       test1: true,
-      test2: false
+      test2: false,
+      itemInfo: ''
     }
   },
   mounted() {
@@ -134,7 +136,7 @@ export default {
     },
     getData() {
       this.$http
-        .get('http://127.0.0.1:8000/api/deliver_model')
+        .get(this.Global_Api + '/api/deliver_model')
         .then(response => {
           console.log(response.data)
           this.linkDataArray = response.data.data_edge
@@ -373,7 +375,7 @@ export default {
       // 向后端传递添加信息
       function postAddData(data) {
         var httpRequest = new XMLHttpRequest() //第一步：创建需要的对象
-        httpRequest.open('POST', 'http://127.0.0.1:8000/api/verify_add', true) //第二步：打开连接
+        httpRequest.open('POST', this.Global_Api + '/api/verify_add', true) //第二步：打开连接
         httpRequest.setRequestHeader('Content-type', 'application/json') //设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
         httpRequest.send(JSON.stringify(data)) //发送请求 将情头体写在send中
         /**
@@ -394,7 +396,7 @@ export default {
       // 向后端传递添删除信息
       function postDelData(data) {
         var httpRequest = new XMLHttpRequest() //第一步：创建需要的对象
-        httpRequest.open('POST', 'http://127.0.0.1:8000/api/verify_del', true) //第二步：打开连接
+        httpRequest.open('POST', this.Global_Api + '/api/verify_del', true) //第二步：打开连接
         httpRequest.setRequestHeader('Content-type', 'application/json') //设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
         httpRequest.send(JSON.stringify(data)) //发送请求 将情头体写在send中
         /**
@@ -424,7 +426,7 @@ export default {
     },
     reduction() {
       this.$http
-        .get('http://127.0.0.1:8000/api/recovery_origin_model')
+        .get(this.Global_Api + '/api/recovery_origin_model')
         .then(response => {
           console.log(response.data)
           this.reload()
@@ -435,7 +437,7 @@ export default {
     },
     saveModel() {
       this.$http
-        .get('http://127.0.0.1:8000/api/save_model')
+        .get(this.Global_Api + '/api/save_model')
         .then(response => {
           console.log(response.data)
         })
@@ -452,11 +454,26 @@ export default {
         this.test2 = false
         this.test1 = true
       }
+    },
+    getItemInfo() {
+      this.itemInfo = this.$store.state.item
+    },
+    modeling() {
+      this.$http
+        .post(this.Global_Api + '/api/scenes_modeling', this.itemInfo)
+        .then(response => {
+          console.log(response)
+          this.reload()
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     }
   },
   created() {
+    this.getItemInfo()
     this.getData()
-    // this.saveModel()
+    this.saveModel()
   }
 }
 </script>

@@ -70,7 +70,7 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .post('http://127.0.0.1:8000/api/complete_list', this.itemInfo)
+        .post(this.Global_Api + '/api/complete_list', this.itemInfo)
         .then(response => {
           console.log(response.data.complete_list)
           this.data = response.data.complete_list
@@ -101,7 +101,7 @@ export default {
         }
       }
       this.$http
-        .post('http://127.0.0.1:8000/api/edit_complete', this.tableData)
+        .post(this.Global_Api + '/api/edit_complete', this.tableData)
         .then(response => {
           if (response.data.error_code === 0) {
             alert('保存成功')

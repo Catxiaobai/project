@@ -5,7 +5,9 @@
         <el-input v-model="search" placeholder="按名称搜索" style="width: 300px" @input="pageList" />
       </div>
       <div id="actionButton" style="margin-left:73%;margin-bottom: 20px;margin-top: -40px">
-        <el-button type="primary">导入</el-button>
+        <el-upload :action="doUpload" :on-success="handleImport" style="margin-left: -80px;margin-bottom: -40px" :show-file-list="false">
+          <el-button type="primary">导入</el-button>
+        </el-upload>
         <el-button type="primary" @click="handleAdd('addForm')">增加</el-button>
         <el-button type="success" :disabled="disabled.edit" @click="visible.editDialog = true">编辑</el-button>
         <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选场景" style="margin-left: 20px" @onConfirm="handleDeleteCommit">
@@ -23,7 +25,7 @@
           <el-table-column prop="describe" label="描述" width="180" :show-overflow-tooltip="true">
             <!--todo: 过长不好看-->
           </el-table-column>
-          <el-table-column prop="content" label="规格化描述"> </el-table-column>
+          <el-table-column prop="content" label="规格化描述" :show-overflow-tooltip="true"> </el-table-column>
         </el-table>
       </div>
       <div id="page">
@@ -115,6 +117,7 @@ export default {
   data() {
     return {
       tableData: [],
+      doUpload: this.Global_Api + '/api/upload_file',
       filterData: [
         { text: '外部交联环境', value: '外部交联环境' },
         { text: '功能处理', value: '功能处理' },
@@ -191,7 +194,7 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .post('http://127.0.0.1:8000/api/scenes_list', this.itemInfo)
+        .post(this.Global_Api + '/api/scenes_list', this.itemInfo)
         .then(response => {
           // console.log(response.data.analysis_list)
           this.data = response.data.scenes_list
@@ -260,7 +263,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$http
-            .post('http://127.0.0.1:8000/api/add_scenes', this.addForm)
+            .post(this.Global_Api + '/api/add_scenes', this.addForm)
             .then(response => {
               if (response.data.error_code === 0) {
                 alert('添加成功')
@@ -283,7 +286,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$http
-            .post('http://127.0.0.1:8000/api/edit_scenes', this.editForm)
+            .post(this.Global_Api + '/api/edit_scenes', this.editForm)
             .then(response => {
               if (response.data.error_code === 0) {
                 alert('修改成功')
@@ -304,7 +307,7 @@ export default {
     },
     handleDeleteCommit() {
       this.$http
-        .post('http://127.0.0.1:8000/api/delete_scenes', this.deleteData)
+        .post(this.Global_Api + '/api/delete_scenes', this.deleteData)
         .then(response => {
           console.log(response.data)
           if (response.data.error_code === 0) {
@@ -320,6 +323,24 @@ export default {
     getItemInfo() {
       this.itemInfo = this.$store.state.item
       console.log('综合场景项目信息', this.itemInfo)
+    },
+    handleImport(code, file) {
+      console.log('test')
+      this.$http
+        .post(this.Global_Api + '/api/import_scenes', { name: file.name, type: 'complex', item: this.itemInfo })
+        .then(response => {
+          if (response.data.error_code === 0) {
+            console.log(response)
+            alert('导入成功')
+            this.pageList()
+          } else {
+            // console.log(response.data)
+            this.msg = response
+          }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     }
   }
 }

@@ -86,7 +86,7 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .post('http://127.0.0.1:8000/api/check_list', this.itemInfo)
+        .post(this.Global_Api + '/api/check_list', this.itemInfo)
         .then(response => {
           console.log(response.data.check_list)
           this.data = response.data.check_list
@@ -119,7 +119,7 @@ export default {
         }
       }
       this.$http
-        .post('http://127.0.0.1:8000/api/edit_check', this.tableData)
+        .post(this.Global_Api + '/api/edit_check', this.tableData)
         .then(response => {
           if (response.data.error_code === 0) {
             this.pageList()

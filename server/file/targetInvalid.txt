@@ -1,0 +1,7 @@
+Transition:
+	name=T40
+	src=S1
+	tgt=S2
+	event=Enter_pin(p)
+	cond=(p==pin) & (attempts==3)
+	action=Write("Select Withdrawal/GetBalance/Cancel"),attempts=attempts+1

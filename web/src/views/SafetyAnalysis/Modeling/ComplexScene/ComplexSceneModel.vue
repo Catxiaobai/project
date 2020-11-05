@@ -126,7 +126,7 @@ export default {
     },
     getData() {
       this.$http
-        .get('http://127.0.0.1:8000/api/deliver_model')
+        .get(this.Global_Api + '/api/deliver_model')
         .then(response => {
           console.log(response.data)
           this.linkDataArray = response.data.data_edge
@@ -365,7 +365,7 @@ export default {
       // 向后端传递添加信息
       function postAddData(data) {
         var httpRequest = new XMLHttpRequest() //第一步：创建需要的对象
-        httpRequest.open('POST', 'http://127.0.0.1:8000/api/verify_add', true) //第二步：打开连接
+        httpRequest.open('POST', this.Global_Api + '/api/verify_add', true) //第二步：打开连接
         httpRequest.setRequestHeader('Content-type', 'application/json') //设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
         httpRequest.send(JSON.stringify(data)) //发送请求 将情头体写在send中
         /**
@@ -386,7 +386,7 @@ export default {
       // 向后端传递添删除信息
       function postDelData(data) {
         var httpRequest = new XMLHttpRequest() //第一步：创建需要的对象
-        httpRequest.open('POST', 'http://127.0.0.1:8000/api/verify_del', true) //第二步：打开连接
+        httpRequest.open('POST', this.Global_Api + '/api/verify_del', true) //第二步：打开连接
         httpRequest.setRequestHeader('Content-type', 'application/json') //设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
         httpRequest.send(JSON.stringify(data)) //发送请求 将情头体写在send中
         /**
@@ -416,7 +416,7 @@ export default {
     },
     reduction() {
       this.$http
-        .get('http://127.0.0.1:8000/api/recovery_origin_model')
+        .get(this.Global_Api + '/api/recovery_origin_model')
         .then(response => {
           console.log(response.data)
           this.reload()
@@ -427,7 +427,7 @@ export default {
     },
     saveModel() {
       this.$http
-        .get('http://127.0.0.1:8000/api/save_model')
+        .get(this.Global_Api + '/api/save_model')
         .then(response => {
           console.log(response.data)
         })

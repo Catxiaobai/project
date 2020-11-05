@@ -8,8 +8,14 @@ from django.http import HttpResponse, JsonResponse
 from newfirst.models import Item, Personnel, DesignCriteria, AnalysisRules, Scenes, Rules, Case, Fmea, Demand, \
     DesignCheck, Design, DesignComplete
 from server import error_code
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
-
+# from lwn_Graphic.constructModel import constructModel
+# from lwn_Graphic.combination import combination
+import lwn_Graphic.combination
+import lwn_Graphic.constructModel
+import lxd_verify.Main
+import newVerify.Main
 
 # Create your views here.
 
@@ -207,7 +213,7 @@ def add_item(request):
                         level=new_level,
                         path=new_path)
         new_item.save()
-        os.mkdir(new_path+'./'+new_name)
+        os.mkdir(new_path + './' + new_name)
         print(new_item.to_dict())
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
@@ -492,11 +498,12 @@ def verify_case(request):
                 if aim_rule_describe == 'ATM系统的安全性验证':
                     aim_content = request_json[i]['content']
                     print(aim_content)
-                    with open('E:/Code/project301/file/targetInvalid.txt', 'w') as f:  # 设置文件对象
+                    with open('./file/targetInvalid.txt', 'w') as f:  # 设置文件对象
                         f.write('Transition:\n')
                         f.write(aim_content)
-                    os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
-                    with open('E:/Code/project301/file/path.txt') as f:
+                    # os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
+
+                    with open('./file/path.txt') as f:
                         lines = f.read()
                     if len(lines) > 2:
                         res = "违背"
@@ -539,7 +546,6 @@ def verify_case_test(request):
             if not Case.objects.filter(id=aim_id).exists():
                 return JsonResponse({**error_code.CLACK_NOT_EXISTS})
             res = "未检验"
-
             # 判断应该使用哪一个方法验证
             aim_element = request_json[i]['element']
             aim_rule_describe = request_json[i]['rule_describe']
@@ -547,16 +553,28 @@ def verify_case_test(request):
                 if aim_rule_describe == 'ATM系统的安全性验证':
                     aim_content = request_json[i]['content']
                     print(aim_content)
-                    with open('E:/Code/project301/file/targetInvalid.txt', 'w') as f:  # 设置文件对象
+                    with open('./file/targetInvalid.txt', 'w') as f:  # 设置文件对象
                         f.write('Transition:\n')
-                        f.write(aim_content)
-                    os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
-                    with open('E:/Code/project301/file/path.txt') as f:
-                        lines = f.read()
-                    if len(lines) > 2:
-                        res = "违背"
-                    else:
+                        # print(aim_content)
+                        ttt = aim_content.split('\n')
+                        for t in ttt:
+                            # print('\t'+t)
+                            f.write('\t'+t+'\n')
+                        # f.write(aim_content)
+                    # os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
+                    # lxd_verify.Main.main()
+                    # newVerify.Main.main()
+                    # with open('./file/path.txt') as f:
+                    #     lines = f.read()
+                    # if len(lines) > 8:
+                    #     res = "违背"
+                    # else:
+                    #     res = "符合"
+                    a = random.randint(0, 1)
+                    if a == 0:
                         res = "符合"
+                    elif a == 1:
+                        res = "违背"
             else:
                 a = random.randint(0, 1)
                 if a == 0:
@@ -767,6 +785,82 @@ def edit_complete(request):
                 return JsonResponse({**error_code.CLACK_NOT_EXISTS})
             DesignComplete.objects.filter(id=aim_id).update(designCheck_id=new_check_id)
             DesignComplete.objects.filter(id=aim_id).update(complete=new_complete)
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 上传文件
+def upload_file(request):
+    myfile = request.FILES['file']
+    fs = FileSystemStorage(location='file')
+    fs.save(myfile.name, myfile)
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 从txt文件中导入场景
+def import_scenes(request):
+    request_json = json.loads(request.body)
+    filename = request_json['name']
+    new_element = request_json['name'][:-4]
+    new_type = request_json['type']
+    new_item = request_json['item']
+    try:
+        with open('./file/' + filename, 'r', encoding='utf-8') as f:
+            original_file = f.read()
+            lines = original_file.splitlines()
+        index = 0
+        while index < len(lines):
+            if '0' <= lines[index][0] <= '9':
+                index += 1
+                new_content = ""
+                new_name = ""
+                new_describe = ""
+                if lines[index] == "describe:":
+                    index += 1
+                    new_describe = lines[index]
+                    index += 1
+                if lines[index] == "name:":
+                    index += 1
+                    new_name = lines[index]
+                    index += 1
+                if lines[index] == "content:":
+                    index += 1
+                while index < len(lines) and (lines[index][0] <= '0' or lines[index][0] >= '9'):
+                    new_content = new_content + lines[index] + '\n'
+                    index += 1
+                scenes = Scenes(item_id=new_item['id'],
+                                element=new_element,
+                                content=new_content,
+                                type=new_type,
+                                name=new_name,
+                                describe=new_describe)
+                scenes.save()
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+# 从数据库中导出场景建模
+def scenes_modeling(request):
+    request_jsons = json.loads(request.body)
+    print(request_jsons)
+    try:
+        scenes = Scenes.objects.filter(item_id=request_jsons['id'])
+        f = open('./file/Trace.txt', 'w+', encoding='utf-8')
+        for s in scenes:
+            # print(s.to_dict())
+            ch = s.to_dict()
+            f.write('Trace:' + '\n')
+            f.write(ch['content'])
+        f.close()
+        lwn_Graphic.constructModel.main()
+        lwn_Graphic.combination.combination()
+        filepath = './file/'
+        with open(filepath + 'resultSaveCreate.txt', 'wt+', encoding='utf-8') as f:
+            f.write(open(filepath + 'result.txt', 'r', encoding='utf-8').read())
+        with open(filepath + 'resultModelSaveCreate.txt', 'wt+', encoding='utf-8') as f:
+            f.write(open(filepath + 'resultModel.txt', 'r', encoding='utf-8').read())
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})

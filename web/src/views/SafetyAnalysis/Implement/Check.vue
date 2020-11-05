@@ -133,7 +133,7 @@ export default {
     pageList() {
       // 发请求拿到数据并暂存全部数据,方便之后操作
       this.$http
-        .post('http://127.0.0.1:8000/api/case_list', this.itemInfo.id)
+        .post(this.Global_Api + '/api/case_list', this.itemInfo.id)
         .then(response => {
           this.data = response.data.case_list
           this.left_rules = response.data.left_rules_id
@@ -206,7 +206,7 @@ export default {
     },
     verifyCase() {
       this.$http
-        .post('http://127.0.0.1:8000/api/verify_case', this.verifyData)
+        .post(this.Global_Api + '/api/verify_case', this.verifyData)
         .then(response => {
           if (response.data.error_code === 0) {
             this.pageList()
@@ -220,7 +220,7 @@ export default {
     },
     verifyTest() {
       this.$http
-        .post('http://127.0.0.1:8000/api/verify_case_test', this.verifyData)
+        .post(this.Global_Api + '/api/verify_case_test', this.verifyData)
         .then(response => {
           if (response.data.error_code === 0) {
             this.pageList()
@@ -234,7 +234,7 @@ export default {
     },
     resetCase() {
       this.$http
-        .post('http://127.0.0.1:8000/api/reset_case', this.resetData)
+        .post(this.Global_Api + '/api/reset_case', this.resetData)
         .then(response => {
           if (response.data.error_code === 0) {
             this.pageList()

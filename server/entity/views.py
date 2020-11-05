@@ -11,6 +11,7 @@ from server import error_code
 from django.shortcuts import render
 
 
+
 # Create your views here.
 
 
@@ -18,7 +19,7 @@ from django.shortcuts import render
 def modeling(request):
     os.system('python E:/Code/project301/lwn_Graphic/ConstructModel.py')
     os.system('python E:/Code/project301/lwn_Graphic/2020-08.py')
-    filepath = 'E:/Code/project301/file/'
+    filepath = './file/'
     with open(filepath + 'resultSaveCreate.txt', 'wt+', encoding='utf-8') as f:
         f.write(open(filepath + 'result.txt', 'r', encoding='utf-8').read())
     with open(filepath + 'resultModelSaveCreate.txt', 'wt+', encoding='utf-8') as f:
@@ -26,22 +27,13 @@ def modeling(request):
     return JsonResponse({**error_code.CLACK_SUCCESS})
 
 
-# 图形化展示模型（废弃）
-def show_model(request):
-    os.system('python E:/Code/project301/lwn_Graphic/2020-08.py')
-    pp = subprocess.Popen('python E:/Code/project301/lwn_Graphic/draw_graph.py')
-    time.sleep(10)
-    pp.kill()
-    return JsonResponse({**error_code.CLACK_SUCCESS})
-
-
 # 完整性验证
 def judge_model(request):
     os.system('python E:/Code/project301/lzy_Complete/Model3/judgeModelComplete.py')
-    with open('E:/Code/project301/file/out.txt', 'r') as f:
+    with open('./file/out.txt', 'r') as f:
         lines = f.readline().split("\n")
     res = lines[0]
-    with open('E:/Code/project301/file/out.txt', 'r') as f:
+    with open('./file/out.txt', 'r') as f:
         test = f.read()
     test = test[62:]
     return JsonResponse({**error_code.CLACK_SUCCESS, "result": res, "msg": test})
@@ -52,7 +44,7 @@ def add_model(request):
     request_json = json.loads(request.body)
     if (None == request_json):
         return JsonResponse({**error_code.CLACK_NULL_ERROR})
-    with open('E:/Code/project301/file/addTrace.txt', 'w') as f:  # 设置文件对象
+    with open('./file/addTrace.txt', 'w') as f:  # 设置文件对象
         for i in range(len(request_json)):
             f.write('Trace:\n')
             f.write(request_json[i]['value'].replace('  ', '\n'))  # 将字符串写入文件中
@@ -67,7 +59,7 @@ def add_model(request):
 def safe_verify(request):
     request_json = json.loads(request.body)
     res = request_json['msg']
-    with open('E:/Code/project301/file/target.txt', 'w') as f:  # 设置文件对象
+    with open('./file/target.txt', 'w') as f:  # 设置文件对象
         f.write('Transition:\n')
         f.write(res.replace('  ', '\n'))  # 将字符串写入文件中
     os.system('python E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
@@ -131,8 +123,12 @@ def trace_list(request):
 def import_trace(request):
     request_json = json.loads(request.body)
     filename = request_json['name']
+    code = request_json['code']
+    file = request_json['file']
+    print(code)
+    print(file)
     try:
-        with open('E:/Code/project301/file/' + filename, 'r', encoding='utf-8') as f:
+        with open('./file/' + filename, 'r', encoding='utf-8') as f:
             original_file = f.read()
             lines = original_file.splitlines()
         index = 0
@@ -238,7 +234,7 @@ def import_invalid(request):
     request_json = json.loads(request.body)
     filename = request_json['name']
     try:
-        with open('E:/Code/project301/file/' + filename, 'r', encoding='utf-8') as f:
+        with open('./file/' + filename, 'r', encoding='utf-8') as f:
             original_file = f.read()
             lines = original_file.splitlines()
         if Invalid.objects.filter().exists():
@@ -276,13 +272,13 @@ def verify_invalid(request):
     aim_id = request_json['invalid']['invalid_id']
     aim_invalid = request_json['invalid']['invalid_content']
     print(aim_invalid)
-    with open('E:/Code/project301/file/targetInvalid.txt', 'w') as f:  # 设置文件对象
+    with open('./file/targetInvalid.txt', 'w') as f:  # 设置文件对象
         f.write('Transition:\n')
         f.write(aim_invalid)
     try:
         # os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
         os.system('py -2 E:/Code/project301/lxd_Safety/newVerify/Main.py')
-        with open('E:/Code/project301/file/test_data.txt') as f:
+        with open('./file/test_data.txt') as f:
             lines = f.read()
         if len(lines) > 2:
             a = 0
@@ -316,8 +312,8 @@ def reset_verify(request):
 
 # 传递模型数据
 def deliver_model(request):
-    file_name = 'E:/Code/project301/file/result.txt'
-    # file_name = 'E:/Code/project301/file/resultModel.txt'
+    file_name = './file/result.txt'
+    # file_name = './file/resultModel.txt'
     lines = open(file_name, 'r', encoding='UTF-8').readlines()
     index_line = 0
     data_node = []
@@ -403,7 +399,7 @@ def verify_del(request):
     # print(node)
     # print('edge:')
     # print(edge)
-    filepath = 'E:/Code/project301/file/'
+    filepath = './file/'
     try:
         data_list1 = node
         result = ''
@@ -478,7 +474,7 @@ def verify_del(request):
 
 # 验证模型的完整性
 def verify_complete(request):
-    file_name = 'E:/Code/project301/file/result.txt'
+    file_name = './file/result.txt'
     lines = open(file_name, 'r', encoding='UTF-8').readlines()
     index_line = 0
     data_node = []
@@ -526,7 +522,7 @@ def verify_complete(request):
     # print(1)
     # E:\Code\project301\lzy_Complete\Model5\judgeFeasibility
     os.system('python E:/Code/project301/lzy_Complete/Model5/judgeFeasibility/judgeModelComplete.py')
-    file_name2 = 'E:/Code/project301/file/outNew.txt'
+    file_name2 = './file/outNew.txt'
     lines = open(file_name2, 'r', encoding='UTF-8').readlines()
     index_line = 0
     res = 0
@@ -575,7 +571,7 @@ def verify_complete(request):
 
 # 返回前端失效场景的复现路径
 def verify_safe_result(request):
-    file_name = 'E:/Code/project301/file/path.txt'
+    file_name = './file/path.txt'
     try:
         with open(file_name, 'r', encoding='utf-8') as f:
             lines = f.read()
@@ -597,11 +593,11 @@ def verify_select_invalid(request):
             # print(aim_invalid)
             if not Invalid.objects.filter(id=aim_id).exists():
                 return JsonResponse({**error_code.CLACK_NOT_EXISTS})
-            with open('E:/Code/project301/file/targetInvalid.txt', 'w') as f:  # 设置文件对象
+            with open('./file/targetInvalid.txt', 'w') as f:  # 设置文件对象
                 f.write('Transition:\n')
                 f.write(aim_invalid)
             os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
-            with open('E:/Code/project301/file/path.txt') as f:
+            with open('./file/path.txt') as f:
                 lines = f.read()
             if len(lines) > 2:
                 # print("len长度"+len(lines))
@@ -622,7 +618,7 @@ def verify_select_invalid(request):
 
 # 模型还原成单次编辑前的样子
 def recovery_model(request):
-    filepath = 'E:/Code/project301/file/'
+    filepath = './file/'
     with open(filepath + 'result.txt', 'wt+', encoding='utf-8') as f:
         f.write(open(filepath + 'resultSave.txt', 'r', encoding='utf-8').read())
     with open(filepath + 'resultModel.txt', 'wt+', encoding='utf-8') as f:
@@ -632,7 +628,7 @@ def recovery_model(request):
 
 # 保存编辑前的模型样子
 def save_model(request):
-    filepath = 'E:/Code/project301/file/'
+    filepath = './file/'
     with open(filepath + 'resultSave.txt', 'wt+', encoding='utf-8') as f:
         f.write(open(filepath + 'result.txt', 'r', encoding='utf-8').read())
     with open(filepath + 'resultModelSave.txt', 'wt+', encoding='utf-8') as f:
@@ -653,7 +649,7 @@ def save_integrity_verification(request):
     # print(node)
     # print('edge:')
     # print(edge)
-    filepath = 'E:/Code/project301/file/'
+    filepath = './file/'
     try:
         data_list1 = node
         result = ''
@@ -716,7 +712,7 @@ def save_integrity_verification(request):
 # 补全完整性的点或边
 def save_node_and_link(request):
     request_json = json.loads(request.body)
-    file_name = 'E:/Code/project301/file/result.txt'
+    file_name = './file/result.txt'
     lines = open(file_name, 'r', encoding='UTF-8').readlines()
     index_line = 0
     Sr = ''
@@ -814,16 +810,16 @@ def save_node_and_link(request):
              + '\t' + 'event=' + str(edge['event']) + '\n' \
              + '\t' + 'condition=' + str(edge['cond']) + '\n' \
              + '\t' + 'action=' + str(edge['action']) + '\n'
-    with open('E:/Code/project301/file/result.txt', 'wt+', encoding='utf-8') as f:
+    with open('./file/result.txt', 'wt+', encoding='utf-8') as f:
         f.write(Sr + Tr)
-    with open('E:/Code/project301/file/resultModel.txt', 'wt+', encoding='utf-8') as f:
+    with open('./file/resultModel.txt', 'wt+', encoding='utf-8') as f:
         f.write(Sm + Tm)
     return JsonResponse({**error_code.CLACK_SUCCESS})
 
 
 # 还原为刚建模的样子
 def recovery_origin_model(request):
-    filepath = 'E:/Code/project301/file/'
+    filepath = './file/'
     with open(filepath + 'result.txt', 'wt+', encoding='utf-8') as f:
         f.write(open(filepath + 'resultSaveCreate.txt', 'r', encoding='utf-8').read())
     with open(filepath + 'resultModel.txt', 'wt+', encoding='utf-8') as f:
