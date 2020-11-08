@@ -1,7 +1,9 @@
 <template>
   <div id="modelList">
     <el-card>
-      <el-button type="primary" style="margin-bottom: 20px;margin-left: 90%">导出</el-button>
+      <download-excel :data="json_data" :fields="json_fields" name="output.xls">
+        <el-button type="primary" style="margin-bottom: 20px;margin-left: 90%">导出</el-button>
+      </download-excel>
       <div id="table">
         <el-table :data="tableData" border style="width: 100%">
           <el-table-column prop="id" label="序号" width="180"> </el-table-column>
