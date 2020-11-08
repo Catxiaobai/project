@@ -1,6 +1,6 @@
 # An lexer for simple C Langrage
 from ply import *
-# from judgeFeasibility import lex
+import lzy_Complete.lex
 
 reserved = (
 #    'AUTO', 'BREAK', 'CASE', 'CHAR', 'CONST', 'CONTINUE', 'DEFAULT', 'DO', 'DOUBLE',

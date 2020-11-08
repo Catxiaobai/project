@@ -62,5 +62,6 @@ urlpatterns = [
     path('import_scenes', views.import_scenes, name='import_scenes'),  # 导入场景
     path('scenes_modeling', views.scenes_modeling, name='scenes_modeling'),  # 场景建模
     path('deliver_model_data', views.deliver_model_data, name='deliver_model_data'),  # 传递模型的场景信息
+    path('model_list', views.model_list, name='model_list'),  # 模型列表
 
 ]

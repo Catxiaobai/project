@@ -2,58 +2,58 @@ digraph g {
  S5 -> S0 [ label="t1
 event=null
 condition=x=3" ];
- S2 -> S0 [ label="t2
-event=null
-condition=y=50" ];
- S1 -> S0 [ label="t3
-event=null
-condition=y=50" ];
- S1 -> S0 [ label="t4
-event=Enter_pin(p)
-condition=p!=pin,N=3,y=18" ];
- S3 -> S0 [ label="t5
-event=null
-condition=y=50" ];
- S0 -> S0 [ label="t6
+ S0 -> S0 [ label="t2
 event=Card(pin,B)
 condition=x=3" ];
- S4 -> S0 [ label="t7
+ S3 -> S0 [ label="t3
+event=null
+condition=y=50" ];
+ S4 -> S0 [ label="t4
 event=null
 condition=x=3" ];
+ S1 -> S0 [ label="t5
+event=null
+condition=y=50" ];
+ S1 -> S0 [ label="t6
+event=Enter_pin(p)
+condition=p!=pin,N=3,y=18" ];
+ S2 -> S0 [ label="t7
+event=null
+condition=y=50" ];
  S1 -> S1 [ label="t8
 event=Enter_pin(p)
 condition=p!=pin,0<=N<=2,10<=y<=49" ];
- S2 -> S3 [ label="t9
-event=Withdrawal()
-condition=9<=y<=31" ];
+ S1 -> S0 [ label="t9
+event=Cancel()
+condition=10<=y<=49" ];
  S1 -> S2 [ label="t10
 event=Enter_pin(p)
 condition=p=pin,0<=N<=2,8<=y<=45" ];
- S1 -> S0 [ label="t11
-event=Cancel()
-condition=10<=y<=49" ];
- S0 -> S1 [ label="t12
-event=Card(pin,B)
-condition=1<=x<=2" ];
- S2 -> S4 [ label="t13
-event=GetBalance()
-condition=38<=y<=49" ];
- S2 -> S0 [ label="t14
+ S2 -> S0 [ label="t11
 event=Cancel()
 condition=5<=y<=23" ];
- S4 -> S2 [ label="t15
-event=null
-condition=1<=x<=2" ];
- S1 -> S0 [ label="t16
-event=Enter_pin(p)
+ S2 -> S4 [ label="t12
+event=GetBalance()
 condition=38<=y<=49" ];
- S3 -> S4 [ label="t17
-event=Enter_amount(w)
-condition=w<=B,20<=y<=44" ];
- S5 -> S2 [ label="t18
-event=null
-condition=1<=x<=2" ];
- S3 -> S5 [ label="t19
+ S3 -> S5 [ label="t13
 event=Enter_amount(w)
 condition=w>B,20<=y<=25" ];
+ S3 -> S4 [ label="t14
+event=Enter_amount(w)
+condition=w<=B,20<=y<=44" ];
+ S1 -> S0 [ label="t15
+event=Enter_pin(p)
+condition=38<=y<=49" ];
+ S2 -> S3 [ label="t16
+event=Withdrawal()
+condition=9<=y<=31" ];
+ S5 -> S2 [ label="t17
+event=null
+condition=1<=x<=2" ];
+ S0 -> S1 [ label="t18
+event=Card(pin,B)
+condition=1<=x<=2" ];
+ S4 -> S2 [ label="t19
+event=null
+condition=1<=x<=2" ];
 }

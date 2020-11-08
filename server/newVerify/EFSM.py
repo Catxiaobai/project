@@ -1317,7 +1317,7 @@ class EFSM:
                         self.outputTestData(currPath,pathVarType,0)
                         break  # break for j loop
                     population = gaSample.basicSurvive(oldInvidualFit, invidualFitness,population)
-                    if time.time() - starttime > 4:
+                    if time.time() - starttime > 6:
                         print('this path is not feasible')
                         filepath = './file/'
                         filename = 'test_data.txt'

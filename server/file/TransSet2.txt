@@ -1,0 +1,157 @@
+T1 S1 S2 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T2 S2 S3 event=Cancel() condition=y=48 action=Write("Canceling"),return_card(),x=0,y=0 
+T3 S4 S5 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T4 S5 S6 event=Cancel() condition=y=49 action=Write("Canceling"),return_card(),x=0,y=0 
+T5 S7 S8 event=Card(pin,B) condition=x=3 action=Write("Response timeout"),return_card(),x=0,y=0 
+T6 S9 S10 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T7 S10 S11 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T8 S12 S13 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T9 S13 S14 event=Enter_pin(p) condition=y=48 action=Write("Verify password timeout"),return_card(),x=0,y=0 
+T10 S15 S16 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T11 S16 S17 event=Enter_pin(p) condition=y=45 action=Write("Verify password timeout"),return_card(),x=0,y=0 
+T12 S18 S19 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T13 S19 S20 event=Enter_pin(p) condition=y=38 action=Write("Verify password timeout"),return_card(),x=0,y=0 
+T14 S21 S22 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T15 S22 S23 event=Enter_pin(p) condition=y=49 action=Write("Verify password timeout"),return_card(),x=0,y=0 
+T16 S24 S25 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T17 S25 S26 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T18 S27 S28 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T19 S28 S29 event=Enter_pin(p) condition=p!=pin,N=0,y=48 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T20 S29 S30 event=Cancel() condition=y=49 action=Write("Canceling"),return_card(),x=0,y=0 
+T21 S31 S32 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T22 S32 S33 event=Enter_pin(p) condition=p!=pin,N=0,y=49 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T23 S33 S34 event=Cancel() condition=y=37 action=Write("Canceling"),return_card(),x=0,y=0 
+T24 S35 S36 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T25 S36 S37 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T26 S38 S39 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T27 S39 S40 event=Enter_pin(p) condition=p!=pin,N=0,y=36 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T28 S40 S41 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T29 S42 S43 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T30 S43 S44 event=Enter_pin(p) condition=p!=pin,N=0,y=20 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T31 S44 S45 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T32 S46 S47 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T33 S47 S48 event=Enter_pin(p) condition=p!=pin,N=0,y=27 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T34 S48 S49 event=Enter_pin(p) condition=p!=pin,N=1,y=31 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T35 S49 S50 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T36 S51 S52 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T37 S52 S53 event=Enter_pin(p) condition=p!=pin,N=0,y=22 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T38 S53 S54 event=Enter_pin(p) condition=p!=pin,N=1,y=24 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T39 S54 S55 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T40 S56 S57 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T41 S57 S58 event=Enter_pin(p) condition=p!=pin,N=0,y=17 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T42 S58 S59 event=Cancel() condition=y=10 action=Write("Canceling"),return_card(),x=0,y=0 
+T43 S60 S61 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T44 S61 S62 event=Enter_pin(p) condition=p!=pin,N=0,y=19 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T45 S62 S63 event=Enter_pin(p) condition=p!=pin,N=1,y=36 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T46 S63 S64 event=Cancel() condition=y=11 action=Write("Canceling"),return_card(),x=0,y=0 
+T47 S65 S66 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T48 S66 S67 event=Enter_pin(p) condition=p!=pin,N=0,y=25 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T49 S67 S68 event=Enter_pin(p) condition=p!=pin,N=1,y=21 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T50 S68 S69 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T51 S70 S71 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T52 S71 S72 event=Enter_pin(p) condition=p=pin,N=0,y=9 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T53 S72 S73 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T54 S74 S75 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T55 S75 S76 event=Enter_pin(p) condition=p!=pin,N=0,y=33 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T56 S76 S77 event=Enter_pin(p) condition=p=pin,N=1,y=34 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T57 S77 S78 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T58 S79 S80 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T59 S80 S81 event=Enter_pin(p) condition=p!=pin,N=0,y=26 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T60 S81 S82 event=Enter_pin(p) condition=p!=pin,N=1,y=10 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T61 S82 S83 event=Enter_pin(p) condition=p=pin,N=2,y=16 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T62 S83 S84 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T63 S85 S86 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T64 S86 S87 event=Enter_pin(p) condition=p=pin,N=0,y=8 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T65 S87 S88 event=Cancel() condition=y=6 action=Write("Canceling"),return_card(),x=0,y=0 
+T66 S89 S90 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T67 S90 S91 event=Enter_pin(p) condition=p!=pin,N=0,y=15 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T68 S91 S92 event=Enter_pin(p) condition=p=pin,N=1,y=34 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T69 S92 S93 event=Cancel() condition=y=5 action=Write("Canceling"),return_card(),x=0,y=0 
+T70 S94 S95 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T71 S95 S96 event=Enter_pin(p) condition=p!=pin,N=0,y=26 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T72 S96 S97 event=Enter_pin(p) condition=p!=pin,N=1,y=10 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T73 S97 S98 event=Enter_pin(p) condition=p=pin,N=2,y=16 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T74 S98 S99 event=Cancel() condition=y=8 action=Write("Canceling"),return_card(),x=0,y=0 
+T75 S100 S101 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T76 S101 S102 event=Enter_pin(p) condition=p=pin,N=0,y=45 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T77 S102 S103 event=Withdrawal() condition=y=30 action=Write("Enter amount"),x=0,y=0 
+T78 S103 S104 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T79 S105 S106 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T80 S106 S107 event=Enter_pin(p) condition=p=pin,N=0,y=40 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T81 S107 S108 event=Withdrawal() condition=y=19 action=Write("Enter amount"),x=0,y=0 
+T82 S108 S109 event=Enter_amount(w) condition=w<=B,y=44 action=Give_money(),B=B-w,Write("your balance",B),x=0,y=0 
+T83 S109 S110 event=null condition=x=3 action=Write("Response timeout"),return_card(),x=0,y=0 
+T84 S111 S112 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T85 S112 S113 event=Enter_pin(p) condition=p=pin,N=0,y=36 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T86 S113 S114 event=Withdrawal() condition=y=9 action=Write("Enter amount"),x=0,y=0 
+T87 S114 S115 event=Enter_amount(w) condition=w<=B,y=20 action=Give_money(),B=B-w,Write("your balance",B),x=0,y=0 
+T88 S115 S116 event=null condition=x=2 action=Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0 
+T89 S116 S117 event=Cancel() condition=y=10 action=Write("Canceling"),return_card(),x=0,y=0 
+T90 S118 S119 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T91 S119 S120 event=Enter_pin(p) condition=p=pin,N=0,y=26 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T92 S120 S121 event=Withdrawal() condition=y=30 action=Write("Enter amount"),x=0,y=0 
+T93 S121 S122 event=Enter_amount(w) condition=w<=B,y=38 action=Give_money(),B=B-w,Write("your balance",B),x=0,y=0 
+T94 S122 S123 event=null condition=x=2 action=Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0 
+T95 S123 S124 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T96 S125 S126 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T97 S126 S127 event=Enter_pin(p) condition=p=pin,N=0,y=28 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T98 S127 S128 event=Withdrawal() condition=y=31 action=Write("Enter amount"),x=0,y=0 
+T99 S128 S129 event=Enter_amount(w) condition=w>B,y=20 action=Write("Out balance"),x=0,y=0 
+T100 S129 S130 event=null condition=x=2 action=Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0 
+T101 S130 S131 event=Cancel() condition=y=8 action=Write("Canceling"),return_card(),x=0,y=0 
+T102 S132 S133 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T103 S133 S134 event=Enter_pin(p) condition=p=pin,N=0,y=33 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T104 S134 S135 event=Withdrawal() condition=y=27 action=Write("Enter amount"),x=0,y=0 
+T105 S135 S136 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T106 S137 S138 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T107 S138 S139 event=Enter_pin(p) condition=p=pin,N=0,y=21 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T108 S139 S140 event=Withdrawal() condition=y=10 action=Write("Enter amount"),x=0,y=0 
+T109 S140 S141 event=Enter_amount(w) condition=w>B,y=25 action=Write("Out balance"),x=0,y=0 
+T110 S141 S142 event=null condition=x=3 action=Write("Response timeout"),return_card(),x=0,y=0 
+T111 S143 S144 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T112 S144 S145 event=Enter_pin(p) condition=p=pin,N=0,y=27 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T113 S145 S146 event=Withdrawal() condition=y=14 action=Write("Enter amount"),x=0,y=0 
+T114 S146 S147 event=Enter_amount(w) condition=w>B,y=21 action=Write("Out balance"),x=0,y=0 
+T115 S147 S148 event=null condition=x=1 action=Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0 
+T116 S148 S149 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T117 S150 S151 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T118 S151 S152 event=Enter_pin(p) condition=p=pin,N=0,y=39 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T119 S152 S153 event=GetBalance() condition=y=40 action=Write("Blance=",B),x=0,y=0 
+T120 S153 S154 event=null condition=x=2 action=Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0 
+T121 S154 S155 event=Cancel() condition=y=23 action=Write("Canceling"),return_card(),x=0,y=0 
+T122 S156 S157 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T123 S157 S158 event=Enter_pin(p) condition=p=pin,N=0,y=33 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T124 S158 S159 event=GetBalance() condition=y=49 action=Write("Blance=",B),x=0,y=0 
+T125 S159 S160 event=null condition=x=3 action=Write("Response timeout"),return_card(),x=0,y=0 
+T126 S161 S162 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T127 S162 S163 event=Enter_pin(p) condition=p=pin,N=0,y=22 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T128 S163 S164 event=GetBalance() condition=y=38 action=Write("Blance=",B),x=0,y=0 
+T129 S164 S165 event=null condition=x=1 action=Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0 
+T130 S165 S166 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T131 S167 S168 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T132 S168 S169 event=Enter_pin(p) condition=p!=pin,N=0,y=32 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T133 S169 S170 event=Enter_pin(p) condition=p=pin,N=1,y=16 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T134 S170 S171 event=Cancel() condition=y=11 action=Write("Canceling"),return_card(),x=0,y=0 
+T135 S172 S173 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T136 S173 S174 event=Enter_pin(p) condition=p!=pin,N=0,y=25 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T137 S174 S175 event=Enter_pin(p) condition=p!=pin,N=1,y=27 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T138 S175 S176 event=Enter_pin(p) condition=p=pin,N=2,y=32 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T139 S176 S177 event=Cancel() condition=y=10 action=Write("Canceling"),return_card(),x=0,y=0 
+T140 S178 S179 event=Card(pin,B) condition=x=2 action=Write("Enter Pin"),N=0,x=0,y=0 
+T141 S179 S180 event=Enter_pin(p) condition=p!=pin,N=0,y=23 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T142 S180 S181 event=Enter_pin(p) condition=p=pin,N=1,y=13 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T143 S181 S182 event=GetBalance() condition=y=43 action=Write("Blance=",B),x=0,y=0 
+T144 S182 S183 event=null condition=x=1 action=Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0 
+T145 S183 S184 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T146 S185 S186 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T147 S186 S187 event=Enter_pin(p) condition=p!=pin,N=0,y=29 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T148 S187 S188 event=Enter_pin(p) condition=p!=pin,N=1,y=15 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T149 S188 S189 event=Enter_pin(p) condition=p=pin,N=2,y=39 action=Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0 
+T150 S189 S190 event=GetBalance() condition=y=45 action=Write("Blance=",B),x=0,y=0 
+T151 S190 S191 event=null condition=x=1 action=Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0 
+T152 S191 S192 event=null condition=y=50 action=Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0 
+T153 S193 S194 event=Card(pin,B) condition=x=1 action=Write("Enter Pin"),N=0,x=0,y=0 
+T154 S194 S195 event=Enter_pin(p) condition=p!=pin,N=0,y=21 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T155 S195 S196 event=Enter_pin(p) condition=p!=pin,N=1,y=31 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T156 S196 S197 event=Enter_pin(p) condition=p!=pin,N=2,y=15 action=Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0 
+T157 S197 S198 event=Enter_pin(p) condition=p!=pin,N=3,y=18 action=Write("Password error number exceeded"),return_card(),x=0,y=0 

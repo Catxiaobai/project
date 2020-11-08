@@ -66,7 +66,7 @@ def onefailure():
     flag=0
     iteration=0
     # obtain_efsm_info.getSM()
-    obtain_efsm_info.getfailureList()
+    #obtain_efsm_info.getfailureList()
     while obtain_efsm_info.targetbranchlist and flag <= len(obtain_efsm_info.targetbranchlist):
         # 序列生成
         pathT = sequeueGenerate.search()
@@ -106,7 +106,7 @@ def multifailure():
     targetPath = list()
     uselist = []
     # obtain_efsm_info.getSM()
-    obtain_efsm_info.getfailureList()
+    #obtain_efsm_info.getfailureList()
     while obtain_efsm_info.targetbranchlist and flag <= len(obtain_efsm_info.targetbranchlist):
         # 序列生成
         pathT = sequeueGeneratemulti.search(uselist)

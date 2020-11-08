@@ -6,14 +6,11 @@
       </download-excel>
       <div id="table">
         <el-table :data="tableData" border style="width: 100%">
-          <el-table-column prop="id" label="序号" width="180"> </el-table-column>
-          <el-table-column prop="model_name" label="模型名称" width="180"> </el-table-column>
-          <el-table-column prop="element" label="场景类型" width="180"> </el-table-column>
-          <el-table-column prop="name" label="场景名称" width="180"> </el-table-column>
-          <el-table-column prop="type" label="场景类型"> </el-table-column>
-          <el-table-column prop="model_type" label="模型类型" width="180">
-            <!--todo: 筛选功能存在bug-->
-          </el-table-column>
+          <el-table-column prop="id" label="序号" width="80" align="center"></el-table-column>
+          <el-table-column prop="model_name" label="模型名称" align="center"></el-table-column>
+          <el-table-column prop="element" label="场景类别" align="center"></el-table-column>
+          <el-table-column prop="name" label="场景名称" align="center"></el-table-column>
+          <el-table-column prop="type2" label="场景所属" align="center"></el-table-column>
           <!--          <el-table-column prop="describe" label="场景描述" width="180"> </el-table-column>-->
           <!--          <el-table-column prop="content" label="场景内容"> </el-table-column>-->
         </el-table>
@@ -40,48 +37,19 @@ export default {
   name: 'ModelList.vue',
   data() {
     return {
-      // todo: 没有建数据库，用的假数据
-      tableData: [
-        {
-          id: 1,
-          model_name: 'ATM系统',
-          model_type: '状态机',
-          element: '状态迁移',
-          name: '取款',
-          type: '综合场景'
-        },
-        {
-          id: 2,
-          model_name: 'ATM系统',
-          model_type: '状态机',
-          element: '状态迁移',
-          name: '存款',
-          type: '综合场景'
-        },
-        {
-          id: 3,
-          model_name: 'ATM系统',
-          model_type: '状态机',
-          element: '状态迁移',
-          name: '输密码',
-          type: '综合场景'
-        }
-      ],
+      tableData: [],
       pagination: {
         limit: 7, //每页显示条数
         total: 0, //项目总数
         page: 1 //第几页
       },
-      filterData: [
-        { text: '状态机', value: '状态机' },
-        { text: '时序图', value: '时序图' },
-        { text: '活动图', value: '活动图' },
-        { text: '顺序图', value: '顺序图' }
-      ]
+      search: '', //搜索框
+      itemInfo: ''
     }
   },
   created() {
-    this.pagination.total = this.tableData.length
+    this.getItemInfo()
+    this.pageList()
   },
   methods: {
     handleSizeChange(val) {
@@ -95,6 +63,35 @@ export default {
       console.log(`当前页: ${val}`)
       this.pagination.page = val
       this.getList()
+    },
+    pageList() {
+      // 发请求拿到数据并暂存全部数据,方便之后操作
+      this.$http
+        .post(this.Global_Api + '/api/model_list', this.itemInfo)
+        .then(response => {
+          // console.log(response.data.analysis_list)
+          this.data = response.data.model_list
+          this.getList()
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+      // this.data = this.tableData
+      // this.getList()
+    },
+    getList() {
+      // 处理数据，根据表格中name字段来筛选
+      let list = this.data.filter((item, index) => item.name.includes(this.search))
+      // let list = this.data
+      this.tableData = list.filter(
+        (item, index) => index < this.pagination.page * this.pagination.limit && index >= this.pagination.limit * (this.pagination.page - 1)
+      )
+      this.pagination.total = list.length
+      // console.log(this.tableData)
+    },
+    getItemInfo() {
+      this.itemInfo = this.$store.state.item
+      console.log('模型列表', this.itemInfo)
     }
   }
 }

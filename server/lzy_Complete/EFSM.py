@@ -2,15 +2,15 @@
 # Copyright (C) 2009 Ruilian Zhao
 # Time-stamp: <Ruilian Zhao 21-04-2009 15:25:22>
 
-__author__ = 'Ruilian Zhao'
+__author__ = 'Ruilian Zhao '
 __date__ = '2009-04-21'
-
-from lxd_verify import sclexer
 import random
 import string
 from datetime import datetime
 import time
 import copy
+import lzy_Complete.sclexer as sclexer
+# from kvparser import ListParser
 
 
 class SLIMException (Exception):
@@ -40,12 +40,12 @@ class Transition:
            if isinstance(src, State):
                self.src = src
            else:
-               print ('source must be a State type')
+               print('source must be a State type')
         if tgt is not None:
            if isinstance(tgt, State):
                self.tgt = tgt
            else:
-               print ('target must be a State type')
+               print('target must be a State type')
         self.event = event
         self.cond = cond
         self.action = action
@@ -105,9 +105,8 @@ class GA:
     #    self.totalFitnessScore = 0
         self.maxGeneration = maxGeneration
     #    self.max=100  ### cruiseControl: max=100
-    #     self.max = 8191 ### Cashier, ATM: max=10000,
-    #     self.max=500   ### fulePump
-        self.max=250   ### lift_EFSM
+        self.max = 8191 ### Cashier, ATM: max=10000,
+    #    self.max=500   ### fulePump
         self.min=0
 
 
@@ -132,8 +131,6 @@ class GA:
 
         for i in range(self.populationSize):
             self.genomes.append(self.genome(varType, self.genomeLen))
-        # print 'self.genomes'
-        # print self.genomes
         return self.genomes
 
 
@@ -276,7 +273,7 @@ class GA:
         """
         self.genomes=genome   
         normFitness=self.fitnessScore(genomeFitness)  
-        accumFitness=self.accumFitness(normFitness)
+        accumFitness=self.accumFitness(normFitness)   
         selectedGenome=self.selectionGA(accumFitness)     
         crossedGenome=self.crossAddSubGA(selectedGenome)   
         mutatedGenome=self.mutateGA(crossedGenome,varType)  
@@ -379,11 +376,12 @@ class EFSM:
     """Instances of this class represent a EFSM machine.
     A machine is set of states and trsitions.
     """
-    def __init__ (self, name, transitionList =[]):
+    def __init__ (self, name):
         """       """
         self.name = name.split('/')[-1].split('.')[0]
+        # print(self.name)
         self.stateList = []
-        self.transitionList = transitionList
+        self.transitionList = []
         self.startStateList=[]#the start states list
         self.endStateList=[]#the end states list
         self.startTransitionList=[]#the start transition list
@@ -409,7 +407,6 @@ class EFSM:
         self.repeatTranFlag=0 ## there are no identical transitons on the path
         self.repeatTranVarDict={}
         self.repeatTranFuncDict={} ####store repeat transition
-
      
         
 
@@ -417,16 +414,20 @@ class EFSM:
     def __repr__(self):
         return "<EFSM %s>" % self.name
 
-    
-
-    def state(self, name=None):
+    def state(self, name):
         if name == None:
+            # print("aaaa")
             return self.stateList
         else:
+            # print(self.stateList)
             for state in self.stateList:
+                # print(state)
+                # print(state.name)
+                # print(name)
                 if state.name == name:
+                    # print("bbb")
                     return state
-        print ('can not find %s in the state machine' , name)
+        print('can not find %s in the state machine' % name)
 
 
 
@@ -435,7 +436,7 @@ class EFSM:
         """
         if isinstance(newstate, State):
             if newstate in self.stateList:
-                print ('State %s is in the machine' , newstate.name)
+                print('State %s is in the machine' % newstate.name)
             else:
                 self.stateList.append (newstate)
 
@@ -446,7 +447,7 @@ class EFSM:
         """
         if isinstance(newtransition, Transition):
             if newtransition in self.transitionList:
-                print ('Transition %s is in the machine' , newtransition.name)
+                print ('Transition %s is in the machine' %newtransition.name)
             else:
                 self.transitionList.append (newtransition)
 
@@ -458,13 +459,9 @@ class EFSM:
         """
 
         for currTransition in self.transitionList:
-            # print 'currTransition=',currTransition
             self.succDict[currTransition.name]=self.transitionSuccessor2(currTransition)
-            # print '^^^^^^^^^^^^^^^^^^'
-            # print self.succDict[currTransition.name]
-            # print '__________________'
-
         
+    # 向后搜索
     def transitionSuccessor2(self, currTransition):
         """ return a list of transitions that are
         the surccessors of the given transition
@@ -478,16 +475,12 @@ class EFSM:
         """
         return [item for item in self.transitionList \
                     if item.tgt == currTransition.src]
-
-
-
-
     def findStartTransition(self):
         """ computer start transitions which source is START state
         """
-        # print self.transitionList
+        print(self.transitionList)
         templist=[item.name for item in self.transitionList if item.src.name == "START" ]
-        # print 'tmplist=',templist
+        print ('tmplist=',templist)
         if templist:
             self.startTransitionList=templist[:]  
         else:
@@ -570,10 +563,10 @@ class EFSM:
                 else:
                     count_SourceDiff = count_SourceDiff + 1
         sim_tran =match*1+mismatch*0+gap*0
-        print (count_BothIden,count_SourceIden,count_SourceDiff)
+        print(count_BothIden,count_SourceIden,count_SourceDiff)
         sim_state=(count_BothIden*2.0 + count_SourceIden*1.0 + count_SourceDiff*0)/(2**abs(len(first)-len(second))+1)    #how to consider the difference between path lengths ?
-        print (match,mismatch,gap)
-        print (sim_tran,sim_state)
+        print(match,mismatch,gap)
+        print(sim_tran,sim_state)
 
 
     def findAllPath(self):
@@ -581,27 +574,27 @@ class EFSM:
         Path: list of transitions [TS1, TS2,...]
         pathList: list of paths [[TS1, TS2],[TS1,TS2],...]
         """
-        # print self.startTransitionList
         tempPathList=[]
+        print(self.startTransitionList)
         for startTran in self.startTransitionList:
-            # print 'startTran = ',startTran
+            print('startTran = ',startTran)
             tempPathList=[Path([startTran])]# path includes startTransition
-        # print 'tempPathList=',type(tempPathList)
+        print ('tempPathList=',tempPathList)
         allPathList=[]
         count=0
         feasiblePathList=[]
         endStartNo=0
         while len(tempPathList) > 0:
             currPath = tempPathList[0]
-            # print 'currPath=',currPath
+            print ('currPath=',currPath)
             restPathList = tempPathList[1:]
-            # print 'restPathList=', restPathList
+            print ('restPathList=', restPathList)
             lastTransition = currPath[-1]
-            # print 'lastTransition=', lastTransition
+            print ('lastTransition=', lastTransition)
             successorList = self.succDict[lastTransition]
-            # print 'successorList=', successorList
+            print ('successorList=', successorList)
             if (successorList!=[]):
-                # print 'count=',count
+                print ('count=',count)
                 allPathList.append(Path(currPath))
                # print 'No%s:' % (count), currPath
                 #print currPath
@@ -619,7 +612,7 @@ class EFSM:
         '''print 'number of no_repeat_tran feasible path:',count
         print 'all no_repeat_tran feasible path:',feasiblePathList'''
         #self.VarNumDefOnPath(allPathList[2])
-        print (allPathList)
+        print ('allPahtList=',allPathList)
         return allPathList
 
 
@@ -807,12 +800,11 @@ class EFSM:
             sclexer.lex.input(stat)
             while 1:
                 tok=sclexer.lex.token()
-
                 if not tok:
                     break
                 else:
                     if tok.type == 'ID':
-                        vlist.append(tok.value)
+                        vlist.append(tok.value)  
         condlist.append(statements)
         tranFuncDict['condFunc']=condlist[:]
         tranVarDict['condVuse']=vlist[:]
@@ -848,6 +840,9 @@ class EFSM:
 
         # print "actionVdef:",vdef
         # print "actionVuse:",vuse
+ 
+
+
 
 
     def initTranVarFuncList(self):
@@ -966,10 +961,6 @@ class EFSM:
             tempvdict.extend(vdict['eventVdef'])
             while tempvdict!=[]:
                 self.originalDef.append(tempvdict.pop(0))
-
-  
-
-
     def identifyLeftRight(self, string):
          """ identify left and right substing for a sting
          """
@@ -1004,7 +995,8 @@ class EFSM:
         predicate=predicate.strip(")")
         subList=self.identifyLeftRight(predicate)
         rightstr=subList.pop(0)
-        leftstr=subList.pop(0)
+        leftstr=subList.pop(0)         
+
         leftValue=eval(leftstr, {},predVarValue)
         if type(leftValue)==type(leftstr):      
             leftValue=ord(leftValue)            
@@ -1019,9 +1011,6 @@ class EFSM:
     #    distance=1-1.001**(-distance)     
         return distance
 
-
-
-
     def  outputTestData(self,currPath, varType, noinput):
         """ print test data
         """
@@ -1034,30 +1023,16 @@ class EFSM:
                      eventSequence.append(fdict['eventFunc'])
             i=i+1
         if eventSequence!=[]:
-            # print 'test event squence:', eventSequence
+            print ('test event squence:', eventSequence)
             if noinput==0:
-                path_data = []
-
-                # print ' test data:',
-                path_data.append('test data:')
+                print (' test data:',)
                 for var in self.pathVarValue:
-                    # print var,
-                    path_data.append(var)
+                    print(var,end=' ')
                     if var in varType:
                         if varType[var]=="chr":
-                            print (':' ,chr(self.pathVarValue[var]))
-                            path_data.append(chr(self.pathVarValue[var]))
-                    else:
-                        print (':',self.pathVarValue[var])
-                        path_data.append(self.pathVarValue[var])
-
-                filepath = '../file/'
-                filename = 'test_data.txt'
-                with open(filepath+filename, 'w') as file_object:
-                    file_object.truncate()
-                    file_object.write(str(path_data))
-        
-
+                            print(':' ,chr(self.pathVarValue[var]),end=' ')
+                    else: print(':',self.pathVarValue[var],end=' ')
+                print
 
     def findVarInEvent(self, var, eventFun):
         """
@@ -1156,10 +1131,7 @@ class EFSM:
                                 #if isString!=1:
                                 # print 'condVuseValueDict=', condVuseValueDict
                                 # print 'condStr=',condStr
-                                # 20200914 rinsmq 添加下面这条语句 将下if中 & 改为 and
-                                # newCondStr = condStr.replace('&','and')
                                 if eval(condStr,{},condVuseValueDict) == False:
-                                    # print 'False'
                                     if '&' in condStr:
                                         totalFitness=0.0
                                         for predStr in condStr.split(" & "):
@@ -1177,7 +1149,7 @@ class EFSM:
                                     fitness=approachLevel + distance                                       
                                     return fitness                                    
                     
-                            # print '####execute action #######'
+                         #   print ' ####execute action #######'
                             approachLevel=approachLevel-1  ####approach level fitness                           
                             tempActFun=[]
                             tempActFun.extend(fdict['actionFunc'])
@@ -1220,14 +1192,11 @@ class EFSM:
 #            if i == 7:
 #                return 0
      #   self.outputTestData(currPath , condVuseTypeDict, noInput)
-    #    for var, val in actionVdefValueDict.iteritems():
+    #    for var, val in actionVdefValueDict.items():
     #        print '', var,val,
     #        print ',',
     #    print
         return 0
-
-
-
 
     def obtainIndividualFitness(self,currPath,invidual, populationSize, noInput):
         # print '执行obtainIndividualFitness函数'
@@ -1237,18 +1206,13 @@ class EFSM:
         for i in range(populationSize):
             for var, val in zip(self.pathDefVar, invidual[i]):
                 self.pathVarValue[var]=val
-            fitness=self.executePath(currPath, noInput)
-            # print 'fitness=',fitness
+            fitness=self.executePath(currPath, noInput)            
             if (fitness==0) or (fitness==0.0): ##  the current path is executed
                 invidualFit[0]=0
                 break
             else:
                 invidualFit[i]=1/fitness
         return invidualFit
-
-
-
-
     def copyPathInfo(self):
         """
         copy path information into current Path Dictionary
@@ -1259,15 +1223,10 @@ class EFSM:
          # transition information in Current path copying from self.tranVarDict and self.tranfUNCdICT
          #   key transition.name, value:dict
          #{eventVdef:vlist, condVuse:vlist, actionVdef:vlist, actionVuse,vlist}
-
-
-
-
     def testGenforPath(self, currPath):        
-        print ('执行testGenforPath')
+        print('执行testGenforPath')
         populationSize=20
 #        maxGeneration=10000
-        
         self.repeatTranVarDict={}
         self.repeatTranFuncDict={} ####store repeat transition
         self.currPathTranVarDict={}
@@ -1289,14 +1248,14 @@ class EFSM:
 #        print self.pathDefVar
 #        print 'print success'
 #        print currPath, '\t', len(currPath)
-        print ('self.pathDefVar=',self.pathDefVar)
+#         print 'self.pathDefVar=',self.pathDefVar
         for num in range(len(self.pathDefVar)):               
             pathVarType[num]='int'
             if 'garauntee' in self.pathDefVar[num] or 'accept' in self.pathDefVar[num]:
                 pathVarType[num]='Boolean'        
         # print 'pathVarType=',pathVarType
         if len(self.pathDefVar)>0:  ##There exist input variables on the path
-            for repeat in range(10):
+            for repeat in range(100):
                 gaSample = GA(populationSize,len(self.pathDefVar)) 
                 population = gaSample.creatStartPopulation(pathVarType) ###initiate Population according to input variable number
                 j = 1
@@ -1306,37 +1265,25 @@ class EFSM:
                     oldInvidualFit = self.obtainIndividualFitness(currPath, population, populationSize, noInputVar)
                     # print 'oldInvidualFit=',oldInvidualFit
                     if oldInvidualFit[0] == 0:
-                        print ('No' + str(repeat) + '\tsuccessGeneration\t', j)
+                        print ('No\t' + str(repeat) + '\tsuccessGeneration\t', j)
                         self.outputTestData(currPath,pathVarType,0)
                         break  #    break for j loop
                     j += 1
                     population = gaSample.GeneticAlgorithm(oldInvidualFit, population, pathVarType)
                     invidualFitness = self.obtainIndividualFitness(currPath,population, populationSize, noInputVar)
                     if invidualFitness[0] == 0:   
-                        print ('No' + str(repeat) + '\tsuccessGeneration\t', j)
+                        print('No\t' + str(repeat) + '\tsuccessGeneration\t', j)
                         self.outputTestData(currPath,pathVarType,0)
                         break  # break for j loop
                     population = gaSample.basicSurvive(oldInvidualFit, invidualFitness,population)
-                    if repeat == 0 and j >= 1000:
-                        print ('this path is not feasible')
-                        filepath = '../file/'
-                        filename = 'test_data.txt'
-                        with open(filepath+filename, 'w') as file_object:
-                            file_object.truncate()
+                    if repeat == 0 and j >= 10000:
+                        print('this path is not feasible')
                         return 0
-                return 1
             return 1
         else:
             noInputVar=1
             self.executePath( currPath, noInputVar)
             return 1
-      
-
-
-
-
-
-
 
 ################### find all path for a given transition###############
             
@@ -1383,9 +1330,9 @@ class EFSM:
                         break
             temp=temp+1
         actionVar=set(actionDefVar) 
-        print ('   ', eventVar+len(actionVar))
-        print ('   ', eventVar)
-        print ('   ', len(actionVar))
+        print ('   ', eventVar+len(actionVar),end=' ')
+        print ('   ', eventVar,end=' ')
+        print ('   ', len(actionVar),end=' ')
 
 
 
@@ -1429,22 +1376,18 @@ class EFSM:
                                    
                     if (tempFlag==1): break    
             temp=temp+1  
-        print ('  ', condNum)
-        print ('  ', subcondNum)
-        print ('  ', equalOperator)
-        print ('  ', subcondNum-equalOperator)
-        print ('  ',logicalEqual)
-        print ('  ', equalOperator-logicalEqual)
-
-
-
+        print ('  ', condNum,end=' ')
+        print ('  ', subcondNum,end=' ')
+        print ('  ', equalOperator,end=' ')
+        print ('  ', subcondNum-equalOperator,end=' ')
+        print ('  ',logicalEqual,end=' ')
+        print ('  ', equalOperator-logicalEqual,end=' ')
     def VarNumUseOnPath(self, currPath):
         """        
         compute the number of used variables on a path
         """
         useInCond=[]
         useInAction=[]
-
         temp=0
         while (temp<len(currPath)):
             currTrans=currPath[temp]           
@@ -1489,8 +1432,8 @@ class EFSM:
                             
                     break
             temp=temp+1
-        print ('  ',  len(useInCond))
-        print ('  ',  len(useInAction))
+        print ('  ',  len(useInCond),end=' ')
+        print ('  ',  len(useInAction),end=' ')
 
 
 
@@ -1545,8 +1488,8 @@ class EFSM:
                                 nexti=nexti+1
                     break
             temp=temp+1
-        print ('  ', len(defEventUseCond))
-        print ('  ', len(set(defActUseCond)))
+        print ('  ', len(defEventUseCond),end=' ')
+        print ('  ', len(set(defActUseCond)),end=' ')
 
 
     def eventNumOnPath(self, currPath):
@@ -1572,7 +1515,7 @@ class EFSM:
                             break                                   
                     if (tempFlag==1): break    
             temp=temp+1  
-        print (' ', eventNum)
+        print (' ', eventNum,end=' ')
         print ('', eventWithVar)
        
         
@@ -1586,15 +1529,15 @@ class EFSM:
 
         for item in self.transitionList:
             coveredTrans=item.name
-            print (' transition', coveredTrans)
+            print (' transition', coveredTrans,end=' ')
             transPathList=self.findPathforGivenTrans(coveredTrans)
             i=0
             while (i<len(transPathList)):
-                print ('NO. path', i)
+                print ('NO. path', i,end=' ')
                 currPath=transPathList[i]
                 print ('    currPath', currPath)
               #  print ' lengthOfPath', len(currPath),
-                print ('  ', len(currPath))
+                print ('  ', len(currPath),end=' ')
                 self.VarNumDefOnPath(currPath)
                 self.VarNumUseOnPath(currPath)
                 self.VarNumDefUseOnPath(currPath)
@@ -1605,7 +1548,7 @@ class EFSM:
     def DUAnalysisForPath(self, currPath):
         
         print ('currPath',currPath)
-        print ('  ', len(currPath))
+        print ('  ', len(currPath),end=' ')
         self.VarNumDefOnPath(currPath)
         self.VarNumUseOnPath(currPath)
         self.VarNumDefUseOnPath(currPath)
@@ -1650,16 +1593,14 @@ class EFSM:
 #                    coveredTrans=item.name
 #                    print ' Transition', coveredTrans
 #                    self.testGenForTrans(coveredTrans)
-
-
-
+    #返回和状态节点所有相关联的边
+    def delState(self, curState):
+        print(curState)
+        return [item for item in self.transitionList if item.tgt == curState or item.src == curState]
 
 
 
 ################# test generation for path that length <= 100 ########
-    # 删除与当前状态相关联的迁移
-    def delState(self,curState):
-        return [item for item in self.transitionList if item.tgt == curState or item.src == curState]
 
     def testGen(self,path):
 
@@ -1700,7 +1641,8 @@ class EFSM:
         # for path in PathList1:
         startTime = datetime.now()
         print (path, len(path))
-        flag = self.testGenforPath(path)
+        judge = self.testGenforPath(path)
+        # print(judge)
         endTime = datetime.now()
         print ('endTime - startTime:\t', endTime - startTime)
         print ('average time:\t', (endTime - startTime) / 100)
@@ -1712,7 +1654,7 @@ class EFSM:
 #                self.testGenforPath(currPath)
 #            i=i+1
 #            currPath=pathList[i]
-        return flag
+        return judge
 
         
 #        i=0
@@ -1722,51 +1664,58 @@ class EFSM:
 #                self.DUAnalysisForPath(currPath)
 #                self.testGenforPath(currPath)
 #            i=i+1
-
-
 #######################################################
+# inputfile1= r'resultModel.txt'
 def efsmFromFile(inputfile):
-        from lxd_verify.kvparser import Parser, ListParser
-        SM = EFSM(inputfile)
-        f=open(inputfile)
-        s=f.read()
-        SMBlockList = ListParser().parse(s)
-        for block in SMBlockList:
-           if block[0] == 'State':
-               for (key, value) in block[1]:
-                   SM.addState(State(value))
-           elif block[0] == 'Transition':
-               (name, srcName, tgtName, event, cond, action) = [item[1] for item in block[1]]
-               if srcName != '':      #old code is !=''
-                   src=SM.state(srcName)
-               else:
-                   print ('transition src can not be null')
-               if tgtName != '':
-                   tgt=SM.state(tgtName)
-               else:
-                   print ('transition tgt can not be null')  #
-               SM.addTransition(Transition(name, src, tgt, event, cond, action))
+    # print(inputfile)
+    from lzy_Complete.kvparser import Parser, ListParser
+    SM = EFSM(inputfile)
+    print(SM.transitionList)
+    f=open(inputfile, 'r')
+    # print(inputfile)
+    s=f.read()
+    # print('s=',s)
+    SMBlockList = ListParser().parse(s)
+    # print(SMBlockList)
+    for block in SMBlockList:
+       if block[0] == 'State':
+           for (key, value) in block[1]:
+               SM.addState(State(value))
+       elif block[0] == 'Transition':
+           (name, srcName, tgtName, event, cond, action) = [item[1] for item in block[1]]
+           if srcName != '':      #old code is !=''
+               src=SM.state(srcName)
            else:
-               pass
-        print ('<><><><><><><><>>><>><><><><><><><><><><><><><>')
-    #   format of transitionList is <Transition T1 <state START> <state S1? Card(pin, sb, cb)  write("Enter PIN"); attempts = 0;>
-        f.close()
-        return SM
+               print ('transition src can not be null')
+           if tgtName != '':
+               tgt=SM.state(tgtName)
+           else:
+               print('transition tgt can not be null')  #
+           SM.addTransition(Transition(name, src, tgt, event, cond, action))
+       else:
+           pass
+    # print('<><><><><><><><>>><>><><><><><><><><><><><><><>')
+#   format of transitionList is <Transition T1 <state START> <state S1? Card(pin, sb, cb)  write("Enter PIN"); attempts = 0;>
+    f.close()
+    # print(SM.transitionList)
+    # print(len(SM.transitionList))
+    return SM
 
 def testGenFromMain(inputfile,path):
-    # print inputfile
+    # print(inputfile)
     SM = efsmFromFile(inputfile)
     SM.allPathNum()
     SM.testGen(path)
 
-
 if __name__ == '__main__':
-    modelfiledir = 'model/'
-    modelfile = "resultModel2.txt"
-    inputfile = modelfiledir + modelfile
-    SM = efsmFromFile(inputfile)
-    SM.allPathNum()
-    pathT = ['t9', 't6', 't11', 't14']
-    SM.testGen(pathT)
+    # modelfiledir = '/Users/liuzhuoyuan/PycharmProjects/Modeling/Model3/judgeFeasibility/model/'
+    # modelfile = "efsm_atm1.txt"
+    inputfile = './file/resultModel2.txt'
+    # SM = efsmFromFile(inputfile)
+    # oriModel =efsmFromFile（'resultModel2.txt'）
+    # print(oriModel.transitionList)
+    # TransNum = len(oriModel.transitionList)
+    # SM.allPathNum()
+    # SM.testGen(inputfile)
 
-    #target1, S4, S8, Withdrawal(w), !(cb >= w), cb = cb - w,
+    #target1, S4, S8, Model3/judgeFeasibility/model/resultModel.txtWithdrawal(w), !(cb >= w), cb = cb - w,

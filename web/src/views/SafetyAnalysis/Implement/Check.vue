@@ -10,7 +10,15 @@
         <el-button type="primary" :disabled="disabled.reset" @click="resetCase">重置</el-button>
       </div>
       <div id="table">
-        <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelection" @filter-change="handleFilterChange">
+        <el-table
+          :data="tableData"
+          border
+          style="width: 100%"
+          @selection-change="handleSelection"
+          @filter-change="handleFilterChange"
+          v-loading="loading"
+          element-loading-text="正在验证，请耐心等候..."
+        >
           <el-table-column type="selection" width="40px" align="center"> </el-table-column>
           <el-table-column prop="id" label="序号" width="80" align="center"> </el-table-column>
           <el-table-column prop="element" label="类别" width="100" :filters="filterData" column-key="element" align="center"> </el-table-column>
@@ -54,6 +62,7 @@ export default {
   data() {
     return {
       tableData: [],
+      loading: false,
       filterData: [
         { text: '外部接口', value: '外部接口' },
         { text: '功能处理', value: '功能处理' },
@@ -205,13 +214,17 @@ export default {
       }
     },
     verifyCase() {
+      this.loading = true
       this.$http
         .post(this.Global_Api + '/api/verify_case', this.verifyData)
         .then(response => {
           if (response.data.error_code === 0) {
+            this.loading = false
             this.pageList()
           } else {
             console.log(response.data)
+            this.loading = false
+            alert('error!!!!')
           }
         })
         .catch(function(error) {
@@ -219,13 +232,17 @@ export default {
         })
     },
     verifyTest() {
+      this.loading = true
       this.$http
         .post(this.Global_Api + '/api/verify_case_test', this.verifyData)
         .then(response => {
           if (response.data.error_code === 0) {
+            this.loading = false
             this.pageList()
           } else {
             console.log(response.data)
+            this.loading = false
+            alert('error!!!!')
           }
         })
         .catch(function(error) {
@@ -233,13 +250,17 @@ export default {
         })
     },
     resetCase() {
+      this.loading = true
       this.$http
         .post(this.Global_Api + '/api/reset_case', this.resetData)
         .then(response => {
           if (response.data.error_code === 0) {
+            this.loading = false
             this.pageList()
           } else {
             console.log(response.data)
+            this.loading = false
+            alert('error!!!!')
           }
         })
         .catch(function(error) {

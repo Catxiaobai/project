@@ -95,14 +95,21 @@ class Scenes(models.Model):
     describe = models.TextField(default='')
 
     def to_dict(self):
+        type2 = ''
+        if self.type == 'sub':
+            type2 = '子场景'
+        elif self.type == 'complex':
+            type2 = '综合场景'
         return {
             'id': self.id,
             'name': self.name,
             'element': self.element,
             'type': self.type,
+            'type2': type2,
             'describe': self.describe,
             'content': self.content,
-            'item': self.item.id
+            'item': self.item.id,
+            'model_name': self.item.name + '的' + self.element
         }
 
 
@@ -261,4 +268,38 @@ class DesignComplete(models.Model):
             'element': self.designCheck.design.element,
             'problem': self.designCheck.problem,
             'item': self.designCheck.design.item_id
+        }
+
+
+# 模型列表
+class Models(models.Model):
+    scenes = models.ForeignKey(Scenes, on_delete=models.CASCADE)
+    name = models.TextField(default='')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'scenes_element': self.scenes.element,
+            'scenes_type': self.scenes.type,
+            'scenes_describe': self.scenes.describe,
+            'scenes_content': self.scenes.content,
+            'scenes_name': self.scenes.name,
+            'item_id': self.scenes.item.id,
+            'item_name': self.scenes.item.name,
+        }
+
+
+# 模型列表
+class FTA(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    number = models.IntegerField(default='')
+    path = models.TextField(default='')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'item': self.item.id,
+            'number': self.number,
+            'path': self.path,
         }

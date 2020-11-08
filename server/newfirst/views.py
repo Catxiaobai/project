@@ -6,7 +6,7 @@ import random
 
 from django.http import HttpResponse, JsonResponse
 from newfirst.models import Item, Personnel, DesignCriteria, AnalysisRules, Scenes, Rules, Case, Fmea, Demand, \
-    DesignCheck, Design, DesignComplete
+    DesignCheck, Design, DesignComplete, Models
 from server import error_code
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
@@ -16,7 +16,6 @@ import lwn_Graphic.combination
 import lwn_Graphic.constructModel
 import lwn_Graphic.constructModel2
 import lwn_Graphic.combination2
-# import lxd_verify.Main
 import newVerify.Main
 
 
@@ -216,7 +215,7 @@ def add_item(request):
                         level=new_level,
                         path=new_path)
         new_item.save()
-        os.makedirs('./'+new_path + '/' + new_name)
+        os.makedirs('./' + new_path + '/' + new_name)
         print(new_item.to_dict())
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
@@ -500,13 +499,20 @@ def verify_case(request):
             if aim_element == '状态迁移':
                 if aim_rule_describe == 'ATM系统的安全性验证':
                     aim_content = request_json[i]['content']
-                    print(aim_content)
+                    # print(aim_content)
                     with open('./file/targetInvalid.txt', 'w') as f:  # 设置文件对象
-                        f.write('Transition:\n')
-                        f.write(aim_content)
-                    # os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
 
-                    with open('./file/path.txt') as f:
+                        # print(aim_content)
+                        ttt = aim_content.split('\n')
+                        for t in ttt:
+                            # print('\t'+t)
+                            if 'name' in t:
+                                f.write('Transition:\n')
+                                print(t)
+                            f.write('\t' + t + '\n')
+
+                    newVerify.Main.main()
+                    with open('./file/test_data.txt') as f:
                         lines = f.read()
                     if len(lines) > 2:
                         res = "违背"
@@ -567,8 +573,6 @@ def verify_case_test(request):
                                 print(t)
                             f.write('\t' + t + '\n')
 
-
-                    # os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
                     newVerify.Main.main()
                     with open('./file/test_data.txt') as f:
                         lines = f.read()
@@ -868,7 +872,7 @@ def scenes_modeling(request):
         f.close()
         if request_jsons['type'] == 'sub':
             lwn_Graphic.constructModel.main()
-            lwn_Graphic.combination.combination()
+            # lwn_Graphic.combination.combination()
             filepath = './file/'
             with open(filepath + 'resultSaveCreate.txt', 'wt+', encoding='utf-8') as f:
                 f.write(open(filepath + 'result.txt', 'r', encoding='utf-8').read())
@@ -876,12 +880,19 @@ def scenes_modeling(request):
                 f.write(open(filepath + 'resultModel.txt', 'r', encoding='utf-8').read())
         elif request_jsons['type'] == 'complex':
             lwn_Graphic.constructModel2.main()
-            lwn_Graphic.combination2.combination()
+            # lwn_Graphic.combination2.combination()
             filepath = './file/'
-            with open(filepath + 'resultSaveCreate.txt', 'wt+', encoding='utf-8') as f:
+            with open(filepath + 'resultSaveCreate2.txt', 'wt+', encoding='utf-8') as f:
                 f.write(open(filepath + 'result2.txt', 'r', encoding='utf-8').read())
-            with open(filepath + 'resultModelSaveCreate.txt', 'wt+', encoding='utf-8') as f:
+            with open(filepath + 'resultModelSaveCreate2.txt', 'wt+', encoding='utf-8') as f:
                 f.write(open(filepath + 'resultModel2.txt', 'r', encoding='utf-8').read())
+        # Models.objects.all().delete()
+        # scenes2 = Scenes.objects.filter(item_id=request_jsons['item']['id'])
+        # for s in scenes2:
+        #     model_name = s.to_dict['']
+        #     models = Models(name=s.to_dict[''])
+        #     Models.save(models)
+
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
@@ -938,3 +949,14 @@ def deliver_model_data(request):
         index_line += 1
     # print(data_edge)
     return JsonResponse({**error_code.CLACK_SUCCESS, "data_node": data_node, "data_edge": data_edge})
+
+
+# 模型列表
+def model_list(request):
+    request_jsons = json.loads(request.body)
+    try:
+        scenes = Scenes.objects.filter(item_id=request_jsons['id'])
+        result = [s.to_dict() for s in scenes]
+    except Exception as e:
+        return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
+    return JsonResponse({**error_code.CLACK_SUCCESS, "model_list": result})

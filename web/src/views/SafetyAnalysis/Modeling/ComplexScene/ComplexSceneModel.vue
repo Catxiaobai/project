@@ -426,7 +426,7 @@ export default {
     },
     saveModel() {
       this.$http
-        .get(this.Global_Api + '/api/save_model')
+        .get(this.Global_Api + '/api/save_model2')
         .then(response => {
           console.log(response.data)
         })

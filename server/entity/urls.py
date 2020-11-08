@@ -43,6 +43,7 @@ urlpatterns = [
     path('verify_safe_result', views.verify_safe_result, name='verify_safe_result'),  # 返回前端失效场景的复现路径
     path('verify_select_invalid', views.verify_select_invalid, name='verify_select_invalid'),  # 一次性验证多个失效序列
     path('save_model', views.save_model, name='save_model'),  # 保存模型原本的样子
+    path('save_model2', views.save_model2, name='save_model2'),  # 保存模型原本的样子
     path('recovery_model', views.recovery_model, name='recovery_model'),  # 模型还原成编辑前的样子
     path('save_integrity_verification', views.save_integrity_verification, name='save_integrity_verification'),  # 补全
     path('save_node_and_link', views.save_node_and_link, name='save_node_and_link'),  # 补全完整性验证的结果

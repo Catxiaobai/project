@@ -143,7 +143,7 @@ def getfailureList():
     k=0
     global  targetbranchlist
     targetbranchlist=[]
-    # print ('zhixingzheli')
+    print ('zhixingzheli')
     # print (SMBlockList)
     for block in SMBlockList:
         if block[0] == 'Transition':

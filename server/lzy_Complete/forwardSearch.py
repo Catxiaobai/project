@@ -1,21 +1,15 @@
 # encoding:UTF-8
 #前向搜索
-import datetime
-import gc
-import random
 import time
 import re
 from typing import List
 #调用自己配置文件，EFSM和obtain_efsm_info文件为实验室早期研究
-from lxd_verify import EFSM
-from lxd_verify import obtain_efsm_info
-from lxd_verify import config
-
-
+import lzy_Complete.config as config
+import lzy_Complete.obtain_efsm_info as obtain_efsm_info
 #迁移信息
+from lzy_Complete.obtain_efsm_info import getSecondOppositeBranch, targetBranch
 class TranWithInfo:
     conflictTran = {}
-
     def __repr__(self):
         return "<Transition %s>" % (self.tran.name)
 
@@ -54,6 +48,7 @@ class TranWithInfo:
         if len(self.Candidatelist) == 0 and self.candidateinitflag == 0:
             self.Candidatelist = [TranWithInfo(item) for item in obtain_efsm_info.obtain_succ(self.tran)]
             self.candidateinitflag = 1
+            # print("aaaa")
         else:
             if self.getName() in TranWithInfo.conflictTran.keys():
                 self.Candidatelist = list(set(self.Candidatelist) - {TranWithInfo.conflictTran[self.getName()]})
@@ -74,7 +69,7 @@ class PartialList:
 
     usePercent = None  # type: List[int]
 
-    def __init__(self, targetBranch, starttime,uselist):
+    def __init__(self, targetBranch, starttime):
         # traninforlist = obtain_efsm_info.obtain_tran_info()
         self.targetBranch = targetBranch
         #处理目标分支
@@ -84,7 +79,7 @@ class PartialList:
             self.targetBranch.cond = self.targetBranch.cond.replace('.', '')
         while '.' in self.targetBranch.action:
             self.targetBranch.action = self.targetBranch.action.replace('.', '')
-        # self.targetBranchSrcList = obtain_efsm_info.getOppositeBranch(self.targetBranch) #返回目标分值起始节点
+        # self.targetBranchSrcList = obtain_efsm_info.getOppositeBranch(self.targetBranch) #返回目标分支起始节点
         self.targetBranchSrcList = obtain_efsm_info.getSecondOppositeBranch(self.targetBranch) #返回目标分值起始节点
         # self.targetBranchSrcList = obtain_efsm_info.tragetState() #返回目标分值起始节点
         self.useList = []
@@ -98,25 +93,32 @@ class PartialList:
         #------------rinsmq
         self.defUseList = [] #保存使用已定义的变量
         #------------rinsmq
-        print (self.targetBranchSrcList)
+        print(self.targetBranchSrcList)
         if self.targetBranchSrcList is not None:
-            print ("候选的目标分支插入点列表：",(self.targetBranchSrcList, time.time() - starttime))
-            self.targetBranch.src = self.targetBranchSrcList[0]
-            self.targetBranchSrcList.pop(0)
-            originTran = TranWithInfo(self.targetBranch)
-            originTran.quality = 'relate'
-            # print 'originTran=',originTran
-            self.useList = list(set(originTran.getvUseList()) - set(originTran.getveventVdef())) #当前迁移使用变量减去当前迁移定义变量，为当前迁移使用变量
-            self.tranlist.append(originTran)
-            self.eventDefList = set(originTran.getveventVdef())
+            print (("候选的目标分支插入点列表：%s %s") % (self.targetBranchSrcList, time.time() - starttime))
+            # STATE = EFSM.State("State S6")
+            # targetBranch.src = STATE
+            if not self.targetBranchSrcList:
+                return
+            else:
+                self.targetBranch.src = self.targetBranchSrcList[0]
+                self.targetBranchSrcList.pop(0)
+                originTran = TranWithInfo(self.targetBranch)
+
+                originTran.quality = 'relate'
+                print('originTran=',originTran)
+                self.useList = list(set(originTran.getvUseList()) - set(originTran.getveventVdef())) #当前迁移使用变量减去当前迁移定义变量，为当前迁移使用变量
+                self.tranlist.append(originTran)
+                self.eventDefList = set(originTran.getveventVdef())
+
         else:
-            print ("目标分支无对立分支")
-        self.useList = list(set(uselist) | set(self.useList))
+            print("目标分支无对立分支")
+
         # 一些后面需要用到的东西
 
     def __repr__(self):
         # return "<PartialList %s %s %s %s>" % (self.currentPartialList, self.nameList,self.vUseList,self.Candidatelist)
-        return "<PartialList %s>"  % ([item.getName() for item in reversed(self.tranlist)])
+        return "<PartialList %s>" % ([item.getName() for item in reversed(self.tranlist)])
     #获取目标分支信息，目标分支起始节点修改为targetBranchSrcList[0]
     def newTargetSrc(self):
         if len(self.targetBranchSrcList) > 0:
@@ -137,7 +139,7 @@ class PartialList:
             self.eventDefList = set(self.eventDefList) - set(self.top().getveventVdef())
             self.tranlist.pop()
         else:
-            print ("部分迁移序列为空！")
+            print("部分迁移序列为空！")
     #返回部分序列顶部迁移
     def top(self):
         return self.tranlist[-1]
@@ -147,13 +149,13 @@ class PartialList:
         useVarlist = []
         defVarlist = []
         for item in self.tranlist:
-            # print 'item=', item
+            print('item=', item)
             defVarlist = item.getvDefList()
             self.defUseList.extend(set(defVarlist) & set(useVarlist))
-            # print 'defVarlist=', defVarlist
+            print('defVarlist=', defVarlist)
             midVar = (set(item.getvUseList()) & set(item.getveventVdef()))  # 排除自己定义自己使用的情况
             useVarlist = list(set(useVarlist) | (set(item.getvUseList()) - midVar))
-            # print 'useVarlist=',useVarlist
+            print ('useVarlist=',useVarlist)
 
         self.defUseList = set(self.defUseList)
         # print 'defUseList= ',self.defUseList
@@ -178,8 +180,8 @@ class PartialList:
     def getCandidatelist(self):
         # firsttime = time.time()
         tmplist = self.tranlist[-1].getCandidatelist()  # 获取栈顶迁移的前序迁移
-        # print self.tranlist
-        # print self.tranlist[-1].sortedflag
+        print(self.tranlist)
+        print ('tmplist=',tmplist)
         # random.shuffle(tmplist)
         firsttime = time.time()
         if self.tranlist[-1].sortedflag == 0:
@@ -194,51 +196,51 @@ class PartialList:
                 # print '栈顶迁移的前序迁移tmplist= ',tmplist
                 atmplist = [item for item in tmplist if len(set(item.getvDefList()) & set(self.useList)) >= 1]  # 筛选相关迁移
                 # rinsmq------------------start
-                # print '具有数据相关前序迁移atmplist= ', atmplist
-                self.flushdefUseList()
-                self.flushUseList()
-                # print 'self.defUseList= ', self.defUseList
-                if self.sortKaiGuan == 1 and len(atmplist) >= 1:
-                    # print 'rinsmq-start'
-                    # print 'priority_use_defition'
-                    tmplist = atmplist
-                    for tran in tmplist:
-                        tran.quality = 'relate'
-                    if config.useNodefition == 1:
-                        tmplist = self.priority_use_no_definition(tmplist)
-                    # print 'rinsmq-end'
-                    # print ''
-                # #rinsmq-------------------end
-                # if (self.sortKaiGuan == 1 or self.sortKaiGuan == 2) and len(atmplist) >= 1:  # 如果存在相关迁移，且原迁移未筛选过
+                print ('具有数据相关前序迁移atmplist= ', atmplist)
+                # self.flushdefUseList()
+                # self.flushUseList()
+                # # print 'self.defUseList= ', self.defUseList
+                # if self.sortKaiGuan == 1 and len(atmplist) >= 1:
+                #     # print 'rinsmq-start'
+                #     # print 'priority_use_defition'
                 #     tmplist = atmplist
                 #     for tran in tmplist:
                 #         tran.quality = 'relate'
-                #     if config.yrzswgbl == 1:
-                #         print " 按引入变量的多少排序"
-                #         tmplist = sorted(tmplist,
-                #                         key=lambda x: len(x.getvcondVuse()) * self.usePercent[0] + len(x.getvactionVuse()) * self.usePercent[1])  # 按引入变量的多少排序，少的优先
-                #     if config.achcdpx == 1:
-                #         print "按重合程度排序"
-                #         tmplist = sorted(tmplist,key=self.achcdpx, reverse=True)  # 按重合程度排序
-                #     if config.achxhpx == 1:
-                #         print "按重合先后排序"
-                #         tmplist = sorted(tmplist, key=self.achxhpx)  # 按重合先后排序
-                #     if config.hhpx == 1 and len(tmplist)>1:
-                #         if self.achcdpx(tmplist[0]) == self.achcdpx(tmplist[1]):
-                #             print "混合排序"
-                #             tmplist = sorted(tmplist, key=self.hhpx, reverse=True)  # 混合排序
-                #     # self.sortnum += 1;
-                # if (self.sortKaiGuan == 1 or self.sortKaiGuan == 3) and len(atmplist) < 1:
-                #
-                #     tmplist = sorted(tmplist, key=lambda x: len(set(x.getvUseList()) - set(x.getveventVdef())))
-                #     for tran in tmplist:
-                #         tran.quality = 'noRelate'
-                #     # self.sortnum += 1;
-                # if config.newtransort == 1:
-                #     tmplist = sorted(tmplist, key=self.isNewTran, reverse=True)
-                # # self.sorttime += time.time() - firsttime
-                # if (self.sortKaiGuan == 3 and len(atmplist) >= 1)or(self.sortKaiGuan == 2 and len(atmplist) < 1):
-                #     tmplist=tmplist
+                #     if config.usedefition == 1:
+                #         tmplist = self.priority_use_no_definition(tmplist)
+                #     # print 'rinsmq-end'
+                #     # print ''
+                # #rinsmq-------------------end
+                if (self.sortKaiGuan == 1 or self.sortKaiGuan == 2) and len(atmplist) >= 1:  # 如果存在相关迁移，且原迁移未筛选过
+                    tmplist = atmplist
+                    for tran in tmplist:
+                        tran.quality = 'relate'
+                    if config.yrzswgbl == 1:
+                        print (" 按引入变量的多少排序")
+                        tmplist = sorted(tmplist,
+                                        key=lambda x: len(x.getvcondVuse()) * self.usePercent[0] + len(x.getvactionVuse()) * self.usePercent[1])  # 按引入变量的多少排序，少的优先
+                    if config.achcdpx == 1:
+                        print ("按重合程度排序")
+                        tmplist = sorted(tmplist,key=self.achcdpx, reverse=True)  # 按重合程度排序
+                    if config.achxhpx == 1:
+                        print("按重合先后排序")
+                        tmplist = sorted(tmplist, key=self.achxhpx)  # 按重合先后排序
+                    if config.hhpx == 1 and len(tmplist)>1:
+                        if self.achcdpx(tmplist[0]) == self.achcdpx(tmplist[1]):
+                            print("混合排序")
+                            tmplist = sorted(tmplist, key=self.hhpx, reverse=True)  # 混合排序
+                    # self.sortnum += 1;
+                if (self.sortKaiGuan == 1 or self.sortKaiGuan == 3) and len(atmplist) < 1:
+
+                    tmplist = sorted(tmplist, key=lambda x: len(set(x.getvUseList()) - set(x.getveventVdef())))
+                    for tran in tmplist:
+                        tran.quality = 'noRelate'
+                    # self.sortnum += 1;
+                if config.newtransort == 1:
+                    tmplist = sorted(tmplist, key=self.isNewTran, reverse=True)
+                # self.sorttime += time.time() - firsttime
+                if (self.sortKaiGuan == 3 and len(atmplist) >= 1)or(self.sortKaiGuan == 2 and len(atmplist) < 1):
+                    tmplist=tmplist
                 self.sorttime += time.time() - firsttime
             else:
                 # random.shuffle(tmplist)
@@ -265,19 +267,30 @@ class PartialList:
         # print 'defUseList=',self.defUseList
         for transition in tmplist:
             defSet = set(transition.getvDefList())
+            # print 'transition=', transition
+            # print 'defSet=', defSet
             useDefinition = list(defSet & set(self.defUseList))
             transition.priority = len(useDefinition)
         atmplist = sorted(tmplist, key = lambda transition: transition.priority, reverse=True)
+        # for item in atmplist:
+            # print 'item=', item
+            # print item.priority
         return atmplist
     # 前序迁移中定义变量与部分序列使用但未被定义的变量交集越大，优先级越高
     def priority_use_no_definition(self,tmplist):
         for transition in tmplist:
+            # eventDefSet = set(transition.getveventVdef())
+            # actionDefSet = set(transition.getvactionVdef())
             # 获取迁移定义变量
             defSet = set(transition.getvDefList())
-            # print 'cond=',transition.tran.cond
+            # print 'transition=',transition
+            # print 'defSet=',defSet
             useNotdefinition = list(defSet & set(self.useList))
             transition.priority = len(useNotdefinition)
         atmplist = sorted(tmplist,key=lambda transition: transition.priority,reverse=True)
+        # for transition in atmplist:
+        #     print 'transition=',transition
+        #     print transition.priority
         return atmplist
     #-------------------rinsmq
 
@@ -331,19 +344,16 @@ class PartialList:
                 return 0
         return 1
     #返回是否搜索到模型开始节点
-    def isComplete(self,targetTgt,noInput):
-        # print ('iscomplete',self.useList)
-        if len(self.tranlist) == 0:  # 部分序列为空
+    def isComplete(self):
+        print("--------isComplete()----------")
+        print (self.tranlist, self.useList)
+        # print "-----------------------------"
+        if len(self.tranlist) == 0:  # 目标分支出发的所有路径全无法达成
             return 0
-        if noInput == 1:
-            if self.tranlist[-1].tran.src == targetTgt[0] and self.tranlist[-1].tran.tgt == targetTgt[1]:  # 成功的情况
-                self.tranlist.pop()
-                return 1
-        else :
-            if self.tranlist[-1].tran.src.name == 'START' and len(self.useList) == 0:  # 成功的情况
-                return 1
-
-        return 2  # 其余情况
+        if self.tranlist[-1].tran.src.name == "START" and len(self.useList) == 0:  # 成功的情况
+            return 1
+        else:
+            return 2  # 其余情况
 
 
 def insert_value_dict(value_dict, action_def, selected_tran):
@@ -365,8 +375,8 @@ def get_infeasible_order_number(selected_tran, tran_list, partialListEventDefLis
     selectedTranAction = selected_tran.tran.action
     eventDefList = set(eventDefList) | set(partialListEventDefList)
 
-    # print 'selected_tran=',selected_tran
-    # print 'actionDefList=',actionDefList
+    print('selected_tran=',selected_tran)
+    print('actionDefList=',actionDefList)
 
     # 分析action
     tmpDic = {}
@@ -429,7 +439,6 @@ def get_infeasible_order_number(selected_tran, tran_list, partialListEventDefLis
                     cond = item.tran.cond[:]
                     # print 'cond=',cond
                     for condUse in item.getvcondVuse():
-
                         if condUse in eventDefList:
                             stra = re.search("!{0,1}\([^(]*" + condUse + '[^)]*\)', cond)
                             if stra:
@@ -509,7 +518,7 @@ def get_infeasible_order_number(selected_tran, tran_list, partialListEventDefLis
     return -1
 
 #搜索
-def search(uselist):
+def search():
     # 初始化：name, src=None, tgt=None, event=None, cond=None, action=None
     operator = ['+', '-', '*', '/']  # 4种情况
     loopLimit = config.loopLimit
@@ -523,11 +532,7 @@ def search(uselist):
         numOfPSG = numOfPSG - 1
         starttime = time.time()
 
-        #获取目标迁移前一条的tgt节点
-        LastState = obtain_efsm_info.getLastState()
-        noInput = LastState[-1]
-        print ('LastState=',LastState)
-        partialList = PartialList(obtain_efsm_info.targetBranch(), starttime,uselist)
+        partialList = PartialList(targetBranch(), starttime)
 
         partialList.sortKaiGuan = config.sort  # 排序开关 1是排序； 0是全随机，除了候选对立分支； 2是连接迁移随机
         # partialList = PartialList(obtain_efsm_info.getTran(70))
@@ -535,23 +540,21 @@ def search(uselist):
         # print partialList
         if partialList.targetBranchSrcList is not None:
 
-            while partialList.isComplete(LastState,noInput) == 2 or ( partialList.isComplete(LastState,noInput) == 0 and len(partialList.targetBranchSrcList) > 0):
-
-                if partialList.isComplete(LastState,noInput) == 0 and len(partialList.targetBranchSrcList) > 0:
-                    # print '执行newTargetSrc'
+            while partialList.isComplete() == 2 or ( partialList.isComplete() == 0 and len(partialList.targetBranchSrcList) > 0):
+                if partialList.isComplete() == 0 and len(partialList.targetBranchSrcList) > 0:
                     partialList.newTargetSrc()
-                # print "一次执行前的部分序列%s %s" % (partialList, time.time() - starttime)
+                print("一次执行前的部分序列%s%s" % (partialList, time.time() - starttime))
                 # print '获取前序迁移候选集合：'
                 candidateList = partialList.getCandidatelist
-                # print "前序候选迁移集合:%s" % (candidateList)
-
+                print ("前序候选迁移集合:%s" % (candidateList))
+                print (len(candidateList))
                 if len(candidateList) == 0:
                     if config.back == 1:
-                        # print 'pop之前：'
-                        # print partialList
+                        print('pop之前：')
+                        print(partialList)
                         partialList.pop()
-                        # print 'pop之后：'
-                        # print partialList
+                        print('pop之后：')
+                        print (partialList)
                         # continue
                     # print time.time()-starttime
                     # 下面是回溯至上一数据相关迁移的代码
@@ -573,8 +576,9 @@ def search(uselist):
                 # rinsmq add---------------------------
                 pb = 0
                 for i in range(len(partialList.tranlist)):
-                    # 候选迁移在部分序列中出现，且只有一个候选迁移
-                    if partialList.tranlist[i].tran == selectedTran.tran and len(partialList.tranlist[-1].Candidatelist)==1:
+                    # print('执行这个for循环')
+                    if partialList.tranlist[i].tran == selectedTran.tran:
+                        print('有相同的')
                         pb = 1
                         break
                 if pb == 1:
@@ -608,7 +612,7 @@ def search(uselist):
                     #   pos = cond.find(actiondef)
                     # if pos != -1:
                 if not isFeasibility:
-                    print ("矛盾变量冲突")
+                    print("矛盾变量冲突")
                     continue
                 # 判断是否选择变量冲突
                 actionDefList = selectedTran.getvactionVdef()
@@ -625,7 +629,7 @@ def search(uselist):
                     judge = re.search(actionDef + '[^;]*(?=;{0,1})', selectedTranAction)  # 这里实际上是假设了都是形如a=xxx的形式
                     if judge is not None:  # 分四种情况讨论
                         judge = judge.group()
-                        # print 'judge=',judge
+                        print('judge=',judge)
                         if '=' in judge:
                             pos = judge.find('=')
                             strDef = judge[pos + 1:].strip()
@@ -655,15 +659,15 @@ def search(uselist):
                                         break
                                 if flag == 'c':  # v = c
                                     exec (judge, tmpDic)
-                # print ('isFeasibility=',isFeasibility)
+                print ('isFeasibility=',isFeasibility)
 
                 # print (len(tmpDic))
                 # for k, v in tmpDic.items():
                 #     print k, v
                 if len(tmpDic) > 0:
-                    # print "开始二阶段可行性判断"
+                    print ("开始二阶段可行性判断")
                     num = get_infeasible_order_number(selectedTran, partialList.tranlist, partialList.eventDefList)
-                    # print num
+                    print(num)
                     flag = 0
                     if num >= 0:
                         tranList = partialList.tranlist
@@ -751,9 +755,9 @@ def search(uselist):
                         else:
                             # print "已纠正"
                             pass
-                # print '执行到判定完可行性'
+                print('执行到判定完可行性')
                 if not isFeasibility:
-                    # print "可行性判断无法通过%s" % (time.time() - starttime)
+                    print("可行性判断无法通过%s" % (time.time() - starttime))
                     if time.time() - starttime > 1:
                        break
                     continue
@@ -763,7 +767,7 @@ def search(uselist):
                 for i in range(len(partialList.tranlist)):
                     if partialList.tranlist[i].tran == selectedTran.tran:
                         firstFind.append(i)
-                # print 'firstFind=',firstFind
+                print('firstFind=',firstFind)
                 if len(firstFind) == 0:
                     flag = 1
                 for item in firstFind:
@@ -793,10 +797,7 @@ def search(uselist):
                 # print '\n'
                 if time.time() - starttime>1:
                     break
-
-
-
-        if partialList.isComplete(LastState,noInput) == 0:
+        if partialList.isComplete() == 0:
             print ("无任何可行序列")
         else:
             if time.time() - starttime < 1:
@@ -811,7 +812,7 @@ def search(uselist):
     # print '\n'
     res3 = 0
     for item in psDict.keys():
-        # print item
+        print (item)
         # print len(item.tranlist)
         res3 += len(item.tranlist)
         # print psDict[item]
@@ -833,7 +834,7 @@ def search(uselist):
     global selecenumber
     global successnumber
     sequencenumber=len(psDict)
-    print ("生成序列条数为",sequencenumber)
+    print ("生成序列条数为%s" % sequencenumber)
     if sequencenumber==0:
         generationtime=0
         generationsorttime=0
@@ -843,18 +844,18 @@ def search(uselist):
     else:
         successnumber = 1
         generationtime = res / len(psDict)
-        # print "序列生成平均时间为%s" % (generationtime)
+        print ("序列生成平均时间为%s" % (generationtime))
 
         generationsorttime = res1 / len(psDict1)
         # print "优先级排序时间: %s"%(partialList.sorttime)
-        # print "优先级排序平均时间: %s" % (generationsorttime)
+        print ("优先级排序平均时间: %s" % (generationsorttime))
 
         sequencelength=float(res3)/float(len(psDict1))
-        # print "平均序列长度:"
+        print("平均序列长度:")
         print(format(sequencelength,'.2f'))
 
         selecenumber=float(res2) / float(len(psDict2))
-        # print "平均选择次数:"
+        print("平均选择次数1:")
         print(format(selecenumber, '.2f'))
 
         #for item in psDict.keys():
@@ -863,11 +864,8 @@ def search(uselist):
          #   break
 
 
-    return [[item.getName() for item in reversed(partialList.tranlist)],partialList.useList]
+    return [item.getName() for item in reversed(partialList.tranlist)]
     #return psDict3.values()
-
-
-
 
 if __name__ == '__main__':
     search()
