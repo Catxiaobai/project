@@ -1,0 +1,831 @@
+Trace:
+source:S1:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S2:输入密码页
+source:S2:输入密码页
+event:Cancel()
+condition:y=48
+action:Write("Canceling"),return_card(),x=0,y=0
+target:S3:初始页面
+Trace:
+source:S4:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S5:输入密码页
+source:S5:输入密码页
+event:Cancel()
+condition:y=49
+action:Write("Canceling"),return_card(),x=0,y=0
+target:S6:初始页面
+Trace:
+source:S7:初始页面
+event:Card(pin,B)
+condition:x=3
+action:Write("Response timeout"),return_card(),x=0,y=0
+target:S8:初始页面
+Trace:
+source:S9:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S10:输入密码页
+source:S10:输入密码页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S11:初始页面
+Trace:
+source:S12:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S13:输入密码页
+source:S13:输入密码页
+event:Enter_pin(p)
+condition:y=48
+action:Write("Verify password timeout"),return_card(),x=0,y=0
+target:S14:初始页面
+Trace:
+source:S15:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S16:输入密码页
+source:S16:输入密码页
+event:Enter_pin(p)
+condition:y=45
+action:Write("Verify password timeout"),return_card(),x=0,y=0
+target:S17:初始页面
+Trace:
+source:S18:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S19:输入密码页
+source:S19:输入密码页
+event:Enter_pin(p)
+condition:y=38
+action:Write("Verify password timeout"),return_card(),x=0,y=0
+target:S20:初始页面
+Trace:
+source:S21:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S22:输入密码页
+source:S22:输入密码页
+event:Enter_pin(p)
+condition:y=49
+action:Write("Verify password timeout"),return_card(),x=0,y=0
+target:S23:初始页面
+9.
+name:
+输入密码超时
+describe:
+用户插卡，ATM机在2秒时从初始页面变为输入密码页；用户在50秒时还没完成操作，ATM机退出卡片返回初始页面。
+content:
+source:S24:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S25:输入密码页
+source:S25:输入密码页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S26:初始页面
+Trace:
+source:S27:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S28:输入密码页
+source:S28:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=48
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S29:输入密码页
+source:S29:输入密码页
+event:Cancel()
+condition:y=49
+action:Write("Canceling"),return_card(),x=0,y=0
+target:S30:初始页面
+Trace:
+source:S31:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S32:输入密码页
+source:S32:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=49
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S33:输入密码页
+source:S33:输入密码页
+event:Cancel()
+condition:y=37
+action:Write("Canceling"),return_card(),x=0,y=0
+target:S34:初始页面
+Trace:
+source:S35:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S36:输入密码页
+source:S36:输入密码页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S37:初始页面
+Trace:
+source:S38:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S39:输入密码页
+source:S39:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=36
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S40:输入密码页
+source:S40:输入密码页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S41:初始页面
+Trace:
+source:S42:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S43:输入密码页
+source:S43:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=20
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S44:输入密码页
+source:S44:输入密码页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S45:初始页面
+Trace:
+source:S46:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S47:输入密码页
+source:S47:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=27
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S48:输入密码页
+source:S48:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=1,y=31
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S49:输入密码页
+source:S49:输入密码页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S50:初始页面
+Trace:
+source:S51:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S52:输入密码页
+source:S52:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=22
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S53:输入密码页
+source:S53:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=1,y=24
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S54:输入密码页
+source:S54:输入密码页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S55:初始页面
+Trace:
+source:S56:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S57:输入密码页
+source:S57:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=17
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S58:输入密码页
+source:S58:输入密码页
+event:Cancel()
+condition:y=10
+action:Write("Canceling"),return_card(),x=0,y=0
+target:S59:初始页面
+Trace:
+source:S60:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S61:输入密码页
+source:S61:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=19
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S62:输入密码页
+source:S62:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=1,y=36
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S63:输入密码页
+source:S63:输入密码页
+event:Cancel()
+condition:y=11
+action:Write("Canceling"),return_card(),x=0,y=0
+target:S64:初始页面
+Trace:
+source:S65:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S66:输入密码页
+source:S66:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=25
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S67:输入密码页
+source:S67:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=1,y=21
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S68:输入密码页
+source:S68:输入密码页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S69:初始页面
+Trace:
+source:S70:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S71:输入密码页
+source:S71:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=0,y=9
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S72:用户选择页
+source:S72:用户选择页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S73:初始页面
+Trace:
+source:S74:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S75:输入密码页
+source:S75:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=33
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S76:输入密码页
+source:S76:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=1,y=34
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S77:用户选择页
+source:S77:用户选择页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S78:初始页面
+Trace:
+source:S79:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S80:输入密码页
+source:S80:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=26
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S81:输入密码页
+source:S81:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=1,y=10
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S82:输入密码页
+source:S82:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=2,y=16
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S83:用户选择页
+source:S83:用户选择页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S84:初始页面
+Trace:
+source:S85:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S86:输入密码页
+source:S86:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=0,y=8
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S87:用户选择页
+source:S87:用户选择页
+event:Cancel()
+condition:y=6
+action:Write("Canceling"),return_card(),x=0,y=0
+target:S88:初始页面
+Trace:
+source:S89:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S90:输入密码页
+source:S90:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=15
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S91:输入密码页
+source:S91:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=1,y=34
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S92:用户选择页
+source:S92:用户选择页
+event:Cancel()
+condition:y=5
+action:Write("Canceling"),return_card(),x=0,y=0
+target:S93:初始页面
+Trace:
+source:S94:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S95:输入密码页
+source:S95:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=26
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S96:输入密码页
+source:S96:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=1,y=10
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S97:输入密码页
+source:S97:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=2,y=16
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S98:用户选择页
+source:S98:用户选择页
+event:Cancel()
+condition:y=8
+action:Write("Canceling"),return_card(),x=0,y=0
+target:S99:初始页面
+Trace:
+source:S100:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S101:输入密码页
+source:S101:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=0,y=45
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S102:用户选择页
+source:S102:用户选择页
+event:Withdrawal()
+condition:y=30
+action:Write("Enter amount"),x=0,y=0
+target:S103:输入金额页
+source:S103:输入金额页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S104:初始页面
+Trace:
+source:S105:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S106:输入密码页
+source:S106:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=0,y=40
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S107:用户选择页
+source:S107:用户选择页
+event:Withdrawal()
+condition:y=19
+action:Write("Enter amount"),x=0,y=0
+target:S108:输入金额页
+source:S108:输入金额页
+event:Enter_amount(w)
+condition:w<=B,y=44
+action:Give_money(),B=B-w,Write("your balance",B),x=0,y=0
+target:S109:显示余额页
+source:S109:显示余额页
+event:null
+condition:x=3
+action:Write("Response timeout"),return_card(),x=0,y=0
+target:S110:初始页面
+Trace:
+source:S111:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S112:输入密码页
+source:S112:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=0,y=36
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S113:用户选择页
+source:S113:用户选择页
+event:Withdrawal()
+condition:y=9
+action:Write("Enter amount"),x=0,y=0
+target:S114:输入金额页
+source:S114:输入金额页
+event:Enter_amount(w)
+condition:w<=B,y=20
+action:Give_money(),B=B-w,Write("your balance",B),x=0,y=0
+target:S115:显示余额页
+source:S115:显示余额页
+event:null
+condition:x=2
+action:Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0
+target:S116:用户选择页
+source:S116:用户选择页
+event:Cancel()
+condition:y=10
+action:Write("Canceling"),return_card(),x=0,y=0
+target:S117:初始页面
+Trace:
+source:S118:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S119:输入密码页
+source:S119:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=0,y=26
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S120:用户选择页
+source:S120:用户选择页
+event:Withdrawal()
+condition:y=30
+action:Write("Enter amount"),x=0,y=0
+target:S121:输入金额页
+source:S121:输入金额页
+event:Enter_amount(w)
+condition:w<=B,y=38
+action:Give_money(),B=B-w,Write("your balance",B),x=0,y=0
+target:S122:显示余额页
+source:S122:显示余额页
+event:null
+condition:x=2
+action:Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0
+target:S123:用户选择页
+source:S123:用户选择页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S124:初始页面
+Trace:
+source:S125:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S126:输入密码页
+source:S126:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=0,y=28
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S127:用户选择页
+source:S127:用户选择页
+event:Withdrawal()
+condition:y=31
+action:Write("Enter amount"),x=0,y=0
+target:S128:输入金额页
+source:S128:输入金额页
+event:Enter_amount(w)
+condition:w>B,y=20
+action:Write("Out balance"),x=0,y=0
+target:S129:余额不足页
+source:S129:余额不足页
+event:null
+condition:x=2
+action:Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0
+target:S130:用户选择页
+source:S130:用户选择页
+event:Cancel()
+condition:y=8
+action:Write("Canceling"),return_card(),x=0,y=0
+target:S131:初始页面
+Trace:
+source:S132:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S133:输入密码页
+source:S133:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=0,y=33
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S134:用户选择页
+source:S134:用户选择页
+event:Withdrawal()
+condition:y=27
+action:Write("Enter amount"),x=0,y=0
+target:S135:输入金额页
+source:S135:输入金额页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S136:初始页面
+Trace:
+source:S137:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S138:输入密码页
+source:S138:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=0,y=21
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S139:用户选择页
+source:S139:用户选择页
+event:Withdrawal()
+condition:y=10
+action:Write("Enter amount"),x=0,y=0
+target:S140:输入金额页
+source:S140:输入金额页
+event:Enter_amount(w)
+condition:w>B,y=25
+action:Write("Out balance"),x=0,y=0
+target:S141:余额不足页
+source:S141:余额不足页
+event:null
+condition:x=3
+action:Write("Response timeout"),return_card(),x=0,y=0
+target:S142:初始页面
+Trace:
+source:S143:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S144:输入密码页
+source:S144:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=0,y=27
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S145:用户选择页
+source:S145:用户选择页
+event:Withdrawal()
+condition:y=14
+action:Write("Enter amount"),x=0,y=0
+target:S146:输入金额页
+source:S146:输入金额页
+event:Enter_amount(w)
+condition:w>B,y=21
+action:Write("Out balance"),x=0,y=0
+target:S147:余额不足页
+source:S147:余额不足页
+event:null
+condition:x=1
+action:Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0
+target:S148:用户选择页
+source:S148:用户选择页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S149:初始页面
+Trace:
+source:S150:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S151:输入密码页
+source:S151:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=0,y=39
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S152:用户选择页
+source:S152:用户选择页
+event:GetBalance()
+condition:y=40
+action:Write("Blance=",B),x=0,y=0
+target:S153:显示余额页
+source:S153:显示余额页
+event:null
+condition:x=2
+action:Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0
+target:S154:用户选择页
+source:S154:用户选择页
+event:Cancel()
+condition:y=23
+action:Write("Canceling"),return_card(),x=0,y=0
+target:S155:初始页面
+Trace:
+source:S156:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S157:输入密码页
+source:S157:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=0,y=33
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S158:用户选择页
+source:S158:用户选择页
+event:GetBalance()
+condition:y=49
+action:Write("Blance=",B),x=0,y=0
+target:S159:显示余额页
+source:S159:显示余额页
+event:null
+condition:x=3
+action:Write("Response timeout"),return_card(),x=0,y=0
+target:S160:初始页面
+Trace:
+source:S161:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S162:输入密码页
+source:S162:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=0,y=22
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S163:用户选择页
+source:S163:用户选择页
+event:GetBalance()
+condition:y=38
+action:Write("Blance=",B),x=0,y=0
+target:S164:显示余额页
+source:S164:显示余额页
+event:null
+condition:x=1
+action:Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0
+target:S165:用户选择页
+source:S165:用户选择页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S166:初始页面
+Trace:
+source:S167:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S168:输入密码页
+source:S168:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=32
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S169:输入密码页
+source:S169:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=1,y=16
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S170:用户选择页
+source:S170:用户选择页
+event:Cancel()
+condition:y=11
+action:Write("Canceling"),return_card(),x=0,y=0
+target:S171:初始页面
+Trace:
+source:S172:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S173:输入密码页
+source:S173:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=25
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S174:输入密码页
+source:S174:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=1,y=27
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S175:输入密码页
+source:S175:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=2,y=32
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S176:用户选择页
+source:S176:用户选择页
+event:Cancel()
+condition:y=10
+action:Write("Canceling"),return_card(),x=0,y=0
+target:S177:初始页面
+Trace:
+source:S178:初始页面
+event:Card(pin,B)
+condition:x=2
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S179:输入密码页
+source:S179:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=23
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S180:输入密码页
+source:S180:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=1,y=13
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S181:用户选择页
+source:S181:用户选择页
+event:GetBalance()
+condition:y=43
+action:Write("Blance=",B),x=0,y=0
+target:S182:显示余额页
+source:S182:显示余额页
+event:null
+condition:x=1
+action:Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0
+target:S183:用户选择页
+source:S183:用户选择页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S184:初始页面
+Trace:
+source:S185:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S186:输入密码页
+source:S186:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=29
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S187:输入密码页
+source:S187:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=1,y=15
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S188:输入密码页
+source:S188:输入密码页
+event:Enter_pin(p)
+condition:p=pin,N=2,y=39
+action:Write("Select Withdrawal/GetBalance/Cancel"),N=N+1,x=0,y=0
+target:S189:用户选择页
+source:S189:用户选择页
+event:GetBalance()
+condition:y=45
+action:Write("Blance=",B),x=0,y=0
+target:S190:显示余额页
+source:S190:显示余额页
+event:null
+condition:x=1
+action:Write("Select Withdrawal/GetBalance/Cancel"),x=0,y=0
+target:S191:用户选择页
+source:S191:用户选择页
+event:null
+condition:y=50
+action:Write("The user did nothing or the operation timed out"),return_card(),x=0,y=0
+target:S192:初始页面
+Trace:
+source:S193:初始页面
+event:Card(pin,B)
+condition:x=1
+action:Write("Enter Pin"),N=0,x=0,y=0
+target:S194:输入密码页
+source:S194:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=0,y=21
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S195:输入密码页
+source:S195:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=1,y=31
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S196:输入密码页
+source:S196:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=2,y=15
+action:Write("Wrong Pin,ReEnter"),N=N+1,x=0,y=0
+target:S197:输入密码页
+source:S197:输入密码页
+event:Enter_pin(p)
+condition:p!=pin,N=3,y=18
+action:Write("Password error number exceeded"),return_card(),x=0,y=0
+target:S198:初始页面

@@ -43,13 +43,8 @@
       <el-button type="primary" @click="reduction">模型还原</el-button>
       <div v-show="test2" style="background-color: whitesmoke; border: solid 1px black; width: 100%; height: 520px;margin-top: 20px"></div>
       <div id="myDiagramDiv" v-show="test1" style="background-color: whitesmoke; border: solid 1px black; width: 100%; height: 520px;margin-top: 20px"></div>
-      <textarea id="myTransaction" style="width:100%;height:200px" v-show="false"></textarea>
-      <textarea id="mytest" v-model="msg" v-show="false" />
-      <!--      <input id="mytest" value="test" @change="postData('test')" />-->
-      <!--      <div id="example">-->
-      <!--&lt;!&ndash;        <p>Original message: "{{ msg }}"</p>&ndash;&gt;-->
-      <!--        &lt;!&ndash;        <p>Computed reversed message: "{{ reversedMessage }}"</p>&ndash;&gt;-->
-      <!--      </div>-->
+      <!--      <textarea id="myTransaction" style="width:100%;height:200px" v-show="false"></textarea>-->
+      <!--      <textarea id="mytest" v-model="msg" v-show="false" />-->
     </el-card>
   </div>
 </template>
@@ -136,7 +131,7 @@ export default {
     },
     getData() {
       this.$http
-        .get(this.Global_Api + '/api/deliver_model')
+        .post(this.Global_Api + '/api/deliver_model_data', { type: 'sub', item: this.itemInfo })
         .then(response => {
           console.log(response.data)
           this.linkDataArray = response.data.data_edge
@@ -447,7 +442,7 @@ export default {
     },
     onChange(value) {
       console.log(value)
-      if (value != '状态机') {
+      if (value != '时序要求') {
         this.test2 = true
         this.test1 = false
       } else {
@@ -459,8 +454,9 @@ export default {
       this.itemInfo = this.$store.state.item
     },
     modeling() {
+      console.log('test')
       this.$http
-        .post(this.Global_Api + '/api/scenes_modeling', this.itemInfo)
+        .post(this.Global_Api + '/api/scenes_modeling', { item: this.itemInfo, type: 'sub' })
         .then(response => {
           console.log(response)
           this.reload()

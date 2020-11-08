@@ -13,118 +13,87 @@ State:
 State:
 	label=S4
 	name=显示余额页
-State:
-	label=S5
-	name=余额不足页
 Transition:
 	name=t1
-	src=S4
-	tgt=S2
-	event=null
-	condition=()
-	action=Write("Select Withdrawal/GetBalance/Cancel")
+	src=S0
+	tgt=S1
+	event=Card(pin,B)
+	condition=
+	action=Write("Enter Pin");attempts=0
 Transition:
 	name=t2
 	src=S1
 	tgt=S0
-	event=Cancel()
-	condition=()
-	action=Write("Canceling");return_card()
-Transition:
-	name=t3
-	src=S5
-	tgt=S2
-	event=null
-	condition=()
-	action=Write("Select Withdrawal/GetBalance/Cancel")
-Transition:
-	name=t4
-	src=S1
-	tgt=S1
-	event=Enter_pin(p)
-	condition=(p==pin) & (attempts==1)
-	action=Write("Select Withdrawal/GetBalance/Cancel");attempts=attempts+1
-Transition:
-	name=t5
-	src=S4
-	tgt=S0
-	event=Cancel()
-	condition=()
-	action=Write("Canceling");return_card()
-Transition:
-	name=t6
-	src=S0
-	tgt=S1
-	event=Card(pin,B)
-	condition=()
-	action=Write("Enter Pin");attempts=0
-Transition:
-	name=t7
-	src=S1
-	tgt=S0
 	event=Enter_pin(p)
 	condition=(p!=pin) & (attempts==2)
-	action=Write("Wrong Pin;Ejecting Card");attempts=attempts+1
+	action=Write("Password error number exceeded");return_card();attempts=attempts+1
 Transition:
-	name=t8
+	name=t3
+	src=S2
+	tgt=S3
+	event=Withdrawal()
+	condition=
+	action=Write("Enter amount")
+Transition:
+	name=t4
+	src=S4
+	tgt=S2
+	event=Return()
+	condition=
+	action=Write("Select Withdrawal/GetBalance/Cancel")
+Transition:
+	name=t5
 	src=S3
 	tgt=S4
 	event=Enter_amount(w)
 	condition=(w<=B)
-	action=Give_money;B=B-w;Write("your balance";B)
+	action=give_money();B=B-w;Write("your balance";B)
+Transition:
+	name=t6
+	src=S2
+	tgt=S4
+	event=GetBalance()
+	condition=
+	action=Write("your balance";B)
+Transition:
+	name=t7
+	src=S1
+	tgt=S0
+	event=Cancel()
+	condition=
+	action=Write("Canceling");return_card()
+Transition:
+	name=t8
+	src=S2
+	tgt=S0
+	event=Cancel()
+	condition=
+	action=Write("Canceling");return_card()
 Transition:
 	name=t9
 	src=S4
-	tgt=S2
-	event=Return()
-	condition=()
-	action=Write("Select Withdrawal/GetBalance/Cancel")
+	tgt=S0
+	event=Cancel()
+	condition=
+	action=Write("Canceling");return_card()
 Transition:
 	name=t10
 	src=S1
 	tgt=S0
 	event=Enter_pin(p)
-	condition=()
+	condition=
 	action=Write("Verify password timeout");return_card()
 Transition:
 	name=t11
-	src=S2
-	tgt=S3
-	event=Withdrawal()
-	condition=()
-	action=Write("Enter amount")
-Transition:
-	name=t12
-	src=S2
-	tgt=S0
-	event=Cancel()
-	condition=()
-	action=Write("Canceling");return_card()
-Transition:
-	name=t13
-	src=S3
-	tgt=S5
-	event=Enter_amount(w)
-	condition=(w>B)
-	action=Write("Out balance")
-Transition:
-	name=t14
-	src=S2
-	tgt=S4
-	event=GetBalance()
-	condition=()
-	action=Write("your balance";B)
-Transition:
-	name=t15
-	src=S1
-	tgt=S1
-	event=Enter_pin(p)
-	condition=(p!=pin) & (attempts>=0) & (attempts<=1)
-	action=Write("Wrong Pin;ReEnter");attempts=attempts+1
-Transition:
-	name=t16
 	src=S1
 	tgt=S2
 	event=Enter_pin(p)
 	condition=(p==pin) & (attempts>=0) & (attempts<=2)
 	action=Write("Select Withdrawal/GetBalance/Cancel");attempts=attempts+1
+Transition:
+	name=t12
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	condition=(p!=pin) & (attempts>=0) & (attempts<=1)
+	action=Write("Wrong Pin ReEnter");attempts=attempts+1

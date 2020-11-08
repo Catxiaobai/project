@@ -39,7 +39,8 @@
       <el-select v-model="value" placeholder="请选择" @change="onChange">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
       </el-select>
-      <el-button type="primary" style="margin-left: 60%" @click="reduction">模型还原</el-button>
+      <el-button type="primary" style="margin-left: 50%" @click="modeling"> 模型构建</el-button>
+      <el-button type="primary" @click="reduction">模型还原</el-button>
       <div v-show="test2" style="background-color: whitesmoke; border: solid 1px black; width: 100%; height: 520px;margin-top: 20px"></div>
       <div id="myDiagramDiv" v-show="test1" style="background-color: whitesmoke; border: solid 1px black; width: 100%; height: 520px;margin-top: 20px"></div>
       <textarea id="myTransaction" style="width:100%;height:200px" v-show="false"></textarea>
@@ -92,7 +93,8 @@ export default {
       ],
       value: '状态迁移',
       test1: true,
-      test2: false
+      test2: false,
+      itemInfo: ''
     }
   },
   mounted() {
@@ -126,7 +128,7 @@ export default {
     },
     getData() {
       this.$http
-        .get(this.Global_Api + '/api/deliver_model')
+        .post(this.Global_Api + '/api/deliver_model_data', { type: 'complex' })
         .then(response => {
           console.log(response.data)
           this.linkDataArray = response.data.data_edge
@@ -437,18 +439,34 @@ export default {
     },
     onChange(value) {
       console.log(value)
-      if (value != '状态机') {
+      if (value != '状态迁移') {
         this.test2 = true
         this.test1 = false
       } else {
         this.test2 = false
         this.test1 = true
       }
+    },
+    getItemInfo() {
+      this.itemInfo = this.$store.state.item
+    },
+    modeling() {
+      console.log('test')
+      this.$http
+        .post(this.Global_Api + '/api/scenes_modeling', { item: this.itemInfo, type: 'complex' })
+        .then(response => {
+          console.log(response)
+          this.reload()
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     }
   },
   created() {
+    this.getItemInfo()
     this.getData()
-    // this.saveModel()
+    this.saveModel()
   }
 }
 </script>

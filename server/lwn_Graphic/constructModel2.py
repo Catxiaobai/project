@@ -10,11 +10,11 @@ import numpy as np
 # filepath = r''
 filepath = './file/'
 # filename1 = "Trace.txt"
-filename2 = r'result'
+filename2 = r'result2'
 def getTransState1():
     # with open(r"Trace.txt", 'r', encoding='utf-8') as file:       #读取生成的模型文件，对模型进行完整性验证和补全
     #     lines = file.readlines()  # 读取所有行并返回列表
-    lines = open(filepath+'Trace.txt', 'r', encoding="utf-8").readlines()
+    lines = open(filepath+'Trace2.txt', 'r', encoding="utf-8").readlines()
     states_label = []
     source, event, condition, action, target = "", "", "", "", ""
     count = 0
@@ -111,7 +111,7 @@ def constructModel1():
     if flagValue:
         s = "S" + str(i)
         State3[flagValue]=s
-    with open(filepath+'S1.txt', 'w') as f:
+    with open(filepath+'S12.txt', 'w') as f:
         json_str = json.dumps(State3, ensure_ascii=False, indent=0)
         f.write(json_str)
         f.write('\n')
@@ -119,7 +119,7 @@ def constructModel1():
     State4 = {}
     for key, value in State3.items():
         State4[value] = key
-    with open(filepath+'S2.txt', 'w') as f:
+    with open(filepath+'S22.txt', 'w') as f:
         json_str = json.dumps(State4, ensure_ascii=False, indent=0)
         f.write(json_str)
         f.write('\n')
@@ -292,7 +292,7 @@ def constructModel1():
         # print(mergeSame)
         T1.append(mergeSame)
         k += 1
-    output = open(filepath+'T6.txt', 'w+')
+    output = open(filepath+'T62.txt', 'w+')
     for i in range(len(T1)):
         for j in range(len(T1[i])-1):
             output.write(str(T1[i][j]))

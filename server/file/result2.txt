@@ -1,68 +1,74 @@
 State:
-	name=START
+	label=S0
+	name=初始页面
 State:
-	name=S1
+	label=S1
+	name=输入密码页
 State:
-	name=S2
+	label=S2
+	name=用户选择页
 State:
-	name=S3
+	label=S3
+	name=输入金额页
 State:
-	name=S4
+	label=S4
+	name=显示余额页
 State:
-	name=S5
+	label=S5
+	name=余额不足页
 Transition:
 	name=t1
-	src=START
-	tgt=START
+	src=S0
+	tgt=S0
 	event=Card(pin,B)
 	condition=(x==3)
 	action=Write("Response timeout");return_card();x=0;y=0
 Transition:
 	name=t2
 	src=S2
-	tgt=START
+	tgt=S0
 	event=null
 	condition=(y==50)
 	action=Write("The user did nothing or the operation timed out");return_card();x=0;y=0
 Transition:
 	name=t3
 	src=S4
-	tgt=START
+	tgt=S0
 	event=null
 	condition=(x==3)
 	action=Write("Response timeout");return_card();x=0;y=0
 Transition:
 	name=t4
 	src=S5
-	tgt=START
+	tgt=S0
 	event=null
 	condition=(x==3)
 	action=Write("Response timeout");return_card();x=0;y=0
 Transition:
 	name=t5
 	src=S1
-	tgt=START
+	tgt=S0
 	event=null
 	condition=(y==50)
 	action=Write("The user did nothing or the operation timed out");return_card();x=0;y=0
 Transition:
 	name=t6
 	src=S3
-	tgt=START
+	tgt=S0
 	event=null
 	condition=(y==50)
 	action=Write("The user did nothing or the operation timed out");return_card();x=0;y=0
 Transition:
 	name=t7
 	src=S1
-	tgt=START
+	tgt=S0
 	event=Enter_pin(p)
 	condition=(p!=pin) & (N==3) & (y==18)
 	action=Write("Password error number exceeded");return_card();x=0;y=0
 Transition:
 	name=t8
 	src=S1
-	tgt=START
+	tgt=S0
 	event=Cancel()
 	condition=(y>=10) & (y<=49)
 	action=Write("Canceling");return_card();x=0;y=0
@@ -104,7 +110,7 @@ Transition:
 Transition:
 	name=t14
 	src=S2
-	tgt=START
+	tgt=S0
 	event=Cancel()
 	condition=(y>=5) & (y<=23)
 	action=Write("Canceling");return_card();x=0;y=0
@@ -118,7 +124,7 @@ Transition:
 Transition:
 	name=t16
 	src=S1
-	tgt=START
+	tgt=S0
 	event=Enter_pin(p)
 	condition=(y>=38) & (y<=49)
 	action=Write("Verify password timeout");return_card();x=0;y=0
@@ -131,7 +137,7 @@ Transition:
 	action=Give_money();B=B-w;Write("your balance";B);x=0;y=0
 Transition:
 	name=t18
-	src=START
+	src=S0
 	tgt=S1
 	event=Card(pin,B)
 	condition=(x>=1) & (x<=2)

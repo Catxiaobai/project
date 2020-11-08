@@ -72,7 +72,7 @@
           </el-form-item>
           <el-form-item label="项目保存路径" label-width="120px" prop="path">
             <el-radio-group v-model="radio" @change="handleSetPath">
-              <el-radio label="false">使用默认路径（E:/Project/Item）</el-radio>
+              <el-radio label="false">使用默认路径（Project/Item）</el-radio>
               <el-radio label="true">自定义路径</el-radio>
             </el-radio-group>
             <el-input v-model="addForm.path" clearable placeholder="请输入项目保存路径" v-show="visible.pathInput"></el-input>
@@ -106,7 +106,7 @@
           </el-form-item>
           <el-form-item label="项目保存路径" label-width="120px" prop="path">
             <el-radio-group v-model="radio" @change="handleSetPath">
-              <el-radio label="false">使用默认路径（E:/Project/Item）</el-radio>
+              <el-radio label="false">使用默认路径（Project/Item）</el-radio>
               <el-radio label="true">自定义路径</el-radio>
             </el-radio-group>
             <el-input v-model="addForm2.path" clearable placeholder="请输入项目保存路径" v-show="visible.pathInput"></el-input>
@@ -168,7 +168,7 @@ export default {
         name: '',
         software: '',
         level: '',
-        path: 'E:/Project/Item',
+        path: 'Project/Item',
         team: ''
       },
       addForm2: {
@@ -338,7 +338,7 @@ export default {
     handleSetPath() {
       if (this.radio === 'false') {
         this.visible.pathInput = false
-        this.addForm.path = 'E:/Project/Item'
+        this.addForm.path = 'Project/Item'
       } else {
         this.visible.pathInput = true
       }

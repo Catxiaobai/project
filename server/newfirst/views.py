@@ -14,8 +14,11 @@ from django.shortcuts import render
 # from lwn_Graphic.combination import combination
 import lwn_Graphic.combination
 import lwn_Graphic.constructModel
-import lxd_verify.Main
+import lwn_Graphic.constructModel2
+import lwn_Graphic.combination2
+# import lxd_verify.Main
 import newVerify.Main
+
 
 # Create your views here.
 
@@ -213,7 +216,7 @@ def add_item(request):
                         level=new_level,
                         path=new_path)
         new_item.save()
-        os.mkdir(new_path + './' + new_name)
+        os.makedirs('./'+new_path + '/' + new_name)
         print(new_item.to_dict())
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
@@ -559,7 +562,7 @@ def verify_case_test(request):
                         ttt = aim_content.split('\n')
                         for t in ttt:
                             # print('\t'+t)
-                            f.write('\t'+t+'\n')
+                            f.write('\t' + t + '\n')
                         # f.write(aim_content)
                     # os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
                     # lxd_verify.Main.main()
@@ -794,6 +797,8 @@ def edit_complete(request):
 def upload_file(request):
     myfile = request.FILES['file']
     fs = FileSystemStorage(location='file')
+    if fs.exists(myfile.name):
+        fs.delete(myfile.name)
     fs.save(myfile.name, myfile)
     return JsonResponse({**error_code.CLACK_SUCCESS})
 
@@ -816,13 +821,13 @@ def import_scenes(request):
                 new_content = ""
                 new_name = ""
                 new_describe = ""
-                if lines[index] == "describe:":
-                    index += 1
-                    new_describe = lines[index]
-                    index += 1
                 if lines[index] == "name:":
                     index += 1
                     new_name = lines[index]
+                    index += 1
+                if lines[index] == "describe:":
+                    index += 1
+                    new_describe = lines[index]
                     index += 1
                 if lines[index] == "content:":
                     index += 1
@@ -844,23 +849,89 @@ def import_scenes(request):
 # 从数据库中导出场景建模
 def scenes_modeling(request):
     request_jsons = json.loads(request.body)
-    print(request_jsons)
     try:
-        scenes = Scenes.objects.filter(item_id=request_jsons['id'])
-        f = open('./file/Trace.txt', 'w+', encoding='utf-8')
+        scenes = Scenes.objects.filter(item_id=request_jsons['item']['id'], type=request_jsons['type'])
+        if request_jsons['type'] == 'sub':
+            filename = 'Trace.txt'
+        elif request_jsons['type'] == 'complex':
+            filename = 'Trace2.txt'
+
+        f = open('./file/' + filename, 'w', encoding='utf-8')
         for s in scenes:
-            # print(s.to_dict())
+            print(s.to_dict())
             ch = s.to_dict()
             f.write('Trace:' + '\n')
             f.write(ch['content'])
         f.close()
-        lwn_Graphic.constructModel.main()
-        lwn_Graphic.combination.combination()
-        filepath = './file/'
-        with open(filepath + 'resultSaveCreate.txt', 'wt+', encoding='utf-8') as f:
-            f.write(open(filepath + 'result.txt', 'r', encoding='utf-8').read())
-        with open(filepath + 'resultModelSaveCreate.txt', 'wt+', encoding='utf-8') as f:
-            f.write(open(filepath + 'resultModel.txt', 'r', encoding='utf-8').read())
+        if request_jsons['type'] == 'sub':
+            lwn_Graphic.constructModel.main()
+            lwn_Graphic.combination.combination()
+            filepath = './file/'
+            with open(filepath + 'resultSaveCreate.txt', 'wt+', encoding='utf-8') as f:
+                f.write(open(filepath + 'result.txt', 'r', encoding='utf-8').read())
+            with open(filepath + 'resultModelSaveCreate.txt', 'wt+', encoding='utf-8') as f:
+                f.write(open(filepath + 'resultModel.txt', 'r', encoding='utf-8').read())
+        elif request_jsons['type'] == 'complex':
+            lwn_Graphic.constructModel2.main()
+            lwn_Graphic.combination2.combination()
+            filepath = './file/'
+            with open(filepath + 'resultSaveCreate.txt', 'wt+', encoding='utf-8') as f:
+                f.write(open(filepath + 'result2.txt', 'r', encoding='utf-8').read())
+            with open(filepath + 'resultModelSaveCreate.txt', 'wt+', encoding='utf-8') as f:
+                f.write(open(filepath + 'resultModel2.txt', 'r', encoding='utf-8').read())
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
+
+
+def deliver_model_data(request):
+    request_jsons = json.loads(request.body)
+    if request_jsons['type'] == 'sub':
+        file_name = './file/result.txt'
+    elif request_jsons['type'] == 'complex':
+        file_name = './file/result2.txt'
+    lines = open(file_name, 'r', encoding='UTF-8').readlines()
+    index_line = 0
+    data_node = []
+    data_edge = []
+    test_id = 1
+    while index_line < len(lines):
+        if lines[index_line].strip() == "State:":
+            index_line += 1
+            node_num0 = lines[index_line].strip().split('=')[1]
+            node_num = int(node_num0[1:])
+            node_label = lines[index_line].strip().split('=')[1]
+            if node_label == 'S0':
+                node_label = 'START'
+            index_line += 1
+            node_name = lines[index_line].strip().split('=', 1)[1]
+            # data.append({"data": {"id": node_name, "label": node_name, "category": node_category.get(node_name, 2)}})
+            # data.append({"data": {"id": node_name, "label": node_label,"name":node_name}})
+            data_node.append({"id": node_num, "text": node_label, 'name': node_name})
+        if lines[index_line].strip() == "Transition:":
+            index_line += 1
+            name = lines[index_line].strip().split('=', 1)[1]
+            index_line += 1
+            src0 = lines[index_line].strip().split('=', 1)[1]
+            src = int(src0[1:])
+            index_line += 1
+            tgt0 = lines[index_line].strip().split('=', 1)[1]
+            tgt = int(tgt0[1:])
+            index_line += 1
+            event = lines[index_line].strip().split('=', 1)
+            event = event[1] if len(event) > 1 else ""
+            index_line += 1
+            cond = lines[index_line].strip().split('=', 1)
+            cond = cond[1] if len(cond) > 1 else ""
+            index_line += 1
+            action = lines[index_line].strip().split('=', 1)
+            action = action[1] if len(action) > 1 else ""
+            edge = {"id": test_id, "from": src, "to": tgt, "text": name, "event": event, "cond": cond,
+                    "action": action, "color": "black"}
+            # print(edge)
+            test_id += 1
+            data_edge.append(edge)
+
+        index_line += 1
+    # print(data_edge)
+    return JsonResponse({**error_code.CLACK_SUCCESS, "data_node": data_node, "data_edge": data_edge})

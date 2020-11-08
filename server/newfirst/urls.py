@@ -60,5 +60,7 @@ urlpatterns = [
     path('edit_complete', views.edit_complete, name='edit_complete'),  # 编辑设计完善
     path('upload_file', views.upload_file, name='upload_file'),  # 上传文件
     path('import_scenes', views.import_scenes, name='import_scenes'),  # 导入场景
-    path('scenes_modeling', views.scenes_modeling, name='scenes_modeling'),  # 导入场景
+    path('scenes_modeling', views.scenes_modeling, name='scenes_modeling'),  # 场景建模
+    path('deliver_model_data', views.deliver_model_data, name='deliver_model_data'),  # 传递模型的场景信息
+
 ]
