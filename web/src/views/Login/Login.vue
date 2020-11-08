@@ -44,8 +44,13 @@ export default {
   },
   methods: {
     gotolink() {
-      console.log(this.loginForm.name)
-      this.$router.replace('/main')
+      if (this.loginForm.name != 'admin') {
+        this.$message.error('用户名不存在！')
+      } else if (this.loginForm.name == 'admin' && this.loginForm.password != 'admin') {
+        this.$message.error('密码错误！')
+      } else {
+        this.$router.replace('/main')
+      }
     },
     remember(data) {
       // console.log(data)
