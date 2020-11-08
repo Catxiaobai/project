@@ -3,7 +3,9 @@
     <el-card>
       <div style="margin-top: 20px">
         <div id="table">
-          <el-button type="primary" style="margin-bottom: 20px;margin-left: 90%">导出</el-button>
+          <download-excel :data="tableData" :fields="json_fields" name="output.xls">
+            <el-button type="primary" style="margin-bottom: 20px;margin-left: 90%">导出</el-button>
+          </download-excel>
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column prop="id" label="序号" width="50" align="center"> </el-table-column>
             <el-table-column prop="element" label="要素" width="150" align="center"> </el-table-column>
@@ -36,6 +38,14 @@ export default {
   name: 'DesignTable.vue',
   data() {
     return {
+      json_fields: {
+        序号: 'id',
+        要素: 'element',
+        类别: 'type',
+        准则描述: 'describe',
+        问题描述: 'problem',
+        完善措施: 'complete'
+      },
       tableData: [],
       pagination: {
         limit: 7, //每页显示条数

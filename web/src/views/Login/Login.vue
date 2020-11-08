@@ -44,6 +44,7 @@ export default {
   },
   methods: {
     gotolink() {
+      console.log(this.loginForm.name)
       this.$router.replace('/main')
     },
     remember(data) {

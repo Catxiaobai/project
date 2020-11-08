@@ -3,7 +3,9 @@
     <el-card>
       <div style="margin-top: 20px">
         <div id="table">
-          <el-button type="primary" style="margin-bottom: 20px;margin-left: 90%">导出</el-button>
+          <download-excel :data="tableData" :fields="json_fields" name="output.xls">
+            <el-button type="primary" style="margin-bottom: 20px;margin-left: 90%">导出</el-button>
+          </download-excel>
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column prop="id" label="序号" width="80" align="center"> </el-table-column>
             <el-table-column prop="describe" label="失效描述" width="180" align="center"> </el-table-column>
@@ -34,6 +36,12 @@ export default {
   name: 'Requirements.vue',
   data() {
     return {
+      json_fields: {
+        序号: 'id',
+        失效描述: 'describe',
+        改进措施: 'improve',
+        软件安全性需求: 'demand'
+      },
       tableData: [],
       pagination: {
         limit: 7, //每页显示条数

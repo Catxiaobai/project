@@ -1,14 +1,14 @@
 <template>
   <div id="modelList">
     <el-card>
-      <download-excel :data="json_data" :fields="json_fields" name="output.xls">
+      <download-excel :data="tableData" :fields="json_fields" name="output.xls">
         <el-button type="primary" style="margin-bottom: 20px;margin-left: 90%">导出</el-button>
       </download-excel>
       <div id="table">
         <el-table :data="tableData" border style="width: 100%">
           <el-table-column prop="id" label="序号" width="180"> </el-table-column>
           <el-table-column prop="model_name" label="模型名称" width="180"> </el-table-column>
-          <el-table-column prop="element" label="场景类型" width="180"> </el-table-column>
+          <el-table-column prop="element" label="场景要素" width="180"> </el-table-column>
           <el-table-column prop="name" label="场景名称" width="180"> </el-table-column>
           <el-table-column prop="type" label="场景类型"> </el-table-column>
           <el-table-column prop="model_type" label="模型类型" width="180">
@@ -41,6 +41,14 @@ export default {
   data() {
     return {
       // todo: 没有建数据库，用的假数据
+      json_fields: {
+        序号: 'id',
+        模型名称: 'model_name',
+        场景要素: 'model_type',
+        场景名称: 'element',
+        场景类型: 'name',
+        模型类型: 'type'
+      },
       tableData: [
         {
           id: 1,
