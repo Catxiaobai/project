@@ -6,7 +6,7 @@ import re
 def combination():
     filepath = './file/'
     wf = codecs.open(filepath + "result2.txt", 'w', encoding="utf-8")
-    state = dict(json.load(open(filepath + "S22.txt", 'r', encoding="gbk")))
+    state = dict(json.load(open(filepath + "S22.txt", 'r', encoding="utf-8")))
 
     wf1 = codecs.open(filepath + "resultModel2.txt", 'w', encoding="utf-8")
 
