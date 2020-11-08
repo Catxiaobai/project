@@ -37,7 +37,7 @@
             <!--            <el-button size="mini" type="info" @click="handleShow(scope.$index, scope.row)">查看</el-button>-->
             <!--            <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
             <!--            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>-->
-            <el-popconfirm icon="el-icon-info" iconColor="red" title="确定删除此项目吗？" @onConfirm="handleDelete(scope.$index, scope.row)">
+            <el-popconfirm icon="el-icon-info" iconColor="red" title="确定删除此项目吗？" @confirm="handleDelete(scope.$index, scope.row)">
               <el-button slot="reference" size="mini" type="danger" style="margin-left: 15px">删除</el-button>
             </el-popconfirm>
           </template>

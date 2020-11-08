@@ -3,7 +3,7 @@ import axios from 'axios'
 // 创建axios实例
 const service = axios.create({
   //请求超时时间
-  timeout: 10000000
+  timeout: 100000
 })
 
 // 添加请求拦截器

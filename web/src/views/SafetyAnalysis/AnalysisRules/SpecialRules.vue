@@ -2,10 +2,10 @@
   <div id="specialRules">
     <el-card style="margin-left: 10px;margin-right: 10px">
       <div id="actionButton" style="margin-left: 50px;margin-bottom: 20px">
-        <el-popconfirm icon="el-icon-loading" iconColor="blue" title="是否将所选规则加入通用分析规则库？" @onConfirm="handleSelectCommit">
+        <el-popconfirm icon="el-icon-loading" iconColor="blue" title="是否将所选规则加入通用分析规则库？" @confirm="handleSelectCommit">
           <el-button type="primary" :disabled="disabled.select" slot="reference">选择加入通用分析规则库</el-button>
         </el-popconfirm>
-        <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选规则" style="margin-left: 20px" @onConfirm="handleDeleteCommit">
+        <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选规则" style="margin-left: 20px" @confirm="handleDeleteCommit">
           <el-button type="danger" :disabled="disabled.delete" slot="reference">删除</el-button>
         </el-popconfirm>
         <el-button type="primary" style="margin-left: 60%" @click="handleAdd('addForm')">增加项目分析规则</el-button>

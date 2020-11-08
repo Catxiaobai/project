@@ -10,7 +10,7 @@
         </el-upload>
         <el-button type="primary" @click="handleAdd('addForm')">增加</el-button>
         <el-button type="success" :disabled="disabled.edit" @click="visible.editDialog = true">编辑</el-button>
-        <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选场景" style="margin-left: 10px" @onConfirm="handleDeleteCommit">
+        <el-popconfirm icon="el-icon-info" iconColor="red" title="是否删除所选场景" style="margin-left: 10px" @confirm="handleDeleteCommit">
           <el-button type="danger" :disabled="disabled.delete" slot="reference">删除</el-button>
         </el-popconfirm>
       </div>

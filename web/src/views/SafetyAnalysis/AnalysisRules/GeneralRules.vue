@@ -2,7 +2,7 @@
   <div id="generalRules">
     <el-card>
       <div id="actionButton" style="margin-left: 50px">
-        <el-popconfirm icon="el-icon-loading" iconColor="blue" title="是否将所选规则加入此项目规则集？" @onConfirm="handleSelectCommit">
+        <el-popconfirm icon="el-icon-loading" iconColor="blue" title="是否将所选规则加入此项目规则集？" @confirm="handleSelectCommit">
           <el-button type="primary" :disabled="disabled.select" slot="reference">选择加入此项目规则集</el-button>
         </el-popconfirm>
       </div>
@@ -159,7 +159,9 @@ export default {
       this.itemInfo = this.$store.state.item
     },
     handleSelectCommit() {
+      console.log('sdsdssdsasasas')
       this.getItemInfo()
+      console.log('sdsdssd')
       this.visible.selectDialog = false
       this.$http
         .post(this.Global_Api + '/api/add_rule', { selectData: this.selectData, item: this.itemInfo, belong: '通用' })

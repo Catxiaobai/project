@@ -2,7 +2,7 @@
   <div id="generalCriteria">
     <el-card>
       <div id="actionButton" style="margin-left: 50px">
-        <el-popconfirm icon="el-icon-loading" iconColor="blue" title="是否将所选规则加入此项目设计准则库？" @onConfirm="handleSelectCommit">
+        <el-popconfirm icon="el-icon-loading" iconColor="blue" title="是否将所选规则加入此项目设计准则库？" @confirm="handleSelectCommit">
           <el-button type="primary" :disabled="disabled.select" slot="reference">选择加入此项目</el-button>
         </el-popconfirm>
       </div>

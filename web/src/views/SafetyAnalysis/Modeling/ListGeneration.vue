@@ -1,7 +1,7 @@
 <template>
   <div id="modelList">
     <el-card>
-      <download-excel :data="json_data" :fields="json_fields" name="output.xls">
+      <download-excel :data="tableData" :fields="json_fields" name="output.xls">
         <el-button type="primary" style="margin-bottom: 20px;margin-left: 90%">导出</el-button>
       </download-excel>
       <div id="table">
@@ -37,6 +37,13 @@ export default {
   name: 'ModelList.vue',
   data() {
     return {
+      json_fields: {
+        序号: 'id',
+        模型名称: 'model_name',
+        场景类别: 'element',
+        场景名称: 'name',
+        场景所属: 'type2'
+      },
       tableData: [],
       pagination: {
         limit: 7, //每页显示条数

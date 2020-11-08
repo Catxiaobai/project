@@ -103,8 +103,8 @@ def edit_analysis_rule(request):
         new_remark = request_json['remark']
         if not AnalysisRules.objects.filter(id=aim_id).exists():
             return JsonResponse({**error_code.CLACK_NOT_EXISTS})
-        if AnalysisRules.objects.filter(name=new_name).exists():
-            return JsonResponse({**error_code.CLACK_NAME_EXISTS})
+        # if AnalysisRules.objects.filter(name=new_name).exists():
+        #     return JsonResponse({**error_code.CLACK_NAME_EXISTS})
         AnalysisRules.objects.filter(id=aim_id).update(name=new_name)
         AnalysisRules.objects.filter(id=aim_id).update(type=new_type)
         AnalysisRules.objects.filter(id=aim_id).update(describe=new_describe)
@@ -477,7 +477,7 @@ def reset_case(request):
             aim_id = request_json[i]['id']
             if not Case.objects.filter(id=aim_id).exists():
                 return JsonResponse({**error_code.CLACK_NOT_EXISTS})
-            Case.objects.filter(id=aim_id).update(verify_result="unverified")
+            Case.objects.filter(id=aim_id).update(verify_result="未检验")
     except Exception as e:
         return JsonResponse({**error_code.CLACK_UNEXPECTED_ERROR, "exception": e})
     return JsonResponse({**error_code.CLACK_SUCCESS})
@@ -561,7 +561,7 @@ def verify_case_test(request):
             if aim_element == '状态迁移':
                 if aim_rule_describe == 'ATM系统的安全性验证':
                     aim_content = request_json[i]['content']
-                    # print(aim_content)
+                    print(aim_content)
                     with open('./file/targetInvalid.txt', 'w') as f:  # 设置文件对象
 
                         # print(aim_content)
@@ -585,6 +585,12 @@ def verify_case_test(request):
                     #     res = "符合"
                     # elif a == 1:
                     #     res = "违背"
+                else:
+                    a = random.randint(0, 1)
+                    if a == 0:
+                        res = "符合"
+                    elif a == 1:
+                        res = "违背"
             else:
                 a = random.randint(0, 1)
                 if a == 0:
