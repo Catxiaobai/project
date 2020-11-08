@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import http from '@/api/config'
 import store from './store'
-
+import JsonExcel from 'vue-json-excel'
 // 全局配置
 import '@/assets/scss/reset.scss'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -16,7 +16,7 @@ Vue.use(ElementUI)
 Vue.prototype.bus = new Vue()
 Vue.prototype.$http = http
 Vue.prototype.Global_Api = Api.Global_Api
-
+Vue.component('downloadExcel', JsonExcel)
 Vue.config.productionTip = false
 new Vue({
   router,
