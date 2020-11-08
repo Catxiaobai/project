@@ -68,18 +68,18 @@ def getTransState1():
             TransSet.append([TransLable, states_label[k - 2], states_label[k - 1], event, condition, action])
             source, event, condition, action, target = "", "", "", "", ""
     TraceSet.append(Trace)
-    output = open(filepath+'TraceSet.txt', 'w+')
+    output = open(filepath+'TraceSet.txt', 'w+', encoding="utf-8")
     for i in range(len(TraceSet)):
         for j in range(len(TraceSet[i])):
             output.write(str(TraceSet[i][j]))
             output.write(' ')
         output.write('\n')
     output.close()
-    with open(filepath+'StateSet.txt', 'w') as f:
+    with open(filepath+'StateSet.txt', 'w', encoding="utf-8") as f:
         json_str = json.dumps(StateSet, ensure_ascii=False, indent=0)
         f.write(json_str)
         f.write('\n')
-    output = open(filepath+'TransSet.txt', 'w+')
+    output = open(filepath+'TransSet.txt', 'w+', encoding="utf-8")
     for i in range(len(TransSet)):
         for j in range(len(TransSet[i])):
             output.write(str(TransSet[i][j]))
@@ -111,7 +111,7 @@ def constructModel1():
     if flagValue:
         s = "S" + str(i)
         State3[flagValue]=s
-    with open(filepath+'S1.txt', 'w') as f:
+    with open(filepath+'S1.txt', 'w', encoding="utf-8") as f:
         json_str = json.dumps(State3, ensure_ascii=False, indent=0)
         f.write(json_str)
         f.write('\n')
@@ -119,7 +119,7 @@ def constructModel1():
     State4 = {}
     for key, value in State3.items():
         State4[value] = key
-    with open(filepath+'S2.txt', 'w') as f:
+    with open(filepath+'S2.txt', 'w', encoding="utf-8") as f:
         json_str = json.dumps(State4, ensure_ascii=False, indent=0)
         f.write(json_str)
         f.write('\n')
@@ -292,7 +292,7 @@ def constructModel1():
         # print(mergeSame)
         T1.append(mergeSame)
         k += 1
-    output = open(filepath+'T6.txt', 'w+')
+    output = open(filepath+'T6.txt', 'w+', encoding="utf-8")
     for i in range(len(T1)):
         for j in range(len(T1[i])-1):
             output.write(str(T1[i][j]))
@@ -329,7 +329,7 @@ def constructModel1():
             fout.writelines('" ];\n')
             if src not in st:
                 st.append(src)
-                print(src + "->" + State4[src])
+                # print(src + "->" + State4[src])
         fout.writelines("}\n")
     # os.popen("dot -Tpng {}.dot -o {}.png".format(filename2, filename2))
     # # 生成PDF图

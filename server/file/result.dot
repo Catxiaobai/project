@@ -1,13 +1,37 @@
 digraph g {
+<<<<<<< HEAD
+ S2 -> S4 [ label="t1
+event=GetBalance()
+condition=null" ];
+ S2 -> S3 [ label="t2
+event=Withdrawal()
+=======
  S1 -> S0 [ label="t1
 event=Enter_pin(p)
 condition=p!=pin,attempts=2" ];
  S1 -> S0 [ label="t2
 event=Cancel()
+>>>>>>> 71904aeb9037f71ebc65fe26eefcc01166196178
 condition=null" ];
  S2 -> S0 [ label="t3
 event=Cancel()
 condition=null" ];
+<<<<<<< HEAD
+ S1 -> S0 [ label="t4
+event=Enter_pin(p)
+condition=p!=pin,attempts=2" ];
+ S3 -> S4 [ label="t5
+event=Enter_amount(w)
+condition=w<=B" ];
+ S1 -> S0 [ label="t6
+event=Cancel()
+condition=null" ];
+ S4 -> S2 [ label="t7
+event=Return()
+condition=null" ];
+ S0 -> S1 [ label="t8
+event=Card(pin,B)
+=======
  S0 -> S1 [ label="t4
 event=Card(pin,B)
 condition=null" ];
@@ -22,12 +46,18 @@ event=Enter_amount(w)
 condition=w<=B" ];
  S4 -> S0 [ label="t8
 event=Cancel()
+>>>>>>> 71904aeb9037f71ebc65fe26eefcc01166196178
 condition=null" ];
  S1 -> S0 [ label="t9
 event=Enter_pin(p)
 condition=null" ];
+<<<<<<< HEAD
+ S4 -> S0 [ label="t10
+event=Cancel()
+=======
  S2 -> S3 [ label="t10
 event=Withdrawal()
+>>>>>>> 71904aeb9037f71ebc65fe26eefcc01166196178
 condition=null" ];
  S1 -> S2 [ label="t11
 event=Enter_pin(p)

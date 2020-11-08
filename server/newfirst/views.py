@@ -555,29 +555,32 @@ def verify_case_test(request):
             if aim_element == '状态迁移':
                 if aim_rule_describe == 'ATM系统的安全性验证':
                     aim_content = request_json[i]['content']
-                    print(aim_content)
+                    # print(aim_content)
                     with open('./file/targetInvalid.txt', 'w') as f:  # 设置文件对象
-                        f.write('Transition:\n')
+
                         # print(aim_content)
                         ttt = aim_content.split('\n')
                         for t in ttt:
                             # print('\t'+t)
+                            if 'name' in t:
+                                f.write('Transition:\n')
+                                print(t)
                             f.write('\t' + t + '\n')
-                        # f.write(aim_content)
+
+
                     # os.system('py -2 E:/Code/project301/lxd_Safety/graphTraversal-submit2/execution/project_gui.py')
-                    # lxd_verify.Main.main()
-                    # newVerify.Main.main()
-                    # with open('./file/path.txt') as f:
-                    #     lines = f.read()
-                    # if len(lines) > 8:
-                    #     res = "违背"
-                    # else:
-                    #     res = "符合"
-                    a = random.randint(0, 1)
-                    if a == 0:
-                        res = "符合"
-                    elif a == 1:
+                    newVerify.Main.main()
+                    with open('./file/test_data.txt') as f:
+                        lines = f.read()
+                    if len(lines) > 8:
                         res = "违背"
+                    else:
+                        res = "符合"
+                    # a = random.randint(0, 1)
+                    # if a == 0:
+                    #     res = "符合"
+                    # elif a == 1:
+                    #     res = "违背"
             else:
                 a = random.randint(0, 1)
                 if a == 0:
@@ -858,7 +861,7 @@ def scenes_modeling(request):
 
         f = open('./file/' + filename, 'w', encoding='utf-8')
         for s in scenes:
-            print(s.to_dict())
+            # print(s.to_dict())
             ch = s.to_dict()
             f.write('Trace:' + '\n')
             f.write(ch['content'])

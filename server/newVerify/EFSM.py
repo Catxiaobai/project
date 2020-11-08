@@ -1267,7 +1267,7 @@ class EFSM:
         print ('执行testGenforPath')
         populationSize=20
 #        maxGeneration=10000
-        
+        starttime = time.time()
         self.repeatTranVarDict={}
         self.repeatTranFuncDict={} ####store repeat transition
         self.currPathTranVarDict={}
@@ -1317,6 +1317,13 @@ class EFSM:
                         self.outputTestData(currPath,pathVarType,0)
                         break  # break for j loop
                     population = gaSample.basicSurvive(oldInvidualFit, invidualFitness,population)
+                    if time.time() - starttime > 4:
+                        print('this path is not feasible')
+                        filepath = './file/'
+                        filename = 'test_data.txt'
+                        with open(filepath + filename, 'w') as file_object:
+                            file_object.truncate()
+                        return 0
                     if repeat == 0 and j >= 10000:
                         print ('this path is not feasible')
                         filepath = './file/'

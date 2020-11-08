@@ -12,9 +12,9 @@ State:
 	name=S5
 Transition:
 	name=t1
-	src=START
+	src=S5
 	tgt=START
-	event=Card(pin,B)
+	event=null
 	condition=(x==3)
 	action=Write("Response timeout");return_card();x=0;y=0
 Transition:
@@ -26,46 +26,46 @@ Transition:
 	action=Write("The user did nothing or the operation timed out");return_card();x=0;y=0
 Transition:
 	name=t3
-	src=S4
-	tgt=START
-	event=null
-	condition=(x==3)
-	action=Write("Response timeout");return_card();x=0;y=0
-Transition:
-	name=t4
-	src=S5
-	tgt=START
-	event=null
-	condition=(x==3)
-	action=Write("Response timeout");return_card();x=0;y=0
-Transition:
-	name=t5
 	src=S1
 	tgt=START
 	event=null
 	condition=(y==50)
 	action=Write("The user did nothing or the operation timed out");return_card();x=0;y=0
 Transition:
-	name=t6
-	src=S3
-	tgt=START
-	event=null
-	condition=(y==50)
-	action=Write("The user did nothing or the operation timed out");return_card();x=0;y=0
-Transition:
-	name=t7
+	name=t4
 	src=S1
 	tgt=START
 	event=Enter_pin(p)
 	condition=(p!=pin) & (N==3) & (y==18)
 	action=Write("Password error number exceeded");return_card();x=0;y=0
 Transition:
+	name=t5
+	src=S3
+	tgt=START
+	event=null
+	condition=(y==50)
+	action=Write("The user did nothing or the operation timed out");return_card();x=0;y=0
+Transition:
+	name=t6
+	src=START
+	tgt=START
+	event=Card(pin,B)
+	condition=(x==3)
+	action=Write("Response timeout");return_card();x=0;y=0
+Transition:
+	name=t7
+	src=S4
+	tgt=START
+	event=null
+	condition=(x==3)
+	action=Write("Response timeout");return_card();x=0;y=0
+Transition:
 	name=t8
 	src=S1
-	tgt=START
-	event=Cancel()
-	condition=(y>=10) & (y<=49)
-	action=Write("Canceling");return_card();x=0;y=0
+	tgt=S1
+	event=Enter_pin(p)
+	condition=(p!=pin) & (N>=0) & (N<=2) & (y>=10) & (y<=49)
+	action=Write("Wrong Pin;ReEnter");N=N+1;x=0;y=0
 Transition:
 	name=t9
 	src=S2
@@ -75,25 +75,25 @@ Transition:
 	action=Write("Enter amount");x=0;y=0
 Transition:
 	name=t10
-	src=S3
-	tgt=S5
-	event=Enter_amount(w)
-	condition=(w>B) & (y>=20) & (y<=25)
-	action=Write("Out balance");x=0;y=0
-Transition:
-	name=t11
 	src=S1
 	tgt=S2
 	event=Enter_pin(p)
 	condition=(p==pin) & (N>=0) & (N<=2) & (y>=8) & (y<=45)
 	action=Write("Select Withdrawal/GetBalance/Cancel");N=N+1;x=0;y=0
 Transition:
-	name=t12
+	name=t11
 	src=S1
+	tgt=START
+	event=Cancel()
+	condition=(y>=10) & (y<=49)
+	action=Write("Canceling");return_card();x=0;y=0
+Transition:
+	name=t12
+	src=START
 	tgt=S1
-	event=Enter_pin(p)
-	condition=(p!=pin) & (N>=0) & (N<=2) & (y>=10) & (y<=49)
-	action=Write("Wrong Pin;ReEnter");N=N+1;x=0;y=0
+	event=Card(pin,B)
+	condition=(x>=1) & (x<=2)
+	action=Write("Enter Pin");N=0;x=0;y=0
 Transition:
 	name=t13
 	src=S2
@@ -110,7 +110,7 @@ Transition:
 	action=Write("Canceling");return_card();x=0;y=0
 Transition:
 	name=t15
-	src=S5
+	src=S4
 	tgt=S2
 	event=null
 	condition=(x>=1) & (x<=2)
@@ -131,15 +131,15 @@ Transition:
 	action=Give_money();B=B-w;Write("your balance";B);x=0;y=0
 Transition:
 	name=t18
-	src=START
-	tgt=S1
-	event=Card(pin,B)
-	condition=(x>=1) & (x<=2)
-	action=Write("Enter Pin");N=0;x=0;y=0
-Transition:
-	name=t19
-	src=S4
+	src=S5
 	tgt=S2
 	event=null
 	condition=(x>=1) & (x<=2)
 	action=Write("Select Withdrawal/GetBalance/Cancel");x=0;y=0
+Transition:
+	name=t19
+	src=S3
+	tgt=S5
+	event=Enter_amount(w)
+	condition=(w>B) & (y>=20) & (y<=25)
+	action=Write("Out balance");x=0;y=0

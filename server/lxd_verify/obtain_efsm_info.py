@@ -6,11 +6,14 @@ import re
 from lxd_verify import EFSM
 from lxd_verify import config
 from lxd_verify import sclexer
-SM = EFSM.efsmFromFile(config.getGenerateModule())  # 对efsm类实例化
+
+def getSM():
+    global SM
+    SM = EFSM.efsmFromFile(config.getGenerateModule())  # 对efsm类实例化
+    return SM
 #----------------rinsmq
 # print ('rinsmq')
 print('执行 obtain_efsm_info 文件')
-targetbranchlist = []
 #----------------rinsmq
 
 def obtain_tran_info():  # 得到某efsm的全部迁移信息（name, src, tgt, event, cond, action）
@@ -127,22 +130,22 @@ def getSecondOppositeBranch(targetedTran):
     # print 'TranWithSameEvent=',TranWithSameEvent
     return gjsjylgxpx(targetedTran, TranWithSameEvent)
 
-def getfauile():
-    from lxd_verify.kvparser import Parser, ListParser
-    filepath = '../file/'
-    f = open(filepath + "targetInvalid.txt")
-    # targetList=[]
-    # targetList = f.readlines()
-    # print (f)
-    file = f.read()
+
+from lxd_verify.kvparser import Parser, ListParser
+#获取失效迁移
+def getfailureList():
+
+    filepath = 'file/'
+    f = open(filepath+"targetInvalid.txt")
+    file=f.read()
     SMBlockList = ListParser().parse(file)
     s = []
-    k = 0
-    targetbranchlist = []
-    print('zhixingzheli')
-    print(file)
+    k=0
+    global  targetbranchlist
+    targetbranchlist=[]
+    # print ('zhixingzheli')
+    # print (SMBlockList)
     for block in SMBlockList:
-
         if block[0] == 'Transition':
             print([item[1] for item in SMBlockList])
             print('----------------')
@@ -153,56 +156,9 @@ def getfauile():
             if tgtName != '':
                 tgt = SM.state(tgtName)
 
-            print(name, srcName, tgtName, event, cond, action)
+            print (name, srcName, tgtName, event, cond, action)
             targetbranchlist.append(EFSM.Transition(name, src, tgt, event, cond, action))
-
-    # for item in targetList:
-    #     s.append(item.split(', '))
-    #     print s
-    #     #需要修改成<name, src，tgt，event，cond，action>
-    #     src = SM.state(s[k][1])
-    #     tgt = SM.state(s[k][2])
-    #     targetbranchlist.append(EFSM.Transition(s[k][0], src, tgt, s[k][3], s[k][4], s[k][5]))
-    #     k+=1
     f.close()
-    return targetbranchlist
-from lxd_verify.kvparser import Parser, ListParser
-filepath = './file/'
-f = open(filepath+"targetInvalid.txt")
-# targetList=[]
-# targetList = f.readlines()
-# print (f)
-file=f.read()
-SMBlockList = ListParser().parse(file)
-s = []
-k=0
-targetbranchlist=[]
-print ('zhixingzheli')
-print (file)
-for block in SMBlockList:
-
-    if block[0] == 'Transition':
-        print([item[1] for item in SMBlockList])
-        print('----------------')
-        (name, srcName, tgtName, event, cond, action) = [item[1] for item in block[1]]
-
-        if srcName != '':  # old code is !=''
-            src = SM.state(srcName)
-        if tgtName != '':
-            tgt = SM.state(tgtName)
-
-        print (name, srcName, tgtName, event, cond, action)
-        targetbranchlist.append(EFSM.Transition(name, src, tgt, event, cond, action))
-
-# for item in targetList:
-#     s.append(item.split(', '))
-#     print s
-#     #需要修改成<name, src，tgt，event，cond，action>
-#     src = SM.state(s[k][1])
-#     tgt = SM.state(s[k][2])
-#     targetbranchlist.append(EFSM.Transition(s[k][0], src, tgt, s[k][3], s[k][4], s[k][5]))
-#     k+=1
-f.close()
 def targetBranch():
     return targetbranchlist[-1]
 

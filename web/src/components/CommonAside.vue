@@ -13,11 +13,13 @@
               <template slot="title"> <i class="el-icon-folder"></i>子使用场景建模</template>
               <el-menu-item index="/subSceneInfo"><i class="el-icon-folder"></i>子使用场景描述</el-menu-item>
               <el-menu-item index="/subSceneModel"><i class="el-icon-folder"></i>子使用场景构建</el-menu-item>
+              <el-menu-item index="/subCompleteness"><i class="el-icon-folder"></i>完整性验证与补全</el-menu-item>
             </el-submenu>
             <el-submenu index="1-1-2">
               <template slot="title"><i class="el-icon-folder"></i>综合使用场景建模</template>
               <el-menu-item index="/complexSceneInfo"><i class="el-icon-folder"></i>综合使用场景描述</el-menu-item>
               <el-menu-item index="/complexSceneModel"><i class="el-icon-folder"></i>综合使用场景构建</el-menu-item>
+              <el-menu-item index="/complexCompleteness"><i class="el-icon-folder"></i>完整性验证与补全</el-menu-item>
             </el-submenu>
             <el-menu-item index="/listGeneration"><i class="el-icon-folder"></i>模型列表生成</el-menu-item>
           </el-submenu>

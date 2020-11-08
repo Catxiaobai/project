@@ -6,8 +6,11 @@ import re
 from newVerify import EFSM
 from newVerify import config
 from newVerify import sclexer
-from newVerify.kvparser import Parser, ListParser
-SM = EFSM.efsmFromFile(config.getGenerateModule())  # 对efsm类实例化
+
+def getSM():
+    global SM
+    SM = EFSM.efsmFromFile(config.getGenerateModule())  # 对efsm类实例化
+    return SM
 #----------------rinsmq
 # print ('rinsmq')
 print('执行 obtain_efsm_info 文件')
@@ -128,43 +131,34 @@ def getSecondOppositeBranch(targetedTran):
     return gjsjylgxpx(targetedTran, TranWithSameEvent)
 
 
+from newVerify.kvparser import Parser, ListParser
+#获取失效迁移
+def getfailureList():
 
-filepath = './file/'
-f = open(filepath+"targetInvalid.txt")
-# targetList=[]
-# targetList = f.readlines()
-# print (f)
-file=f.read()
-SMBlockList = ListParser().parse(file)
-s = []
-k=0
-targetbranchlist=[]
-# print ('zhixingzheli')
-# print (SMBlockList)
-for block in SMBlockList:
-    
-    if block[0] == 'Transition':
-        print([item[1] for item in SMBlockList])
-        print('----------------')
-        (name, srcName, tgtName, event, cond, action) = [item[1] for item in block[1]]
-        
-        if srcName != '':  # old code is !=''
-            src = SM.state(srcName)
-        if tgtName != '':
-            tgt = SM.state(tgtName)
-        
-        print (name, srcName, tgtName, event, cond, action)
-        targetbranchlist.append(EFSM.Transition(name, src, tgt, event, cond, action))
+    filepath = './file/'
+    f = open(filepath+"targetInvalid.txt")
+    file=f.read()
+    SMBlockList = ListParser().parse(file)
+    s = []
+    k=0
+    global  targetbranchlist
+    targetbranchlist=[]
+    # print ('zhixingzheli')
+    # print (SMBlockList)
+    for block in SMBlockList:
+        if block[0] == 'Transition':
+            print([item[1] for item in SMBlockList])
+            print('----------------')
+            (name, srcName, tgtName, event, cond, action) = [item[1] for item in block[1]]
 
-# for item in targetList:
-#     s.append(item.split(', '))
-#     print s
-#     #需要修改成<name, src，tgt，event，cond，action>
-#     src = SM.state(s[k][1])
-#     tgt = SM.state(s[k][2])
-#     targetbranchlist.append(EFSM.Transition(s[k][0], src, tgt, s[k][3], s[k][4], s[k][5]))
-#     k+=1
-f.close()
+            if srcName != '':  # old code is !=''
+                src = SM.state(srcName)
+            if tgtName != '':
+                tgt = SM.state(tgtName)
+
+            print (name, srcName, tgtName, event, cond, action)
+            targetbranchlist.append(EFSM.Transition(name, src, tgt, event, cond, action))
+    f.close()
 def targetBranch():
     return targetbranchlist[-1]
 

@@ -1,4 +1,11 @@
 Transition:
+	name=T33
+	src=S1
+	tgt=S1
+	event=Enter_pin(p)
+	cond=(p!=pin) & (attempts>2)
+	action=Write("Wrong Pin,ReEnter");attempts=attempts+1
+Transition:
 	name=T40
 	src=S1
 	tgt=S2

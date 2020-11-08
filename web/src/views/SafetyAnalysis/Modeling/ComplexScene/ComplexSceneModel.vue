@@ -12,6 +12,8 @@
         <p>删除边：鼠标左键单击进行选定，然后点击键盘上的"delete"或"Backspace"键</p>
         <p>移动节点：鼠标左键单击进行选定，将鼠标移至节点中心处，长按鼠标左键即可拖拽移动</p>
         <br />
+        <p>选择场景类型：不同类型对应不同的模型</p>
+        <p>模型构建：根据场景规格化描述构建模型</p>
         <p>模型还原：将模型还原至未修改前的初始状态</p>
         <el-button icon="el-icon-message-solid" circle slot="reference"></el-button>
       </el-popover>
@@ -27,14 +29,14 @@
           <p>删除边：鼠标左键单击进行选定，然后点击键盘上的"delete"或"Backspace"键</p>
           <p>移动节点：鼠标左键单击进行选定，将鼠标移至节点中心处，长按鼠标左键即可拖拽移动</p>
           <br />
+          <p>选择场景类型：不同类型对应不同的模型</p>
+          <p>模型构建：根据场景规格化描述构建模型</p>
           <p>模型还原：将模型还原至未修改前的初始状态</p>
         </div>
         <el-button type="text" slot="reference">操作提示</el-button>
       </el-popover>
     </div>
     <el-card>
-      <!--      <el-button type="primary" @click="save">save</el-button>-->
-      <!--      <el-button type="primary" @click="load">load</el-button>-->
       <span style="font-size: large;margin-left: 10px;margin-right: 10px">选择场景类型</span>
       <el-select v-model="value" placeholder="请选择" @change="onChange">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
@@ -45,11 +47,6 @@
       <div id="myDiagramDiv" v-show="test1" style="background-color: whitesmoke; border: solid 1px black; width: 100%; height: 520px;margin-top: 20px"></div>
       <textarea id="myTransaction" style="width:100%;height:200px" v-show="false"></textarea>
       <textarea id="mytest" v-model="msg" v-show="false" />
-      <!--      <input id="mytest" value="test" @change="postData('test')" />-->
-      <!--      <div id="example">-->
-      <!--&lt;!&ndash;        <p>Original message: "{{ msg }}"</p>&ndash;&gt;-->
-      <!--        &lt;!&ndash;        <p>Computed reversed message: "{{ reversedMessage }}"</p>&ndash;&gt;-->
-      <!--      </div>-->
     </el-card>
   </div>
 </template>
@@ -476,5 +473,7 @@ export default {
   margin-left: 1100px;
   height: 40px;
   margin-top: -40px;
+  z-index: 1;
+  position: absolute;
 }
 </style>
