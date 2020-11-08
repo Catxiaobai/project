@@ -152,6 +152,11 @@ const routes = [
         component: () => import('@/views/SafetyAnalysis/Modeling/SubScene/SubSceneModel')
       },
       {
+        path: '/subCompleteness',
+        name: 'subCompleteness',
+        component: () => import('@/views/SafetyAnalysis/Modeling/SubScene/SubCompleteness')
+      },
+      {
         path: '/complexSceneInfo',
         name: 'complexSceneInfo',
         component: () => import('@/views/SafetyAnalysis/Modeling/ComplexScene/ComplexSceneInfo')
@@ -160,6 +165,11 @@ const routes = [
         path: '/complexSceneModel',
         name: 'complexSceneModel',
         component: () => import('@/views/SafetyAnalysis/Modeling/ComplexScene/ComplexSceneModel')
+      },
+      {
+        path: '/complexCompleteness',
+        name: 'complexCompleteness',
+        component: () => import('@/views/SafetyAnalysis/Modeling/ComplexScene/ComplexCompleteness')
       }
     ]
   }

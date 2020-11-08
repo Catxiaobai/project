@@ -41,7 +41,7 @@ def getTargetBranch(targetBranch):
 # 获取用于序列生成的模型
 def getGenerateModule():
     print('config')
-    filepath = '../file/'
+    filepath = './file/'
     # modelfile = "efsm_atm1.txt"
     # modelfile = "lift_EFSM.txt"
     modelfile = "resultModel.txt"
