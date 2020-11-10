@@ -487,23 +487,23 @@ export default {
         // this.msg.edge_id = JSON.stringify(edge[0].id)
         this.textVisible = true
       }
-      this.$http
-        .get(this.Global_Api + '/api/verify_complete')
-        .then(response => {
-          // console.log(response.data)
-          this.linkDataArray = response.data.data_edge
-          this.nodeDataArray = response.data.data_node
-          this.text_data.nodeDataArray = this.nodeDataArray
-          this.text_data.linkDataArray = this.linkDataArray
-          // this.text_data.nodeDataArray.push(this.nodeDataArray[0])
-          // this.text_data.linkDataArray.push(this.linkDataArray[0])
-          console.log(this.text_data)
-          // this.result(response.data.data_node_add, response.data.data_edge_add)
-          this.load()
-        })
-        .catch(function(error) {
-          // console.log(error)
-        })
+      // this.$http
+      //   .post(this.Global_Api + '/api/verify_complete', {type: 'sub'})
+      //   .then(response => {
+      //     // console.log(response.data)
+      //     this.linkDataArray = response.data.data_edge
+      //     this.nodeDataArray = response.data.data_node
+      //     this.text_data.nodeDataArray = this.nodeDataArray
+      //     this.text_data.linkDataArray = this.linkDataArray
+      //     // this.text_data.nodeDataArray.push(this.nodeDataArray[0])
+      //     // this.text_data.linkDataArray.push(this.linkDataArray[0])
+      //     console.log(this.text_data)
+      //     // this.result(response.data.data_node_add, response.data.data_edge_add)
+      //     this.load()
+      //   })
+      //   .catch(function(error) {
+      //     // console.log(error)
+      //   })
     },
     completeAll() {
       for (var i = 0; i < this.msg.edge_id.length; i++) {

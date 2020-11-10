@@ -475,10 +475,11 @@ def verify_del(request):
 # 验证模型的完整性
 def verify_complete(request):
     request_json = json.loads(request.body)
-    if request_json['type']=='sub':
+    if request_json['type'] == 'sub':
         file_name = './file/result.txt'
-    elif request_json['type']=='complex':
+    elif request_json['type'] == 'complex':
         file_name = './file/result2.txt'
+
     lines = open(file_name, 'r', encoding='UTF-8').readlines()
     index_line = 0
     data_node = []
@@ -527,9 +528,9 @@ def verify_complete(request):
     # E:\Code\project301\lzy_Complete\Model5\judgeFeasibility
     # os.system('python E:/Code/project301/lzy_Complete/Model5/judgeFeasibility/judgeModelComplete.py')
     judgeModelComplete.judgeModelComplete1()
-    if request_json['type']=='sub':
+    if request_json['type'] == 'sub':
         file_name2 = './file/outNew.txt'
-    elif request_json['type']=='complex':
+    elif request_json['type'] == 'complex':
         file_name2 = './file/outNew2.txt'
     lines = open(file_name2, 'r', encoding='UTF-8').readlines()
     index_line = 0
@@ -643,6 +644,7 @@ def save_model(request):
         f.write(open(filepath + 'resultModel.txt', 'r', encoding='utf-8').read())
     return JsonResponse({**error_code.CLACK_SUCCESS})
 
+
 # 保存编辑前的模型样子
 def save_model2(request):
     filepath = './file/'
@@ -651,6 +653,7 @@ def save_model2(request):
     with open(filepath + 'resultModelSave2.txt', 'wt+', encoding='utf-8') as f:
         f.write(open(filepath + 'resultModel2.txt', 'r', encoding='utf-8').read())
     return JsonResponse({**error_code.CLACK_SUCCESS})
+
 
 # 补全完整性验证的结果
 def save_integrity_verification(request):

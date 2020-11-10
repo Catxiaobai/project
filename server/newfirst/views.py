@@ -878,6 +878,7 @@ def scenes_modeling(request):
         f.close()
         if request_jsons['type'] == 'sub':
             lwn_Graphic.constructModel.main()
+            print('建模')
             # lwn_Graphic.combination.combination()
             filepath = './file/'
             with open(filepath + 'resultSaveCreate.txt', 'wt+', encoding='utf-8') as f:

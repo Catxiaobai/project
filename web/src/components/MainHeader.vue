@@ -31,8 +31,8 @@
           <template slot="title">平台信息管理</template>
           <el-submenu index="1-1">
             <template slot="title">系统管理</template>
-            <el-menu-item index="/personnel">人员管理</el-menu-item>
-            <el-menu-item index="/authority">权限管理</el-menu-item>
+            <!--            <el-menu-item index="/personnel">人员管理</el-menu-item>-->
+            <!--            <el-menu-item index="/authority">权限管理</el-menu-item>-->
             <el-menu-item index="/tools">工具说明</el-menu-item>
           </el-submenu>
           <el-menu-item index="/item">项目管理</el-menu-item>

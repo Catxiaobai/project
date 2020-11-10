@@ -1,2 +1,8 @@
-N
+模型不完整，请补全：
+S0->初始页面
+S1->输入密码页
+S2->用户选择页
+S3->输入金额页
+S4->显示余额页
+推荐补全的迁移为:
 t13, S3, S5, event=Enter_amount(w), condition=(w>B), action=null
